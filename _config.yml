@@ -1,0 +1,261 @@
+theme                  : "minimal-mistakes-jekyll"
+minimal_mistakes_skin    : "default"
+
+# Site Settings
+locale                   : "en-US"
+title                    : "Xspatula"
+title_separator          : "-"
+subtitle                 : "Database-integrated Python modelling"
+name                     : "Thomas Gumbricht"
+description              : "Documentation for loading AI4SoilHealth data into the Xspatula PostgreSQL framework."
+url                      : "https://xspatula.github.io"
+baseurl                  : "/xspatula_ai4sh_docs"
+repository               : "xspatula/xspatula_ai4sh_docs"
+logo                     : "/assets/media/xspectre_logo-trans_480.png"
+masthead_title           : "Script your own environ"
+breadcrumbs              : false
+words_per_minute         : 200
+enable_copy_code_button  : true
+
+comments:
+  provider               : false
+
+atom_feed:
+  path                   :
+  hide                   :
+
+search                   : true
+search_full_content      : true
+search_provider          : lunr
+lunr:
+  search_within_pages    : true
+
+# SEO
+google_site_verification :
+bing_site_verification   :
+
+# Social
+social:
+  type                   :
+  name                   :
+  links:
+    - https://github.com/xspatula
+
+analytics:
+  provider               : false
+
+# Site Author
+author:
+  name             : "Thomas Gumbricht"
+  avatar           : "/assets/media/biophoto_tg_1.png"
+  bio              : "Private scientist working with spatial data and spectroscopy."
+  location         : "Öland, Sweden"
+  email            : "thomasg@karttur.com"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/xspatula"
+    - label: "Google scholar"
+      icon: "fab fa-fw fa-google-scholar"
+      url: "https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en"
+    - label: "Orcid"
+      icon: "fab fa-fw fa-orcid"
+      url: "https://orcid.org/0000-0002-5125-4487"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/thomas-gumbricht-588a2a23"
+
+# Site Footer
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/xspatula"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/thomas-gumbricht-588a2a23"
+    - label: "Google scholar"
+      icon: "fab fa-fw fa-google-scholar"
+      url: "https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en"
+    - label: "Orcid"
+      icon: "fab fa-fw fa-orcid"
+      url: "https://orcid.org/0000-0002-5125-4487"
+  since: "2013"
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - minimal-mistakes-jekyll.gemspec
+  - node_modules
+  - package.json
+  - package-lock.json
+  - Rakefile
+  - README
+  - tmp
+  - /docs
+  - /test
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+permalink: /:categories/:title/
+timezone: CET
+
+paginate: 5
+paginate_path: /page:num/
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+
+whitelist:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
+
+# Collections
+collections:
+  setup_db:
+    output: true
+  setup_processes:
+    output: true
+  utility:
+    output: true
+  dataset_meta:
+    output: true
+  sample:
+    output: true
+  wetlab:
+    output: true
+  spectra:
+    output: true
+  all_data:
+    output: true
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      comments: false
+      share: true
+      related: true
+      show_date: true
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: setup_db
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: setup_processes
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: utility
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: dataset_meta
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: sample
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: wetlab
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: spectra
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: all_data
+    values:
+      layout: single
+      author_profile: false

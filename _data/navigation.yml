@@ -1,0 +1,167 @@
+setup_db:
+  - title: Setup AI4SoilHealth database
+    children:
+      - title: "Introduction"
+        url: /setup_db/
+      - title: "Schemas"
+        url: /setup_db/schemas/
+      - title: "Utility"
+        url: /setup_db/utility/
+      - title: "Community"
+        url: /setup_db/community/
+      - title: "Process"
+        url: /setup_db/process/
+      - title: "Observation utility"
+        url: /setup_db/observation_utility/
+      - title: "Observation"
+        url: /setup_db/observation/
+      - title: "Landscape"
+        url: /setup_db/landscape/
+      - title: "eDNA"
+        url: /setup_db/edna/
+
+setup_processes:
+  - title: Setup AI4SoilHealth processes
+    children:
+      - title: "Introduction"
+        url: /setup_process/
+      - title: "Root process"
+        url: /setup_process/root_process/
+      - title: "Translate"
+        url: /setup_process/translate/
+      - title: "Community"
+        url: /setup_process/community/
+      - title: "Utility"
+        url: /setup_process/utility/
+      - title: "Observation utility"
+        url: /setup_process/observation_utility/
+      - title: "Observation"
+        url: /setup_process/observation/
+      - title: "eDNA"
+        url: /setup_process/edna/
+
+utility:
+  - title: Load utility data
+    children:
+      - title: "Synopsis"
+        url: /utility/
+      - title: "Translate general utilities"
+        url: /utility/translate_general_utilities/
+      - title: "Manage general utilities"
+        url: /utility/manage_general_utilities/
+      - title: "Translate observation utilities"
+        url: /utility/translate_observation_utilities/
+      - title: "Manage observation utilities"
+        url: /utility/manage_observation_utilities/
+      - title: "Translate obs. utilities (inherit)"
+        url: /utility/translate_observation_utilities_inherit/
+      - title: "Manage obs. utilities (inherit)"
+        url: /utility/manage_observation_utilities_inherit/
+
+dataset_meta:
+  - title: Load dataset metadata
+    children:
+      - title: "Synopsis"
+        url: /dataset_meta/
+      - title: "Translate dataset"
+        url: /dataset_meta/translate_dataset/
+      - title: "Manage data source"
+        url: /dataset_meta/manage_data_source/
+      - title: "Manage persons"
+        url: /dataset_meta/manage_person/
+      - title: "Manage dataset"
+        url: /dataset_meta/manage_dataset/
+      - title: "Manage campaign"
+        url: /dataset_meta/manage_campaign/
+      - title: "Manage sampling log"
+        url: /dataset_meta/manage_sampling_log/
+
+sample:
+  - title: Load sample data
+    children:
+      - title: "Synopsis"
+        url: /sample/
+      - title: "Translate geotag sample"
+        url: /sample/translate_geotag_sample/
+      - title: "Manage sample geolocation"
+        url: /sample/manage_sample_geolocation/
+      - title: "Manage samples"
+        url: /sample/manage_sample/
+
+wetlab:
+  - title: Load wetlab data
+    children:
+      - title: "Synopsis"
+        url: /wetlab/
+      - title: "Translate wetlab data"
+        url: /wetlab/translate_ai4sh_wetlab_data/
+      - title: "Manage Agrolab obs. log"
+        url: /wetlab/manage_ai4sh_agrolab_obs_log/
+      - title: "Manage Agrolab observation"
+        url: /wetlab/manage_ai4sh_wetlab_data/
+
+spectra:
+  - title: Load spectral data
+    children:
+      - title: "Synopsis"
+        url: /spectra/
+      - title: "FOSS DS2500 spectrometer"
+        url: /spectra/manage_foss_ds2500_spectrometer/
+      - title: "FOSS DS2500 obs. log"
+        url: /spectra/manage_foss_ds2500_obs_log/
+      - title: "FOSS DS2500 observation"
+        url: /spectra/manage_foss_ds2500_obs/
+      - title: "Neospectra spectrometer"
+        url: /spectra/manage_neospectra_spectrometer/
+      - title: "Neospectra obs. log"
+        url: /spectra/manage_neospectra_obs_log/
+      - title: "Neospectra observation"
+        url: /spectra/manage_neospectra_obs/
+      - title: "FTIR spectrometer"
+        url: /spectra/manage_ftir_spectrometer/
+      - title: "FTIR obs. log"
+        url: /spectra/manage_ftir_obs_log/
+      - title: "FTIR observation"
+        url: /spectra/manage_ftir_obs/
+      - title: "LIBS spectrometer"
+        url: /spectra/manage_libs_spectrometer/
+      - title: "LIBS obs. log"
+        url: /spectra/manage_libs_obs_log/
+      - title: "LIBS observation"
+        url: /spectra/manage_libs_obs/
+
+all_data:
+  - title: Load all data
+    children:
+      - title: "Synopsis"
+        url: /all_data/
+
+loading_data:
+  - title: Loading data
+    children:
+      - title: "Utility"
+        url: /utility/
+      - title: "Dataset metadata"
+        url: /dataset_meta/
+      - title: "Sample"
+        url: /sample/
+      - title: "Wetlab"
+        url: /wetlab/
+      - title: "Spectra"
+        url: /spectra/
+      - title: "All data"
+        url: /all_data/
+
+# main navbar links
+main:
+  - title: "Setup DB"
+    url: /setup_db/
+    description: "Setting up the AI4SoilHealth database"
+  - title: "Setup processes"
+    url: /setup_process/
+    description: "Setting up the AI4SoilHealth processes"
+  - title: "Loading data"
+    url: /loading_data/
+    description: "Loading AI4SoilHealth data into the database"
+  - title: "About"
+    url: https://xspatula.github.io/about/
