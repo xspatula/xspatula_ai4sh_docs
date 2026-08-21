@@ -23,6 +23,8 @@ auditing:
     children:
       - title: "Introduction"
         url: /auditing/
+      - title: "Setup"
+        url: /auditing/setup/
       - title: "Queries"
         url: /auditing/queries/
 

@@ -12,6 +12,8 @@ last_modified_at: 2026-08-15 08:00:00 +0200
 
 Everything on this page is plain SQL you can paste directly into DBeaver's SQL editor against the `ai4sh` database, connected as a role that can read the `audit` schema (see [Auditing][auditing_introduction] for the `login_evaluation` grant). No Python, no notebook.
 
+**Prerequisite**: these queries assume the "Apply audit triggers" notebook cell has already been run against this database — see [Auditing setup][auditing_setup]. Otherwise `audit.logged_actions` doesn't exist yet and every query below will error.
+
 ## 1. What just happened — most recent changes first
 
 ```sql
@@ -86,9 +88,23 @@ ORDER BY id;
 
 ## 7. What won't show up here
 
-Two things are missing from the log **by design**, not by accident:
+Three things are missing from the log **by design**, not by accident:
 
 - `INSERT`s on `observation`/`landscape` tables — those schemas audit `UPDATE`/`DELETE` only, see [Auditing][auditing_introduction].
 - Anything on `audit.logged_actions` itself except `UPDATE`/`DELETE` — it audits itself, but never its own `INSERT` (the self-audit recursion gotcha, also covered on the previous page).
+- Anything at all on a table with no `"audit"` key — it simply isn't audited, see [Auditing setup][auditing_setup].
+
+## 8. What's currently covered
+
+Coverage is declared per table and changes as tables are added — don't trust the snapshot table on the introduction page for a database you're actually working with; check it directly:
+
+```sql
+SELECT event_object_schema, event_object_table, string_agg(event_manipulation, ', ')
+FROM information_schema.triggers
+WHERE trigger_name LIKE '%_audit'
+GROUP BY 1, 2
+ORDER BY 1, 2;
+```
 
 [auditing_introduction]: /auditing/
+[auditing_setup]: /auditing/setup/

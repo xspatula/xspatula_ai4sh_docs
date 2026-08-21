@@ -46,17 +46,35 @@ This column is `NULL` whenever a write happens outside a real login flow — mos
 
 ## Which tables are audited, and for which events
 
-Coverage differs by **table role**, not just by schema:
+Coverage differs by **table role**, not just by schema. Each table declares its own coverage
+inline, on its own `create_table` definition:
+
+```json
+"audit": {
+  "INSERT": true,
+  "UPDATE": true,
+  "DELETE": true
+}
+```
+
+No `"audit"` key at all (or one where every value is `false`) means that table simply isn't
+audited — see [Auditing setup][auditing_setup] for how this key is declared and applied.
+
+A snapshot of current coverage, verified against a live database on 2026-08-19 — **this is a
+snapshot, not a permanent list**; coverage is now driven by an inline key on each table rather
+than a fixed file, so it will keep changing as tables are added. Check current coverage
+yourself (query 8 in [Auditing queries][auditing_queries]) rather than trust a number written
+into documentation:
 
 | Schema | Audited tables | `INSERT` audited? |
 |---|---|---|
 | `community` | 5 | yes |
 | `process` | 9 | yes |
 | `utility` | 2 | yes |
-| `observation_utility` | 63 | yes |
+| `observation_utility` | 65 | yes |
 | `landscape_utility` | 17 | yes |
-| `observation` | 40 | no (`UPDATE`/`DELETE` only) |
-| `landscape` | 6 | no (`UPDATE`/`DELETE` only) |
+| `observation` | 50 | no (`UPDATE`/`DELETE` only) |
+| `landscape` | 8 | no (`UPDATE`/`DELETE` only) |
 | `audit` (self-audit) | 1 | no, and never can be — see below |
 
 The rule in one sentence per group:
@@ -64,7 +82,7 @@ The rule in one sentence per group:
 - **Full coverage** (`community`, `process`, `utility`, `observation_utility`, `landscape_utility`) — admin/config data, or catalogue/reference tables (`indicator`, `taxa`, `apparatus`, `unit`, `land_use_order`, etc.) that get added one row at a time, usually by hand. Knowing when a new catalogue entry was created has real audit value.
 - **`UPDATE`/`DELETE` only** (`observation`, `landscape`) — bulk pipeline-written data: samples, measurements, spectra. Auditing every `INSERT` here would double the write volume on an import batch of thousands of rows, for no real audit gain — the row's own existence already proves it was created.
 
-When adding a new table to the schema: a new catalogue/reference table follows the full-coverage group; a new bulk pipeline-written table follows the `UPDATE`/`DELETE`-only group.
+When adding a new table to the schema: a new catalogue/reference table follows the full-coverage group; a new bulk pipeline-written table follows the `UPDATE`/`DELETE`-only group. See [Auditing setup][auditing_setup] for the mechanics of declaring and applying this.
 
 ## The self-audit gotcha
 
@@ -81,19 +99,15 @@ GRANT SELECT ON ALL TABLES IN SCHEMA audit TO login_evaluation;
 
 This is almost certainly the role you want to connect DBeaver as for the queries on the next page, unless you're already using a role with broader database access.
 
-## Config file map
+## Turning auditing on, and adding a new audited table
 
-If you ever need to change what's audited, everything lives under `setup/zzz/ai4sh/setup_db/json_ai4sh/audit/`:
-
-| File | Defines |
-|---|---|
-| `audit_table_v10_sql.json` | The `audit.logged_actions` table |
-| `audit_function_v10_sql.json` | The `audit.if_modified_func()` trigger function |
-| `audit_triggers_<schema-group>_v10_sql.json` | One `CREATE TRIGGER` block per audited table, grouped by schema |
-
-**To audit a new table**: add one `create_trigger` block (`schema`, `table`, `trigger`, `timing`, `events`, `function: "audit.if_modified_func"`) to the relevant `audit_triggers_*` file — full-coverage events for a catalogue/admin table, `UPDATE`/`DELETE`-only for a bulk pipeline-written table — and make sure the pilot-list entry for that trigger file comes *after* both the target table and `audit_function_v10_sql.json` have already been created.
+Auditing is opt-in per table and applied in a separate step from database setup — see
+[Auditing setup][auditing_setup] for the full walkthrough, including the config files under
+`setup/zzz/ai4sh/setup_db/json_ai4sh/audit/` (these are now **generated build artifacts, not
+hand-edited files** — the only thing you ever hand-edit is a table's own `"audit"` key).
 
 See [Auditing queries][auditing_queries] for how to actually read this log day-to-day, and [Setup DB][setup_db] for how the schemas and tables it audits are created in the first place.
 
+[auditing_setup]: /auditing/setup/
 [auditing_queries]: /auditing/queries/
 [setup_db]: /setup_db/
