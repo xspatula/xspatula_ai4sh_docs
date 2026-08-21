@@ -10,7 +10,7 @@ date: 2026-03-31 08:00:00 +0200
 last_modified_at: 2026-03-31 08:00:00 +0200
 ---
 
-The `community` schema manages all organisations and users in the AI4SH database. It is one of the three default Xspatula framework schemas. Every user logging into the system must have a record in `community.user`, and the login process checks that table for credentials and access level.
+The `community` schema manages all organisations and users in the AI4SH database. It is one of the default Xspatula framework schemas. Every user logging into the system must have a record in `community.user`, and the login process checks that table for credentials and access level.
 
 ## Process files
 
@@ -48,7 +48,7 @@ Key columns:
 | `id` | SERIAL | Primary key |
 | `organisation_id` | INTEGER | FK to `community.organisation` |
 | `user_name` | VARCHAR UNIQUE | Login name |
-| `password` | VARCHAR | Login password |
+| `password` | VARCHAR | Hash crypted login password |
 | `stratum_code` | SMALLINT | FK to `user_categories`; determines database privilege level |
 | `first_name` | VARCHAR | — |
 | `last_name` | VARCHAR | — |
@@ -68,8 +68,13 @@ Tracks cumulative session time and last activity date per user.
 
 The files `organisation_records_v10_sql.json` and `user_records_v10_sql.json` insert default records directly into the database during setup. You must edit these files to include at least one real organisation and one real user before running the notebook.
 
-The `user_name` and `password` in these files must match the `user_project` credentials in any non-setup scheme file you later use to operate the database.
+The `password` value in `user_records_v10_sql.json` must be a **bcrypt hash**, not plaintext — `community.user.password` is never stored or compared as plaintext. Generate the hash with the standalone CLI `setup/hash_password.py` and paste its output into the JSON file; see [Bootstrap user][setup_community_bootstrap_user] for the full walkthrough, including how to apply a new hash to a live database without rebuilding. Without a correctly hashed password here, the bootstrap user cannot log in and no further users can be registered — the Excel-intake registration workflow itself requires an already-logged-in user.
+
+The `user_name` in this file must match the `user_name` in the `user_project` credentials of any non-setup scheme file you later use to operate the database.
+
+**Note**, the scheme file's `password`, however, stays **plaintext** — it's the password you type at login, verified against the stored hash. The two values are never the same string; the scheme file holds the plaintext that hashes to the value stored in `user_records_v10_sql.json` upon login.
 
 For the full framework treatment of the community schema and its role in authentication, see the [core framework documentation][setup_core_db_docs_schemas].
 
 [setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
+[setup_community_bootstrap_user]: /setup_community/bootstrap_user/
