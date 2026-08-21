@@ -26,6 +26,22 @@ auditing:
       - title: "Queries"
         url: /auditing/queries/
 
+setup_community:
+  - title: Setup AI4SoilHealth community
+    children:
+      - title: "Introduction"
+        url: /setup_community/
+      - title: "Bootstrap user"
+        url: /setup_community/bootstrap_user/
+      - title: "SMTP email"
+        url: /setup_community/smtp_email/
+      - title: "Excel intake"
+        url: /setup_community/excel_intake/
+      - title: "Register notebook"
+        url: /setup_community/register_notebook/
+      - title: "Welcome email"
+        url: /setup_community/welcome_email/
+
 setup_processes:
   - title: Setup AI4SoilHealth processes
     children:
@@ -164,6 +180,9 @@ main:
   - title: "Audit"
     url: /auditing/
     description: "AI4SoilHealth database auditing setup and function"
+  - title: "Community"
+    url: /setup_community/
+    description: "Setting up AI4SoilHealth organisations and users"
   - title: "Setup processes"
     url: /setup_process/
     description: "Setting up the AI4SoilHealth processes"

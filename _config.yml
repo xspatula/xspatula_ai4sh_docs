@@ -179,6 +179,8 @@ collections:
     output: true
   auditing:
     output: true
+  setup_community:
+    output: true
   setup_processes:
     output: true
   utility:
@@ -222,6 +224,12 @@ defaults:
   - scope:
       path: ""
       type: auditing
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: setup_community
     values:
       layout: single
       author_profile: false
