@@ -61,6 +61,8 @@ setup_processes:
         url: /setup_process/observation_utility/
       - title: "Observation"
         url: /setup_process/observation/
+      - title: "Schema conventions"
+        url: /setup_process/schema_conventions/
 
 utility:
   - title: Load utility data
