@@ -86,13 +86,15 @@ Example for `provision.json`:
       "process": "translate_tabular_data",
       "parameters": {
         "process": "manage_provision",
-        "tabular_data_path": "../../../utility/observation/excel/provision.xlsx",
-        "dst_path": "../../../utility/observation/manage_process"
+        "tabular_data_path": "import_data/utility/observation/excel/provision.xlsx",
+        "dst_path": "import_data/utility/observation/manage_process"
       }
     }
   ]
 }
 ```
+
+`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution].
 
 ## Source files
 
@@ -122,3 +124,4 @@ Proceed to [Manage observation utilities with inheritance] to insert these recor
 
 [Manage observation utilities]: /utility/manage_observation_utilities/
 [Manage observation utilities with inheritance]: /utility/manage_observation_utilities_inherit/
+[setup_process_path_resolution]: /setup_process/path_resolution/

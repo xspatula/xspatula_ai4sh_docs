@@ -44,8 +44,8 @@ Note: the cell uses `process_file`, not `job_file`.
       "overwrite": true,
       "parameters": {
         "process": "manage_observation_log",
-        "tabular_data_path": "../../../wetlab/agrolab/excel/AI4SH_observation_log_agrolab.xlsx",
-        "dst_path": "../../../wetlab/agrolab/manage_process"
+        "tabular_data_path": "import_data/wetlab/agrolab/excel/AI4SH_observation_log_agrolab.xlsx",
+        "dst_path": "import_data/wetlab/agrolab/manage_process"
       }
     },
     {
@@ -53,15 +53,15 @@ Note: the cell uses `process_file`, not `job_file`.
       "overwrite": true,
       "parameters": {
         "process": "manage_observation",
-        "tabular_data_path": "../../../wetlab/agrolab/excel/AI4SH_observation_agrolab.xlsx",
-        "dst_path": "../../../wetlab/agrolab/manage_process"
+        "tabular_data_path": "import_data/wetlab/agrolab/excel/AI4SH_observation_agrolab.xlsx",
+        "dst_path": "import_data/wetlab/agrolab/manage_process"
       }
     }
   ]
 }
 ```
 
-The two entries are executed in sequence. Each reads an Excel source file and writes one manage process file to `./ai4sh/import_data/wetlab/agrolab/manage_process/`.
+`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution]. The two entries are executed in sequence. Each reads an Excel source file and writes one manage process file to `./ai4sh/import_data/wetlab/agrolab/manage_process/`.
 
 ## Source files
 
@@ -117,3 +117,4 @@ Proceed to [Manage Agrolab observation log].
 [Load sample data]: /sample/
 [Load utility data]: /utility/
 [Manage Agrolab observation log]: /wetlab/manage_ai4sh_agrolab_obs_log/
+[setup_process_path_resolution]: /setup_process/path_resolution/

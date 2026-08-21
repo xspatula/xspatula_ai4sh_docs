@@ -51,6 +51,8 @@ setup_processes:
         url: /setup_process/root_process/
       - title: "Translate"
         url: /setup_process/translate/
+      - title: "Path resolution"
+        url: /setup_process/path_resolution/
       - title: "Community"
         url: /setup_process/community/
       - title: "Utility"

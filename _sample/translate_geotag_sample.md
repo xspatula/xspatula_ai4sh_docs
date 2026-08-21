@@ -44,8 +44,8 @@ Note the cell uses `process_file`, not `job_file` — no pilot file is involved.
       "overwrite": true,
       "parameters": {
         "process": "manage_geolocation",
-        "tabular_data_path": "../../sample/excel/AI4SH_geolocation.xlsx",
-        "dst_path": "../../sample/manage_process"
+        "tabular_data_path": "import_data/sample/excel/AI4SH_geolocation.xlsx",
+        "dst_path": "import_data/sample/manage_process"
       }
     },
     {
@@ -53,15 +53,15 @@ Note the cell uses `process_file`, not `job_file` — no pilot file is involved.
       "overwrite": true,
       "parameters": {
         "process": "manage_geolocated_profile_sample",
-        "tabular_data_path": "../../sample/excel/AI4SH_samples_geotag.xlsx",
-        "dst_path": "../../sample/manage_process"
+        "tabular_data_path": "import_data/sample/excel/AI4SH_samples_geotag.xlsx",
+        "dst_path": "import_data/sample/manage_process"
       }
     }
   ]
 }
 ```
 
-The two entries are executed in sequence. Each reads an Excel source file and writes one manage process file to `./ai4sh/import_data/sample/manage_process/`.
+`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution]. The two entries are executed in sequence. Each reads an Excel source file and writes one manage process file to `./ai4sh/import_data/sample/manage_process/`.
 
 ## Source files
 
@@ -92,3 +92,4 @@ Proceed to [Manage sample geolocation].
 
 [Load dataset metadata]: /dataset_meta/
 [Manage sample geolocation]: /sample/manage_sample_geolocation/
+[setup_process_path_resolution]: /setup_process/path_resolution/

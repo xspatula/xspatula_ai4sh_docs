@@ -113,15 +113,15 @@ Each entry in the pilot file is a translate process file in `./ai4sh/import_data
       "overwrite": true,
       "parameters": {
         "process": "manage_apparatus",
-        "tabular_data_path": "../../../utility/observation/excel/apparatus.xlsx",
-        "dst_path": "../../../utility/observation/manage_process"
+        "tabular_data_path": "import_data/utility/observation/excel/apparatus.xlsx",
+        "dst_path": "import_data/utility/observation/manage_process"
       }
     }
   ]
 }
 ```
 
-Each translate process file reads its Excel source and writes a manage process file to:
+`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution]. Each translate process file reads its Excel source and writes a manage process file to:
 
 ```
 ./ai4sh/import_data/utility/observation/manage_process/
@@ -141,3 +141,4 @@ Proceed to [Manage observation utilities] to insert these catalogues into the da
 
 [Manage general utilities]: /utility/manage_general_utilities/
 [Manage observation utilities]: /utility/manage_observation_utilities/
+[setup_process_path_resolution]: /setup_process/path_resolution/

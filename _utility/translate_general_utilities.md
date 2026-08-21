@@ -64,15 +64,15 @@ Only one process file is listed. Comments (lines beginning with `#`) are ignored
       "overwrite": true,
       "parameters": {
         "process": "manage_territory",
-        "tabular_data_path": "../../../utility/general/excel/territory.xlsx",
-        "dst_path": "../../../utility/general/manage_process"
+        "tabular_data_path": "import_data/utility/general/excel/territory.xlsx",
+        "dst_path": "import_data/utility/general/manage_process"
       }
     }
   ]
 }
 ```
 
-The translate process reads `territory.xlsx` and writes the resulting manage process file to:
+`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution]. The translate process reads `territory.xlsx` and writes the resulting manage process file to:
 
 ```
 ./ai4sh/import_data/utility/general/manage_process/manage_territory.json
@@ -96,3 +96,4 @@ The Excel file contains one row per territory. The framework maps each column he
 After running this cell, proceed to [Manage general utilities] to insert the territory data into the database.
 
 [Manage general utilities]: /utility/manage_general_utilities/
+[setup_process_path_resolution]: /setup_process/path_resolution/

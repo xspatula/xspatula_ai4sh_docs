@@ -74,8 +74,8 @@ This is distinct from the `manage_table_data` root: translate processes write JS
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `process` | text | yes | The target process that the generated JSON will call |
-| `tabular_data_path` | text | yes | Path to the source CSV or Excel file |
-| `dst_path` | text | yes | Destination path for the generated JSON process file |
+| `tabular_data_path` | text | yes | Path to the source CSV or Excel file — resolved relative to the project root, see [Path resolution][setup_process_path_resolution] |
+| `dst_path` | text | yes | Destination path for the generated JSON process file — resolved relative to the project root, see [Path resolution][setup_process_path_resolution] |
 
 ## How it works
 
@@ -98,3 +98,5 @@ Use `translate_tabular_data` when you have a large number of records to insert a
 ## Access level
 
 Minimum user stratum: 3
+
+[setup_process_path_resolution]: /setup_process/path_resolution/

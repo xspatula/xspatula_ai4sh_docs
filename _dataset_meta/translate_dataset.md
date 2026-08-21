@@ -72,15 +72,15 @@ All five translate process files share the same structure. Example for `data_sou
       "overwrite": false,
       "parameters": {
         "process": "manage_data_source",
-        "tabular_data_path": "../../dataset/excel/data_source.xlsx",
-        "dst_path": "../../dataset/manage_process"
+        "tabular_data_path": "import_data/dataset/excel/data_source.xlsx",
+        "dst_path": "import_data/dataset/manage_process"
       }
     }
   ]
 }
 ```
 
-Each translate process reads its Excel source file and writes the resulting manage process file to `./ai4sh/import_data/dataset/manage_process/`.
+`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution]. Each translate process reads its Excel source file and writes the resulting manage process file to `./ai4sh/import_data/dataset/manage_process/`.
 
 ## Output
 
@@ -100,3 +100,4 @@ Proceed to [Manage data source] to begin inserting records into the database.
 
 [Load utility data]: /utility/
 [Manage data source]: /dataset_meta/manage_data_source/
+[setup_process_path_resolution]: /setup_process/path_resolution/
