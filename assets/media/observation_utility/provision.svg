@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/>
+    </marker>
+  </defs>
+
+  <style>
+    .box { fill: #ffffff; stroke: #3a6ea5; stroke-width: 1.5; }
+    .head { fill: #dbe7f5; stroke: #3a6ea5; stroke-width: 1.5; }
+    .title { font-size: 15px; font-weight: bold; fill: #1a1a1a; }
+    .field { font-size: 12px; fill: #333333; }
+    .edge { stroke: #3a6ea5; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .lbl { font-size: 11px; fill: #555555; }
+  </style>
+
+  <!-- apparatus -->
+  <g>
+    <rect class="head" x="30" y="30" width="180" height="30"/>
+    <rect class="box" x="30" y="60" width="180" height="40"/>
+    <text class="title" x="42" y="50">apparatus</text>
+    <text class="field" x="42" y="83">id (PK)</text>
+  </g>
+
+  <!-- provider -->
+  <g>
+    <rect class="head" x="360" y="30" width="180" height="30"/>
+    <rect class="box" x="360" y="60" width="180" height="40"/>
+    <text class="title" x="372" y="50">provider</text>
+    <text class="field" x="372" y="83">id (PK)</text>
+  </g>
+
+  <!-- method_tier -->
+  <g>
+    <rect class="head" x="690" y="30" width="180" height="30"/>
+    <rect class="box" x="690" y="60" width="180" height="40"/>
+    <text class="title" x="702" y="50">method_tier</text>
+    <text class="field" x="702" y="83">id (PK)</text>
+  </g>
+
+  <!-- provision (central) -->
+  <g>
+    <rect class="head" x="330" y="200" width="240" height="30"/>
+    <rect class="box" x="330" y="230" width="240" height="100"/>
+    <text class="title" x="342" y="220">provision</text>
+    <text class="field" x="342" y="253">id (PK)</text>
+    <text class="field" x="342" y="270">apparatus_id (FK)</text>
+    <text class="field" x="342" y="287">provider_id (FK)</text>
+    <text class="field" x="342" y="304">method_tier_id (FK)</text>
+    <text class="field" x="342" y="321">name</text>
+  </g>
+
+  <!-- arrows into provision -->
+  <path class="edge" d="M120,100 C120,160 330,180 380,230"/>
+  <path class="edge" d="M450,100 L450,230"/>
+  <path class="edge" d="M780,100 C780,160 570,180 520,230"/>
+
+  <!-- provision_method_tier -->
+  <g>
+    <rect class="head" x="30" y="420" width="200" height="30"/>
+    <rect class="box" x="30" y="450" width="200" height="55"/>
+    <text class="title" x="42" y="440">provision_method_tier</text>
+    <text class="field" x="42" y="473">provision_id (PK, FK)</text>
+    <text class="field" x="42" y="490">tier flags...</text>
+  </g>
+
+  <!-- provision_serial_nr -->
+  <g>
+    <rect class="head" x="350" y="420" width="200" height="30"/>
+    <rect class="box" x="350" y="450" width="200" height="55"/>
+    <text class="title" x="362" y="440">provision_serial_nr</text>
+    <text class="field" x="362" y="473">id (PK)</text>
+    <text class="field" x="362" y="490">provision_id (FK)</text>
+  </g>
+
+  <!-- provision_calibration -->
+  <g>
+    <rect class="head" x="670" y="420" width="200" height="30"/>
+    <rect class="box" x="670" y="450" width="200" height="72"/>
+    <text class="title" x="682" y="440">provision_calibration</text>
+    <text class="field" x="682" y="473">provision_id (FK)</text>
+    <text class="field" x="682" y="490">provision_serial_nr_id (FK)</text>
+    <text class="field" x="682" y="507">indicator_id (FK)</text>
+  </g>
+
+  <!-- arrows out of provision down to companions -->
+  <path class="edge" d="M400,330 C300,370 180,390 140,420"/>
+  <path class="edge" d="M450,330 L450,420"/>
+  <path class="edge" d="M500,330 C600,370 720,390 760,420"/>
+  <!-- provision_serial_nr feeds provision_calibration -->
+  <path class="edge" d="M550,477 L670,477"/>
+
+  <text class="lbl" x="30" y="545">1 apparatus + 1 provider + 1 method_tier combine into 1 reusable provision.</text>
+</svg>
