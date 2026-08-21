@@ -3,7 +3,7 @@ title: "Root Processes"
 layout: single
 sidebar:
   nav: "setup_processes"
-excerpt: "Root processes are named families that group related processes together. The AI4SH database registers two root processes: manage_table_data for all data management operations, and translate_data for data format translation."
+excerpt: "Root processes are named families that group related processes together. The AI4SH database registers two root processes: manage_table_data for all data management operations, and translate_data for data format translation — with one deliberate, named exception that does write to the database."
 permalink: /setup_process/root_process/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
@@ -48,10 +48,14 @@ All data management operations — inserting, updating, and deleting records in 
 }
 ```
 
-Translation processes convert data between formats (e.g. from a tabular spreadsheet to the JSON process file format expected by the framework). Crucially, translation processes do not write to the database directly — they prepare data for subsequent processes that do.
+**One deliberate exception**: [`insert_tabular_data`][setup_process_insert] is registered under this same `translate_data` root, purely for dispatch convenience — `Run_process` routes anything under `translate_data` to the same handler class (`Process_import_JSON`), and that class's own internal dispatch is keyed off the process **name's prefix** (`translate_`, `insert_`, `manage_`), not the root it's registered under. So despite the root's label above, `insert_tabular_data` does write to the database — it reads a spreadsheet and applies it immediately, INSERT-only. `translate_tabular_data` itself is unaffected by this and still never touches the database.
+
+Translation processes convert data between formats (e.g. from a tabular spreadsheet to the JSON process file format expected by the framework). As a rule, translation processes do not write to the database directly — they prepare data for subsequent processes that do — with the one `insert_tabular_data` exception noted above.
 
 ## Why root processes matter
 
 The root process is part of the primary key structure for process lookup. When the framework receives a process call it uses both the `root_process_id` and the `process_id` to find the correct Python function to execute. This two-level lookup means you can have the same process name in different root families without collision.
 
 Root processes also serve as a grouping mechanism in the user interface — all processes under `manage_table_data` can be presented together as the "data management" operations for a given schema.
+
+[setup_process_insert]: /setup_process/insert/
