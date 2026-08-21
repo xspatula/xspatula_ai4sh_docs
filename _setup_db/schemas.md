@@ -3,14 +3,14 @@ title: "AI4SH Database Schemas"
 layout: single
 sidebar:
   nav: "setup_db"
-excerpt: "The AI4SH database is organised into 7 postgreSQL schemas. The schema process file must be run first — before any tables — to create all schema namespaces."
+excerpt: "The AI4SH database is organised into 8 postgreSQL schemas. The schema process file must be run first — before any tables — to create all schema namespaces."
 permalink: /setup_db/schemas/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
 last_modified_at: 2026-03-31 08:00:00 +0200
 ---
 
-The AI4SH database is organised into 7 postgreSQL schemas. Schemas group related tables into logical namespaces and allow different access permissions to be applied per schema. The schema process file must be executed first in the pilot file — before any table definitions — because table creation requires the target schema to already exist.
+The AI4SH database is organised into 8 postgreSQL schemas. Schemas group related tables into logical namespaces and allow different access permissions to be applied per schema. The schema process file must be executed first in the pilot file — before any table definitions — because table creation requires the target schema to already exist.
 
 ## The schema process file
 
@@ -37,11 +37,11 @@ This single file creates all 8 schemas using repeated calls to the `create_schem
 
 | Schema | Type | Purpose |
 |---|---|---|
-| `utility` | Framework default | General support tables shared across schemas (territory etc.) |
+| `utility` | Framework default | General support catalogues shared across schemas (territory etc.) |
 | `community` | Framework default | Organisations and users; manages all database access |
 | `process` | Framework default | Process definitions and parameter specifications |
 | `audit` | Framework default | Audit when and by whom data in core tables were changed |
-| `landscape_utility` | AI4SH | Reference tables for landscape classification |
+| `landscape_utility` | AI4SH | Reference catalogues for landscape classification |
 | `landscape` | AI4SH | Landscape observations |
 | `observation_utility` | AI4SH | Reference catalogues for FAIR-compliant soil data (units, methods, instruments, taxa, eDNA metabarcoding methods, etc.) |
 | `observation` | AI4SH | Actual soil property data (datasets, campaigns, samples, observations, eDNA results) |
