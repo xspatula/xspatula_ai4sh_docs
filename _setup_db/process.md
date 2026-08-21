@@ -10,7 +10,7 @@ date: 2026-03-31 08:00:00 +0200
 last_modified_at: 2026-03-31 08:00:00 +0200
 ---
 
-The `process` schema stores all process definitions and their parameter specifications. It is one of the three default Xspatula framework schemas. Every operation the framework can execute — including the operations used to insert records into the `process` schema itself — must be registered here before it can be called from a process file.
+The `process` schema stores all process definitions and their parameter specifications. It is one of the default Xspatula framework schemas. Every operation the framework can execute — including the operations used to insert records into the `process` schema itself — must be registered here before it can be called from a process file.
 
 ## Process files — edit before running
 
@@ -22,11 +22,11 @@ Three process files create and seed the process schema:
 | `process/root_process_records_v10_sql.json` | Inserts the root process group definitions |
 | `process/processes_records_v10_sql.json` | Inserts the bootstrap processes needed to register all other processes |
 
-You must edit `processes_records_v10_sql.json` to have a `creator` that exists in the database; if not the script will report an error and stop. Typically, the user defined in the [Default community records][default_community_record]
+You must edit `processes_records_v10_sql.json` to have a `creator` that exists in the database; if not the script will report an error and stop. Typically, it is the user defined in the [Default community records][default_community_record] that defines the processes. When the processes are setup, other users can also add processes, given that their stratum allows that.
 
 ## Tables
 
-The process schema defines 8 tables that together fully describe every operation the framework can run:
+The process schema defines 10 tables that together fully describe every operation the framework can run:
 
 | Table | Purpose |
 |---|---|
@@ -37,7 +37,13 @@ The process schema defines 8 tables that together fully describe every operation
 | `process_parameter_minmax` | Minimum and maximum allowed values for a numeric parameter |
 | `process_parameter_schema_table` | The target `schema.table` that a parameter writes to |
 | `process_parameter_permission` | Whether a parameter value can be updated or deleted after insertion |
-| `process_parameter_default` | Default parameter values drawn automatically from another table |
+| `process_parameter_default` | Default parameter values for non compulsory parameters |
+| `process_parameter_inherit` | Default parameter values drawn automatically from another table |
+| `process_parameter_auto_name` | Default convention for parameter name |
+
+`process_parameter_set_value` and `process_parameter_minmax` are not compulsory.
+
+`process_parameter_default`, `process_parameter_inherit` and `process_parameter_auto_name` are not compulsory and are further ignored if the user define explicit values when calling them.
 
 ## Bootstrap processes
 

@@ -30,7 +30,7 @@ if structured_process_D is not None:
     Run_process(structured_process_D, scheme_params_D)
 ```
 
-Note that this cell passes a `process_file` path directly, not a `job_file`. This bypasses the pilot file mechanism and executes the single manage file immediately.
+Note that this cell passes a `process_file` path directly, not a `job_file`. This bypasses the pilot file mechanism and executes the single process file immediately.
 
 ## Manage process file
 

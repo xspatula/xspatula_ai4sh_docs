@@ -37,7 +37,7 @@ Source: `./ai4sh/import_data/utility/general/excel/`
 
 Observation utilities are the catalogues that make soil observations FAIR-compliant — every instrument, method, unit, and indicator used in an observation must first be registered here.
 
-There are two sub-groups within observation utilities:
+There are three sub-groups within observation utilities:
 
 **Independent** (no foreign key dependencies on other observation utilities):
 
@@ -59,7 +59,7 @@ There are two sub-groups within observation utilities:
 | `transportation.xlsx` | `transportation` | Sample transport conditions |
 | `unit.xlsx` | `unit` | Units of observation values |
 
-**Dependent** (have foreign key requirements from the independent tables above):
+**Dependent** (have foreign key (FK) requirements from the independent tables above and use `__` notation for FK lookup):
 
 | Excel file | Database table | Requires |
 |---|---|---|
@@ -69,7 +69,7 @@ There are two sub-groups within observation utilities:
 | `juxtaposition.xlsx` | `juxtaposition` | `setting_system` |
 | `profiling.xlsx` | `profiling` | `unit` |
 
-**With inheritance** (depend on multiple observation utility tables and use `__` notation for FK lookup):
+**With inheritance** (depend on pre-inserted records in a parent table which value is inherited if the user does not explicitly define a custom value):
 
 | Excel file | Database table | Requires |
 |---|---|---|

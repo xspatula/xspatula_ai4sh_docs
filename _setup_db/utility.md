@@ -10,7 +10,7 @@ date: 2026-03-31 08:00:00 +0200
 last_modified_at: 2026-03-31 08:00:00 +0200
 ---
 
-The `utility` schema holds general support tables shared across the entire database. It is one of the three default Xspatula framework schemas and must be populated before the `community` schema, because the `community.user` table references `utility.territory`.
+The `utility` schema holds general support tables shared across the entire database. It is one of the default Xspatula framework schemas and must be populated before the `community` schema, because the `community.user` table references `utility.territory`.
 
 ## Process files
 
@@ -77,6 +77,5 @@ The utility schema is referenced by:
 - Any process where the foreign_key definition does not adhere to standard syntax
 
 For the full table specification of the default utility schema, see the [core framework documentation][setup_core_db_docs_schemas].
-
 
 [setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
