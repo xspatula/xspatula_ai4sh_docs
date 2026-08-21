@@ -12,6 +12,22 @@ last_modified_at: 2026-03-31 08:00:00 +0200
 
 The `community` schema manages all organisations and users in the AI4SH database. It is one of the default Xspatula framework schemas. Every user logging into the system must have a record in `community.user`, and the login process checks that table for credentials and access level.
 
+![Community schema](/assets/media/xspatula_db_community_schema.png)
+
+## Two ways to add a user
+
+There are two distinct routes into `community.user`, depending on whether the user already
+exists to log in with:
+
+- **Bootstrap, during database setup** — hand-editing `user_records_v10_sql.json` and running
+  `setup_db.ipynb`. This is the *only* option for the very first user, since every other route
+  requires an already-logged-in user to run. See "Default records" below and
+  [Bootstrap user][setup_community_bootstrap_user] for the full walkthrough.
+- **Excel/CSV intake, for every user after that** — filling in a spreadsheet, reviewed and run
+  through the `manage_organisation`/`manage_user` processes. No plaintext password is ever
+  handled this way — one is generated and emailed automatically. See
+  [Setup community][setup_community_introduction] for the full collection.
+
 ## Process files
 
 Six process files create and populate the community schema:
@@ -78,3 +94,4 @@ For the full framework treatment of the community schema and its role in authent
 
 [setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
 [setup_community_bootstrap_user]: /setup_community/bootstrap_user/
+[setup_community_introduction]: /setup_community/
