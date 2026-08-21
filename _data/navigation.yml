@@ -73,6 +73,8 @@ utility:
     children:
       - title: "Synopsis"
         url: /utility/
+      - title: "Insert utility data"
+        url: /utility/insert_utility_data/
       - title: "Translate general utilities"
         url: /utility/translate_general_utilities/
       - title: "Manage general utilities"
@@ -91,6 +93,8 @@ dataset_meta:
     children:
       - title: "Synopsis"
         url: /dataset_meta/
+      - title: "Insert dataset metadata"
+        url: /dataset_meta/insert_dataset_meta/
       - title: "Translate dataset"
         url: /dataset_meta/translate_dataset/
       - title: "Manage data source"
@@ -109,6 +113,8 @@ sample:
     children:
       - title: "Synopsis"
         url: /sample/
+      - title: "Insert sample data"
+        url: /sample/insert_sample_data/
       - title: "Translate geotag sample"
         url: /sample/translate_geotag_sample/
       - title: "Manage sample geolocation"
@@ -121,6 +127,8 @@ wetlab:
     children:
       - title: "Synopsis"
         url: /wetlab/
+      - title: "Insert wetlab data"
+        url: /wetlab/insert_wetlab_data/
       - title: "Translate wetlab data"
         url: /wetlab/translate_ai4sh_wetlab_data/
       - title: "Manage Agrolab obs. log"

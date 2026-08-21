@@ -90,6 +90,9 @@ Two manage process files are written:
 
 Proceed to [Manage sample geolocation].
 
+**Or, do it in one step instead**: [Insert sample data][insert_sample_data] covers both tables via the single-step `insert_tabular_data` route, with no separate manage step.
+
 [Load dataset metadata]: /dataset_meta/
 [Manage sample geolocation]: /sample/manage_sample_geolocation/
 [setup_process_path_resolution]: /setup_process/path_resolution/
+[insert_sample_data]: /sample/insert_sample_data/

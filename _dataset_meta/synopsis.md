@@ -13,11 +13,18 @@ last_modified_at: 2026-06-10 08:00:00 +0200
 
 Dataset metadata describes the provenance of all soil observations: who collected them, under what organisational umbrella, in which campaign, and at which sampling operation. This chain of records must be in place before any sample position or observation value can be entered.
 
-All dataset metadata loading is driven by a single notebook:
+Two notebooks can load this data — pick one:
 
 ```
-./ai4sh/import_data/load_ai4sh_dataset_meta.ipynb
+./ai4sh/import_data/insert_ai4sh_dataset_meta.ipynb   (single-step, recommended default)
+./ai4sh/import_data/load_ai4sh_dataset_meta.ipynb     (2-step translate + manage)
 ```
+
+**Which one should I use?** Use `insert_ai4sh_dataset_meta.ipynb` unless you need to `UPDATE`
+an existing record or want to hand-inspect/edit the generated JSON before it's applied — the
+single-step route is INSERT-only by construction, so it's always safe to re-run. See
+[Insert dataset metadata][insert_dataset_meta] for the single-step walkthrough and
+[Single-step vs dual-step][insert_vs_translate] for the full comparison.
 
 ## The dataset hierarchy
 
@@ -55,7 +62,14 @@ All five Excel files are in `./ai4sh/import_data/dataset/excel/`:
 
 ## Required loading sequence
 
-Unlike the utility steps, all five tables are translated in a single notebook cell. The manage steps then each use a direct `process_file` call, one per cell, in this order:
+Same dependency order either way — data source and person before dataset, dataset before
+campaign, campaign before sampling log.
+
+**Single step** (default): **[Insert dataset metadata]** — 5 cells, one per table, translate
+and insert combined, no shared job file.
+
+**2-step** (for `UPDATE`s or manual inspection), 6 cells — all five tables translated in a
+single notebook cell, then each manage step uses a direct `process_file` call, one per cell:
 
 1. **[Translate dataset]** — single cell translates all five tables to JSON
 2. **[Manage data source]** — insert data source records
@@ -64,8 +78,11 @@ Unlike the utility steps, all five tables are translated in a single notebook ce
 5. **[Manage campaign]** — insert campaign records (requires dataset, territory, spatial reference, location method, unit, provision)
 6. **[Manage sampling log]** — insert sampling log records (requires campaign)
 
-After completing these steps, proceed to [Load sample data] to register individual sample positions.
+After completing either route, proceed to [Load sample data] to register individual sample positions.
 
+[Insert dataset metadata]: /dataset_meta/insert_dataset_meta/
+[insert_dataset_meta]: /dataset_meta/insert_dataset_meta/
+[insert_vs_translate]: /insert_vs_translate/
 [Translate dataset]: /dataset_meta/translate_dataset/
 [Manage data source]: /dataset_meta/manage_data_source/
 [Manage persons]: /dataset_meta/manage_person/

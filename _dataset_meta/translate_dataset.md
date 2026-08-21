@@ -98,6 +98,9 @@ Running this cell produces five manage process files:
 
 Proceed to [Manage data source] to begin inserting records into the database.
 
+**Or, do it in one step instead**: [Insert dataset metadata][insert_dataset_meta] covers the same five tables via the single-step `insert_tabular_data` route, with no separate manage step.
+
 [Load utility data]: /utility/
 [Manage data source]: /dataset_meta/manage_data_source/
 [setup_process_path_resolution]: /setup_process/path_resolution/
+[insert_dataset_meta]: /dataset_meta/insert_dataset_meta/

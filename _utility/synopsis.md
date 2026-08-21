@@ -13,11 +13,19 @@ last_modified_at: 2026-06-10 08:00:00 +0200
 
 Utility data provides the controlled vocabularies and reference catalogues that all observation data depends on. Every observation record must reference — an indicator, a unit and a provision (e.g. instrument, tool or laboratory analysis method). Utility data must therefore be fully loaded before any dataset, sample, or observation data can be entered.
 
-All utility loading is driven by a single notebook:
+Two notebooks can load this data — pick one:
 
 ```
-./ai4sh/import_data/load_ai4sh_utility_data.ipynb
+./ai4sh/import_data/insert_ai4sh_utility_data.ipynb   (single-step, recommended default)
+./ai4sh/import_data/load_ai4sh_utility_data.ipynb     (2-step translate + manage)
 ```
+
+**Which one should I use?** Use `insert_ai4sh_utility_data.ipynb` unless you need to `UPDATE`
+an existing record or want to hand-inspect/edit the generated JSON before it's applied — the
+single-step route is INSERT-only by construction, so it's always safe to re-run. Use
+`load_ai4sh_utility_data.ipynb`'s 2-step route for `UPDATE`s or manual inspection. See
+[Insert utility data][insert_utility_data] for the single-step walkthrough and
+[Single-step vs dual-step][insert_vs_translate] for the full comparison.
 
 ## Two groups of utility data
 
@@ -81,7 +89,13 @@ Source: `./ai4sh/import_data/utility/observation/excel/`
 
 ## Required loading sequence
 
-The six notebook cells must be run in this order:
+Same dependency order either way — general utilities, then independent/dependent observation
+utilities, then the inheritance-dependent ones.
+
+**Single step** (default): **[Insert utility data]** — 3 cells, general utilities → observation
+utilities → observation utilities with inheritance, translate and insert combined.
+
+**2-step** (for `UPDATE`s or manual inspection), 6 cells:
 
 1. **[Translate general utilities]** — Excel → JSON for `territory`
 2. **[Manage general utilities]** — Insert `territory` into the database
@@ -90,6 +104,9 @@ The six notebook cells must be run in this order:
 5. **[Translate observation utilities with inheritance]** — Excel → JSON for `provision`, `provision_indicator`, `provision_serial_nr`
 6. **[Manage observation utilities with inheritance]** — Insert those tables into the database
 
+[Insert utility data]: /utility/insert_utility_data/
+[insert_utility_data]: /utility/insert_utility_data/
+[insert_vs_translate]: /insert_vs_translate/
 [Translate general utilities]: /utility/translate_general_utilities/
 [Manage general utilities]: /utility/manage_general_utilities/
 [Translate observation utilities]: /utility/translate_observation_utilities/

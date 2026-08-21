@@ -80,5 +80,8 @@ Unlike the `__` FK-lookup arrays, `sampling_tool_array` is a plain comma-separat
 
 All dataset metadata is now loaded. Proceed to [Load sample data] to register the individual sample geolocations and link them to sampling logs.
 
+**Or, do it in one step instead**: [Insert dataset metadata][insert_dataset_meta] covers all five dataset metadata tables, including this one, via the single-step `insert_tabular_data` route.
+
 [Manage campaign]: /dataset_meta/manage_campaign/
 [Load sample data]: /sample/
+[insert_dataset_meta]: /dataset_meta/insert_dataset_meta/

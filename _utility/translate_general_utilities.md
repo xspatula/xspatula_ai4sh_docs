@@ -95,5 +95,8 @@ The Excel file contains one row per territory. The framework maps each column he
 
 After running this cell, proceed to [Manage general utilities] to insert the territory data into the database.
 
+**Or, do it in one step instead**: [Insert utility data][insert_utility_data] covers the same territory table (and the rest of utility) via the single-step `insert_tabular_data` route, with no separate manage step.
+
 [Manage general utilities]: /utility/manage_general_utilities/
 [setup_process_path_resolution]: /setup_process/path_resolution/
+[insert_utility_data]: /utility/insert_utility_data/

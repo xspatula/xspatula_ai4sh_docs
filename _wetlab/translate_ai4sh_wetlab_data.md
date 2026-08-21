@@ -113,8 +113,11 @@ Two manage process files are written:
 
 Proceed to [Manage Agrolab observation log].
 
+**Or, do it in one step instead**: [Insert wetlab data][insert_wetlab_data] covers both tables via the single-step `insert_tabular_data` route, with no separate manage step.
+
 [sample translate step]: /sample/translate_geotag_sample/
 [Load sample data]: /sample/
 [Load utility data]: /utility/
 [Manage Agrolab observation log]: /wetlab/manage_ai4sh_agrolab_obs_log/
 [setup_process_path_resolution]: /setup_process/path_resolution/
+[insert_wetlab_data]: /wetlab/insert_wetlab_data/

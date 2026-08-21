@@ -82,5 +82,8 @@ The full file contains one entry per ISO country/territory. The file is generate
 
 Proceed to [Translate observation utilities] to convert the observation utility catalogues.
 
+**Or, do it in one step instead**: [Insert utility data][insert_utility_data] runs this same territory insert (and the rest of utility) via the single-step `insert_tabular_data` route, with no separate translate step and no file to hand-edit.
+
 [Translate general utilities]: /utility/translate_general_utilities/
 [Translate observation utilities]: /utility/translate_observation_utilities/
+[insert_utility_data]: /utility/insert_utility_data/

@@ -111,6 +111,9 @@ The `sample_id__sample_name` FK uses the pattern `<tag>@<profile_min>-<profile_m
 
 All wetlab data is now loaded. Proceed to [Load spectral data] to add spectroscopic observations.
 
+**Or, do it in one step instead**: [Insert wetlab data][insert_wetlab_data] covers both wetlab tables, including this one, via the single-step `insert_tabular_data` route.
+
 [Manage Agrolab observation log]: /wetlab/manage_ai4sh_agrolab_obs_log/
 [Load sample data]: /sample/
 [Load spectral data]: /spectra/
+[insert_wetlab_data]: /wetlab/insert_wetlab_data/
