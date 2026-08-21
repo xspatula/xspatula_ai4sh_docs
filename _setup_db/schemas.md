@@ -16,7 +16,7 @@ The AI4SH database is organised into 7 postgreSQL schemas. Schemas group related
 
 **File**: `./setup/zzz/ai4sh/setup_db/json_ai4sh/schema/schema_v10_sql.json`
 
-This single file creates all 7 schemas using repeated calls to the `create_schema` process:
+This single file creates all 8 schemas using repeated calls to the `create_schema` process:
 
 ```json
 {
@@ -24,6 +24,7 @@ This single file creates all 7 schemas using repeated calls to the `create_schem
     { "process_id": "create_schema", "parameters": { "schema": "utility" } },
     { "process_id": "create_schema", "parameters": { "schema": "community" } },
     { "process_id": "create_schema", "parameters": { "schema": "process" } },
+    { "process_id": "create_schema", "parameters": { "schema": "audit" } },
     { "process_id": "create_schema", "parameters": { "schema": "landscape_utility" } },
     { "process_id": "create_schema", "parameters": { "schema": "landscape" } },
     { "process_id": "create_schema", "parameters": { "schema": "observation_utility" } },
@@ -39,12 +40,13 @@ This single file creates all 7 schemas using repeated calls to the `create_schem
 | `utility` | Framework default | General support tables shared across schemas (territory etc.) |
 | `community` | Framework default | Organisations and users; manages all database access |
 | `process` | Framework default | Process definitions and parameter specifications |
+| `audit` | Framework default | Audit when and by whom data in core tables were changed |
 | `landscape_utility` | AI4SH | Reference tables for landscape classification |
 | `landscape` | AI4SH | Landscape observations |
 | `observation_utility` | AI4SH | Reference catalogues for FAIR-compliant soil data (units, methods, instruments, taxa, eDNA metabarcoding methods, etc.) |
 | `observation` | AI4SH | Actual soil property data (datasets, campaigns, samples, observations, eDNA results) |
 
-The three **framework default** schemas (`utility`, `community`, `process`) are created for every Xspatula database, not just AI4SH. Their table structure is the same as described in the [core framework documentation][setup_core_db_docs_schemas]. The remaining four schemas are specific to the AI4SH project.
+The four **framework default** schemas (`utility`, `community`, `process`, `audit`) are created for every Xspatula database, not just AI4SH. Their table structure is the same as described in the [core framework documentation][setup_core_db_docs_schemas]. The remaining schemas are specific to the AI4SH project.
 
 ## Schema dependencies
 

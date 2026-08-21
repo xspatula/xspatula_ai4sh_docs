@@ -18,6 +18,14 @@ setup_db:
       - title: "Landscape"
         url: /setup_db/landscape/
 
+auditing:
+  - title: Auditing
+    children:
+      - title: "Introduction"
+        url: /auditing/
+      - title: "Queries"
+        url: /auditing/queries/
+
 setup_processes:
   - title: Setup AI4SoilHealth processes
     children:
@@ -153,6 +161,9 @@ main:
   - title: "Setup DB"
     url: /setup_db/
     description: "Setting up the AI4SoilHealth database"
+  - title: "Audit"
+    url: /auditing/
+    description: "AI4SoilHealth database auditing setup and function"
   - title: "Setup processes"
     url: /setup_process/
     description: "Setting up the AI4SoilHealth processes"

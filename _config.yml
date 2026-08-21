@@ -177,6 +177,8 @@ compress_html:
 collections:
   setup_db:
     output: true
+  auditing:
+    output: true
   setup_processes:
     output: true
   utility:
@@ -214,6 +216,12 @@ defaults:
   - scope:
       path: ""
       type: setup_db
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: auditing
     values:
       layout: single
       author_profile: false
