@@ -32,10 +32,11 @@ The database setup is driven by the Jupyter notebook:
 ./setup/setup_db.ipynb
 ```
 
-Open this notebook in VS Code or Jupyter Lab. The notebook has two key code blocks to edit before running:
+Open this notebook in VS Code or Jupyter Lab. It has an imports cell you can run as-is, followed by three cells that matter:
 
 1. **Scheme file** — set the path to your [scheme file][scheme_file]
-2. **Job file** — set the name of the [job file][job_file] (default: `job_setup_db.json`)
+2. **Setup database** — runs `Initiate_database`, pointed at the [job file][job_file] `job_setup_db.json`. This creates every schema and table, and — as a side effect — also (re)writes the audit config files described under [The pilot file](#the-pilot-file) below. No audit trigger exists in the database yet after this cell alone.
+3. **Apply audit triggers** *(optional)* — runs `Initiate_audit`, pointed at `job_setup_audit.json`. This is what actually creates the audit log table and every table's trigger. Skip it and the database simply has no auditing; run it any time later (or re-run it after adding a new table's `"audit"` key) — it always re-applies the complete current config. See [Auditing setup][auditing_setup] for the full walkthrough.
 
 ## Edit the scheme file
 
@@ -116,7 +117,14 @@ Change the default passwords for all `db_users` before deploying to any non-loca
 
 ## The pilot file
 
-The job file points to the pilot file:
+There are two pilot files, used by two different cells above:
+
+| Pilot file | Used by | Maintained |
+|---|---|---|
+| `db_xspatula_ai4sh_setup.txt` | "Setup database" cell (`job_setup_db.json`) | Hand-maintained |
+| `db_xspatula_ai4sh_audit.txt` | "Apply audit triggers" cell (`job_setup_audit.json`) | Auto-generated — its own header says "do not hand-edit" |
+
+### The core database pilot file
 
 ```
 ./setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_setup.txt
@@ -126,16 +134,33 @@ This text file lists all process JSON files in the order they must be executed. 
 
 The full execution order is:
 
-1. `schema/schema_v10_sql.json` — create all 9 schemas
+1. `schema/schema_v10_sql.json` — create all 8 schemas
 2. `utility/utility_v10_sql.json` — utility tables
 3. `utility/territory_v10_sql.json` — territory reference data
 4. `community/` — user categories, organisations and users
 5. `process/` — process and process parameter tables
-6. `observation_utility/` — 38 JSON files defining reference catalogue tables (independent first, then dependent), including the eDNA metabarcoding method catalogues
+6. `observation_utility/` — 38 JSON files defining reference catalogue tables (independent first, then dependent), plus 9 eDNA metabarcoding catalogue files
 7. `observation/` — dataset, campaign, sample and observation tables, including eDNA observation tables
 8. `landscape/` — landscape utility and observation tables
 
 Each section is described in detail in the following pages.
+
+### The audit pilot file — generated, not hand-edited
+
+```
+./setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_audit.txt
+```
+
+You never write this file yourself. Every table's own `create_table` definition may carry an
+inline `"audit": {"INSERT": bool, "UPDATE": bool, "DELETE": bool}` key — running the "Setup
+database" cell above scans every table's key across the whole core pilot list and (re)writes
+this pilot file, plus one `audit_triggers_<schema>_v10_sql.json` per schema, to match. This is
+pure file assembly — no database connection is used and no audit objects exist yet at this
+point.
+
+Running the "Apply audit triggers" cell then executes this generated pilot file against the
+database, creating the actual triggers. See [Auditing setup][auditing_setup] for the full
+mechanism, including how to add auditing to a new table.
 
 ## Default community records
 
@@ -175,3 +200,4 @@ with a scheme file where `"delete": true`.
 [netrc]: https://xspatula.github.io/setup_core_db_docs/setup_db/netrc/
 [scheme_file]:https://xspatula.github.io/setup_core_db_docs/framework/scheme_file/
 [job_file]:https://xspatula.github.io/setup_core_db_docs/framework/job_file//
+[auditing_setup]: /auditing/setup/
