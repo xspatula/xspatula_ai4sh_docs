@@ -10,6 +10,8 @@ date: 2026-08-15 08:00:00 +0200
 last_modified_at: 2026-08-15 08:00:00 +0200
 ---
 
+Auditing keeps a permanent log of every change made to an audited table — who changed it, when, and what the row looked like before and after — so any insert, update, or delete can be traced after the fact.
+
 A natural first question: is auditing a Python thing, or a database thing? It's a **database thing**. Python touches it exactly once, at setup time, to create two Postgres objects. After that, Python is out of the picture entirely — every `INSERT`, `UPDATE`, or `DELETE` on an audited table is intercepted by Postgres itself, synchronously, inside the same transaction as the write that triggered it, no matter what client made that write: a notebook, `psql`, DBeaver, or any future application.
 
 Think of it like a doorbell wired directly into a house's electrical system, not a security-camera app running on someone's phone. The app only has to be open once, to do the wiring — after that, the doorbell rings no matter who's home or what device is nearby, because the mechanism lives in the house itself.
