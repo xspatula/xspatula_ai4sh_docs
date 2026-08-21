@@ -3,14 +3,14 @@ title: "Auditing Queries"
 layout: single
 sidebar:
   nav: "auditing"
-excerpt: "Copy-paste SQL for reading the AI4SH audit log in DBeaver (or any SQL GUI) — no Python, no notebook required."
+excerpt: "Copy-paste SQL for reading the AI4SH audit log in any SQL GUI — no Python, no notebook required."
 permalink: /auditing/queries/
 author_profile: false
 date: 2026-08-15 08:00:00 +0200
 last_modified_at: 2026-08-15 08:00:00 +0200
 ---
 
-Everything on this page is plain SQL you can paste directly into DBeaver's SQL editor against the `ai4sh` database, connected as a role that can read the `audit` schema (see [Auditing][auditing_introduction] for the `login_evaluation` grant). No Python, no notebook.
+Everything on this page is plain SQL you can paste directly into any SQL editor against the `ai4sh` database, connected as a role that can read the `audit` schema (see [Auditing][auditing_introduction] for the `login_evaluation` grant). No Python, no notebook.
 
 **Prerequisite**: these queries assume the "Apply audit triggers" notebook cell has already been run against this database — see [Auditing setup][auditing_setup]. Otherwise `audit.logged_actions` doesn't exist yet and every query below will error.
 

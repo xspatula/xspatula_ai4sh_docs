@@ -3,7 +3,7 @@ title: "Single-Step vs Dual-Step Loading"
 layout: single
 sidebar:
   nav: "loading_data"
-excerpt: "Two ways to get spreadsheet data into the AI4SH database: a single-step insert route (INSERT-only, no manual hand-off) and the original 2-step translate-then-manage route (supports UPDATE and hand-inspection)."
+excerpt: "Two ways to get spreadsheet data into the AI4SH database: a single-step insert route (INSERT-only, no manual hand-off) and a 2-step translate-then-manage route (supports UPDATE and hand-inspection)."
 permalink: /insert_vs_translate/
 author_profile: false
 date: 2026-08-21 08:00:00 +0200

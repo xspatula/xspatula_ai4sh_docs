@@ -12,7 +12,7 @@ last_modified_at: 2026-08-15 08:00:00 +0200
 
 Without this stage, the framework has a working database and registered processes, but only one practical way to add a `community.organisation` or `community.user` row: hand-edit a JSON seed file and rerun `setup_db.ipynb` as the database superuser. That doesn't scale beyond the person running setup — it can't be how a workshop participant, or any ordinary contributor, gets an account.
 
-This collection covers the workshop-scale replacement: organisations and users fill in an Excel spreadsheet, an admin reviews and curates it, and a notebook translates and inserts the accepted rows through the normal `manage_organisation`/`manage_user` processes — the same generic Excel-intake pipeline already used elsewhere in this site for [dataset metadata][dataset_meta] and other data types, reused here as-is.
+This collection covers the workshop-scale replacement: organisations and users fill in an Excel spreadsheet, an admin reviews and curates it, and a notebook translates and inserts the accepted rows through the normal generic Excel-intake pipeline already used elsewhere in this site for [dataset metadata][dataset_meta] and other data types, reused here as-is.
 
 ## Prerequisite
 

@@ -53,7 +53,7 @@ For example, to find the foreign key for the column _dataset_id_, the parameter:
 "dataset_id__dataset_name": "AI4SH"
 ```
 
-will search the table _dataset_ column _name_ for the value _AI4SH_ and return the _id_ of that records, and the _id_ will be used as the foreign key. This syntax is not possible to use in all cases, for instance when a process requires more than one fk from the same destination table.
+will search the table _dataset_ column _name_ (and _alias_ for tables with an alias column) for the value _AI4SH_ and return the _id_ of that records, and the _id_ will be used as the foreign key. This syntax is not possible to use in all cases, for instance when a process requires more than one foreign key from the same destination table.
 
 The `foreign_key` table holds information on which schema, table and column to use for searching foreign keys that can not be resolved with the default syntax. Most foreign keys are constructed such that the name of the parameter reveals the foreign key to look for, but there are exceptions. For these exceptions, the python scripts looks for the correct foreign key in the utility.foreign_key table.
 
