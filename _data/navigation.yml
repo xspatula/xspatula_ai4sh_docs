@@ -17,8 +17,6 @@ setup_db:
         url: /setup_db/observation/
       - title: "Landscape"
         url: /setup_db/landscape/
-      - title: "eDNA"
-        url: /setup_db/edna/
 
 setup_processes:
   - title: Setup AI4SoilHealth processes
@@ -37,8 +35,6 @@ setup_processes:
         url: /setup_process/observation_utility/
       - title: "Observation"
         url: /setup_process/observation/
-      - title: "eDNA"
-        url: /setup_process/edna/
 
 utility:
   - title: Load utility data

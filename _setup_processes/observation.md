@@ -38,6 +38,8 @@ Process files are located at:
 | `slakes_v10_sql.json` | `manage_beerkan_observation` | `observation.app_aggregate_stability` | 2 |
 | `aggregate_app_observation_v10_sql.json` | `manage_aggregate_app_observation` | `observation.observation` (aggregate) | 2 |
 
+**eDNA observation tables have no process files yet.** `edna_nucleotide`, `taxa_bioinformatics`, `edna_measurement`, and `taxa_biodiversity_measurement` (see [Observation Schema][setup_db_observation]) are created by `setup_db.ipynb`, but no `manage_*` process registrations exist for them yet — they can't be managed through the normal process workflow until those are written. The eDNA method catalogues in `observation_utility` (extraction, amplification, purification, sequencing, metabarcoding pipeline) do have process files, but those aren't in the pilot list yet either — see [Observation Utility Processes][setup_process_observation_utility].
+
 ## Access levels
 
 Access levels reflect the operational role of each process:
@@ -122,3 +124,7 @@ To enter a complete soil observation, the following sequence must be followed:
 7. `manage_observation`
 
 If any step in this chain is missing, the foreign key constraints prevent entry of the subsequent records. This enforced chain is what ensures FAIR data compliance — every observation can be traced back to a fully documented campaign and sampling event.
+
+
+[setup_db_observation]: /setup_db/observation/
+[setup_process_observation_utility]: /setup_process/observation_utility/

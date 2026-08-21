@@ -131,10 +131,9 @@ The full execution order is:
 3. `utility/territory_v10_sql.json` — territory reference data
 4. `community/` — user categories, organisations and users
 5. `process/` — process and process parameter tables
-6. `observation_utility/` — 37 JSON files defining reference catalogue tables (independent first, then dependent)
-7. `observation/` — dataset, campaign, sample and observation tables
+6. `observation_utility/` — 38 JSON files defining reference catalogue tables (independent first, then dependent), including the eDNA metabarcoding method catalogues
+7. `observation/` — dataset, campaign, sample and observation tables, including eDNA observation tables
 8. `landscape/` — landscape utility and observation tables
-9. `edna/` — eDNA utility and observation tables
 
 Each section is described in detail in the following pages.
 

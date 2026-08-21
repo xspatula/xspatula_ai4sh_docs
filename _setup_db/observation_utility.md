@@ -3,7 +3,7 @@ title: "Observation Utility Schema"
 layout: single
 sidebar:
   nav: "setup_db"
-excerpt: "The observation_utility schema holds all reference catalogues needed for FAIR-compliant soil observations — units, methods, instruments, taxa, spatial references and more. It is defined across 37 JSON files that must be seeded before any observation data can be entered."
+excerpt: "The observation_utility schema holds all reference catalogues needed for FAIR-compliant soil observations — units, methods, instruments, taxa, spatial references, eDNA metabarcoding methods and more. It is defined across 38 JSON files that must be seeded before any observation data can be entered."
 permalink: /setup_db/observation_utility/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
@@ -12,7 +12,7 @@ last_modified_at: 2026-03-31 08:00:00 +0200
 
 The `observation_utility` schema holds all reference catalogues needed for FAIR-compliant soil observations. Think of it as the controlled vocabulary layer of the database: every instrument, method, unit, taxon, and spatial reference used in an observation must first exist here. The `observation` schema tables cannot be populated until the relevant `observation_utility` records exist.
 
-The schema is defined across 37 JSON files, split into two groups: those with no internal foreign key dependencies (seeded first), and those that reference other observation_utility tables (seeded second).
+The schema is defined across 38 JSON files, split into two groups: those with no internal foreign key dependencies (seeded first), and those that reference other observation_utility tables (seeded second).
 
 ## Process files — independent tables
 
@@ -64,6 +64,26 @@ These tables reference other `observation_utility` tables and must be created af
 | `observation_utility_taxa_v10_sql.json` | `taxa` | `taxa_level`, `taxa_status` |
 | `observation_utility_taxa_function_v10_sql.json` | `taxa_function` | `taxa_level`, `taxa_status` |
 | `observation_utility_unit_translate_v10_sql.json` | `unit_translate` | `unit` — mathematical conversion factors between units |
+| `edna_v10_sql.json` | `sequence_library`, `nucleotide_archive`, `extraction`, `amplification`, `purification`, `sequencing`, `metabarcoding_pipeline`, `bioinformatics` | `reference_proprietor`, `analysis_method`, `taxa`, `taxa_function` — eDNA metabarcoding reference catalogues, see below |
+
+## eDNA reference catalogues
+
+Environmental DNA (eDNA) metabarcoding — identifying soil taxa by sequencing DNA extracted directly from a sample.
+
+Eight tables cover the metabarcoding pipeline step by step:
+
+| Table | Description |
+|---|---|
+| `sequence_library` | A named DNA sequence reference library (e.g. a curated barcode database), attributed to a `reference_proprietor` |
+| `nucleotide_archive` | A public nucleotide sequence archive (e.g. GenBank), also attributed to a `reference_proprietor` |
+| `extraction` | DNA extraction method/protocol from a soil sample |
+| `amplification` | PCR amplification protocol — used for both forward and reverse primers |
+| `purification` | Clean-up method for extracted or amplified DNA |
+| `sequencing` | Sequencing platform, strategy, and data requirement (e.g. Illumina, Nanopore) |
+| `metabarcoding_pipeline` | Combines one `extraction` + two `amplification` records (forward/reverse) + one `purification` + one `sequencing` into a single, uniquely identifiable pipeline definition |
+| `bioinformatics` | A named bioinformatics analysis, combining an `analysis_method` with a `taxa` and `taxa_function` target |
+
+`metabarcoding_pipeline` is the eDNA equivalent of `provision` elsewhere in this schema: it bundles several method choices into one reusable, referenceable combination, unique on `(extraction_id, forward_amplification_id, reverse_amplification_id, sequencing_id)`.
 
 ## Key concepts
 

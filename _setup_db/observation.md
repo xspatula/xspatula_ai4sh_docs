@@ -34,6 +34,20 @@ The `observation` schema stores actual soil property data. Data is organised in 
 | `observation/slakes_v10_sql.json` | `app_aggregate_stability` | Aggregate stability measurements from the SLAKES app |
 | `observation/macrofauna_v10_sql.json` | `macrofauna` | Macrofauna count and biomass observations |
 | `observation/macrofauna_image_v10_sql.json` | `macrofauna_image` | Image records for automated macrofauna detection |
+| `observation/edna_v10_sql.json` | `edna_nucleotide`, `taxa_bioinformatics`, `edna_measurement`, `taxa_biodiversity_measurement` | Environmental DNA (eDNA) metabarcoding observations, see below |
+
+## eDNA observation tables
+
+| Table | Description |
+|---|---|
+| `edna_nucleotide` | Links a `sample` to a submitted nucleotide sequence — the archive it was deposited in and its accession code/URL |
+| `taxa_bioinformatics` | One bioinformatics run against an `edna_nucleotide` record: which `metabarcoding_pipeline`, which `bioinformatics` treatment, treatment date, and the taxon it resolved to |
+| `edna_measurement` | An indicator value attached to a regular `observation` record, specific to eDNA-derived measurements (value, standard deviation, number of repeats) |
+| `taxa_biodiversity_measurement` | The biodiversity value (e.g. relative abundance) produced by a `taxa_bioinformatics` run |
+
+eDNA observations still use the same sample infrastructure as any other observation — dataset → campaign → sampling log → sample — the eDNA-specific tables attach to a `sample` and to the eDNA reference catalogues, not to a separate hierarchy.
+
+**Not yet wired into process setup.** The five `manage_metabarcoding_*` process files (`extraction`, `amplification`, `purification`, `sequencing`, `metabarcoding_pipeline`) exist under `observation_utility` in the setup_processes source but are not yet listed in the process pilot file, and there are no `manage_*` process registrations yet for `edna_nucleotide`, `taxa_bioinformatics`, `edna_measurement`, or `taxa_biodiversity_measurement`. The tables are created by `setup_db.ipynb`, but until this wiring lands, eDNA data can't be entered through the normal `manage_*` process workflow — see [Observation Processes][setup_process_observation].
 
 ## Table hierarchy
 
@@ -87,8 +101,13 @@ A sampling log is a sampling event within a campaign, covering one or multiple s
 
 ### Specialised observation tables
 
-Three additional tables cover non-standard observation types:
+Additional tables cover non-standard observation types:
 
 - **infiltration_beerkan** — BeerKan ring infiltration test results
 - **macrofauna** and **macrofauna_image** — macrofauna counts, biomass, and associated image records
 - **measurement** — direct sensor readings (e.g. from a handheld spectral sensor)
+- **edna_nucleotide**, **taxa_bioinformatics**, **edna_measurement**, **taxa_biodiversity_measurement** — eDNA metabarcoding results, see [eDNA observation tables](#edna-observation-tables) above
+
+
+[setup_db_observation_utility]: /setup_db/observation_utility/
+[setup_process_observation]: /setup_process/observation/

@@ -49,7 +49,8 @@ This pilot file lists the process JSON files to execute, grouped by schema. The 
 7. `plot/` — processes for plotting indicators and spectra
 8. `machine_learning/` — 12 processes for spectral preprocessing, outlier detection, and regression
 9. `landscape/` — landscape processes (files defined, not yet in pilot)
-10. `edna/` — eDNA workflow processes (files defined, not yet in pilot)
+
+The eDNA workflow processes (`manage_metabarcoding_*`) now live alongside the rest of `observation_utility/` rather than in their own folder, since the `edna`/`edna_utility` schemas were folded into `observation`/`observation_utility` — see [Observation Utility Processes][setup_process_observation_utility]. Like the `landscape/` processes, they're defined but not yet in the pilot list.
 
 ## Process file structure
 
@@ -115,3 +116,4 @@ Key fields:
 
 
 [setup_db]: /setup_db/
+[setup_process_observation_utility]: /setup_process/observation_utility/

@@ -32,10 +32,8 @@ The AI4SH postgres database contains 9 schemas:
 - **process** — all processes defined for the AI4SH database (default framework schema)
 - **landscape_utility** — reference tables for landscape classification
 - **landscape** — landscape observations
-- **observation_utility** — catalogues and reference data required for FAIR-compliant soil observations (units, methods, instruments, taxa, etc.)
-- **observation** — actual soil property data, organised through datasets, campaigns, samples and observations
-- **edna_utility** — reference tables for environmental DNA methods
-- **edna** — eDNA observations
+- **observation_utility** — catalogues and reference data required for FAIR-compliant soil observations (units, methods, instruments, taxa, eDNA metabarcoding methods, etc.)
+- **observation** — actual soil property data, organised through datasets, campaigns, samples and observations, including eDNA results
 
 ## Seeding the database
 

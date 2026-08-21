@@ -33,7 +33,7 @@ The AI4SH database registers two root processes:
 }
 ```
 
-All data management operations — inserting, updating, and deleting records in any schema — belong to this root. Every process registered in the subsequent community, utility, observation_utility, observation, landscape, and eDNA process files will reference `manage_table_data` as its root.
+All data management operations — inserting, updating, and deleting records in any schema — belong to this root. Every process registered in the subsequent community, utility, observation_utility, observation, and landscape process files will reference `manage_table_data` as its root (the eDNA `manage_metabarcoding_*` processes are part of `observation_utility` and do the same).
 
 ### translate_data
 

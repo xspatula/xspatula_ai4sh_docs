@@ -49,6 +49,13 @@ Process files are located at:
 | `transportation_v10_sql.json` | `manage_transportation` | `observation_utility.transportation` | 4 |
 | `unit_translate_v10_sql.json` | `manage_unit_translate` | `observation_utility.unit_translate` | 4 |
 | `unit_v10_sql.json` | `manage_unit` | `observation_utility.unit` | 4 |
+| `edna_extraction_v10_sql.json` | `manage_metabarcoding_extraction` | `observation_utility.extraction` | 4 |
+| `edna_amplification_v10_sql.json` | `manage_metabarcoding_amplification` | `observation_utility.amplification` | 4 |
+| `edna_purification_v10_sql.json` | `manage_metabarcoding_purification` | `observation_utility.purification` | 4 |
+| `edna_sequencing_v10_sql.json` | `manage_metabarcoding_sequencing` | `observation_utility.sequencing` | 4 |
+| `edna_metabarcoding_pipeline_v10_sql.json` | `manage_metabarcoding_pipeline` | `observation_utility.metabarcoding_pipeline` | 4 |
+
+**Not yet in the pilot list.** These five `edna_*` process files exist on disk but, unlike every other file in this table, are not yet referenced by `ai4sh_setup_processes.txt` — running `setup_processes.ipynb` today will not register them. Add them to the pilot list before relying on the eDNA `manage_metabarcoding_*` processes.
 
 ## Access level
 
