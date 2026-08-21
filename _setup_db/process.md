@@ -18,7 +18,7 @@ Three process files create and seed the process schema:
 
 | File | Purpose |
 |---|---|
-| `process/processes_v10_sql.json` | Creates the 8 process tables |
+| `process/processes_v10_sql.json` | Creates the 9 process tables |
 | `process/root_process_records_v10_sql.json` | Inserts the root process group definitions |
 | `process/processes_records_v10_sql.json` | Inserts the bootstrap processes needed to register all other processes |
 
@@ -26,7 +26,7 @@ You must edit `processes_records_v10_sql.json` to have a `creator` that exists i
 
 ## Tables
 
-The process schema defines 10 tables that together fully describe every operation the framework can run:
+The process schema defines 9 tables that together fully describe every operation the framework can run:
 
 | Table | Purpose |
 |---|---|
@@ -37,13 +37,12 @@ The process schema defines 10 tables that together fully describe every operatio
 | `process_parameter_minmax` | Minimum and maximum allowed values for a numeric parameter |
 | `process_parameter_schema_table` | The target `schema.table` that a parameter writes to |
 | `process_parameter_permission` | Whether a parameter value can be updated or deleted after insertion |
-| `process_parameter_default` | Default parameter values for non compulsory parameters |
 | `process_parameter_inherit` | Default parameter values drawn automatically from another table |
 | `process_parameter_auto_name` | Default convention for parameter name |
 
 `process_parameter_set_value` and `process_parameter_minmax` are not compulsory.
 
-`process_parameter_default`, `process_parameter_inherit` and `process_parameter_auto_name` are not compulsory and are further ignored if the user define explicit values when calling them.
+`process_parameter_inherit` and `process_parameter_auto_name` are not compulsory and are further ignored if the user define explicit values when calling them.
 
 ## Bootstrap processes
 
