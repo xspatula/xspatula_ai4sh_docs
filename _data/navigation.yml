@@ -187,6 +187,8 @@ loading_data:
         url: /spectra/
       - title: "All data"
         url: /all_data/
+      - title: "Single-step vs dual-step"
+        url: /insert_vs_translate/
 
 # main navbar links
 main:
