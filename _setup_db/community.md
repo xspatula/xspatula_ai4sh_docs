@@ -12,7 +12,7 @@ last_modified_at: 2026-03-31 08:00:00 +0200
 
 The `community` schema manages all organisations and users in the AI4SH database. It is one of the default Xspatula framework schemas. Every user logging into the system must have a record in `community.user`, and the login process checks that table for credentials and access level.
 
-![Community schema](/assets/media/xspatula_db_community_schema.png)
+![Community schema]({{ "/assets/media/xspatula_db_community_schema.png" | relative_url }})
 
 ## Two ways to add a user
 

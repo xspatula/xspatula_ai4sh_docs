@@ -97,10 +97,10 @@ schema is `edna_`-prefixed:
 
 **Provision** is the central linking concept in observation_utility. A provision combines an `apparatus` (what instrument/tool), a `provider` (what service or supplier), and a `method_tier` (what level of professionality). A `provision_indicator` then specifies exactly which measurable quantities a provision delivers, with associated analysis method and unit. Every observation in the `observation` schema links back to a provision.
 
-![Provision schema](/assets/media/observation_utility/provision.png)
+![Provision schema]({{ "/assets/media/observation_utility/provision.png" | relative_url }})
 
 **Indicator** represents a single measurable result (e.g. soil pH, organic carbon %). Indicators belong to a `quantity` (the physical property type). The same indicator can be delivered by multiple provisions, and one indicator can be declared equivalent to another via `indicator_parity` (`src_indicator_id`/`dst_indicator_id`, both referencing `indicator`) — useful when two differently-named indicators from different sources measure the same thing.
 
-![Indicator schema](/assets/media/observation_utility/indicator.png)
+![Indicator schema]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})
 
 **Profiling** describes z-dimension sampling profiles (soil cores, sediment cores, ice cores) by specifying depth increments in a given unit. Samples with a profile dimension reference a profiling record.

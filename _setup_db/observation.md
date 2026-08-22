@@ -86,7 +86,7 @@ observation (→ sample, observation_log, observation_utility.provision)
 
 See the diagram below for the same shape drawn visually.
 
-![Sample and observation_log both feed observation](/assets/media/observation/sampling_log.png)
+![Sample and observation_log both feed observation]({{ "/assets/media/observation/sampling_log.png" | relative_url }})
 
 ## Key tables in detail
 
