@@ -10,7 +10,7 @@ date: 2026-03-31 08:00:00 +0200
 last_modified_at: 2026-03-31 08:00:00 +0200
 ---
 
-The `observation_utility` schema holds all reference catalogues needed for FAIR-compliant soil observations. Think of it as the controlled vocabulary layer of the database: every instrument, method, unit, taxon, and spatial reference used in an observation must first exist here. The `observation` schema tables cannot be populated until the relevant `observation_utility` records exist.
+The `observation_utility` schema holds all reference catalogues needed for FAIR-compliant soil observations. Think of it as the controlled vocabulary layer of the database: every instrument, method, unit, taxon, spatial reference etc. used in an observation must first exist here. The `observation` schema tables cannot be populated until the relevant `observation_utility` records exist.
 
 The schema is defined across 47 JSON files: 38 covering the core catalogues (split into those with no internal foreign key dependencies, seeded first, and those that reference other observation_utility tables, seeded second) plus 9 eDNA metabarcoding catalogue files, covered separately below.
 
