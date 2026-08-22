@@ -35,7 +35,7 @@ The database setup is driven by the Jupyter notebook:
 Open this notebook in VS Code or Jupyter Lab. It has an imports cell you can run as-is, followed by three cells that matter:
 
 1. **Scheme file** — set the path to your [scheme file][scheme_file]
-2. **Setup database** — runs `Initiate_database`, pointed at the [job file][job_file] `job_setup_db.json`. This creates every schema and table, and — as a side effect — also (re)writes the audit config files described under [The pilot file](#the-pilot-file) below. No audit trigger exists in the database yet after this cell alone.
+2. **Setup database** — runs `Initiate_database`, pointed at the [job file][job_file] `job_setup_db.json`. This creates every schema and table, and — as a side effect — also (re)writes the audit config files described under [The pilot file](#the-pilot-file) below.
 3. **Apply audit triggers** *(optional)* — runs `Initiate_audit`, pointed at `job_setup_audit.json`. This is what actually creates the audit log table and every table's trigger. Skip it and the database simply has no auditing; run it any time later (or re-run it after adding a new table's `"audit"` key) — it always re-applies the complete current config. See [Auditing setup][auditing_setup] for the full walkthrough.
 
 ## Edit the scheme file
@@ -46,7 +46,7 @@ The scheme file for setting up the AI4SH database is at:
 ./setup/zzz/scheme_ai4sh_local_setup.json
 ```
 
-You must edit this file before running the notebook. At minimum change the postgreSQL superuser credentials and the database name:
+You must edit this file before running the notebook. At minimum change the postgreSQL superuser credentials and the database name. Note this scheme file's own passwords are plaintext (postgreSQL role credentials) — a different thing from the `community.user` password you'll set further below under [Default community records](#default-community-records), which must be a bcrypt hash; see [Bootstrap user][setup_community_bootstrap_user] if you're about to jump straight to running the notebook.
 
 ```json
 {
@@ -201,3 +201,4 @@ with a scheme file where `"delete": true`.
 [scheme_file]:https://xspatula.github.io/setup_core_db_docs/framework/scheme_file/
 [job_file]:https://xspatula.github.io/setup_core_db_docs/framework/job_file//
 [auditing_setup]: /auditing/setup/
+[setup_community_bootstrap_user]: /setup_community/bootstrap_user/
