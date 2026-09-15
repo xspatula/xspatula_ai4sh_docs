@@ -1,0 +1,538 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Manage Observation Utilities with Inheritance - Xspatula</title>
+<meta name="description" content="Inserting provision, provision_indicator, and provision_serial_nr into the AI4SH database. Parameter keys use __ notation to resolve foreign keys by name at insert time.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Manage Observation Utilities with Inheritance">
+<meta property="og:url" content="http://localhost:4000/utility/manage_observation_utilities_inherit/">
+
+
+  <meta property="og:description" content="Inserting provision, provision_indicator, and provision_serial_nr into the AI4SH database. Parameter keys use __ notation to resolve foreign keys by name at insert time.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/utility/manage_observation_utilities_inherit/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Load utility data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/">Synopsis</a></li>
+            
+              <li><a href="/utility/insert_utility_data/">Insert utility data</a></li>
+            
+              <li><a href="/utility/translate_general_utilities/">Translate general utilities</a></li>
+            
+              <li><a href="/utility/manage_general_utilities/">Manage general utilities</a></li>
+            
+              <li><a href="/utility/translate_observation_utilities/">Translate observation utilities</a></li>
+            
+              <li><a href="/utility/manage_observation_utilities/">Manage observation utilities</a></li>
+            
+              <li><a href="/utility/translate_observation_utilities_inherit/">Translate obs. utilities (inherit)</a></li>
+            
+              <li><a href="/utility/manage_observation_utilities_inherit/" class="active">Manage obs. utilities (inherit)</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+      <hr style="margin: 1em 0;">
+      <p style="font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5em;">Data sections</p>
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Loading data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/">Utility</a></li>
+            
+              <li><a href="/dataset_meta/">Dataset metadata</a></li>
+            
+              <li><a href="/sample/">Sample</a></li>
+            
+              <li><a href="/wetlab/">Wetlab</a></li>
+            
+              <li><a href="/spectra/">Spectra</a></li>
+            
+              <li><a href="/all_data/">All data</a></li>
+            
+              <li><a href="/insert_vs_translate/">Single-step vs dual-step</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Manage Observation Utilities with Inheritance">
+    <meta itemprop="description" content="Inserting provision, provision_indicator, and provision_serial_nr into the AI4SH database. Parameter keys use __ notation to resolve foreign keys by name at insert time.">
+    <meta itemprop="datePublished" content="2026-06-10T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-06-10T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/utility/manage_observation_utilities_inherit/" itemprop="url">Manage Observation Utilities with Inheritance
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The sixth and final utility step inserts the inheritance-dependent observation utility records: <code class="language-plaintext highlighter-rouge">provision</code>, <code class="language-plaintext highlighter-rouge">provision_indicator</code>, and <code class="language-plaintext highlighter-rouge">provision_serial_nr</code>. After this step, the full controlled vocabulary is in place and dataset metadata loading can begin.</p>
+
+<h2 id="prerequisite">Prerequisite</h2>
+
+<p>Run <a href="/utility/translate_observation_utilities_inherit/">Translate observation utilities with inheritance</a> first. The <code class="language-plaintext highlighter-rouge">apparatus</code>, <code class="language-plaintext highlighter-rouge">provider</code>, <code class="language-plaintext highlighter-rouge">method_tier</code>, <code class="language-plaintext highlighter-rouge">indicator</code>, <code class="language-plaintext highlighter-rouge">analysis_method</code>, and <code class="language-plaintext highlighter-rouge">unit</code> tables must already be populated (from <a href="/utility/manage_observation_utilities/">Manage observation utilities</a>).</p>
+
+<h2 id="notebook-cell">Notebook cell</h2>
+
+<p>In <code class="language-plaintext highlighter-rouge">load_ai4sh_utility_data.ipynb</code>, the <strong>Manage observation utilities with inheritance</strong> cell runs:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job_file</span> <span class="o">=</span> <span class="sh">'</span><span class="s">import_data/utility/job_manage_observation_utility_inherit.json</span><span class="sh">'</span>
+
+<span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span> <span class="o">=</span> <span class="nc">Initiate_process</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">scheme_file</span><span class="p">,</span> <span class="n">job_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">structured_process_D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nc">Run_process</span><span class="p">(</span><span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="job-file">Job file</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/utility/job_manage_observation_utility_inherit.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"job_folder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_data/utility/observation"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"process_sub_folder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_process"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"pilot_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_observation_utility_inherit.txt"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="pilot-file">Pilot file</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/utility/observation/manage_observation_utility_inherit.txt</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>manage_provision.json
+manage_provision_indicator.json
+manage_provision_serial_nr.json
+</code></pre></div></div>
+
+<h2 id="manage-process-file-structure">Manage process file structure</h2>
+
+<h3 id="manage_provisionjson-first-entry">manage_provision.json (first entry)</h3>
+
+<p>A provision combines one apparatus, one provider, and one method tier into a named instrument–lab–professionality combination:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"root_process_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_tabular_data"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_provision"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"delete"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"overwrite"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"provider_id__provider_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"metrohm"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apparatus_id__apparatus_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visnir"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"method_tier_id__method_tier_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"laboratory"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nirs xds rapid content analyzer"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"alias"</span><span class="p">:</span><span class="w"> </span><span class="s2">"metrohm-nirs-xds"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NIRS XDS Rapid Content Analyzer"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"abstract"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VISNIR laboratory grade spectrometer"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"laboratory"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="manage_provision_indicatorjson-first-entry">manage_provision_indicator.json (first entry)</h3>
+
+<p>A provision indicator links a provision to the specific indicators it delivers, with the analysis method and unit for each:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"root_process_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_tabular_data"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_provision_indicator"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"delete"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"overwrite"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"provision_id__provision_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"metrohm-nirs-xds"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"indicator_id__indicator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reflectance"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"analysis_method_id__analysis_method_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reflectance"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"unit_id__unit_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unitless"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="the-__-notation">The <code class="language-plaintext highlighter-rouge">__</code> notation</h2>
+
+<p>Parameter keys containing <code class="language-plaintext highlighter-rouge">__</code> instruct the framework to resolve a foreign key by name rather than by ID:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"provider_id__provider_name": "metrohm"
+</code></pre></div></div>
+
+<p>This means: look up the <code class="language-plaintext highlighter-rouge">provider</code> record where <code class="language-plaintext highlighter-rouge">provider_name = "metrohm"</code>, then use its <code class="language-plaintext highlighter-rouge">provider_id</code> for the insert. The referenced record must already exist. If it does not, the insert fails with a foreign key error — re-check that the prerequisite manage steps completed successfully.</p>
+
+<h2 id="what-gets-inserted">What gets inserted</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Database table</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">manage_provision.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.provision</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">manage_provision_indicator.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.provision_indicator</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">manage_provision_serial_nr.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.provision_serial_nr</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="next-step">Next step</h2>
+
+<p>All utility data is now loaded. Proceed to <a href="/dataset_meta/">Load dataset metadata</a> to register data sources, persons, datasets, campaigns, and sampling logs.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-06-10">June 10, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/utility/manage_observation_utilities/" class="pagination--pager" title="Manage Observation Utilities">Previous</a>
+    
+    
+      <a href="/utility/" class="pagination--pager" title="Load Utility Data">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

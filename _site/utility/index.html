@@ -1,0 +1,636 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Load Utility Data - Xspatula</title>
+<meta name="description" content="Overview of the utility data types and the required loading sequence before any observation data can be entered into the AI4SH database.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Load Utility Data">
+<meta property="og:url" content="http://localhost:4000/utility/">
+
+
+  <meta property="og:description" content="Overview of the utility data types and the required loading sequence before any observation data can be entered into the AI4SH database.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/utility/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Load utility data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/" class="active">Synopsis</a></li>
+            
+              <li><a href="/utility/insert_utility_data/">Insert utility data</a></li>
+            
+              <li><a href="/utility/translate_general_utilities/">Translate general utilities</a></li>
+            
+              <li><a href="/utility/manage_general_utilities/">Manage general utilities</a></li>
+            
+              <li><a href="/utility/translate_observation_utilities/">Translate observation utilities</a></li>
+            
+              <li><a href="/utility/manage_observation_utilities/">Manage observation utilities</a></li>
+            
+              <li><a href="/utility/translate_observation_utilities_inherit/">Translate obs. utilities (inherit)</a></li>
+            
+              <li><a href="/utility/manage_observation_utilities_inherit/">Manage obs. utilities (inherit)</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+      <hr style="margin: 1em 0;">
+      <p style="font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5em;">Data sections</p>
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Loading data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/" class="active">Utility</a></li>
+            
+              <li><a href="/dataset_meta/">Dataset metadata</a></li>
+            
+              <li><a href="/sample/">Sample</a></li>
+            
+              <li><a href="/wetlab/">Wetlab</a></li>
+            
+              <li><a href="/spectra/">Spectra</a></li>
+            
+              <li><a href="/all_data/">All data</a></li>
+            
+              <li><a href="/insert_vs_translate/">Single-step vs dual-step</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Load Utility Data">
+    <meta itemprop="description" content="Overview of the utility data types and the required loading sequence before any observation data can be entered into the AI4SH database.">
+    <meta itemprop="datePublished" content="2026-06-10T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-06-10T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/utility/" itemprop="url">Load Utility Data
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Utility data provides the controlled vocabularies and reference catalogues that all observation data depends on. Every observation record must reference — an indicator, a unit and a provision (e.g. instrument, tool or laboratory analysis method). Utility data must therefore be fully loaded before any dataset, sample, or observation data can be entered.</p>
+
+<p>Two notebooks can load this data — pick one:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./ai4sh/import_data/insert_ai4sh_utility_data.ipynb   (single-step, recommended default)
+./ai4sh/import_data/load_ai4sh_utility_data.ipynb     (2-step translate + manage)
+</code></pre></div></div>
+
+<p><strong>Which one should I use?</strong> Use <code class="language-plaintext highlighter-rouge">insert_ai4sh_utility_data.ipynb</code> unless you need to <code class="language-plaintext highlighter-rouge">UPDATE</code>
+an existing record or want to hand-inspect/edit the generated JSON before it’s applied — the
+single-step route is INSERT-only by construction, so it’s always safe to re-run. Use
+<code class="language-plaintext highlighter-rouge">load_ai4sh_utility_data.ipynb</code>’s 2-step route for <code class="language-plaintext highlighter-rouge">UPDATE</code>s or manual inspection. See
+<a href="/utility/insert_utility_data/">Insert utility data</a> for the single-step walkthrough and
+<a href="/insert_vs_translate/">Single-step vs dual-step</a> for the full comparison.</p>
+
+<h2 id="two-groups-of-utility-data">Two groups of utility data</h2>
+
+<p>Utility data is split into two groups with different purposes and storage locations.</p>
+
+<h3 id="general-utilities">General utilities</h3>
+
+<p>General utilities contain reference data used across the whole framework, not just observations. For the AI4SH project this group contains a single table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Excel file</th>
+      <th>Database table</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">territory.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">utility.territory</code></td>
+      <td>Countries and regions (ISO codes)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Source: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/utility/general/excel/</code></p>
+
+<h3 id="observation-utilities">Observation utilities</h3>
+
+<p>Observation utilities are the catalogues that make soil observations FAIR-compliant — every instrument, method, unit, and indicator used in an observation must first be registered here.</p>
+
+<p>There are three sub-groups within observation utilities:</p>
+
+<p><strong>Independent</strong> (no foreign key dependencies on other observation utilities):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Excel file</th>
+      <th>Database table</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">analysis_method.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">analysis_method</code></td>
+      <td>Laboratory and field analysis methods</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">apparatus.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">apparatus</code></td>
+      <td>Instruments and tools delivering data</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">classification_order.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">classification_order</code></td>
+      <td>Highest Linnean style taxonomy level</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">license.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">license</code></td>
+      <td>Dataset and campaign licenses</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">location_method.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">location_method</code></td>
+      <td>Geolocation methods</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">method_tier.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">method_tier</code></td>
+      <td>Professionality level of a method</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">preparation.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">preparation</code></td>
+      <td>Pre-analysis sample preparation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">preservation.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">preservation</code></td>
+      <td>Sample preservation methods</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provider.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">provider</code></td>
+      <td>Labs, services and instruments providing results</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">quantity.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">quantity</code></td>
+      <td>Unambiguous quantity definitions</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">setting_system.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">setting_system</code></td>
+      <td>Thematic frame for juxtapositions</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">spatial_reference.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">spatial_reference</code></td>
+      <td>EPSG-based coordinate reference systems</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">storage.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">storage</code></td>
+      <td>Sample storage methods</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">transportation.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">transportation</code></td>
+      <td>Sample transport conditions</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unit.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">unit</code></td>
+      <td>Units of observation values</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Dependent</strong> (have foreign key (FK) requirements from the independent tables above and use <code class="language-plaintext highlighter-rouge">__</code> notation for FK lookup):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Excel file</th>
+      <th>Database table</th>
+      <th>Requires</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">classification_family.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">classification_family</code></td>
+      <td><code class="language-plaintext highlighter-rouge">classification_order</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">classification_genus.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">classification_genus</code></td>
+      <td><code class="language-plaintext highlighter-rouge">classification_family</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">indicator.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">indicator</code></td>
+      <td><code class="language-plaintext highlighter-rouge">quantity</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">juxtaposition.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">juxtaposition</code></td>
+      <td><code class="language-plaintext highlighter-rouge">setting_system</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">profiling.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">profiling</code></td>
+      <td><code class="language-plaintext highlighter-rouge">unit</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>With inheritance</strong> (depend on pre-inserted records in a parent table which value is inherited if the user does not explicitly define a custom value):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Excel file</th>
+      <th>Database table</th>
+      <th>Requires</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provision.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">provision</code></td>
+      <td><code class="language-plaintext highlighter-rouge">apparatus</code>, <code class="language-plaintext highlighter-rouge">provider</code>, <code class="language-plaintext highlighter-rouge">method_tier</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provision_indicator.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">provision_indicator</code></td>
+      <td><code class="language-plaintext highlighter-rouge">provision</code>, <code class="language-plaintext highlighter-rouge">indicator</code>, <code class="language-plaintext highlighter-rouge">analysis_method</code>, <code class="language-plaintext highlighter-rouge">unit</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provision_serial_nr.xlsx</code></td>
+      <td><code class="language-plaintext highlighter-rouge">provision_serial_nr</code></td>
+      <td><code class="language-plaintext highlighter-rouge">provision</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Source: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/utility/observation/excel/</code></p>
+
+<h2 id="required-loading-sequence">Required loading sequence</h2>
+
+<p>Same dependency order either way — general utilities, then independent/dependent observation
+utilities, then the inheritance-dependent ones.</p>
+
+<p><strong>Single step</strong> (default): <strong><a href="/utility/insert_utility_data/">Insert utility data</a></strong> — 3 cells, general utilities → observation
+utilities → observation utilities with inheritance, translate and insert combined.</p>
+
+<p><strong>2-step</strong> (for <code class="language-plaintext highlighter-rouge">UPDATE</code>s or manual inspection), 6 cells:</p>
+
+<ol>
+  <li><strong><a href="/utility/translate_general_utilities/">Translate general utilities</a></strong> — Excel → JSON for <code class="language-plaintext highlighter-rouge">territory</code></li>
+  <li><strong><a href="/utility/manage_general_utilities/">Manage general utilities</a></strong> — Insert <code class="language-plaintext highlighter-rouge">territory</code> into the database</li>
+  <li><strong><a href="/utility/translate_observation_utilities/">Translate observation utilities</a></strong> — Excel → JSON for independent and dependent tables</li>
+  <li><strong><a href="/utility/manage_observation_utilities/">Manage observation utilities</a></strong> — Insert those tables into the database</li>
+  <li><strong><a href="/utility/translate_observation_utilities_inherit/">Translate observation utilities with inheritance</a></strong> — Excel → JSON for <code class="language-plaintext highlighter-rouge">provision</code>, <code class="language-plaintext highlighter-rouge">provision_indicator</code>, <code class="language-plaintext highlighter-rouge">provision_serial_nr</code></li>
+  <li><strong><a href="/utility/manage_observation_utilities_inherit/">Manage observation utilities with inheritance</a></strong> — Insert those tables into the database</li>
+</ol>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-06-10">June 10, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/utility/manage_observation_utilities_inherit/" class="pagination--pager" title="Manage Observation Utilities with Inheritance">Previous</a>
+    
+    
+      <a href="/utility/translate_general_utilities/" class="pagination--pager" title="Translate General Utilities">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

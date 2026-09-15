@@ -1,0 +1,463 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Process Schema - Xspatula</title>
+<meta name="description" content="The process schema stores all process definitions and their parameter specifications. It is a default Xspatula framework schema. Every operation the framework can execute must be registered here.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Process Schema">
+<meta property="og:url" content="http://localhost:4000/setup_db/process/">
+
+
+  <meta property="og:description" content="The process schema stores all process definitions and their parameter specifications. It is a default Xspatula framework schema. Every operation the framework can execute must be registered here.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_db/process/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth database</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_db/">Introduction</a></li>
+            
+              <li><a href="/setup_db/schemas/">Schemas</a></li>
+            
+              <li><a href="/setup_db/utility/">Utility</a></li>
+            
+              <li><a href="/setup_db/community/">Community</a></li>
+            
+              <li><a href="/setup_db/process/" class="active">Process</a></li>
+            
+              <li><a href="/setup_db/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_db/observation/">Observation</a></li>
+            
+              <li><a href="/setup_db/landscape/">Landscape</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Process Schema">
+    <meta itemprop="description" content="The process schema stores all process definitions and their parameter specifications. It is a default Xspatula framework schema. Every operation the framework can execute must be registered here.">
+    <meta itemprop="datePublished" content="2026-03-31T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-03-31T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_db/process/" itemprop="url">Process Schema
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The <code class="language-plaintext highlighter-rouge">process</code> schema stores all process definitions and their parameter specifications. It is one of the default Xspatula framework schemas. Every operation the framework can execute — including the operations used to insert records into the <code class="language-plaintext highlighter-rouge">process</code> schema itself — must be registered here before it can be called from a process file.</p>
+
+<h2 id="process-files--edit-before-running">Process files — edit before running</h2>
+
+<p>Three process files create and seed the process schema:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process/processes_v10_sql.json</code></td>
+      <td>Creates the 9 process tables</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process/root_process_records_v10_sql.json</code></td>
+      <td>Inserts the root process group definitions</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process/processes_records_v10_sql.json</code></td>
+      <td>Inserts the bootstrap processes needed to register all other processes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You must edit <code class="language-plaintext highlighter-rouge">processes_records_v10_sql.json</code> to have a <code class="language-plaintext highlighter-rouge">creator</code> that exists in the database; if not the script will report an error and stop. Typically, it is the user defined in the <a href="../index.html#default-community-records">Default community records</a> that defines the processes. When the processes are setup, other users can also add processes, given that their stratum allows that.</p>
+
+<h2 id="tables">Tables</h2>
+
+<p>The process schema defines 9 tables that together fully describe every operation the framework can run:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Table</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">root_process</code></td>
+      <td>Groups related processes into families (e.g. <code class="language-plaintext highlighter-rouge">manage_table_data</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process</code></td>
+      <td>Each executable operation, linked to a <code class="language-plaintext highlighter-rouge">root_process</code> and a Python function</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process_parameter</code></td>
+      <td>All parameters expected by a specific process</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process_parameter_set_value</code></td>
+      <td>Enumerated allowed values for a text parameter</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process_parameter_minmax</code></td>
+      <td>Minimum and maximum allowed values for a numeric parameter</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process_parameter_schema_table</code></td>
+      <td>The target <code class="language-plaintext highlighter-rouge">schema.table</code> that a parameter writes to</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process_parameter_permission</code></td>
+      <td>Whether a parameter value can be updated or deleted after insertion</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process_parameter_inherit</code></td>
+      <td>Default parameter values drawn automatically from another table</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process_parameter_auto_name</code></td>
+      <td>Default convention for parameter name</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">process_parameter_set_value</code> and <code class="language-plaintext highlighter-rouge">process_parameter_minmax</code> are not compulsory.</p>
+
+<p><code class="language-plaintext highlighter-rouge">process_parameter_inherit</code> and <code class="language-plaintext highlighter-rouge">process_parameter_auto_name</code> are not compulsory and are further ignored if the user define explicit values when calling them.</p>
+
+<h2 id="bootstrap-processes">Bootstrap processes</h2>
+
+<p><code class="language-plaintext highlighter-rouge">processes_records_v10_sql.json</code> inserts the minimal set of processes needed to register all other processes. Without these bootstrap records, no subsequent process file that tries to register a new process can execute — the framework would find no matching process definition for <code class="language-plaintext highlighter-rouge">add_process</code>.</p>
+
+<p>As outlined above you must edit the <code class="language-plaintext highlighter-rouge">creator</code> for all process records to be inserted, but otherwise
+these bootstrap records are fixed and should not be edited.</p>
+
+<h2 id="ai4sh-processes">AI4SH processes</h2>
+
+<p>After the community and process schemas are seeded, the <a href="/setup_process/">setup processes</a> stage registers all AI4SH-specific processes (for managing campaigns, samples, observations, etc.) into the process schema. This is done via the separate <code class="language-plaintext highlighter-rouge">setup_processes.ipynb</code> notebook.</p>
+
+<p>For the full technical description of the process schema tables and how process files reference them, see the <a href="https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/">core framework documentation</a>.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-31">March 31, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_db/observation_utility/" class="pagination--pager" title="Observation Utility Schema">Previous</a>
+    
+    
+      <a href="/setup_db/schemas/" class="pagination--pager" title="AI4SH Database Schemas">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

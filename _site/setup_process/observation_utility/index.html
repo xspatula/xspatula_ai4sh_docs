@@ -1,0 +1,626 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Observation Utility Processes - Xspatula</title>
+<meta name="description" content="Observation utility processes register operations for managing all reference catalogues in the observation_utility schema — apparatus, indicators, methods, units, provisions and more. These must be registered before any observation data can be entered.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Observation Utility Processes">
+<meta property="og:url" content="http://localhost:4000/setup_process/observation_utility/">
+
+
+  <meta property="og:description" content="Observation utility processes register operations for managing all reference catalogues in the observation_utility schema — apparatus, indicators, methods, units, provisions and more. These must be registered before any observation data can be entered.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-04-07T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-04-07T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_process/observation_utility/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth processes</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_process/">Introduction</a></li>
+            
+              <li><a href="/setup_process/root_process/">Root process</a></li>
+            
+              <li><a href="/setup_process/translate/">Translate</a></li>
+            
+              <li><a href="/setup_process/insert/">Insert</a></li>
+            
+              <li><a href="/setup_process/path_resolution/">Path resolution</a></li>
+            
+              <li><a href="/setup_process/community/">Community</a></li>
+            
+              <li><a href="/setup_process/utility/">Utility</a></li>
+            
+              <li><a href="/setup_process/observation_utility/" class="active">Observation utility</a></li>
+            
+              <li><a href="/setup_process/observation/">Observation</a></li>
+            
+              <li><a href="/setup_process/schema_conventions/">Schema conventions</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Observation Utility Processes">
+    <meta itemprop="description" content="Observation utility processes register operations for managing all reference catalogues in the observation_utility schema — apparatus, indicators, methods, units, provisions and more. These must be registered before any observation data can be entered.">
+    <meta itemprop="datePublished" content="2026-04-07T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-04-07T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_process/observation_utility/" itemprop="url">Observation Utility Processes
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Observation utility processes register the operations for managing every reference catalogue in the <code class="language-plaintext highlighter-rouge">observation_utility</code> schema. Each process allows authorised users to insert, update, or delete records in a specific catalogue table. These processes must be registered before any observation data management processes, because observation processes depend on the utility catalogues being populated and manageable.</p>
+
+<h2 id="process-files">Process files</h2>
+
+<p>Process files are located at:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/zzz/ai4sh/setup_processes/json_ai4sh/observation_utility/
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Process registered</th>
+      <th>Target table</th>
+      <th>Min stratum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">apparatus_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_apparatus</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.apparatus</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">classification_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_classification</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.order/family/genus/species/specimen</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">indicator_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_indicator</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.indicator</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">indicator_default_unit_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_indicator_default_unit</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.indicator_default_unit</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">juxtaposition_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_juxtaposition</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.juxtaposition</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">license_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_license</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.license</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">location_method_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_location_method</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.location_method</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">method_tier_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_method_tier</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.method_tier</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">analysis_method_translate_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_method_translate</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.analysis_method_translate</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">analysis_method_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_method</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.analysis_method</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">preparation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_preparation</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.preparation</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">preservation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_preservation</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.preservation</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">profiling_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_profiling</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.profiling</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provider_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_provider</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.provider</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provision_indicator_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_provision_indicator</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.provision_indicator</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provision_serial_nr_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_provision_serial_nr</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.provision_serial_nr</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provision_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_provision</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.provision</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">quantity_default_unit_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_quantity_default_unit</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.quantity_default_unit</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">quantity_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_quantity</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.quantity</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">setting_system_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_setting</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.juxtaposition</code> (setting records)</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">spatial_reference_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_spatial_reference</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.spatial_reference</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">spectrometer_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_spectrometer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.spectrometer</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">spectroscopy_method_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_spectroscopy_method</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.spectroscopy_method</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">storage_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_storage</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.storage</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">transportation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_transportation</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.transportation</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unit_translate_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_unit_translate</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.unit_translate</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">unit_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_unit</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.unit</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">edna_extraction_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_metabarcoding_extraction</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.extraction</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">edna_amplification_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_metabarcoding_amplification</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.amplification</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">edna_purification_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_metabarcoding_purification</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.purification</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">edna_sequencing_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_metabarcoding_sequencing</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.sequencing</code></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">edna_metabarcoding_pipeline_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">manage_metabarcoding_pipeline</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility.metabarcoding_pipeline</code></td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Not yet in the pilot list.</strong> These five <code class="language-plaintext highlighter-rouge">edna_*</code> process files exist on disk but, unlike every other file in this table, are not yet referenced by <code class="language-plaintext highlighter-rouge">ai4sh_setup_processes.txt</code> — running <code class="language-plaintext highlighter-rouge">setup_processes.ipynb</code> today will not register them. Add them to the pilot list before relying on the eDNA <code class="language-plaintext highlighter-rouge">manage_metabarcoding_*</code> processes.</p>
+
+<h2 id="access-level">Access level</h2>
+
+<p>All observation utility management processes require a minimum user stratum of 4. This reflects that catalogue management (adding new instrument types, methods, units, etc.) is an administrative-level operation, not something an ordinary data contributor should be able to do. Incorrect or inconsistent catalogue entries would break the referential integrity of all observations that reference them.</p>
+
+<h2 id="key-processes-in-detail">Key processes in detail</h2>
+
+<h3 id="manage_apparatus">manage_apparatus</h3>
+
+<p>Registers a new type of apparatus — any instrument, tool, laboratory process, or service that can deliver observation data. Parameters:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code> — generic apparatus name (e.g. “VNIR spectroscopy”, “wet chemistry laboratory”)</li>
+  <li><code class="language-plaintext highlighter-rouge">alias</code> — common shorthand (e.g. “wetlab”)</li>
+  <li><code class="language-plaintext highlighter-rouge">abstract</code> — plain language description</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">alias</code> and <code class="language-plaintext highlighter-rouge">abstract</code> can be updated; the <code class="language-plaintext highlighter-rouge">name</code> cannot (it is a permanent identifier).</p>
+
+<h3 id="manage_provision">manage_provision</h3>
+
+<p>A provision combines an apparatus, a provider, and a method tier into a single identifiable combination. This is the key linking record that connects “what instrument” + “who operates it” + “at what professionality level” into a single entity that observations can reference. Parameters:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">apparatus_id__apparatus_alias</code> — look up apparatus by alias</li>
+  <li><code class="language-plaintext highlighter-rouge">provider_id__provider_alias</code> — look up provider by alias</li>
+  <li><code class="language-plaintext highlighter-rouge">method_tier_id__method_tier_alias</code> — look up method tier by alias</li>
+</ul>
+
+<h3 id="manage_provision_indicator">manage_provision_indicator</h3>
+
+<p>Links a provision to the specific indicators (measurable values) it delivers, together with the analysis method and unit. This is the record an observation references when storing an actual measurement value. Parameters:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">provision_id</code> — the provision delivering this indicator</li>
+  <li><code class="language-plaintext highlighter-rouge">indicator_id__indicator_name</code> — the indicator being measured</li>
+  <li><code class="language-plaintext highlighter-rouge">method_id__method_alias</code> — the analysis method used</li>
+  <li><code class="language-plaintext highlighter-rouge">unit_id__unit_symbol</code> — the unit of the reported value</li>
+</ul>
+
+<h3 id="manage_indicator">manage_indicator</h3>
+
+<p>Registers a measurable soil property. An indicator belongs to a <code class="language-plaintext highlighter-rouge">quantity</code> (the physical property type) and has a name, alias, and abstract. The combination of indicator + provision_indicator defines exactly what value an observation stores.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-04-07">April 7, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_process/observation/" class="pagination--pager" title="Observation Processes">Previous</a>
+    
+    
+      <a href="/setup_process/translate/" class="pagination--pager" title="Translate Processes">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

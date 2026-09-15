@@ -1,0 +1,524 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Manage Samples - Xspatula</title>
+<meta name="description" content="Inserting geolocated profile sample records into the AI4SH database. Each sample links a sampling log, a geolocation, and a depth profile interval.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Manage Samples">
+<meta property="og:url" content="http://localhost:4000/sample/manage_sample/">
+
+
+  <meta property="og:description" content="Inserting geolocated profile sample records into the AI4SH database. Each sample links a sampling log, a geolocation, and a depth profile interval.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/sample/manage_sample/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Load sample data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/sample/">Synopsis</a></li>
+            
+              <li><a href="/sample/insert_sample_data/">Insert sample data</a></li>
+            
+              <li><a href="/sample/translate_geotag_sample/">Translate geotag sample</a></li>
+            
+              <li><a href="/sample/manage_sample_geolocation/">Manage sample geolocation</a></li>
+            
+              <li><a href="/sample/manage_sample/" class="active">Manage samples</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+      <hr style="margin: 1em 0;">
+      <p style="font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5em;">Data sections</p>
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Loading data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/">Utility</a></li>
+            
+              <li><a href="/dataset_meta/">Dataset metadata</a></li>
+            
+              <li><a href="/sample/">Sample</a></li>
+            
+              <li><a href="/wetlab/">Wetlab</a></li>
+            
+              <li><a href="/spectra/">Spectra</a></li>
+            
+              <li><a href="/all_data/">All data</a></li>
+            
+              <li><a href="/insert_vs_translate/">Single-step vs dual-step</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Manage Samples">
+    <meta itemprop="description" content="Inserting geolocated profile sample records into the AI4SH database. Each sample links a sampling log, a geolocation, and a depth profile interval.">
+    <meta itemprop="datePublished" content="2026-06-10T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-06-10T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/sample/manage_sample/" itemprop="url">Manage Samples
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A geolocated profile sample ties together a sampling log (the collection event), a geolocation (the GPS position), and a depth profile interval (the vertical extent of the collected material). Once samples exist in the database, wetlab and spectral observations can be linked to them.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li><a href="/sample/manage_sample_geolocation/">Manage sample geolocation</a> must be complete.</li>
+  <li><a href="/dataset_meta/manage_sampling_log/">Manage sampling log</a> (from the dataset metadata workflow) must be complete.</li>
+  <li>Utility records required by samples must be populated (from <a href="/utility/">Load utility data</a>): <code class="language-plaintext highlighter-rouge">unit</code>, <code class="language-plaintext highlighter-rouge">juxtaposition</code>.</li>
+</ul>
+
+<h2 id="notebook-cell">Notebook cell</h2>
+
+<p>In <code class="language-plaintext highlighter-rouge">load_ai4sh_sample_data.ipynb</code>, the <strong>Manage samples</strong> cell runs:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">process_file</span> <span class="o">=</span> <span class="sh">'</span><span class="s">import_data/sample/manage_process/manage_geolocated_profile_sample.json</span><span class="sh">'</span>
+
+<span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span> <span class="o">=</span> <span class="nc">Initiate_process</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">scheme_file</span><span class="p">,</span> <span class="n">process_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">structured_process_D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nc">Run_process</span><span class="p">(</span><span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="manage-process-file">Manage process file</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/sample/manage_process/manage_geolocated_profile_sample.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"root_process_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_tabular_data"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_geolocated_profile_sample"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"delete"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"overwrite"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"sampling_log_id__sampling_log_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai4sh_es_arkaute_2024"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10-1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"geolocation_id__geolocation_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"es_arkaute@10-1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"area_coverage"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"area_unit_id__area_unit_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"m^2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profile_min"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profile_max"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sampling_date"</span><span class="p">:</span><span class="w"> </span><span class="mi">20241015</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"juxtaposition_id__juxtaposition_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uniform"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"composition_id__composition_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"composite"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"proximity_id__proximity_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"general"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The example file contains 670 entries — one per sample across all AI4SH field sites.</p>
+
+<h2 id="parameters">Parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sampling_log_id__sampling_log_name</code></td>
+      <td>FK lookup: parent sampling log by name</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tag</code></td>
+      <td>Short sample identifier within the sampling log (e.g. <code class="language-plaintext highlighter-rouge">10-1</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">geolocation_id__geolocation_name</code></td>
+      <td>FK lookup: geolocation by name (must exist in <code class="language-plaintext highlighter-rouge">observation.geolocation</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">area_coverage</code></td>
+      <td>Surface area represented by the sample</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">area_unit_id__area_unit_name</code></td>
+      <td>FK lookup: unit for <code class="language-plaintext highlighter-rouge">area_coverage</code> (e.g. <code class="language-plaintext highlighter-rouge">m^2</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">profile_min</code></td>
+      <td>Top of the sampled depth interval (cm)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">profile_max</code></td>
+      <td>Bottom of the sampled depth interval (cm)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sampling_date</code></td>
+      <td>Date of collection as integer (<code class="language-plaintext highlighter-rouge">YYYYMMDD</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">juxtaposition_id__juxtaposition_name</code></td>
+      <td>FK lookup: local thematic setting (e.g. <code class="language-plaintext highlighter-rouge">uniform</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">composition_id__composition_name</code></td>
+      <td>FK lookup: sample composition type (e.g. <code class="language-plaintext highlighter-rouge">composite</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">proximity_id__proximity_name</code></td>
+      <td>FK lookup: spatial proximity type (e.g. <code class="language-plaintext highlighter-rouge">general</code>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="depth-profile">Depth profile</h2>
+
+<p><code class="language-plaintext highlighter-rouge">profile_min</code> and <code class="language-plaintext highlighter-rouge">profile_max</code> define the vertical extent of the collected material in centimetres below the surface. For a standard 0–20 cm topsoil sample: <code class="language-plaintext highlighter-rouge">profile_min = 0</code>, <code class="language-plaintext highlighter-rouge">profile_max = 20</code>. Sub-samples at different depths from the same location are entered as separate rows with the same geolocation name but different profile bounds and tags.</p>
+
+<h2 id="next-step">Next step</h2>
+
+<p>All sample data is now loaded. Proceed to <a href="/wetlab/">Load wetlab data</a> or <a href="/spectra/">Load spectral data</a> to add analytical observations.</p>
+
+<p><strong>Or, do it in one step instead</strong>: <a href="/sample/insert_sample_data/">Insert sample data</a> covers both sample tables, including this one, via the single-step <code class="language-plaintext highlighter-rouge">insert_tabular_data</code> route.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-06-10">June 10, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/sample/manage_sample_geolocation/" class="pagination--pager" title="Manage Sample Geolocation">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

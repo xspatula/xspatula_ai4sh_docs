@@ -1,0 +1,414 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Root Processes - Xspatula</title>
+<meta name="description" content="Root processes are named families that group related processes together. The AI4SH database registers two root processes: manage_table_data for all data management operations, and translate_data for data format translation — with one deliberate, named exception that does write to the database.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Root Processes">
+<meta property="og:url" content="http://localhost:4000/setup_process/root_process/">
+
+
+  <meta property="og:description" content="Root processes are named families that group related processes together. The AI4SH database registers two root processes: manage_table_data for all data management operations, and translate_data for data format translation — with one deliberate, named exception that does write to the database.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_process/root_process/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth processes</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_process/">Introduction</a></li>
+            
+              <li><a href="/setup_process/root_process/" class="active">Root process</a></li>
+            
+              <li><a href="/setup_process/translate/">Translate</a></li>
+            
+              <li><a href="/setup_process/insert/">Insert</a></li>
+            
+              <li><a href="/setup_process/path_resolution/">Path resolution</a></li>
+            
+              <li><a href="/setup_process/community/">Community</a></li>
+            
+              <li><a href="/setup_process/utility/">Utility</a></li>
+            
+              <li><a href="/setup_process/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_process/observation/">Observation</a></li>
+            
+              <li><a href="/setup_process/schema_conventions/">Schema conventions</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Root Processes">
+    <meta itemprop="description" content="Root processes are named families that group related processes together. The AI4SH database registers two root processes: manage_table_data for all data management operations, and translate_data for data format translation — with one deliberate, named exception that does write to the database.">
+    <meta itemprop="datePublished" content="2026-03-31T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-03-31T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_process/root_process/" itemprop="url">Root Processes
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Root processes are named families that group related processes. Every process in the <code class="language-plaintext highlighter-rouge">process</code> schema must belong to a root process. Root processes themselves are stored in <code class="language-plaintext highlighter-rouge">process.root_process</code> and registered before any other processes in the setup_processes workflow.</p>
+
+<h2 id="process-file">Process file</h2>
+
+<p><strong>File</strong>: <code class="language-plaintext highlighter-rouge">./setup/zzz/ai4sh/setup_processes/json_ai4sh/root_process/root_processes_v10_sql.json</code></p>
+
+<h2 id="registered-root-processes">Registered root processes</h2>
+
+<p>The AI4SH database registers two root processes:</p>
+
+<h3 id="manage_table_data">manage_table_data</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"add_root_process"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"root_process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_table_data"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Manage table data"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Root for processes for inserting, updating and deleting table data"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>All data management operations — inserting, updating, and deleting records in any schema — belong to this root. Every process registered in the subsequent community, utility, observation_utility, observation, and landscape process files will reference <code class="language-plaintext highlighter-rouge">manage_table_data</code> as its root (the eDNA <code class="language-plaintext highlighter-rouge">manage_metabarcoding_*</code> processes are part of <code class="language-plaintext highlighter-rouge">observation_utility</code> and do the same).</p>
+
+<h3 id="translate_data">translate_data</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"add_root_process"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"root_process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"translate_data"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Translate data"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Process for translating data between different formats — note that translate data does not affect the database, it prepares data in different formats to be handled by other processes."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>One deliberate exception</strong>: <a href="/setup_process/insert/"><code class="language-plaintext highlighter-rouge">insert_tabular_data</code></a> is registered under this same <code class="language-plaintext highlighter-rouge">translate_data</code> root, purely for dispatch convenience — <code class="language-plaintext highlighter-rouge">Run_process</code> routes anything under <code class="language-plaintext highlighter-rouge">translate_data</code> to the same handler class (<code class="language-plaintext highlighter-rouge">Process_import_JSON</code>), and that class’s own internal dispatch is keyed off the process <strong>name’s prefix</strong> (<code class="language-plaintext highlighter-rouge">translate_</code>, <code class="language-plaintext highlighter-rouge">insert_</code>, <code class="language-plaintext highlighter-rouge">manage_</code>), not the root it’s registered under. So despite the root’s label above, <code class="language-plaintext highlighter-rouge">insert_tabular_data</code> does write to the database — it reads a spreadsheet and applies it immediately, INSERT-only. <code class="language-plaintext highlighter-rouge">translate_tabular_data</code> itself is unaffected by this and still never touches the database.</p>
+
+<p>Translation processes convert data between formats (e.g. from a tabular spreadsheet to the JSON process file format expected by the framework). As a rule, translation processes do not write to the database directly — they prepare data for subsequent processes that do — with the one <code class="language-plaintext highlighter-rouge">insert_tabular_data</code> exception noted above.</p>
+
+<h2 id="why-root-processes-matter">Why root processes matter</h2>
+
+<p>The root process is part of the primary key structure for process lookup. When the framework receives a process call it uses both the <code class="language-plaintext highlighter-rouge">root_process_id</code> and the <code class="language-plaintext highlighter-rouge">process_id</code> to find the correct Python function to execute. This two-level lookup means you can have the same process name in different root families without collision.</p>
+
+<p>Root processes also serve as a grouping mechanism in the user interface — all processes under <code class="language-plaintext highlighter-rouge">manage_table_data</code> can be presented together as the “data management” operations for a given schema.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-31">March 31, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_process/" class="pagination--pager" title="Setup AI4SH Processes">Previous</a>
+    
+    
+      <a href="/setup_process/observation/" class="pagination--pager" title="Observation Processes">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

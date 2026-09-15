@@ -1,0 +1,480 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Insert Sample Data (Single Step) - Xspatula</title>
+<meta name="description" content="insert_ai4sh_sample_data.ipynb inserts geolocation and geolocated profile sample data in one combined process file, translate and insert together — no separate manage step.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Insert Sample Data (Single Step)">
+<meta property="og:url" content="http://localhost:4000/sample/insert_sample_data/">
+
+
+  <meta property="og:description" content="insert_ai4sh_sample_data.ipynb inserts geolocation and geolocated profile sample data in one combined process file, translate and insert together — no separate manage step.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-08-21T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-08-21T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/sample/insert_sample_data/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Load sample data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/sample/">Synopsis</a></li>
+            
+              <li><a href="/sample/insert_sample_data/" class="active">Insert sample data</a></li>
+            
+              <li><a href="/sample/translate_geotag_sample/">Translate geotag sample</a></li>
+            
+              <li><a href="/sample/manage_sample_geolocation/">Manage sample geolocation</a></li>
+            
+              <li><a href="/sample/manage_sample/">Manage samples</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+      <hr style="margin: 1em 0;">
+      <p style="font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5em;">Data sections</p>
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Loading data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/">Utility</a></li>
+            
+              <li><a href="/dataset_meta/">Dataset metadata</a></li>
+            
+              <li><a href="/sample/">Sample</a></li>
+            
+              <li><a href="/wetlab/">Wetlab</a></li>
+            
+              <li><a href="/spectra/">Spectra</a></li>
+            
+              <li><a href="/all_data/">All data</a></li>
+            
+              <li><a href="/insert_vs_translate/">Single-step vs dual-step</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Insert Sample Data (Single Step)">
+    <meta itemprop="description" content="insert_ai4sh_sample_data.ipynb inserts geolocation and geolocated profile sample data in one combined process file, translate and insert together — no separate manage step.">
+    <meta itemprop="datePublished" content="2026-08-21T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-08-21T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/sample/insert_sample_data/" itemprop="url">Insert Sample Data (Single Step)
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><code class="language-plaintext highlighter-rouge">insert_ai4sh_sample_data.ipynb</code> is the single-step alternative to <a href="/sample/translate_geotag_sample/">Translate geotag sample</a>
+plus its two manage pages. See <a href="/setup_process/insert/">Insert process</a> for the mechanism.</p>
+
+<h2 id="which-route-to-use">Which route to use</h2>
+
+<p>Use this notebook when you just want the two spreadsheets’ rows in the database and don’t
+need to <code class="language-plaintext highlighter-rouge">UPDATE</code> an existing record or hand-inspect the generated JSON. Use <a href="/sample/translate_geotag_sample/">Translate geotag sample</a>
+plus the manage pages when you do. See <a href="/insert_vs_translate/">Single-step vs dual-step</a> for the
+full comparison.</p>
+
+<h2 id="preliminary-cell-re-apply-sampling-logs">Preliminary cell: re-apply sampling logs</h2>
+
+<p>Sample geolocation depends on <code class="language-plaintext highlighter-rouge">sampling_log</code> already existing in the database (see
+<a href="/dataset_meta/insert_dataset_meta/">Insert dataset metadata</a>). The first content cell in this notebook
+re-applies <code class="language-plaintext highlighter-rouge">import_data/dataset/insert_process/sampling_log.json</code> directly, as a safety net in
+case this notebook is run on its own:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">process_file</span> <span class="o">=</span> <span class="sh">'</span><span class="s">import_data/dataset/insert_process/sampling_log.json</span><span class="sh">'</span>
+
+<span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span> <span class="o">=</span> <span class="nc">Initiate_process</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">scheme_file</span><span class="p">,</span> <span class="n">process_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">structured_process_D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nc">Run_process</span><span class="p">(</span><span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This is the exact same file the dataset-metadata single-step route uses — re-running it here
+is safe precisely because <code class="language-plaintext highlighter-rouge">insert_tabular_data</code> is INSERT-only: it never duplicates or
+overwrites sampling logs that already exist.</p>
+
+<h2 id="insert-sample-geotag-data">Insert sample geotag data</h2>
+
+<p>One cell translates and inserts both sample tables, in one combined process file (same
+<code class="language-plaintext highlighter-rouge">process_file</code>-not-<code class="language-plaintext highlighter-rouge">job_file</code> pattern the existing 2-step <a href="/sample/translate_geotag_sample/">Translate geotag sample</a>
+page already uses):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">process_file</span> <span class="o">=</span> <span class="sh">'</span><span class="s">import_data/sample/insert_process/insert_geotag_sample.json</span><span class="sh">'</span>
+
+<span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span> <span class="o">=</span> <span class="nc">Initiate_process</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">scheme_file</span><span class="p">,</span> <span class="n">process_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">structured_process_D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nc">Run_process</span><span class="p">(</span><span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="process-file">Process file</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/sample/insert_process/insert_geotag_sample.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insert_tabular_data"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"overwrite"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_geolocation"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tabular_data_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_data/sample/excel/AI4SH_geolocation.xlsx"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dst_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_data/sample/insert_process/staging"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insert_tabular_data"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"overwrite"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_geolocated_profile_sample"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tabular_data_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_data/sample/excel/AI4SH_samples_geotag.xlsx"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dst_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_data/sample/insert_process/staging"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Same two entries, same order, as the 2-step route’s <code class="language-plaintext highlighter-rouge">translate_geotag_sample.json</code> — geolocation
+first, then geolocated profile sample. There is deliberately no <code class="language-plaintext highlighter-rouge">insert_process/manage_process</code>
+step for this route; the <code class="language-plaintext highlighter-rouge">insert_process/staging/*.json</code> files it produces are a debug trail,
+not something you’re meant to edit.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-08-21">August 21, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/sample/translate_geotag_sample/" class="pagination--pager" title="Translate Geotag Sample">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

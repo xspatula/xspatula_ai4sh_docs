@@ -1,0 +1,485 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Translate Processes - Xspatula</title>
+<meta name="description" content="Translate processes convert tabular data (CSV or Excel spreadsheets) into xSpatula JSON process files. Unlike data management processes, translate processes do not write to the database — they prepare data for subsequent process calls.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Translate Processes">
+<meta property="og:url" content="http://localhost:4000/setup_process/translate/">
+
+
+  <meta property="og:description" content="Translate processes convert tabular data (CSV or Excel spreadsheets) into xSpatula JSON process files. Unlike data management processes, translate processes do not write to the database — they prepare data for subsequent process calls.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-04-07T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-04-07T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_process/translate/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth processes</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_process/">Introduction</a></li>
+            
+              <li><a href="/setup_process/root_process/">Root process</a></li>
+            
+              <li><a href="/setup_process/translate/" class="active">Translate</a></li>
+            
+              <li><a href="/setup_process/insert/">Insert</a></li>
+            
+              <li><a href="/setup_process/path_resolution/">Path resolution</a></li>
+            
+              <li><a href="/setup_process/community/">Community</a></li>
+            
+              <li><a href="/setup_process/utility/">Utility</a></li>
+            
+              <li><a href="/setup_process/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_process/observation/">Observation</a></li>
+            
+              <li><a href="/setup_process/schema_conventions/">Schema conventions</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Translate Processes">
+    <meta itemprop="description" content="Translate processes convert tabular data (CSV or Excel spreadsheets) into xSpatula JSON process files. Unlike data management processes, translate processes do not write to the database — they prepare data for subsequent process calls.">
+    <meta itemprop="datePublished" content="2026-04-07T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-04-07T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_process/translate/" itemprop="url">Translate Processes
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Translate processes belong to the <code class="language-plaintext highlighter-rouge">translate_data</code> root process family. They convert externally held tabular data — CSV files or Excel spreadsheets — into the JSON process file format that the xSpatula framework uses for all data management operations. The generated JSON files can then be executed through the normal notebook workflow to insert or update records in the database.</p>
+
+<p>This is distinct from the <code class="language-plaintext highlighter-rouge">manage_table_data</code> root: translate processes write JSON files to disk, not records to the database.</p>
+
+<h2 id="process-file">Process file</h2>
+
+<p><strong>File</strong>: <code class="language-plaintext highlighter-rouge">./setup/zzz/ai4sh/setup_processes/json_ai4sh/translate/translate_tabular_data_v10_sql.json</code></p>
+
+<h2 id="registered-process">Registered process</h2>
+
+<h3 id="translate_tabular_data">translate_tabular_data</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"add_process"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"overwrite"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"root_process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"translate_data"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"translate_tabular_data"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"min_user_stratum"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Translate tabular data from spreadsheet to json process"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Translate tabular data recorded as csv or excel files to xSpatula json command process files."</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"nodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"parent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parameters"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"parameter_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"default_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"hint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The target process."</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tabular_data_path"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"parameter_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"default_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"hint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Absolute or relative path of the spreadsheet source data"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dst_path"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"parameter_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"default_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"hint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Absolute or relative destination path for writing the json process file"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="parameters">Parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process</code></td>
+      <td>text</td>
+      <td>yes</td>
+      <td>The target process that the generated JSON will call</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tabular_data_path</code></td>
+      <td>text</td>
+      <td>yes</td>
+      <td>Path to the source CSV or Excel file — resolved relative to the project root, see <a href="/setup_process/path_resolution/">Path resolution</a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dst_path</code></td>
+      <td>text</td>
+      <td>yes</td>
+      <td>Destination path for the generated JSON process file — resolved relative to the project root, see <a href="/setup_process/path_resolution/">Path resolution</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="how-it-works">How it works</h2>
+
+<p>When <code class="language-plaintext highlighter-rouge">translate_tabular_data</code> is called, the framework:</p>
+
+<ol>
+  <li>Reads the tabular source file (CSV or Excel) at <code class="language-plaintext highlighter-rouge">tabular_data_path</code></li>
+  <li>Maps each row to the parameter structure of the named <code class="language-plaintext highlighter-rouge">process</code></li>
+  <li>Writes a JSON file to <code class="language-plaintext highlighter-rouge">dst_path</code> containing one process call per row</li>
+</ol>
+
+<p>The resulting JSON file follows the standard xSpatula process file format and can be executed directly via the <code class="language-plaintext highlighter-rouge">setup_processes.ipynb</code> notebook or added to the pilot file for batch execution.</p>
+
+<h2 id="when-to-use">When to use</h2>
+
+<p>Use <code class="language-plaintext highlighter-rouge">translate_tabular_data</code> when you have a large number of records to insert and maintaining them as a spreadsheet is more practical than writing individual JSON process calls. Typical use cases include:</p>
+
+<ul>
+  <li>Loading a curated unit library from a reference spreadsheet</li>
+  <li>Bulk-inserting apparatus, provider, or method definitions from a catalogue maintained outside the framework</li>
+  <li>Converting field data collected in spreadsheet form into observation process files</li>
+</ul>
+
+<h2 id="access-level">Access level</h2>
+
+<p>Minimum user stratum: 3</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-04-07">April 7, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_process/observation_utility/" class="pagination--pager" title="Observation Utility Processes">Previous</a>
+    
+    
+      <a href="/setup_process/utility/" class="pagination--pager" title="Utility Processes">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

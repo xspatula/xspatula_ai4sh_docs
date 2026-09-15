@@ -1,0 +1,453 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Schema Conventions: Array Columns vs. Junction Tables - Xspatula</title>
+<meta name="description" content="FK-shaped array columns have no referential integrity in Postgres. As of 2026-08-15, they’ve been replaced with junction tables everywhere except ordered numeric series like spectral data. Read this before adding a new multi-value field.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Schema Conventions: Array Columns vs. Junction Tables">
+<meta property="og:url" content="http://localhost:4000/setup_process/schema_conventions/">
+
+
+  <meta property="og:description" content="FK-shaped array columns have no referential integrity in Postgres. As of 2026-08-15, they’ve been replaced with junction tables everywhere except ordered numeric series like spectral data. Read this before adding a new multi-value field.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-08-15T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-08-15T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_process/schema_conventions/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth processes</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_process/">Introduction</a></li>
+            
+              <li><a href="/setup_process/root_process/">Root process</a></li>
+            
+              <li><a href="/setup_process/translate/">Translate</a></li>
+            
+              <li><a href="/setup_process/insert/">Insert</a></li>
+            
+              <li><a href="/setup_process/path_resolution/">Path resolution</a></li>
+            
+              <li><a href="/setup_process/community/">Community</a></li>
+            
+              <li><a href="/setup_process/utility/">Utility</a></li>
+            
+              <li><a href="/setup_process/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_process/observation/">Observation</a></li>
+            
+              <li><a href="/setup_process/schema_conventions/" class="active">Schema conventions</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Schema Conventions: Array Columns vs. Junction Tables">
+    <meta itemprop="description" content="FK-shaped array columns have no referential integrity in Postgres. As of 2026-08-15, they’ve been replaced with junction tables everywhere except ordered numeric series like spectral data. Read this before adding a new multi-value field.">
+    <meta itemprop="datePublished" content="2026-08-15T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-08-15T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_process/schema_conventions/" itemprop="url">Schema Conventions: Array Columns vs. Junction Tables
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>This page documents a schema-design convention, not an end-user workflow — it’s aimed at whoever (human or Claude) next adds a multi-value field to the AI4SH schema. If you’re looking for how to load data day to day, the rest of this site’s collections cover that; this page is about how the schema itself is shaped.</p>
+
+<h2 id="the-problem">The problem</h2>
+
+<p>An array column typed like a foreign key reference — <code class="language-plaintext highlighter-rouge">INTEGER[]</code>, or the more surprising <code class="language-plaintext highlighter-rouge">BOOLEAN[]</code> — has <strong>zero referential integrity</strong> in Postgres. Postgres can validate a scalar foreign key column against another table, but it cannot constrain individual elements <em>inside</em> an array. Nothing stops an invalid id from sitting silently inside <code class="language-plaintext highlighter-rouge">main_crop_id</code>, <code class="language-plaintext highlighter-rouge">catch_crop_id</code>, <code class="language-plaintext highlighter-rouge">cover_crop_id</code>, or the mistyped <code class="language-plaintext highlighter-rouge">soil_preparation_id_array</code> (a <code class="language-plaintext highlighter-rouge">BOOLEAN[]</code> column <em>named</em> like an id reference, whose real intent was a checkbox set — see below).</p>
+
+<h2 id="the-fix-junction-tables">The fix: junction tables</h2>
+
+<p>As of 2026-08-15, every FK-shaped array column in the schema was replaced with a junction table: one row per <code class="language-plaintext highlighter-rouge">(parent id, referenced id)</code> pair, with a real <code class="language-plaintext highlighter-rouge">REFERENCES</code> foreign key. Postgres now rejects an invalid reference outright instead of silently storing it.</p>
+
+<h2 id="the-boolean-checkbox-special-case">The boolean-checkbox special case</h2>
+
+<p><code class="language-plaintext highlighter-rouge">soil_preparation_id_array</code> was a <code class="language-plaintext highlighter-rouge">BOOLEAN[]</code> meant to represent a checkbox set — which soil preparation methods applied to a given cultivation. A junction table is strictly better here too, and simpler than it sounds: a row’s <em>existence</em> is the checked box. <code class="language-plaintext highlighter-rouge">landscape.cultivation_soil_preparation</code> has no boolean column at all — just <code class="language-plaintext highlighter-rouge">cultivation_id</code> and <code class="language-plaintext highlighter-rouge">soil_preparation_id</code>. If the pair exists, the box is checked; if not, it isn’t.</p>
+
+<h2 id="free-text-tags-get-the-same-treatment-for-a-different-reason">Free-text tags get the same treatment, for a different reason</h2>
+
+<p><code class="language-plaintext highlighter-rouge">campaign.substance_array</code> and <code class="language-plaintext highlighter-rouge">campaign.keyword_array</code> (and the equivalent columns on <code class="language-plaintext highlighter-rouge">dataset</code>) were confirmed free text with no lookup table to enforce — there’s no referential-integrity problem to fix. They were normalized into junction tables anyway, purely for indexing and querying: <code class="language-plaintext highlighter-rouge">campaign_tag</code>/<code class="language-plaintext highlighter-rouge">dataset_tag</code>, with a <code class="language-plaintext highlighter-rouge">tag_type</code> column (<code class="language-plaintext highlighter-rouge">substance</code>/<code class="language-plaintext highlighter-rouge">keyword</code>) distinguishing the two former array columns that now share one table.</p>
+
+<h2 id="whats-deliberately-excluded-and-why">What’s deliberately excluded, and why</h2>
+
+<p>Not every array column was converted. <strong>Ordered numeric series</strong> stay as Postgres arrays: <code class="language-plaintext highlighter-rouge">observation.observation_measurement_array</code>, and the spectral-data columns <code class="language-plaintext highlighter-rouge">observation_utility.spectrometer.wavelength_array</code>, <code class="language-plaintext highlighter-rouge">observation.spectra_scan.signal_mean</code>, <code class="language-plaintext highlighter-rouge">observation.spectra_scan.signal_standard_deviation</code>.</p>
+
+<p>The reasoning is the same in both cases: these aren’t a set of FK references or independent tags, they’re an ordered sequence where position carries meaning (the Nth wavelength value corresponds to the Nth signal value). A junction table has no natural row order — you’d need an explicit sequence column and would lose the “array preserves order for free” property a Postgres array gives you. Converting these would add complexity for no referential-integrity gain, since there’s nothing to reference.</p>
+
+<p>This finishes a rollout the project’s own <code class="language-plaintext highlighter-rouge">indicator</code> → <code class="language-plaintext highlighter-rouge">indicator_parity</code> trial started, a pattern already proven live elsewhere in the schema: <code class="language-plaintext highlighter-rouge">campaign_setting_system</code>, <code class="language-plaintext highlighter-rouge">dataset_setting_system</code>, <code class="language-plaintext highlighter-rouge">sampling_log_setting_system</code>, <code class="language-plaintext highlighter-rouge">campaign_provision</code>, <code class="language-plaintext highlighter-rouge">taxa_parity</code>.</p>
+
+<h2 id="the-four-new-tables">The four new tables</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Table</th>
+      <th>Replaces</th>
+      <th>Key columns</th>
+      <th>Uniqueness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape.cultivation_crop</code></td>
+      <td><code class="language-plaintext highlighter-rouge">main_crop_id</code>/<code class="language-plaintext highlighter-rouge">catch_crop_id</code>/<code class="language-plaintext highlighter-rouge">cover_crop_id INTEGER[]</code> on <code class="language-plaintext highlighter-rouge">landscape.cultivation</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cultivation_id</code>, <code class="language-plaintext highlighter-rouge">taxa_id</code> (→ <code class="language-plaintext highlighter-rouge">observation_utility.taxa</code>), <code class="language-plaintext highlighter-rouge">role</code> (<code class="language-plaintext highlighter-rouge">main</code>/<code class="language-plaintext highlighter-rouge">catch</code>/<code class="language-plaintext highlighter-rouge">cover</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">(cultivation_id, taxa_id, role)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape.cultivation_soil_preparation</code></td>
+      <td><code class="language-plaintext highlighter-rouge">soil_preparation_id_array BOOLEAN[]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cultivation_id</code>, <code class="language-plaintext highlighter-rouge">soil_preparation_id</code> (→ <code class="language-plaintext highlighter-rouge">landscape_utility.soil_preparation</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">(cultivation_id, soil_preparation_id)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation.campaign_tag</code></td>
+      <td><code class="language-plaintext highlighter-rouge">substance_array</code>/<code class="language-plaintext highlighter-rouge">keyword_array TEXT[]</code> on <code class="language-plaintext highlighter-rouge">observation.campaign</code></td>
+      <td><code class="language-plaintext highlighter-rouge">campaign_id</code>, <code class="language-plaintext highlighter-rouge">tag</code>, <code class="language-plaintext highlighter-rouge">tag_type</code> (<code class="language-plaintext highlighter-rouge">substance</code>/<code class="language-plaintext highlighter-rouge">keyword</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">(campaign_id, tag, tag_type)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation.dataset_tag</code></td>
+      <td><code class="language-plaintext highlighter-rouge">substance_array</code>/<code class="language-plaintext highlighter-rouge">keyword_array TEXT[]</code> on <code class="language-plaintext highlighter-rouge">observation.dataset</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dataset_id</code>, <code class="language-plaintext highlighter-rouge">tag</code>, <code class="language-plaintext highlighter-rouge">tag_type</code> (<code class="language-plaintext highlighter-rouge">substance</code>/<code class="language-plaintext highlighter-rouge">keyword</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">(dataset_id, tag, tag_type)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">landscape.cultivation_crop</code> unifies all three former crop-role array columns into a single table via the <code class="language-plaintext highlighter-rouge">role</code> discriminator column, rather than three separate junction tables. This <code class="language-plaintext highlighter-rouge">role</code>/<code class="language-plaintext highlighter-rouge">tag_type</code> discriminator shape recurs twice in this migration (also in <code class="language-plaintext highlighter-rouge">campaign_tag</code>/<code class="language-plaintext highlighter-rouge">dataset_tag</code>) — it’s the pattern to reach for whenever several former array columns share one target type.</p>
+
+<p>One thing that breaks a convention you may already know from elsewhere on this site: <code class="language-plaintext highlighter-rouge">landscape.cultivation</code>’s natural key isn’t a name lookup, it’s geolocation + <code class="language-plaintext highlighter-rouge">season_start_at</code>. So unlike most <code class="language-plaintext highlighter-rouge">..._id__..._name</code> parameters documented elsewhere in this framework, <code class="language-plaintext highlighter-rouge">cultivation_id</code> on <code class="language-plaintext highlighter-rouge">manage_cultivation_crop</code>/<code class="language-plaintext highlighter-rouge">manage_cultivation_soil_preparation</code> takes a raw integer id, not a lookup-by-name string.</p>
+
+<h2 id="registering-and-using-the-new-processes">Registering and using the new processes</h2>
+
+<p>Each new table gets its own independent <code class="language-plaintext highlighter-rouge">manage_*</code> process via <code class="language-plaintext highlighter-rouge">add_process</code> — <code class="language-plaintext highlighter-rouge">manage_cultivation_crop</code>, <code class="language-plaintext highlighter-rouge">manage_cultivation_soil_preparation</code>, <code class="language-plaintext highlighter-rouge">manage_campaign_tag</code>, <code class="language-plaintext highlighter-rouge">manage_dataset_tag</code> — all under <code class="language-plaintext highlighter-rouge">root_process: manage_table_data</code> (see <a href="/setup_process/root_process/">Root Processes</a>), <code class="language-plaintext highlighter-rouge">min_user_stratum: 4</code>.</p>
+
+<p><strong>Why independent processes, not the existing array-parameter fan-out mechanism.</strong> <code class="language-plaintext highlighter-rouge">src/ai4sh/import_data/import_data.py</code>’s <code class="language-plaintext highlighter-rouge">_Define_specifics</code> already has code that infers a target junction table from a parameter name ending in <code class="language-plaintext highlighter-rouge">_array</code> and containing <code class="language-plaintext highlighter-rouge">__</code>, splitting it into multiple records automatically. It’s flagged <code class="language-plaintext highlighter-rouge"># TG TODO</code> in the source and infers its target column via fragile string-splitting — not a mechanism worth adding new load-bearing usage to. This is a deliberate design choice, worth keeping documented here so a future reader doesn’t “helpfully” wire a new array-shaped field through that mechanism instead of writing a proper <code class="language-plaintext highlighter-rouge">manage_*</code> process.</p>
+
+<p><strong>Pilot-list wiring</strong>, for a reader replicating this pattern for a new column: in <code class="language-plaintext highlighter-rouge">ai4sh_setup_processes.txt</code>, the two <code class="language-plaintext highlighter-rouge">*_tag_v10_sql.json</code> files sit in the existing observation section, right after <code class="language-plaintext highlighter-rouge">sampling_log_v10_sql.json</code>. The two <code class="language-plaintext highlighter-rouge">cultivation_*_v10_sql.json</code> files got a <strong>new</strong> <code class="language-plaintext highlighter-rouge">### landscape ###</code> section, since <code class="language-plaintext highlighter-rouge">setup_processes</code> previously had no landscape-schema entries at all.</p>
+
+<h2 id="audit-coverage">Audit coverage</h2>
+
+<p>All four new tables audit <code class="language-plaintext highlighter-rouge">UPDATE</code>/<code class="language-plaintext highlighter-rouge">DELETE</code> only, matching the existing rule for their schema group — <code class="language-plaintext highlighter-rouge">landscape</code> and <code class="language-plaintext highlighter-rouge">observation</code> are bulk pipeline-written data, not admin/catalogue data. See <a href="/auditing/">Auditing</a> for the full two-tier coverage rule; it isn’t repeated here.</p>
+
+<h2 id="verification">Verification</h2>
+
+<p>This was a schema-only change — zero live rows existed in any of the replaced array columns, so no data migration was needed. Verified with a full <code class="language-plaintext highlighter-rouge">delete_db</code> → <code class="language-plaintext highlighter-rouge">setup_db</code> → <code class="language-plaintext highlighter-rouge">setup_processes</code> cycle, real test rows through each new process (correct FK resolution by name), and a deliberately bad lookup rejected cleanly with no row inserted.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-08-15">August 15, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_process/path_resolution/" class="pagination--pager" title="Path Resolution">Previous</a>
+    
+    
+      <a href="/setup_process/insert/" class="pagination--pager" title="Insert Process">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

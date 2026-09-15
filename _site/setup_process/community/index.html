@@ -1,0 +1,406 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Community Processes - Xspatula</title>
+<meta name="description" content="Community schema processes handle organisations and users. A dedicated registration step now registers manage_organisation and manage_user, on top of the default framework processes defined during database setup.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Community Processes">
+<meta property="og:url" content="http://localhost:4000/setup_process/community/">
+
+
+  <meta property="og:description" content="Community schema processes handle organisations and users. A dedicated registration step now registers manage_organisation and manage_user, on top of the default framework processes defined during database setup.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_process/community/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth processes</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_process/">Introduction</a></li>
+            
+              <li><a href="/setup_process/root_process/">Root process</a></li>
+            
+              <li><a href="/setup_process/translate/">Translate</a></li>
+            
+              <li><a href="/setup_process/insert/">Insert</a></li>
+            
+              <li><a href="/setup_process/path_resolution/">Path resolution</a></li>
+            
+              <li><a href="/setup_process/community/" class="active">Community</a></li>
+            
+              <li><a href="/setup_process/utility/">Utility</a></li>
+            
+              <li><a href="/setup_process/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_process/observation/">Observation</a></li>
+            
+              <li><a href="/setup_process/schema_conventions/">Schema conventions</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Community Processes">
+    <meta itemprop="description" content="Community schema processes handle organisations and users. A dedicated registration step now registers manage_organisation and manage_user, on top of the default framework processes defined during database setup.">
+    <meta itemprop="datePublished" content="2026-03-31T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-03-31T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_process/community/" itemprop="url">Community Processes
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The <code class="language-plaintext highlighter-rouge">community</code> schema manages organisations and users. Some of this relies on the default framework processes that are registered by the <code class="language-plaintext highlighter-rouge">process/processes_records_v10_sql.json</code> file during the <a href="/setup_db/process/">database setup stage</a> — but as of 2026-08-14/15 there is also a real, AI4SH-specific registration step for the two everyday community tables:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">community/organisation_v10_sql.json</code> — registers <code class="language-plaintext highlighter-rouge">manage_organisation</code> against <code class="language-plaintext highlighter-rouge">community.organisation</code></li>
+  <li><code class="language-plaintext highlighter-rouge">community/user_v10_sql.json</code> — registers <code class="language-plaintext highlighter-rouge">manage_user</code> against <code class="language-plaintext highlighter-rouge">community.user</code></li>
+</ul>
+
+<p>Both follow the same <code class="language-plaintext highlighter-rouge">add_process</code> pattern documented for <code class="language-plaintext highlighter-rouge">manage_person</code> in <a href="/setup_process/observation/">Observation Processes</a>, and are wired into the pilot list <code class="language-plaintext highlighter-rouge">ai4sh_setup_processes.txt</code> under a <code class="language-plaintext highlighter-rouge">### COMMUNITY ###</code> section, right after <code class="language-plaintext highlighter-rouge">utility/territory_v10_sql.json</code> and before <code class="language-plaintext highlighter-rouge">### OBSERVATION UTILITIES ###</code>.</p>
+
+<h2 id="what-the-framework-provides-by-default">What the framework provides by default</h2>
+
+<p>After running <code class="language-plaintext highlighter-rouge">processes_records_v10_sql.json</code>, the framework has built-in processes for:</p>
+
+<ul>
+  <li>Adding user categories (<code class="language-plaintext highlighter-rouge">community.user_categories</code>)</li>
+  <li>Updating user details</li>
+  <li>Managing user activity</li>
+</ul>
+
+<p>These bootstrap processes are part of the core framework and do not need to be registered again for AI4SH. Organisations and users themselves now go through the AI4SH-specific <code class="language-plaintext highlighter-rouge">manage_organisation</code>/<code class="language-plaintext highlighter-rouge">manage_user</code> processes above instead.</p>
+
+<h2 id="managing-community-data-after-setup">Managing community data after setup</h2>
+
+<p>This page covers process <em>registration</em> only — for the actual day-to-day workflow of adding organisations and users (the Excel spreadsheets, the admin review step, password provisioning and email), see the <a href="/setup_community/">Setup community</a> collection. In short: participants fill in a spreadsheet, an admin reviews and curates it, then a notebook translates and runs it through the <code class="language-plaintext highlighter-rouge">manage_organisation</code>/<code class="language-plaintext highlighter-rouge">manage_user</code> processes registered here.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">stratum_code</code> determines which <code class="language-plaintext highlighter-rouge">.env</code> credentials a user logs in with and thus which database privileges they have. The 8 default strata range from 0 (most restricted) to 5 (most permissive), plus <code class="language-plaintext highlighter-rouge">community_admin</code> and <code class="language-plaintext highlighter-rouge">login_evaluation</code> for administrative functions.</p>
+
+<h2 id="cross-schema-relationship">Cross-schema relationship</h2>
+
+<p>Community records are referenced by:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">observation.data_source</code> — simplified passive data supplier (not a full framework user)</li>
+  <li><code class="language-plaintext highlighter-rouge">observation.person</code> — non-registered individual attributed to data (GDPR consideration)</li>
+</ul>
+
+<p>These two tables in the <code class="language-plaintext highlighter-rouge">observation</code> schema are intentionally decoupled from the full <code class="language-plaintext highlighter-rouge">community.user</code> table, allowing attribution of data to people who are not system users.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-31">March 31, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/setup_process/" class="pagination--pager" title="Setup AI4SH Processes">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

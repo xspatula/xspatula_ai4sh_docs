@@ -1,0 +1,523 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Community Schema - Xspatula</title>
+<meta name="description" content="The community schema manages all organisations and users in the AI4SH database. It is a default Xspatula framework schema. Every user logging into the system must be registered here.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Community Schema">
+<meta property="og:url" content="http://localhost:4000/setup_db/community/">
+
+
+  <meta property="og:description" content="The community schema manages all organisations and users in the AI4SH database. It is a default Xspatula framework schema. Every user logging into the system must be registered here.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_db/community/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth database</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_db/">Introduction</a></li>
+            
+              <li><a href="/setup_db/schemas/">Schemas</a></li>
+            
+              <li><a href="/setup_db/utility/">Utility</a></li>
+            
+              <li><a href="/setup_db/community/" class="active">Community</a></li>
+            
+              <li><a href="/setup_db/process/">Process</a></li>
+            
+              <li><a href="/setup_db/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_db/observation/">Observation</a></li>
+            
+              <li><a href="/setup_db/landscape/">Landscape</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Community Schema">
+    <meta itemprop="description" content="The community schema manages all organisations and users in the AI4SH database. It is a default Xspatula framework schema. Every user logging into the system must be registered here.">
+    <meta itemprop="datePublished" content="2026-03-31T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-03-31T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_db/community/" itemprop="url">Community Schema
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The <code class="language-plaintext highlighter-rouge">community</code> schema manages all organisations and users in the AI4SH database. It is one of the default Xspatula framework schemas. Every user logging into the system must have a record in <code class="language-plaintext highlighter-rouge">community.user</code>, and the login process checks that table for credentials and access level.</p>
+
+<p><img src="/assets/media/xspatula_db_community_schema.png" alt="Community schema" /></p>
+
+<h2 id="two-ways-to-add-a-user">Two ways to add a user</h2>
+
+<p>There are two distinct routes into <code class="language-plaintext highlighter-rouge">community.user</code>, depending on whether the user already
+exists to log in with:</p>
+
+<ul>
+  <li><strong>Bootstrap, during database setup</strong> — hand-editing <code class="language-plaintext highlighter-rouge">user_records_v10_sql.json</code> and running
+<code class="language-plaintext highlighter-rouge">setup_db.ipynb</code>. This is the <em>only</em> option for the very first user, since every other route
+requires an already-logged-in user to run. See “Default records” below and
+<a href="/setup_community/bootstrap_user/">Bootstrap user</a> for the full walkthrough.</li>
+  <li><strong>Excel/CSV intake, for every user after that</strong> — filling in a spreadsheet, reviewed and run
+through the <code class="language-plaintext highlighter-rouge">manage_organisation</code>/<code class="language-plaintext highlighter-rouge">manage_user</code> processes. No plaintext password is ever
+handled this way — one is generated and emailed automatically. See
+<a href="/setup_community/">Setup community</a> for the full collection.</li>
+</ul>
+
+<h2 id="process-files">Process files</h2>
+
+<p>Six process files create and populate the community schema:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">community/user_categories_v10_sql.json</code></td>
+      <td>Creates the <code class="language-plaintext highlighter-rouge">user_categories</code> table</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">community/user_categories_records_v10_sql.json</code></td>
+      <td>Inserts default user category records</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">community/organisation_v10_sql.json</code></td>
+      <td>Creates the <code class="language-plaintext highlighter-rouge">organisation</code> table</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">community/organisation_records_v10_sql.json</code></td>
+      <td><strong>Edit before running</strong> — inserts default organisation(s)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">community/user_v10_sql.json</code></td>
+      <td>Creates the <code class="language-plaintext highlighter-rouge">user</code>, <code class="language-plaintext highlighter-rouge">user_media</code> and <code class="language-plaintext highlighter-rouge">user_activity</code> tables</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">community/user_records_v10_sql.json</code></td>
+      <td><strong>Edit before running</strong> — inserts default user(s)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="tables">Tables</h2>
+
+<h3 id="user_categories">user_categories</h3>
+
+<p>Defines the access strata (0–5) that control which <code class="language-plaintext highlighter-rouge">.env</code> credentials a user logs in with. Stratum 0 has the least privilege, stratum 5 the most.</p>
+
+<h3 id="organisation">organisation</h3>
+
+<p>Holds registered organisations. At least one organisation must exist before any user can be inserted, because <code class="language-plaintext highlighter-rouge">community.user</code> references <code class="language-plaintext highlighter-rouge">community.organisation</code>.</p>
+
+<p>Key columns: <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">organisation_name</code>, <code class="language-plaintext highlighter-rouge">abbreviation</code>, <code class="language-plaintext highlighter-rouge">territory_id</code>, <code class="language-plaintext highlighter-rouge">url</code>, <code class="language-plaintext highlighter-rouge">email</code>, <code class="language-plaintext highlighter-rouge">status_code</code>.</p>
+
+<h3 id="user">user</h3>
+
+<p>The central authentication table. At login, the framework checks <code class="language-plaintext highlighter-rouge">user_name</code>, <code class="language-plaintext highlighter-rouge">password</code>, and <code class="language-plaintext highlighter-rouge">stratum_code</code> against this table.</p>
+
+<p>Key columns:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id</code></td>
+      <td>SERIAL</td>
+      <td>Primary key</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">organisation_id</code></td>
+      <td>INTEGER</td>
+      <td>FK to <code class="language-plaintext highlighter-rouge">community.organisation</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">user_name</code></td>
+      <td>VARCHAR UNIQUE</td>
+      <td>Login name</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">password</code></td>
+      <td>VARCHAR</td>
+      <td>Hash crypted login password</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">stratum_code</code></td>
+      <td>SMALLINT</td>
+      <td>FK to <code class="language-plaintext highlighter-rouge">user_categories</code>; determines database privilege level</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_name</code></td>
+      <td>VARCHAR</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">last_name</code></td>
+      <td>VARCHAR</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">email</code></td>
+      <td>VARCHAR</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">territory_id</code></td>
+      <td>INTEGER</td>
+      <td>FK to <code class="language-plaintext highlighter-rouge">utility.territory</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">status_code</code></td>
+      <td>INTEGER</td>
+      <td>Account status (default 10 = active)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="user_media">user_media</h3>
+
+<p>Optional social/web links for a user. One row per user, linked by <code class="language-plaintext highlighter-rouge">user_id</code>.</p>
+
+<h3 id="user_activity">user_activity</h3>
+
+<p>Tracks cumulative session time and last activity date per user.</p>
+
+<h2 id="default-records--edit-before-running">Default records — edit before running</h2>
+
+<p>The files <code class="language-plaintext highlighter-rouge">organisation_records_v10_sql.json</code> and <code class="language-plaintext highlighter-rouge">user_records_v10_sql.json</code> insert default records directly into the database during setup. You must edit these files to include at least one real organisation and one real user before running the notebook.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">password</code> value in <code class="language-plaintext highlighter-rouge">user_records_v10_sql.json</code> must be a <strong>bcrypt hash</strong>, not plaintext — <code class="language-plaintext highlighter-rouge">community.user.password</code> is never stored or compared as plaintext. Generate the hash with the standalone CLI <code class="language-plaintext highlighter-rouge">setup/hash_password.py</code> and paste its output into the JSON file; see <a href="/setup_community/bootstrap_user/">Bootstrap user</a> for the full walkthrough, including how to apply a new hash to a live database without rebuilding. Without a correctly hashed password here, the bootstrap user cannot log in and no further users can be registered — the Excel-intake registration workflow itself requires an already-logged-in user.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">user_name</code> in this file must match the <code class="language-plaintext highlighter-rouge">user_name</code> in the <code class="language-plaintext highlighter-rouge">user_project</code> credentials of any non-setup scheme file you later use to operate the database.</p>
+
+<p><strong>Note</strong>, the scheme file’s <code class="language-plaintext highlighter-rouge">password</code>, however, stays <strong>plaintext</strong> — it’s the password you type at login, verified against the stored hash. The two values are never the same string; the scheme file holds the plaintext that hashes to the value stored in <code class="language-plaintext highlighter-rouge">user_records_v10_sql.json</code> upon login.</p>
+
+<p>For the full framework treatment of the community schema and its role in authentication, see the <a href="https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/">core framework documentation</a>.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-31">March 31, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/setup_db/" class="pagination--pager" title="Setup AI4SH Database">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

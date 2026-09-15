@@ -1,0 +1,435 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Path Resolution - Xspatula</title>
+<meta name="description" content="Every relative path in a scheme, job, pilot, or process file resolves against the project root — one anchor, one mental model, as of 2026-08-15. This page states the rule and the two exceptions.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Path Resolution">
+<meta property="og:url" content="http://localhost:4000/setup_process/path_resolution/">
+
+
+  <meta property="og:description" content="Every relative path in a scheme, job, pilot, or process file resolves against the project root — one anchor, one mental model, as of 2026-08-15. This page states the rule and the two exceptions.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-08-15T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-08-15T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_process/path_resolution/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth processes</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_process/">Introduction</a></li>
+            
+              <li><a href="/setup_process/root_process/">Root process</a></li>
+            
+              <li><a href="/setup_process/translate/">Translate</a></li>
+            
+              <li><a href="/setup_process/insert/">Insert</a></li>
+            
+              <li><a href="/setup_process/path_resolution/" class="active">Path resolution</a></li>
+            
+              <li><a href="/setup_process/community/">Community</a></li>
+            
+              <li><a href="/setup_process/utility/">Utility</a></li>
+            
+              <li><a href="/setup_process/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_process/observation/">Observation</a></li>
+            
+              <li><a href="/setup_process/schema_conventions/">Schema conventions</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Path Resolution">
+    <meta itemprop="description" content="Every relative path in a scheme, job, pilot, or process file resolves against the project root — one anchor, one mental model, as of 2026-08-15. This page states the rule and the two exceptions.">
+    <meta itemprop="datePublished" content="2026-08-15T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-08-15T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_process/path_resolution/" itemprop="url">Path Resolution
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Every JSON file in this framework — scheme, job/project, pilot, and individual process files — can reference other files or directories by relative path. Before 2026-08-15, exactly what a given relative path was anchored to depended on which field you were looking at, and sometimes on how deeply a file happened to be nested. That’s been harmonised into a single rule.</p>
+
+<h2 id="the-rule">The rule</h2>
+
+<blockquote>
+  <p>Every relative path anywhere in the scheme → job(project) → pilot → process chain is relative to the <strong>project root</strong> — the directory <code class="language-plaintext highlighter-rouge">project_path</code> (in the scheme file) resolves to. This includes <code class="language-plaintext highlighter-rouge">job_folder</code>, <code class="language-plaintext highlighter-rouge">process_sub_folder</code>, <code class="language-plaintext highlighter-rouge">pilot_file</code>, every entry in a pilot list/file, and — as of 2026-08-15 — a process file’s own in-parameter paths (<code class="language-plaintext highlighter-rouge">tabular_data_path</code>, <code class="language-plaintext highlighter-rouge">dst_path</code> on a <code class="language-plaintext highlighter-rouge">translate_tabular_data</code> process).</p>
+</blockquote>
+
+<p>One anchor, one mental model: you never need to count <code class="language-plaintext highlighter-rouge">../</code> levels based on how deeply a file happens to be nested, and moving a process file to a different folder never silently breaks its own internal paths.</p>
+
+<h2 id="the-two-exceptions">The two exceptions</h2>
+
+<p>Both are, deliberately, upstream of the project root itself — they’re what establishes it in the first place, so they can’t be relative to it:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">scheme_file</code></strong> — the path you hand to <code class="language-plaintext highlighter-rouge">Initiate_process</code>/<code class="language-plaintext highlighter-rouge">Initiate_database</code> — is resolved relative to the <strong>calling notebook’s working directory</strong>.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">project_path</code></strong> (inside the scheme file) is resolved relative to the <strong>scheme file’s own directory</strong>, since that’s what establishes the project root.</li>
+</ul>
+
+<h2 id="one-asymmetry-that-looks-like-a-bug-but-isnt">One asymmetry that looks like a bug but isn’t</h2>
+
+<p>A job file’s <code class="language-plaintext highlighter-rouge">pilot_file</code> resolves against <code class="language-plaintext highlighter-rouge">job_folder</code> alone, while the JSON paths <em>inside</em> that pilot file resolve against <code class="language-plaintext highlighter-rouge">job_folder</code> + <code class="language-plaintext highlighter-rouge">process_sub_folder</code>. This is deliberate, and consistent everywhere it’s used: the pilot <code class="language-plaintext highlighter-rouge">.txt</code>/list file lives at the <code class="language-plaintext highlighter-rouge">job_folder</code> level, one directory above the <code class="language-plaintext highlighter-rouge">process_sub_folder</code> that the individual process JSON files it lists actually live in. True for every collection on this site — <code class="language-plaintext highlighter-rouge">import_data/dataset/</code>, <code class="language-plaintext highlighter-rouge">user_management/organisation/</code>, <code class="language-plaintext highlighter-rouge">setup_db/</code>, <code class="language-plaintext highlighter-rouge">setup_processes/</code>.</p>
+
+<h2 id="the-five-path-notations">The five path notations</h2>
+
+<p>All notation-aware resolution goes through <code class="language-plaintext highlighter-rouge">Get_project_path</code>/<code class="language-plaintext highlighter-rouge">Full_path_locate</code> in <code class="language-plaintext highlighter-rouge">src/lib/pilot.py</code>. It recognises five styles, all anchored per the rule above:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Notation</th>
+      <th>Behaviour</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">../</code></td>
+      <td>Parent-relative, supports multiple levels (<code class="language-plaintext highlighter-rouge">../../config.json</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.</code> or <code class="language-plaintext highlighter-rouge">./</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.</code> alone means “the anchor itself”; <code class="language-plaintext highlighter-rouge">./subpath</code> appends <code class="language-plaintext highlighter-rouge">subpath</code> to it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">~/</code></td>
+      <td>Resolved against the user’s home directory</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/</code></td>
+      <td>Absolute — returned unchanged</td>
+    </tr>
+    <tr>
+      <td>bare (no recognised prefix)</td>
+      <td>Joined onto the anchor directly</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="worked-example">Worked example</h2>
+
+<p>Given a project root at <code class="language-plaintext highlighter-rouge">~/GitHub_xspatula/xspatula_ai4sh/ai4sh/</code>, a <code class="language-plaintext highlighter-rouge">tabular_data_path</code> of:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import_data/dataset/excel/data_source.xlsx
+</code></pre></div></div>
+
+<p>resolves to <code class="language-plaintext highlighter-rouge">~/GitHub_xspatula/xspatula_ai4sh/ai4sh/import_data/dataset/excel/data_source.xlsx</code> — regardless of which directory the process JSON file that names it happens to live in. This is the form used throughout the <code class="language-plaintext highlighter-rouge">translate_*</code> pages on this site; see <a href="/setup_process/translate/">Translate Processes</a> for the <code class="language-plaintext highlighter-rouge">tabular_data_path</code>/<code class="language-plaintext highlighter-rouge">dst_path</code> parameters themselves.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-08-15">August 15, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_process/utility/" class="pagination--pager" title="Utility Processes">Previous</a>
+    
+    
+      <a href="/setup_process/schema_conventions/" class="pagination--pager" title="Schema Conventions: Array Columns vs. Junction Tables">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

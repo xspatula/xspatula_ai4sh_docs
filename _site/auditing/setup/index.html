@@ -1,0 +1,508 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Auditing Setup - Xspatula</title>
+<meta name="description" content="Auditing is opt-in per table, declared with an inline “audit” key, and turned on with a second, optional notebook cell — separate from creating the database itself.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Auditing Setup">
+<meta property="og:url" content="http://localhost:4000/auditing/setup/">
+
+
+  <meta property="og:description" content="Auditing is opt-in per table, declared with an inline “audit” key, and turned on with a second, optional notebook cell — separate from creating the database itself.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-08-21T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-08-21T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/auditing/setup/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Auditing</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/auditing/">Introduction</a></li>
+            
+              <li><a href="/auditing/setup/" class="active">Setup</a></li>
+            
+              <li><a href="/auditing/queries/">Queries</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Auditing Setup">
+    <meta itemprop="description" content="Auditing is opt-in per table, declared with an inline “audit” key, and turned on with a second, optional notebook cell — separate from creating the database itself.">
+    <meta itemprop="datePublished" content="2026-08-21T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-08-21T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/auditing/setup/" itemprop="url">Auditing Setup
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A table declares its own audit coverage inline, and turning auditing on for a database is a
+separate, optional step from creating the database at all.</p>
+
+<h2 id="declaring-coverage-on-a-table">Declaring coverage on a table</h2>
+
+<p>Every table’s <code class="language-plaintext highlighter-rouge">create_table</code> definition (under <code class="language-plaintext highlighter-rouge">setup/zzz/ai4sh/setup_db/json_ai4sh/...</code>) may
+carry a sibling <code class="language-plaintext highlighter-rouge">"audit"</code> key:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"audit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"INSERT"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"UPDATE"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"DELETE"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>No <code class="language-plaintext highlighter-rouge">"audit"</code> key at all — or one where every value is <code class="language-plaintext highlighter-rouge">false</code> — means that table simply isn’t
+audited. There’s no implicit fallback: if you want a table audited, its own file has to say
+so. See <a href="/auditing/">Auditing introduction</a> for the two-tier convention (full
+coverage for admin/config/catalogue tables, <code class="language-plaintext highlighter-rouge">UPDATE</code>/<code class="language-plaintext highlighter-rouge">DELETE</code>-only for bulk pipeline data) that
+decides which values to set.</p>
+
+<p>This is the <strong>one and only thing you ever hand-edit</strong>. Everything described below is generated
+from it automatically.</p>
+
+<h2 id="turning-auditing-on-the-two-cell-workflow">Turning auditing on: the two-cell workflow</h2>
+
+<p><code class="language-plaintext highlighter-rouge">setup_db.ipynb</code> has two relevant cells, and they do genuinely different things:</p>
+
+<ol>
+  <li><strong>“Setup database”</strong> — the cell you already run to create/update every schema and table.
+As a side effect, it scans every table’s <code class="language-plaintext highlighter-rouge">"audit"</code> key across the whole pilot list
+and (re)writes the per-schema <code class="language-plaintext highlighter-rouge">audit_triggers_&lt;schema&gt;_v10_sql.json</code> files, plus a
+generated pilot file, <code class="language-plaintext highlighter-rouge">db_xspatula_ai4sh_audit.txt</code> (its own header says “do not
+hand-edit” — treat it the same way you’d treat any other build artifact). This step is
+<strong>pure file assembly</strong> — it does not touch the database, create any audit objects, or need
+a live Postgres connection. After running only this cell, no audit triggers exist yet.</li>
+  <li><strong>“Apply audit triggers”</strong> (<code class="language-plaintext highlighter-rouge">job_setup_audit.json</code>) — a second, separate, <strong>optional</strong> cell.
+This is what actually creates <code class="language-plaintext highlighter-rouge">audit.logged_actions</code>, <code class="language-plaintext highlighter-rouge">audit.if_modified_func()</code>, and every
+table’s trigger in the database, by calling <code class="language-plaintext highlighter-rouge">Initiate_audit()</code>. Skip it and the database
+simply has zero audit triggers — there’s no longer an implicit “auditing is just always
+there” guarantee.</li>
+</ol>
+
+<p>Run cell 1, then cell 2, in that order. Cell 2 is safe to re-run any time — immediately,
+later, or repeatedly — because it always re-applies the <em>complete</em> current config rather than
+only whatever changed. It can’t be broken by a table having been added out of order in the
+pilot list, which is the exact class of bug the old hand-maintained design was vulnerable to.</p>
+
+<p><strong>Adding auditing to a new table later</strong>: set its <code class="language-plaintext highlighter-rouge">"audit"</code> key, then re-run cell 1 (to
+regenerate the trigger config files) followed by cell 2 (to apply it). This is a
+one-time-per-database-refresh action — you don’t need to think about it again until you add
+another audited table.</p>
+
+<p>The very first time cell 2 runs against a database with no audit system yet, it bootstraps
+<code class="language-plaintext highlighter-rouge">audit.logged_actions</code> and <code class="language-plaintext highlighter-rouge">audit.if_modified_func()</code> — you’ll be prompted (a plain y/n
+question) to confirm setting up an audit system for that database. If those objects already
+exist, cell 2 skips straight to applying the current trigger config.</p>
+
+<h2 id="config-files-shipped-vs-generated">Config files: shipped vs. generated</h2>
+
+<p>Everything lives under <code class="language-plaintext highlighter-rouge">setup/zzz/ai4sh/setup_db/json_ai4sh/audit/</code>, but the files there fall
+into two very different categories.</p>
+
+<p><strong>Shipped with the framework</strong> — these 3 files come with xspatula itself and don’t change per
+project or per table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Defines</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_table_v10_sql.json</code></td>
+      <td>The <code class="language-plaintext highlighter-rouge">audit.logged_actions</code> table</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_function_v10_sql.json</code></td>
+      <td>The <code class="language-plaintext highlighter-rouge">audit.if_modified_func()</code> trigger function</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_audit_v10_sql.json</code></td>
+      <td>The <code class="language-plaintext highlighter-rouge">audit</code> schema’s own self-audit trigger (see the self-audit gotcha above)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Auto-generated on every “Setup database” run</strong> — one file per audited schema, written fresh
+each time from every table’s <code class="language-plaintext highlighter-rouge">"audit"</code> key. For AI4SH today that’s 7 files (every schema except
+<code class="language-plaintext highlighter-rouge">audit</code> itself, which is covered by the shipped file above):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Schema</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_community_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">community</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_landscape_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_landscape_utility_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape_utility</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_observation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_observation_utility_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_process_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">process</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit_triggers_utility_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">utility</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Plus, at the pilot-file level: <code class="language-plaintext highlighter-rouge">setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_audit.txt</code> — the
+generated pilot file cell 2 runs. All 7 generated files (and the pilot file) are build
+artifacts. If you edit one by hand, the next “Setup database” run will overwrite your edit —
+change the source table’s <code class="language-plaintext highlighter-rouge">"audit"</code> key instead.</p>
+
+<h2 id="checking-whats-actually-covered">Checking what’s actually covered</h2>
+
+<p>Since coverage is now declared per table rather than fixed in a checked-in file, don’t trust a
+number written into documentation (including the snapshot table on the <a href="/auditing/">introduction
+page</a>) — check the database you’re actually looking at:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">event_object_schema</span><span class="p">,</span> <span class="n">event_object_table</span><span class="p">,</span> <span class="n">string_agg</span><span class="p">(</span><span class="n">event_manipulation</span><span class="p">,</span> <span class="s1">', '</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">triggers</span>
+<span class="k">WHERE</span> <span class="k">trigger_name</span> <span class="k">LIKE</span> <span class="s1">'%_audit'</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>A dry-run script, <code class="language-plaintext highlighter-rouge">setup/scripts/verify_audit_system.py</code>, does the equivalent check without
+touching the database — useful if you want to confirm the assembled trigger-config files match
+every table’s declared <code class="language-plaintext highlighter-rouge">"audit"</code> key before applying anything.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-08-21">August 21, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/auditing/queries/" class="pagination--pager" title="Auditing Queries">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

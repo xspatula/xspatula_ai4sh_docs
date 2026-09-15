@@ -1,0 +1,529 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Auditing - Xspatula</title>
+<meta name="description" content="Every write to the AI4SH database is logged automatically by a native PostgreSQL trigger system — not by Python. This page explains the mechanism, what is audited, and how to change it.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Auditing">
+<meta property="og:url" content="http://localhost:4000/auditing/">
+
+
+  <meta property="og:description" content="Every write to the AI4SH database is logged automatically by a native PostgreSQL trigger system — not by Python. This page explains the mechanism, what is audited, and how to change it.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-08-15T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-08-15T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/auditing/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Auditing</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/auditing/" class="active">Introduction</a></li>
+            
+              <li><a href="/auditing/setup/">Setup</a></li>
+            
+              <li><a href="/auditing/queries/">Queries</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Auditing">
+    <meta itemprop="description" content="Every write to the AI4SH database is logged automatically by a native PostgreSQL trigger system — not by Python. This page explains the mechanism, what is audited, and how to change it.">
+    <meta itemprop="datePublished" content="2026-08-15T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-08-15T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/auditing/" itemprop="url">Auditing
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Auditing keeps a permanent log of every change made to an audited table — who changed it, when, and what the row looked like before and after — so any insert, update, or delete can be traced after the fact.</p>
+
+<p>A natural first question: is auditing a Python thing, or a database thing? It’s a <strong>database thing</strong>. Python touches it exactly once, at setup time, to create two Postgres objects. After that, Python is out of the picture entirely — every <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, or <code class="language-plaintext highlighter-rouge">DELETE</code> on an audited table is intercepted by Postgres itself, synchronously, inside the same transaction as the write that triggered it, no matter what client made that write: a notebook, <code class="language-plaintext highlighter-rouge">psql</code>, DBeaver, or any future application.</p>
+
+<p>Think of it like a doorbell wired directly into a house’s electrical system, not a security-camera app running on someone’s phone. The app only has to be open once, to do the wiring — after that, the doorbell rings no matter who’s home or what device is nearby, because the mechanism lives in the house itself.</p>
+
+<p>If the audit insert itself fails for any reason, the whole triggering write rolls back with it — you can’t accidentally end up with a change that wasn’t logged.</p>
+
+<h2 id="the-two-postgres-objects">The two Postgres objects</h2>
+
+<ol>
+  <li><strong><code class="language-plaintext highlighter-rouge">audit.if_modified_func()</code></strong> — a single PL/pgSQL trigger function, shared by every audited table in the database. It reads the special variables Postgres hands to any trigger function (<code class="language-plaintext highlighter-rouge">TG_OP</code>, <code class="language-plaintext highlighter-rouge">TG_TABLE_SCHEMA</code>, <code class="language-plaintext highlighter-rouge">TG_TABLE_NAME</code>, <code class="language-plaintext highlighter-rouge">OLD</code>, <code class="language-plaintext highlighter-rouge">NEW</code>), serializes the row to JSONB, and inserts one row into <code class="language-plaintext highlighter-rouge">audit.logged_actions</code>. There is no per-table column list to maintain anywhere — the function is generic, so it can’t drift out of sync when a table’s schema changes.</li>
+  <li><strong>One <code class="language-plaintext highlighter-rouge">CREATE TRIGGER</code> per audited table</strong> — named <code class="language-plaintext highlighter-rouge">&lt;table&gt;_audit</code>, firing <code class="language-plaintext highlighter-rouge">AFTER</code> the relevant events, <code class="language-plaintext highlighter-rouge">FOR EACH ROW</code>, calling <code class="language-plaintext highlighter-rouge">audit.if_modified_func()</code>.</li>
+</ol>
+
+<h2 id="the-auditlogged_actions-table">The audit.logged_actions table</h2>
+
+<p>Every logged change is one row here:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">id</code></td>
+      <td>Row identity</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">schema_name</code>, <code class="language-plaintext highlighter-rouge">table_name</code></td>
+      <td>Which table changed — always filter on both; table names repeat across schemas (e.g. <code class="language-plaintext highlighter-rouge">unit</code> exists in more than one)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">op</code></td>
+      <td><code class="language-plaintext highlighter-rouge">I</code> / <code class="language-plaintext highlighter-rouge">U</code> / <code class="language-plaintext highlighter-rouge">D</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">old_data</code>, <code class="language-plaintext highlighter-rouge">new_data</code></td>
+      <td>Full row image as JSONB (<code class="language-plaintext highlighter-rouge">to_jsonb</code>) — <code class="language-plaintext highlighter-rouge">old_data</code> is <code class="language-plaintext highlighter-rouge">NULL</code> on an <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">new_data</code> is <code class="language-plaintext highlighter-rouge">NULL</code> on a <code class="language-plaintext highlighter-rouge">DELETE</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">changed_by</code></td>
+      <td>The connecting Postgres <em>role</em> (<code class="language-plaintext highlighter-rouge">current_user</code>) — shared per user stratum (e.g. <code class="language-plaintext highlighter-rouge">user_cat_2</code>), not a specific person</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">changed_by_user_id</code></td>
+      <td>The individual <code class="language-plaintext highlighter-rouge">community.user.id</code>, when known — see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">changed_at</code></td>
+      <td>Wall-clock time the trigger fired (<code class="language-plaintext highlighter-rouge">clock_timestamp()</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">txid</code></td>
+      <td>The Postgres transaction ID — group every row from the same transaction together</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="individual-attribution-changed_by-vs-changed_by_user_id">Individual attribution: changed_by vs. changed_by_user_id</h3>
+
+<p><code class="language-plaintext highlighter-rouge">changed_by</code> only ever identifies the shared Postgres role a connection used — everyone logged in at the same access stratum connects as the same role, so <code class="language-plaintext highlighter-rouge">changed_by</code> alone can’t tell you <em>which person</em> made a change.</p>
+
+<p>To fix that, <code class="language-plaintext highlighter-rouge">PG_session</code> (in <code class="language-plaintext highlighter-rouge">src/postgres/pg_session.py</code>) accepts an <code class="language-plaintext highlighter-rouge">app_user_id</code> parameter — the <code class="language-plaintext highlighter-rouge">community.user.id</code> of the individual who just logged in — and sets it as a session-level Postgres setting (<code class="language-plaintext highlighter-rouge">audit.app_user_id</code>) right after authentication. <code class="language-plaintext highlighter-rouge">audit.if_modified_func()</code> reads that setting on every trigger firing and stores it as <code class="language-plaintext highlighter-rouge">changed_by_user_id</code>.</p>
+
+<p>This column is <code class="language-plaintext highlighter-rouge">NULL</code> whenever a write happens outside a real login flow — most notably the raw-superuser <code class="language-plaintext highlighter-rouge">setup_db.ipynb</code>/<code class="language-plaintext highlighter-rouge">delete_db.ipynb</code> path. That’s not a bug to explain away: a <code class="language-plaintext highlighter-rouge">NULL</code> here is a genuine, useful signal that a change came from infrastructure/admin setup rather than a specific person’s action.</p>
+
+<h2 id="which-tables-are-audited-and-for-which-events">Which tables are audited, and for which events</h2>
+
+<p>Coverage differs by <strong>table role</strong>, not just by schema. Each table declares its own coverage
+inline, on its own <code class="language-plaintext highlighter-rouge">create_table</code> definition:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"audit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"INSERT"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"UPDATE"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"DELETE"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>No <code class="language-plaintext highlighter-rouge">"audit"</code> key at all (or one where every value is <code class="language-plaintext highlighter-rouge">false</code>) means that table simply isn’t
+audited — see <a href="/auditing/setup/">Auditing setup</a> for how this key is declared and applied.</p>
+
+<p>A snapshot of current coverage, verified against a live database on 2026-08-19 — <strong>this is a
+snapshot, not a permanent list</strong>; coverage is now driven by an inline key on each table rather
+than a fixed file, so it will keep changing as tables are added. Check current coverage
+yourself (query 8 in <a href="/auditing/queries/">Auditing queries</a>) rather than trust a number written
+into documentation:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Schema</th>
+      <th>Audited tables</th>
+      <th><code class="language-plaintext highlighter-rouge">INSERT</code> audited?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">community</code></td>
+      <td>5</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">process</code></td>
+      <td>9</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">utility</code></td>
+      <td>2</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation_utility</code></td>
+      <td>65</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape_utility</code></td>
+      <td>17</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation</code></td>
+      <td>50</td>
+      <td>no (<code class="language-plaintext highlighter-rouge">UPDATE</code>/<code class="language-plaintext highlighter-rouge">DELETE</code> only)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape</code></td>
+      <td>8</td>
+      <td>no (<code class="language-plaintext highlighter-rouge">UPDATE</code>/<code class="language-plaintext highlighter-rouge">DELETE</code> only)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">audit</code> (self-audit)</td>
+      <td>1</td>
+      <td>no, and never can be — see below</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The rule in one sentence per group:</p>
+
+<ul>
+  <li><strong>Full coverage</strong> (<code class="language-plaintext highlighter-rouge">community</code>, <code class="language-plaintext highlighter-rouge">process</code>, <code class="language-plaintext highlighter-rouge">utility</code>, <code class="language-plaintext highlighter-rouge">observation_utility</code>, <code class="language-plaintext highlighter-rouge">landscape_utility</code>) — admin/config data, or catalogue/reference tables (<code class="language-plaintext highlighter-rouge">indicator</code>, <code class="language-plaintext highlighter-rouge">taxa</code>, <code class="language-plaintext highlighter-rouge">apparatus</code>, <code class="language-plaintext highlighter-rouge">unit</code>, <code class="language-plaintext highlighter-rouge">land_use_order</code>, etc.) that get added one row at a time, usually by hand. Knowing when a new catalogue entry was created has real audit value.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">UPDATE</code>/<code class="language-plaintext highlighter-rouge">DELETE</code> only</strong> (<code class="language-plaintext highlighter-rouge">observation</code>, <code class="language-plaintext highlighter-rouge">landscape</code>) — bulk pipeline-written data: samples, measurements, spectra. Auditing every <code class="language-plaintext highlighter-rouge">INSERT</code> here would double the write volume on an import batch of thousands of rows, for no real audit gain — the row’s own existence already proves it was created.</li>
+</ul>
+
+<p>When adding a new table to the schema: a new catalogue/reference table follows the full-coverage group; a new bulk pipeline-written table follows the <code class="language-plaintext highlighter-rouge">UPDATE</code>/<code class="language-plaintext highlighter-rouge">DELETE</code>-only group. See <a href="/auditing/setup/">Auditing setup</a> for the mechanics of declaring and applying this.</p>
+
+<h2 id="the-self-audit-gotcha">The self-audit gotcha</h2>
+
+<p><code class="language-plaintext highlighter-rouge">audit.logged_actions</code> audits <em>itself</em> — but only for <code class="language-plaintext highlighter-rouge">UPDATE</code>/<code class="language-plaintext highlighter-rouge">DELETE</code>, <strong>never</strong> <code class="language-plaintext highlighter-rouge">INSERT</code>. This is deliberate, not an oversight: <code class="language-plaintext highlighter-rouge">if_modified_func()</code> responds to every trigger event by inserting a row into <code class="language-plaintext highlighter-rouge">audit.logged_actions</code>. An <code class="language-plaintext highlighter-rouge">INSERT</code> trigger on that same table would make that internal insert re-fire itself, recursing forever. This is the one table in the database that can never appear in its own log with <code class="language-plaintext highlighter-rouge">op = 'I'</code>.</p>
+
+<h2 id="read-access">Read access</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">login_evaluation</code> role has read access to the audit log, alongside its existing read access to <code class="language-plaintext highlighter-rouge">community</code>:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">GRANT</span> <span class="k">USAGE</span> <span class="k">ON</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">TO</span> <span class="n">login_evaluation</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">SELECT</span> <span class="k">ON</span> <span class="k">ALL</span> <span class="n">TABLES</span> <span class="k">IN</span> <span class="k">SCHEMA</span> <span class="n">audit</span> <span class="k">TO</span> <span class="n">login_evaluation</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>This is almost certainly the role you want to connect DBeaver as for the queries on the next page, unless you’re already using a role with broader database access.</p>
+
+<h2 id="turning-auditing-on-and-adding-a-new-audited-table">Turning auditing on, and adding a new audited table</h2>
+
+<p>Auditing is opt-in per table and applied in a separate step from database setup — see
+<a href="/auditing/setup/">Auditing setup</a> for the full walkthrough, including the config files under
+<code class="language-plaintext highlighter-rouge">setup/zzz/ai4sh/setup_db/json_ai4sh/audit/</code> (these are now <strong>generated build artifacts, not
+hand-edited files</strong> — the only thing you ever hand-edit is a table’s own <code class="language-plaintext highlighter-rouge">"audit"</code> key).</p>
+
+<p>See <a href="/auditing/queries/">Auditing queries</a> for how to actually read this log day-to-day, and <a href="/setup_db/">Setup DB</a> for how the schemas and tables it audits are created in the first place.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-08-15">August 15, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/auditing/queries/" class="pagination--pager" title="Auditing Queries">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

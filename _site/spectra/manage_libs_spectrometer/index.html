@@ -1,0 +1,516 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>LIBS Spectrometer - Xspatula</title>
+<meta name="description" content="Summary of the FOSS Micral LIBS spectrometer and its data range. Required before loading LIBS observation logs or observations.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="LIBS Spectrometer">
+<meta property="og:url" content="http://localhost:4000/spectra/manage_libs_spectrometer/">
+
+
+  <meta property="og:description" content="Summary of the FOSS Micral LIBS spectrometer and its data range. Required before loading LIBS observation logs or observations.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/spectra/manage_libs_spectrometer/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Load spectral data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/spectra/">Synopsis</a></li>
+            
+              <li><a href="/spectra/manage_foss_ds2500_spectrometer/">FOSS DS2500 spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_foss_ds2500_obs_log/">FOSS DS2500 obs. log</a></li>
+            
+              <li><a href="/spectra/manage_foss_ds2500_obs/">FOSS DS2500 observation</a></li>
+            
+              <li><a href="/spectra/manage_neospectra_spectrometer/">Neospectra spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_neospectra_obs_log/">Neospectra obs. log</a></li>
+            
+              <li><a href="/spectra/manage_neospectra_obs/">Neospectra observation</a></li>
+            
+              <li><a href="/spectra/manage_ftir_spectrometer/">FTIR spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_ftir_obs_log/">FTIR obs. log</a></li>
+            
+              <li><a href="/spectra/manage_ftir_obs/">FTIR observation</a></li>
+            
+              <li><a href="/spectra/manage_libs_spectrometer/" class="active">LIBS spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_libs_obs_log/">LIBS obs. log</a></li>
+            
+              <li><a href="/spectra/manage_libs_obs/">LIBS observation</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+      <hr style="margin: 1em 0;">
+      <p style="font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5em;">Data sections</p>
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Loading data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/">Utility</a></li>
+            
+              <li><a href="/dataset_meta/">Dataset metadata</a></li>
+            
+              <li><a href="/sample/">Sample</a></li>
+            
+              <li><a href="/wetlab/">Wetlab</a></li>
+            
+              <li><a href="/spectra/">Spectra</a></li>
+            
+              <li><a href="/all_data/">All data</a></li>
+            
+              <li><a href="/insert_vs_translate/">Single-step vs dual-step</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="LIBS Spectrometer">
+    <meta itemprop="description" content="Summary of the FOSS Micral LIBS spectrometer and its data range. Required before loading LIBS observation logs or observations.">
+    <meta itemprop="datePublished" content="2026-06-10T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-06-10T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/spectra/manage_libs_spectrometer/" itemprop="url">LIBS Spectrometer
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The FOSS Micral is a Laser-Induced Breakdown Spectroscopy (LIBS) instrument. Unlike the reflectance spectrometers, LIBS measures elemental emission intensities in the ultraviolet and visible range. It covers 178–427 nm at 0.1 nm resolution, producing 2491-element arrays of raw emission intensity values (not reflectance). LIBS ablates the sample surface with a laser pulse and records the resulting atomic emission spectrum.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">foss micral</code> provision must exist from <a href="/utility/">Load utility data</a>.</p>
+
+<h2 id="notebook-cell">Notebook cell</h2>
+
+<p>In <code class="language-plaintext highlighter-rouge">load_ai4sh_spectral_data.ipynb</code>, the <strong>Manage LIBS spectrometer</strong> cell runs:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job_file</span> <span class="o">=</span> <span class="sh">'</span><span class="s">import_data/LIBS_spectra/job_libs_spectrometer.json</span><span class="sh">'</span>
+
+<span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span> <span class="o">=</span> <span class="nc">Initiate_process</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">scheme_file</span><span class="p">,</span> <span class="n">job_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">structured_process_D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nc">Run_process</span><span class="p">(</span><span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="job-file">Job file</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/LIBS_spectra/job_libs_spectrometer.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"job_folder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_data/LIBS_spectra/spectrometer"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"process_sub_folder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"pilot_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xspatula_add_spectrometer_pilot.txt"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="process-file">Process file</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/LIBS_spectra/spectrometer/process/foss-micral_spectrometer.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_spectrometer"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"provision_id__provision_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foss micral"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"wavelength_unit_id__wavelength_unit_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"um"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"wavelength_array"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">178.0</span><span class="p">,</span><span class="w"> </span><span class="mf">178.1</span><span class="p">,</span><span class="w"> </span><span class="mf">178.2</span><span class="p">,</span><span class="w"> </span><span class="mf">178.3</span><span class="p">,</span><span class="w"> </span><span class="s2">"...2491 values total..."</span><span class="p">,</span><span class="w"> </span><span class="mf">427.0</span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">wavelength_array</code> contains 2491 values from 178.0 to 427.0 nm in 0.1 nm steps. The example above is abbreviated.</p>
+
+<h2 id="instrument-summary">Instrument summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Provision</td>
+      <td><code class="language-plaintext highlighter-rouge">foss micral</code></td>
+    </tr>
+    <tr>
+      <td>Wavelength range</td>
+      <td>178–427 nm</td>
+    </tr>
+    <tr>
+      <td>Spectral resolution</td>
+      <td>0.1 nm</td>
+    </tr>
+    <tr>
+      <td>Number of bands</td>
+      <td>2491</td>
+    </tr>
+    <tr>
+      <td>Measurement type</td>
+      <td>Emission intensity (not reflectance)</td>
+    </tr>
+    <tr>
+      <td>Use context</td>
+      <td>Laboratory</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="note-on-stored-values">Note on stored values</h2>
+
+<p>LIBS observations store emission intensity counts, not reflectance values in the 0–1 range. Intensity values are typically in the thousands. This is different from all other spectrometers in the AI4SH database, which store reflectance.</p>
+
+<h2 id="next-step">Next step</h2>
+
+<p>Proceed to <a href="/spectra/manage_libs_obs_log/">Manage LIBS observation log</a>.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-06-10">June 10, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/spectra/manage_libs_obs_log/" class="pagination--pager" title="LIBS Observation Log">Previous</a>
+    
+    
+      <a href="/spectra/manage_neospectra_obs/" class="pagination--pager" title="Neospectra Observation">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

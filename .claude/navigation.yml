@@ -1,0 +1,78 @@
+seed:
+  - title: Seed AI4SH DB
+    children:
+      - title: "Seed AI4SH utilities"
+        url: /seed_db/
+      - title: "General utilities"
+        url: /seed_db/general_utils/
+      - title: "Observation utilities"
+        url: /seed_db/observation_utils/
+
+
+load_dataset:
+  - title: Load AI4SH dataset
+    children:
+      - title: "Load dataset metadata"
+        url: /load_dataset_meta/
+      - title: "Datasets and persons"
+        url: /load_dataset_meta/dataset/
+      - title: "Campaigns"
+        url: /load_dataset_meta/campaign/
+      - title: "Sampling logs"
+        url: /load_dataset_meta/sampling_log/
+
+load_sample:
+  - title: Load AI4SH sample data
+    children:
+      - title: "Load geotags"
+        url: /load_sample/geotag/
+      - title: "load sample"
+        url: /load_sample/sample/
+
+load_wetlab:
+  - title: Load AI4SH wetlab data
+    children:
+      - title: "Load wetlab data"
+        url: /load_wetlab_data/
+      - title: "Load observation log"
+        url: /load_wetlab_data/observation_log/
+      - title: "Load observation"
+        url: /load_wetlab_data/observation/
+
+load_spectra:
+  - title: Load AI4SH spectral data
+    children:
+      - title: "Load spectral data"
+        url: /load_spectral_data/
+      - title: "Load NeoSpecra NIR data"
+        url: /load_spectral_data/neospectra/
+      - title: "Load FOSS DS2500 MIR data"
+        url: /load_spectral_data/fossds2500/
+      - title: "Load Bruker invenio FTIR data"
+        url: /load_spectral_data/brukerinvenio/
+      - title: "Load FOSS micral LIBS data"
+        url: /load_spectral_data/fossmicral/
+
+
+# main links
+main:
+  - title: "Seed"
+    url: /seed_db/
+    description: "Seed the AI4SoilHealth database"
+  - title: "Dataset"
+    url: /dataset_meta/
+    description: "Load AI4SoilHealth dataset data and metadata"
+  - title: "Samples"
+    url: /sample_data/
+    description: "Load AI4SoilHealth wet laboratory data"
+  - title: "Wetlab"
+    url: /wetlab_data/
+    description: "Load AI4SoilHealth spectral data"
+  - title: "Spectra"
+    url: /spectral_data/
+    description: "Load AI4SoilHealth spectral data"
+  - title: "LUCAS"
+    url: /lucas_data/
+    description: "Load LUCAS complete data"
+  - title: "About"
+    url: https://xspatula.github.io/about/

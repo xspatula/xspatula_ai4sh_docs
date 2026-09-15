@@ -1,0 +1,451 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Landscape Schema - Xspatula</title>
+<meta name="description" content="The landscape and landscape_utility schemas store landscape-level observations that provide environmental context for soil measurements. Two schemas are used: landscape_utility for reference catalogues and landscape for the observations themselves.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Landscape Schema">
+<meta property="og:url" content="http://localhost:4000/setup_db/landscape/">
+
+
+  <meta property="og:description" content="The landscape and landscape_utility schemas store landscape-level observations that provide environmental context for soil measurements. Two schemas are used: landscape_utility for reference catalogues and landscape for the observations themselves.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_db/landscape/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth database</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_db/">Introduction</a></li>
+            
+              <li><a href="/setup_db/schemas/">Schemas</a></li>
+            
+              <li><a href="/setup_db/utility/">Utility</a></li>
+            
+              <li><a href="/setup_db/community/">Community</a></li>
+            
+              <li><a href="/setup_db/process/">Process</a></li>
+            
+              <li><a href="/setup_db/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_db/observation/">Observation</a></li>
+            
+              <li><a href="/setup_db/landscape/" class="active">Landscape</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Landscape Schema">
+    <meta itemprop="description" content="The landscape and landscape_utility schemas store landscape-level observations that provide environmental context for soil measurements. Two schemas are used: landscape_utility for reference catalogues and landscape for the observations themselves.">
+    <meta itemprop="datePublished" content="2026-03-31T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-03-31T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_db/landscape/" itemprop="url">Landscape Schema
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The AI4SH database uses two schemas for landscape data: <code class="language-plaintext highlighter-rouge">landscape_utility</code> holds reference catalogues and <code class="language-plaintext highlighter-rouge">landscape</code> holds the observations. Landscape observations provide the environmental context for soil measurements — land use, land cover, terrain attributes and similar properties that describe the broader setting of a sampling site.</p>
+
+<h2 id="process-files">Process files</h2>
+
+<p>All 6 files live under <code class="language-plaintext highlighter-rouge">json_ai4sh/landscape/</code> — there is no separate <code class="language-plaintext highlighter-rouge">landscape_utility/</code>
+folder; files in this one folder create tables in both schemas:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Schema</th>
+      <th>Tables created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape/land_use_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape_utility</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landuse_order</code>, <code class="language-plaintext highlighter-rouge">landuse_family</code> (→ <code class="language-plaintext highlighter-rouge">landuse_order</code>), <code class="language-plaintext highlighter-rouge">landuse_genus</code> (→ <code class="language-plaintext highlighter-rouge">landuse_family</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape/land_cover_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape_utility</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landcover_order</code>, <code class="language-plaintext highlighter-rouge">landcover_family</code> (→ <code class="language-plaintext highlighter-rouge">landcover_order</code>), <code class="language-plaintext highlighter-rouge">landcover_genus</code> (→ <code class="language-plaintext highlighter-rouge">landcover_family</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape/soil_classification_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape_utility</code></td>
+      <td><code class="language-plaintext highlighter-rouge">soil_texture_usda</code>, <code class="language-plaintext highlighter-rouge">soil_texture_isss</code>, <code class="language-plaintext highlighter-rouge">reference_soil_groups</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape/utility_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape_utility</code></td>
+      <td><code class="language-plaintext highlighter-rouge">major_landform</code>, <code class="language-plaintext highlighter-rouge">slope_position</code>, <code class="language-plaintext highlighter-rouge">sky_condition</code>, <code class="language-plaintext highlighter-rouge">ground_condition</code>, <code class="language-plaintext highlighter-rouge">cultivation_species</code>, <code class="language-plaintext highlighter-rouge">soil_preparation</code>, <code class="language-plaintext highlighter-rouge">crop_growth_stage</code>, <code class="language-plaintext highlighter-rouge">erosion_conservation_measure</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape/observation_lucc_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landuse_observation</code>, <code class="language-plaintext highlighter-rouge">landcover_observation</code> — both link to <code class="language-plaintext highlighter-rouge">observation.geolocation</code> and their respective <code class="language-plaintext highlighter-rouge">_genus</code> catalogue</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">landscape/observation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">landscape</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sampling_weather</code>, <code class="language-plaintext highlighter-rouge">cultivation</code>, <code class="language-plaintext highlighter-rouge">cultivation_crop</code> (→ <code class="language-plaintext highlighter-rouge">cultivation</code>), <code class="language-plaintext highlighter-rouge">cultivation_soil_preparation</code> (→ <code class="language-plaintext highlighter-rouge">cultivation</code>), <code class="language-plaintext highlighter-rouge">landscape_state</code>, <code class="language-plaintext highlighter-rouge">landscape_geomorphology</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="schema-landscape_utility">Schema: landscape_utility</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">landscape_utility</code> schema holds reference tables for landscape classification — 14 tables
+across the 4 files above. These are analogous to the <code class="language-plaintext highlighter-rouge">observation_utility</code> tables but specific
+to landscape-level attributes:</p>
+
+<ul>
+  <li><strong>land use</strong> — <code class="language-plaintext highlighter-rouge">landuse_order</code> → <code class="language-plaintext highlighter-rouge">landuse_family</code> → <code class="language-plaintext highlighter-rouge">landuse_genus</code> (3-level hierarchy)</li>
+  <li><strong>land cover</strong> — <code class="language-plaintext highlighter-rouge">landcover_order</code> → <code class="language-plaintext highlighter-rouge">landcover_family</code> → <code class="language-plaintext highlighter-rouge">landcover_genus</code> (3-level hierarchy)</li>
+  <li><strong>soil classification</strong> — <code class="language-plaintext highlighter-rouge">soil_texture_usda</code>, <code class="language-plaintext highlighter-rouge">soil_texture_isss</code>, <code class="language-plaintext highlighter-rouge">reference_soil_groups</code></li>
+  <li><strong>general landscape attributes</strong> — <code class="language-plaintext highlighter-rouge">major_landform</code>, <code class="language-plaintext highlighter-rouge">slope_position</code>, <code class="language-plaintext highlighter-rouge">sky_condition</code>, <code class="language-plaintext highlighter-rouge">ground_condition</code>, <code class="language-plaintext highlighter-rouge">cultivation_species</code>, <code class="language-plaintext highlighter-rouge">soil_preparation</code>, <code class="language-plaintext highlighter-rouge">crop_growth_stage</code>, <code class="language-plaintext highlighter-rouge">erosion_conservation_measure</code></li>
+</ul>
+
+<p>The reference tables in <code class="language-plaintext highlighter-rouge">landscape_utility</code> must be populated before any <code class="language-plaintext highlighter-rouge">landscape</code> observation records can be inserted, because landscape observations reference these catalogs through foreign keys.</p>
+
+<h2 id="schema-landscape">Schema: landscape</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">landscape</code> schema stores actual landscape observations — 8 tables across the 2
+observation files above:</p>
+
+<ul>
+  <li><strong>landuse_observation</strong>, <strong>landcover_observation</strong> — land use/cover at a geolocation, each linking to its respective <code class="language-plaintext highlighter-rouge">_genus</code> catalogue</li>
+  <li><strong>sampling_weather</strong> — sky and ground condition at the time of sampling</li>
+  <li><strong>cultivation</strong>, <strong>cultivation_crop</strong>, <strong>cultivation_soil_preparation</strong> — what’s being cultivated at a geolocation, which crop taxa, and what soil preparation was used</li>
+  <li><strong>landscape_state</strong> — crop growth stage and erosion/conservation measures observed</li>
+  <li><strong>landscape_geomorphology</strong> — landform, slope position, and slope value at a geolocation</li>
+</ul>
+
+<p>These observations help contextualise soil property measurements — the same soil property can behave differently under different land use or cover conditions.</p>
+
+<h2 id="relationship-to-observation-schema">Relationship to observation schema</h2>
+
+<p>Every <code class="language-plaintext highlighter-rouge">landscape</code> table above links directly to <code class="language-plaintext highlighter-rouge">observation.geolocation</code> via <code class="language-plaintext highlighter-rouge">geolocation_id</code>
+— not via <code class="language-plaintext highlighter-rouge">sampling_log</code> as such. A sampling location may have both soil observations in the
+<code class="language-plaintext highlighter-rouge">observation</code> schema and landscape observations in the <code class="language-plaintext highlighter-rouge">landscape</code> schema, connected through
+that shared geolocation.</p>
+
+<p>This separation keeps AI4SH-specific landscape classification independent of the more generic observation infrastructure, making it easier to extend or replace the landscape classification system without affecting core soil data tables.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-31">March 31, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_db/" class="pagination--pager" title="Setup AI4SH Database">Previous</a>
+    
+    
+      <a href="/setup_db/observation/" class="pagination--pager" title="Observation Schema">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

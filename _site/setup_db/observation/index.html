@@ -1,0 +1,638 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Observation Schema - Xspatula</title>
+<meta name="description" content="The observation schema stores actual soil property data, organised hierarchically through data source, datasets, campaigns, sampling logs, samples and observations. All observation records depend on the observation_utility reference catalogues.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Observation Schema">
+<meta property="og:url" content="http://localhost:4000/setup_db/observation/">
+
+
+  <meta property="og:description" content="The observation schema stores actual soil property data, organised hierarchically through data source, datasets, campaigns, sampling logs, samples and observations. All observation records depend on the observation_utility reference catalogues.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_db/observation/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth database</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_db/">Introduction</a></li>
+            
+              <li><a href="/setup_db/schemas/">Schemas</a></li>
+            
+              <li><a href="/setup_db/utility/">Utility</a></li>
+            
+              <li><a href="/setup_db/community/">Community</a></li>
+            
+              <li><a href="/setup_db/process/">Process</a></li>
+            
+              <li><a href="/setup_db/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_db/observation/" class="active">Observation</a></li>
+            
+              <li><a href="/setup_db/landscape/">Landscape</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Observation Schema">
+    <meta itemprop="description" content="The observation schema stores actual soil property data, organised hierarchically through data source, datasets, campaigns, sampling logs, samples and observations. All observation records depend on the observation_utility reference catalogues.">
+    <meta itemprop="datePublished" content="2026-03-31T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-03-31T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_db/observation/" itemprop="url">Observation Schema
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The <code class="language-plaintext highlighter-rouge">observation</code> schema stores actual soil property data. Data is organised in a strict hierarchy: an observation belongs to a sample, a sample belongs to a sampling log, a sampling log belongs to a campaign, a campaign belongs to a dataset. Every step in this chain must exist before the next can be created. All observation values link to reference records in <code class="language-plaintext highlighter-rouge">observation_utility</code>.</p>
+
+<h2 id="process-files">Process files</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Tables created</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/data_source_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">data_source</code></td>
+      <td>Simplified copy of <code class="language-plaintext highlighter-rouge">community.organisation</code> — passive data suppliers who need not be full system users</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/person_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">person</code></td>
+      <td>Simplified copy of <code class="language-plaintext highlighter-rouge">community.user</code> with no login credentials — allows attributing data to non-registered persons (GDPR consideration)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/dataset_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dataset</code></td>
+      <td>Top-level grouping of related data (e.g. LUCAS, AI4SoilHealth)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/campaign_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">campaign</code>, <code class="language-plaintext highlighter-rouge">campaign_meta</code>, <code class="language-plaintext highlighter-rouge">campaign_tag</code>, <code class="language-plaintext highlighter-rouge">campaign_method_tier</code>, <code class="language-plaintext highlighter-rouge">campaign_location</code>, <code class="language-plaintext highlighter-rouge">campaign_provision</code>, <code class="language-plaintext highlighter-rouge">campaign_setting_system</code></td>
+      <td>Child of dataset; captures details of a specific data collection effort</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/sampling_log_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sampling_log</code></td>
+      <td>A sampling event — one or multiple samples taken with consistent methods over a period</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/sample_geolocation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sample_geolocation</code></td>
+      <td>Spatial coordinates for a geolocated sample</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/sample_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sample</code></td>
+      <td>An individual sample acquired under a sampling log</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/sample_z_profile_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sample_profile</code></td>
+      <td>Depth profile interval (profile_min, profile_max) for samples with a z-dimension</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/sample_image_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sample_image</code>, <code class="language-plaintext highlighter-rouge">sample_image_orientation</code></td>
+      <td>Image records associated with samples, plus their orientation metadata</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/observation_log_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation_log</code>, <code class="language-plaintext highlighter-rouge">observation_log_meta</code>, <code class="language-plaintext highlighter-rouge">observation_log_method_tier</code>, <code class="language-plaintext highlighter-rouge">observation_log_provision</code></td>
+      <td>Links a sampling log directly to a provision; companion tables record the logistics (preparation, preservation, storage, transportation), method-tier flags, and — since a log’s main <code class="language-plaintext highlighter-rouge">provision_id</code> is one column — any additional provisions used</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/observation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">observation</code>, <code class="language-plaintext highlighter-rouge">observation_temperature</code>, <code class="language-plaintext highlighter-rouge">observation_provision_serial_nr</code></td>
+      <td>The actual measured value for a specific provision, plus companion tables for temperature context and the specific provision serial number used</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/spectra_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">spectra_scan</code></td>
+      <td>Spectral scan metadata — signal statistics, spectroscopy method, and quality flags linked to an observation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/measurement_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">measurement</code></td>
+      <td>General sensor or instrument measurements</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/microbiometer_measurement_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">microbiometer_measurement</code></td>
+      <td>Microbiometer carbon content measurements linked to an observation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/infiltration_beerkan_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">infiltration_beerkan</code></td>
+      <td>BeerKan ring infiltration measurements</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/slakes_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">app_aggregate_stability</code></td>
+      <td>Aggregate stability measurements from the SLAKES app</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/macrofauna_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">macrofauna</code></td>
+      <td>Macrofauna count and biomass observations</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/macrofauna_image_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">macrofauna_image</code></td>
+      <td>Image records for automated macrofauna detection</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_nucleotide</code>, <code class="language-plaintext highlighter-rouge">taxa_bioinformatics</code>, <code class="language-plaintext highlighter-rouge">edna_measurement</code>, <code class="language-plaintext highlighter-rouge">taxa_biodiversity_measurement</code></td>
+      <td>Environmental DNA (eDNA) metabarcoding observations, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_fastp_qc_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_fastp_qc</code></td>
+      <td>eDNA read quality-control step, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_demux_trim_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_feature_abundance</code></td>
+      <td>eDNA demultiplex/trim pipeline output, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_denoise_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_denoise</code></td>
+      <td>eDNA denoising pipeline step, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_chimera_vsearch_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_chimera_vsearch</code></td>
+      <td>eDNA chimera detection (vsearch) pipeline step, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_annotation_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_annotation</code></td>
+      <td>eDNA taxonomic annotation pipeline step, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_merge_flash_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_merge_count</code></td>
+      <td>eDNA read-merging (FLASh) pipeline step, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_taxa_abundance_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_taxa_abundance</code></td>
+      <td>eDNA taxon abundance pipeline output, see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">observation/edna_functional_abundance_v10_sql.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">edna_functional_abundance</code></td>
+      <td>eDNA functional abundance pipeline output, see below</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="edna-observation-tables">eDNA observation tables</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Table</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">edna_nucleotide</code></td>
+      <td>Links a <code class="language-plaintext highlighter-rouge">sample</code> to a submitted nucleotide sequence — the archive it was deposited in and its accession code/URL</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">taxa_bioinformatics</code></td>
+      <td>One bioinformatics run against an <code class="language-plaintext highlighter-rouge">edna_nucleotide</code> record: which <code class="language-plaintext highlighter-rouge">metabarcoding_pipeline</code>, which <code class="language-plaintext highlighter-rouge">bioinformatics</code> treatment, treatment date, and the taxon it resolved to</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">edna_measurement</code></td>
+      <td>An indicator value attached to a regular <code class="language-plaintext highlighter-rouge">observation</code> record, specific to eDNA-derived measurements (value, standard deviation, number of repeats)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">taxa_biodiversity_measurement</code></td>
+      <td>The biodiversity value (e.g. relative abundance) produced by a <code class="language-plaintext highlighter-rouge">taxa_bioinformatics</code> run</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>eDNA observations still use the same sample infrastructure as any other observation — dataset → campaign → sampling log → sample — the eDNA-specific tables attach to a <code class="language-plaintext highlighter-rouge">sample</code> and to the eDNA reference catalogues, not to a separate hierarchy.</p>
+
+<p>Beyond these 4 tables, 8 further tables cover the eDNA bioinformatics pipeline itself — read quality control, denoising, chimera detection, taxonomic annotation, and the resulting taxon/functional abundance outputs: <code class="language-plaintext highlighter-rouge">edna_fastp_qc</code>, <code class="language-plaintext highlighter-rouge">edna_feature_abundance</code>, <code class="language-plaintext highlighter-rouge">edna_denoise</code>, <code class="language-plaintext highlighter-rouge">edna_chimera_vsearch</code>, <code class="language-plaintext highlighter-rouge">edna_annotation</code>, <code class="language-plaintext highlighter-rouge">edna_merge_count</code>, <code class="language-plaintext highlighter-rouge">edna_taxa_abundance</code>, <code class="language-plaintext highlighter-rouge">edna_functional_abundance</code> (see the process-files table above for which file creates each).</p>
+
+<p><strong>Partly wired into process setup.</strong> The 7 <code class="language-plaintext highlighter-rouge">manage_edna_*</code> process files for the <code class="language-plaintext highlighter-rouge">observation_utility</code> eDNA reference catalogues (<code class="language-plaintext highlighter-rouge">edna_sequence_library</code>, <code class="language-plaintext highlighter-rouge">edna_nucleotide_archive</code>, <code class="language-plaintext highlighter-rouge">edna_extraction</code>, <code class="language-plaintext highlighter-rouge">edna_purification</code>, <code class="language-plaintext highlighter-rouge">edna_amplification</code>, <code class="language-plaintext highlighter-rouge">edna_sequencing</code>, <code class="language-plaintext highlighter-rouge">edna_metabarcoding_pipeline</code>) <strong>are</strong> now registered and listed in the process pilot list, under an <code class="language-plaintext highlighter-rouge">### OBSERVATION UTILITIES eDNA ###</code> section — this table’s data can be entered through the normal <code class="language-plaintext highlighter-rouge">manage_*</code> workflow. What’s still missing: no <code class="language-plaintext highlighter-rouge">manage_*</code> process registrations exist yet for any of the 4 <code class="language-plaintext highlighter-rouge">observation</code>-schema eDNA tables above (<code class="language-plaintext highlighter-rouge">edna_nucleotide</code>, <code class="language-plaintext highlighter-rouge">taxa_bioinformatics</code>, <code class="language-plaintext highlighter-rouge">edna_measurement</code>, <code class="language-plaintext highlighter-rouge">taxa_biodiversity_measurement</code>), nor for the 8 pipeline-output tables just listed. Those 12 tables are created by <code class="language-plaintext highlighter-rouge">setup_db.ipynb</code>, but can’t yet be entered through the normal <code class="language-plaintext highlighter-rouge">manage_*</code> process workflow — see <a href="/setup_process/observation/">Observation Processes</a>.</p>
+
+<h2 id="table-hierarchy">Table hierarchy</h2>
+
+<p><code class="language-plaintext highlighter-rouge">sample</code> and <code class="language-plaintext highlighter-rouge">observation_log</code> are <strong>siblings</strong> — both children of <code class="language-plaintext highlighter-rouge">sampling_log</code>, not one
+nested inside the other — and both converge as parallel foreign keys on <code class="language-plaintext highlighter-rouge">observation</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data_source
+dataset (→ data_source)
+  campaign (→ dataset)
+    campaign_meta (→ campaign, observation_utility.*)
+    campaign_tag (→ campaign)
+    campaign_method_tier (→ campaign)
+    campaign_location (→ campaign, utility.territory, observation_utility.spatial_reference)
+    campaign_provision (→ campaign, observation_utility.provision)
+    campaign_setting_system (→ campaign, observation_utility.setting_system)
+    sampling_log (→ campaign)
+      sample_geolocation (→ sampling_log, observation_utility.spatial_reference)
+      sample (→ sampling_log)                                    ─┐
+      observation_log (→ sampling_log, observation_utility.provision)  ├─ siblings
+        observation_log_meta / _method_tier / _provision (→ observation_log) ─┘
+
+observation (→ sample, observation_log, observation_utility.provision)
+  observation_temperature, observation_provision_serial_nr (→ observation)
+</code></pre></div></div>
+
+<p>See the diagram below for the same shape drawn visually.</p>
+
+<p><img src="/assets/media/observation/sampling_log.png" alt="Sample and observation_log both feed observation" /></p>
+
+<h2 id="key-tables-in-detail">Key tables in detail</h2>
+
+<h3 id="dataset">dataset</h3>
+
+<p>A dataset is a coherent collection of data from one or more campaigns — for example, LUCAS 2009–2022 or the AI4SoilHealth project. Datasets are associated with a <code class="language-plaintext highlighter-rouge">data_source</code>.</p>
+
+<p>Key columns: <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">data_source_id</code>, <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">alias</code>, <code class="language-plaintext highlighter-rouge">status_code</code>.</p>
+
+<h3 id="campaign">campaign</h3>
+
+<p>A campaign is a child of a dataset where sampling methods may vary in detail. For example, LUCAS 2009 and LUCAS 2015 are two campaigns within the LUCAS dataset. Each AI4SH pilot site is a separate campaign.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">campaign</code> table has six companion meta tables:</p>
+
+<ul>
+  <li><strong>campaign_meta</strong> — abstract, DOI, URL, keywords, time series flag, license, taxonomic scope</li>
+  <li><strong>campaign_tag</strong> — free-text tags (substance or keyword), one row per tag — the junction-table replacement for what used to be array columns, see <a href="/setup_process/schema_conventions/">Schema conventions</a></li>
+  <li><strong>campaign_method_tier</strong> — boolean flags for which method tiers (in-situ, in-home, in-lab, from-drone, from-satellite, etc.) are used in the campaign</li>
+  <li><strong>campaign_location</strong> — geographic bounding box and spatial reference</li>
+  <li><strong>campaign_provision</strong> — which provisions (instrument+provider+method_tier combinations) are used</li>
+  <li><strong>campaign_setting_system</strong> — which setting systems (field, forest, lake, etc.) apply</li>
+</ul>
+
+<h3 id="sampling_log">sampling_log</h3>
+
+<p>A sampling log is a sampling event within a campaign, covering one or multiple samples taken with consistent methods. It records the responsible person and time window.</p>
+
+<h3 id="sample-and-sample_geolocation">sample and sample_geolocation</h3>
+
+<p><code class="language-plaintext highlighter-rouge">sample</code> represents an individual physical sample. <code class="language-plaintext highlighter-rouge">sample_geolocation</code> optionally records its latitude, longitude, elevation, and spatial reference. Decoupled from <code class="language-plaintext highlighter-rouge">sample</code> so that non-geolocated samples are still representable.</p>
+
+<h3 id="observation_log-and-observation">observation_log and observation</h3>
+
+<p><code class="language-plaintext highlighter-rouge">observation_log</code> links directly to <code class="language-plaintext highlighter-rouge">sampling_log</code> (not to <code class="language-plaintext highlighter-rouge">sample</code>) and to a provision (instrument + service + method tier); its companion tables record the sample handling chain (preparation, preservation, storage, transportation via <code class="language-plaintext highlighter-rouge">observation_log_meta</code>), method-tier flags, and any additional provisions used beyond the log’s own <code class="language-plaintext highlighter-rouge">provision_id</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">sample</code> and <code class="language-plaintext highlighter-rouge">observation_log</code> are <strong>siblings</strong>, both children of <code class="language-plaintext highlighter-rouge">sampling_log</code> — <code class="language-plaintext highlighter-rouge">observation_log</code> is not a child of <code class="language-plaintext highlighter-rouge">sample</code>. <code class="language-plaintext highlighter-rouge">observation</code> itself carries three foreign keys — <code class="language-plaintext highlighter-rouge">sample_id</code>, <code class="language-plaintext highlighter-rouge">observation_log_id</code>, and <code class="language-plaintext highlighter-rouge">provision_id</code> — converging both branches: it’s the actual numeric or text result for a specific sample, recorded under a specific observation log, from a specific provision. There is no <code class="language-plaintext highlighter-rouge">provision_indicator</code> column on <code class="language-plaintext highlighter-rouge">observation</code> itself; which indicator a value represents is determined by the <code class="language-plaintext highlighter-rouge">provision_id</code> in context of that provision’s registered <code class="language-plaintext highlighter-rouge">provision_indicator</code> records.</p>
+
+<h3 id="spectral-data">Spectral data</h3>
+
+<p>Spectral scans are a different shape from a regular scalar observation — one row holds a whole
+signal array, not a single value:</p>
+
+<ul>
+  <li><strong>spectra_scan</strong> — <code class="language-plaintext highlighter-rouge">signal_mean</code> and <code class="language-plaintext highlighter-rouge">signal_standard_deviation</code> array columns plus
+<code class="language-plaintext highlighter-rouge">spectroscopy_method_id</code>, linked directly to <code class="language-plaintext highlighter-rouge">observation</code>. Covers the FOSS DS2500,
+Neospectra, FTIR, and LIBS instrument families documented in the <a href="/spectra/">Spectra</a>
+collection.</li>
+</ul>
+
+<h3 id="specialised-observation-tables">Specialised observation tables</h3>
+
+<p>Additional tables cover other non-standard observation types:</p>
+
+<ul>
+  <li><strong>infiltration_beerkan</strong> — BeerKan ring infiltration test results</li>
+  <li><strong>macrofauna</strong> and <strong>macrofauna_image</strong> — macrofauna counts, biomass, and associated image records</li>
+  <li><strong>measurement</strong> — direct sensor readings (e.g. from a handheld spectral sensor)</li>
+  <li><strong>edna_nucleotide</strong>, <strong>taxa_bioinformatics</strong>, <strong>edna_measurement</strong>, <strong>taxa_biodiversity_measurement</strong>, plus 8 eDNA pipeline-output tables — eDNA metabarcoding results, see <a href="#edna-observation-tables">eDNA observation tables</a> above</li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-31">March 31, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_db/landscape/" class="pagination--pager" title="Landscape Schema">Previous</a>
+    
+    
+      <a href="/setup_db/observation_utility/" class="pagination--pager" title="Observation Utility Schema">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

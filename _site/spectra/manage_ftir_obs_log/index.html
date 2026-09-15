@@ -1,0 +1,534 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>FTIR Observation Log - Xspatula</title>
+<meta name="description" content="Inserting FTIR observation log records into the AI4SH database. Each record links a sampling log to the Bruker Invenio FTIR provision with sample handling metadata.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="FTIR Observation Log">
+<meta property="og:url" content="http://localhost:4000/spectra/manage_ftir_obs_log/">
+
+
+  <meta property="og:description" content="Inserting FTIR observation log records into the AI4SH database. Each record links a sampling log to the Bruker Invenio FTIR provision with sample handling metadata.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-06-10T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/spectra/manage_ftir_obs_log/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Load spectral data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/spectra/">Synopsis</a></li>
+            
+              <li><a href="/spectra/manage_foss_ds2500_spectrometer/">FOSS DS2500 spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_foss_ds2500_obs_log/">FOSS DS2500 obs. log</a></li>
+            
+              <li><a href="/spectra/manage_foss_ds2500_obs/">FOSS DS2500 observation</a></li>
+            
+              <li><a href="/spectra/manage_neospectra_spectrometer/">Neospectra spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_neospectra_obs_log/">Neospectra obs. log</a></li>
+            
+              <li><a href="/spectra/manage_neospectra_obs/">Neospectra observation</a></li>
+            
+              <li><a href="/spectra/manage_ftir_spectrometer/">FTIR spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_ftir_obs_log/" class="active">FTIR obs. log</a></li>
+            
+              <li><a href="/spectra/manage_ftir_obs/">FTIR observation</a></li>
+            
+              <li><a href="/spectra/manage_libs_spectrometer/">LIBS spectrometer</a></li>
+            
+              <li><a href="/spectra/manage_libs_obs_log/">LIBS obs. log</a></li>
+            
+              <li><a href="/spectra/manage_libs_obs/">LIBS observation</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+      <hr style="margin: 1em 0;">
+      <p style="font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5em;">Data sections</p>
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Loading data</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/utility/">Utility</a></li>
+            
+              <li><a href="/dataset_meta/">Dataset metadata</a></li>
+            
+              <li><a href="/sample/">Sample</a></li>
+            
+              <li><a href="/wetlab/">Wetlab</a></li>
+            
+              <li><a href="/spectra/">Spectra</a></li>
+            
+              <li><a href="/all_data/">All data</a></li>
+            
+              <li><a href="/insert_vs_translate/">Single-step vs dual-step</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="FTIR Observation Log">
+    <meta itemprop="description" content="Inserting FTIR observation log records into the AI4SH database. Each record links a sampling log to the Bruker Invenio FTIR provision with sample handling metadata.">
+    <meta itemprop="datePublished" content="2026-06-10T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-06-10T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/spectra/manage_ftir_obs_log/" itemprop="url">FTIR Observation Log
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A FTIR observation log links a sampling log to the <code class="language-plaintext highlighter-rouge">bruker invenio s ftir</code> provision. FTIR requires milled samples, so the preparation is <code class="language-plaintext highlighter-rouge">ds2m</code> (dried, sieved to 2 mm, then milled) rather than the <code class="language-plaintext highlighter-rouge">ds2</code> used by the NIR instruments.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li><a href="/spectra/manage_ftir_spectrometer/">Manage FTIR spectrometer</a> must be complete.</li>
+  <li>Sampling logs must exist from <a href="/dataset_meta/">Load dataset metadata</a>.</li>
+  <li>Preparation, preservation, and storage utility records must exist from <a href="/utility/">Load utility data</a>.</li>
+</ul>
+
+<h2 id="notebook-cell">Notebook cell</h2>
+
+<p>In <code class="language-plaintext highlighter-rouge">load_ai4sh_spectral_data.ipynb</code>, the <strong>Manage FTIR observation log</strong> cell runs:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job_file</span> <span class="o">=</span> <span class="sh">'</span><span class="s">import_data/FTIR_spectra/job_ftir_observation_log.json</span><span class="sh">'</span>
+
+<span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span> <span class="o">=</span> <span class="nc">Initiate_process</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">scheme_file</span><span class="p">,</span> <span class="n">job_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">structured_process_D</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="nc">Run_process</span><span class="p">(</span><span class="n">structured_process_D</span><span class="p">,</span> <span class="n">scheme_params_D</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="job-file">Job file</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/FTIR_spectra/job_ftir_observation_log.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"job_folder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"import_data/FTIR_spectra/observation_log"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"process_sub_folder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"pilot_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xspatula_add_observation_log_pilot.txt"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="process-file-example">Process file example</h2>
+
+<p><strong>Path</strong>: <code class="language-plaintext highlighter-rouge">./ai4sh/import_data/FTIR_spectra/observation_log/process/ai4sh_ch_lens_2026@ftir_ds2m_observation_log.json</code></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manage_observation_log"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"sampling_log_id__sampling_log_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai4sh_ch_lens_2025"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"provision_id__provision_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bruker invenio s ftir"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai4sh_ch_lens_2026@ftir_ds2m"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"contact_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"thomas gumbricht"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"contact_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"thomas.gumbricht@natgeo.su.se"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"preparation_id__preparation_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ds2m"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"preservation_id__preservation_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ds2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"storage_id__storage_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"amb"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"laboratory"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>14 observation log process files — one per field site.</p>
+
+<h2 id="parameters">Parameters</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sampling_log_id__sampling_log_name</code></td>
+      <td>FK lookup: parent sampling log</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provision_id__provision_name</code></td>
+      <td>FK lookup: <code class="language-plaintext highlighter-rouge">bruker invenio s ftir</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">name</code></td>
+      <td>Observation log name — pattern: <code class="language-plaintext highlighter-rouge">&lt;sampling_log_year+1&gt;@ftir_&lt;preparation&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">contact_name</code></td>
+      <td>Responsible person</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">contact_email</code></td>
+      <td>Contact email</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">preparation_id__preparation_name</code></td>
+      <td>FK lookup: <code class="language-plaintext highlighter-rouge">ds2m</code> (dried, sieved 2 mm, milled)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">preservation_id__preservation_name</code></td>
+      <td>FK lookup: preservation method</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">storage_id__storage_name</code></td>
+      <td>FK lookup: storage condition</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">laboratory</code></td>
+      <td>Integer flag — <code class="language-plaintext highlighter-rouge">1</code> for laboratory observations</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="next-step">Next step</h2>
+
+<p>Proceed to <a href="/spectra/manage_ftir_obs/">Manage FTIR observation</a>.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-06-10">June 10, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/spectra/manage_ftir_obs/" class="pagination--pager" title="FTIR Observation">Previous</a>
+    
+    
+      <a href="/spectra/manage_ftir_spectrometer/" class="pagination--pager" title="FTIR Spectrometer">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

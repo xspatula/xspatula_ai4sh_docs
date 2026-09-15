@@ -1,9 +1,10 @@
-_site/
+#_site/
 .jekyll-cache/
 .sass-cache/
 .bundle/
 vendor/
 Gemfile.lock
 .DS_Store
-.claude/
-for_claude.md
+#.claude/
+#for_claude.md
+notes/

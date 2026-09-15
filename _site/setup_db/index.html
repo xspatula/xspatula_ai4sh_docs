@@ -1,0 +1,561 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Setup AI4SH Database - Xspatula</title>
+<meta name="description" content="Seeding the AI4SoilHealth postgreSQL database using the Xspatula framework. This guide covers running the setup notebook, editing the scheme file, and the full order of JSON process files.">
+
+
+  <meta name="author" content="Thomas Gumbricht">
+  
+  <meta property="article:author" content="Thomas Gumbricht">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Xspatula">
+<meta property="og:title" content="Setup AI4SH Database">
+<meta property="og:url" content="http://localhost:4000/setup_db/">
+
+
+  <meta property="og:description" content="Seeding the AI4SoilHealth postgreSQL database using the Xspatula framework. This guide covers running the setup notebook, editing the scheme file, and the full order of JSON process files.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+  <meta property="article:modified_time" content="2026-03-31T08:00:00+02:00">
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/setup_db/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xspatula Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.enable_copy_code_button = true;
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="https://xspectre.com" target="_blank" rel="noopener noreferrer"><img src="/assets/media/xspectre_logo-trans_480.png" alt="Script your own environ"></a>
+        
+        <a class="site-title" href="https://xspatula.github.io">
+          Script your own environ
+          <span class="site-subtitle">Database-integrated Python modelling</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/setup_db/"
+                 title="Setting up the AI4SoilHealth database"
+                
+              >Setup DB</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/auditing/"
+                 title="AI4SoilHealth database auditing setup and function"
+                
+              >Audit</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_community/"
+                 title="Setting up AI4SoilHealth organisations and users"
+                
+              >Community</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/setup_process/"
+                 title="Setting up the AI4SoilHealth processes"
+                
+              >Setup processes</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/loading_data/"
+                 title="Loading AI4SoilHealth data into the database"
+                
+              >Loading data</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="https://xspatula.github.io/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      <nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <span class="nav__sub-title">Setup AI4SoilHealth database</span>
+          
+
+          
+          <ul>
+            
+              <li><a href="/setup_db/" class="active">Introduction</a></li>
+            
+              <li><a href="/setup_db/schemas/">Schemas</a></li>
+            
+              <li><a href="/setup_db/utility/">Utility</a></li>
+            
+              <li><a href="/setup_db/community/">Community</a></li>
+            
+              <li><a href="/setup_db/process/">Process</a></li>
+            
+              <li><a href="/setup_db/observation_utility/">Observation utility</a></li>
+            
+              <li><a href="/setup_db/observation/">Observation</a></li>
+            
+              <li><a href="/setup_db/landscape/">Landscape</a></li>
+            
+          </ul>
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Setup AI4SH Database">
+    <meta itemprop="description" content="Seeding the AI4SoilHealth postgreSQL database using the Xspatula framework. This guide covers running the setup notebook, editing the scheme file, and the full order of JSON process files.">
+    <meta itemprop="datePublished" content="2026-03-31T08:00:00+02:00">
+    <meta itemprop="dateModified" content="2026-03-31T08:00:00+02:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/setup_db/" itemprop="url">Setup AI4SH Database
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Seeding the AI4SH database uses the same Xspatula JSON-driven workflow described in the <a href="https://xspatula.github.io/setup_core_db_docs/">Xspatula python and DB model environment documentation</a>. What this site adds is the full set of AI4SH-specific process files that define the schemas, tables and processes for a comprehensive soil data repository.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before running the AI4SH database setup you need:</p>
+
+<ul>
+  <li>A running postgreSQL installation where you are superuser — see <a href="https://xspatula.github.io/setup_core_db_docs/setup_db/postgres/">PostgreSQL setup</a></li>
+  <li>The Xspatula framework installed and a working Anaconda environment — see <a href="https://xspatula.github.io/setup_core_db_docs/setup_db/anaconda/">Anaconda setup</a></li>
+  <li>The <code class="language-plaintext highlighter-rouge">load_ai4sh_db</code> repository cloned to your machine:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/xspatula/load_ai4sh_db
+</code></pre></div></div>
+
+<h2 id="the-setup-notebook">The setup notebook</h2>
+
+<p>The database setup is driven by the Jupyter notebook:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/setup_db.ipynb
+</code></pre></div></div>
+
+<p>Open this notebook in VS Code or Jupyter Lab. It has an imports cell you can run as-is, followed by three cells that matter:</p>
+
+<ol>
+  <li><strong>Scheme file</strong> — set the path to your <a href="https://xspatula.github.io/setup_core_db_docs/framework/scheme_file/">scheme file</a></li>
+  <li><strong>Setup database</strong> — runs <code class="language-plaintext highlighter-rouge">Initiate_database</code>, pointed at the <a href="https://xspatula.github.io/setup_core_db_docs/framework/job_file//">job file</a> <code class="language-plaintext highlighter-rouge">job_setup_db.json</code>. This creates every schema and table, and — as a side effect — also (re)writes the audit config files described under <a href="#the-pilot-file">The pilot file</a> below.</li>
+  <li><strong>Apply audit triggers</strong> <em>(optional)</em> — runs <code class="language-plaintext highlighter-rouge">Initiate_audit</code>, pointed at <code class="language-plaintext highlighter-rouge">job_setup_audit.json</code>. This is what actually creates the audit log table and every table’s trigger. Skip it and the database simply has no auditing; run it any time later (or re-run it after adding a new table’s <code class="language-plaintext highlighter-rouge">"audit"</code> key) — it always re-applies the complete current config. See <a href="/auditing/setup/">Auditing setup</a> for the full walkthrough.</li>
+</ol>
+
+<h2 id="edit-the-scheme-file">Edit the scheme file</h2>
+
+<p>The scheme file for setting up the AI4SH database is at:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/zzz/scheme_ai4sh_local_setup.json
+</code></pre></div></div>
+
+<p>You must edit this file before running the notebook. At minimum change the postgreSQL superuser credentials and the database name. Note this scheme file’s own passwords are plaintext (postgreSQL role credentials) — a different thing from the <code class="language-plaintext highlighter-rouge">community.user</code> password you’ll set further below under <a href="#default-community-records">Default community records</a>, which must be a bcrypt hash; see <a href="/setup_community/bootstrap_user/">Bootstrap user</a> if you’re about to jump straight to running the notebook.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"project_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./ai4sh"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"postgresdb"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"db"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai4sh"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"user_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_postgres_superuser"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_postgres_superuser_password"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"db_users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"community_admin"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"guessing-rubble-garden-opera"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"community_admin"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"login_evaluation"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hippodrome-bicycle-concert-shuttle"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"login_evaluation"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tablecloth-summerleaf-riverbasin-vacuumcleaner"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_0"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"secret-parsimony-archipelago-hedgehog"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_1"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sailing-courageous-upsidedown-castle"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_2"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_3"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rollerscates-forever-skyline-coconut"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_3"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_4"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"superfluid-altruistic-guitarplayer-climatechange"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_4"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fireplace-olympicgames-grassroot-luminescence"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_cat_5"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"execute"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"verbose"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"overwrite"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"delete"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>You can alternatively use a <code class="language-plaintext highlighter-rouge">.netrc</code> file for credentials — replace <code class="language-plaintext highlighter-rouge">user_name</code> and <code class="language-plaintext highlighter-rouge">password</code> with <code class="language-plaintext highlighter-rouge">"host_netrc_id": "your_netrc_machine_code"</code>. See <a href="https://xspatula.github.io/setup_core_db_docs/setup_db/netrc/">.netrc setup</a> in the core documentation.</p>
+
+<p>Change the default passwords for all <code class="language-plaintext highlighter-rouge">db_users</code> before deploying to any non-local environment.</p>
+
+<h2 id="the-pilot-file">The pilot file</h2>
+
+<p>There are two pilot files, used by two different cells above:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pilot file</th>
+      <th>Used by</th>
+      <th>Maintained</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">db_xspatula_ai4sh_setup.txt</code></td>
+      <td>“Setup database” cell (<code class="language-plaintext highlighter-rouge">job_setup_db.json</code>)</td>
+      <td>Hand-maintained</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">db_xspatula_ai4sh_audit.txt</code></td>
+      <td>“Apply audit triggers” cell (<code class="language-plaintext highlighter-rouge">job_setup_audit.json</code>)</td>
+      <td>Auto-generated — its own header says “do not hand-edit”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="the-core-database-pilot-file">The core database pilot file</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_setup.txt
+</code></pre></div></div>
+
+<p>This text file lists all process JSON files in the order they must be executed. The order matters because schemas must exist before tables, and reference tables before tables that reference them.</p>
+
+<p>The full execution order is:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">schema/schema_v10_sql.json</code> — create all 8 schemas</li>
+  <li><code class="language-plaintext highlighter-rouge">utility/utility_v10_sql.json</code> — utility tables</li>
+  <li><code class="language-plaintext highlighter-rouge">utility/territory_v10_sql.json</code> — territory reference data</li>
+  <li><code class="language-plaintext highlighter-rouge">community/</code> — user categories, organisations and users</li>
+  <li><code class="language-plaintext highlighter-rouge">process/</code> — process and process parameter tables</li>
+  <li><code class="language-plaintext highlighter-rouge">observation_utility/</code> — 38 JSON files defining reference catalogue tables (independent first, then dependent), plus 9 eDNA metabarcoding catalogue files</li>
+  <li><code class="language-plaintext highlighter-rouge">observation/</code> — dataset, campaign, sample and observation tables, including eDNA observation tables</li>
+  <li><code class="language-plaintext highlighter-rouge">landscape/</code> — landscape utility and observation tables</li>
+</ol>
+
+<p>Each section is described in detail in the following pages.</p>
+
+<h3 id="the-audit-pilot-file--generated-not-hand-edited">The audit pilot file — generated, not hand-edited</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_audit.txt
+</code></pre></div></div>
+
+<p>You never write this file yourself. Every table’s own <code class="language-plaintext highlighter-rouge">create_table</code> definition may carry an
+inline <code class="language-plaintext highlighter-rouge">"audit": {"INSERT": bool, "UPDATE": bool, "DELETE": bool}</code> key — running the “Setup
+database” cell above scans every table’s key across the whole core pilot list and (re)writes
+this pilot file, plus one <code class="language-plaintext highlighter-rouge">audit_triggers_&lt;schema&gt;_v10_sql.json</code> per schema, to match. This is
+pure file assembly — no database connection is used and no audit objects exist yet at this
+point.</p>
+
+<p>Running the “Apply audit triggers” cell then executes this generated pilot file against the
+database, creating the actual triggers. See <a href="/auditing/setup/">Auditing setup</a> for the full
+mechanism, including how to add auditing to a new table.</p>
+
+<h2 id="default-community-records">Default community records</h2>
+
+<p>Before running the notebook, also edit the default organisation and user records:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/zzz/ai4sh/setup_db/json_ai4sh/community/organisation_records_v10_sql.json
+./setup/zzz/ai4sh/setup_db/json_ai4sh/community/user_records_v10_sql.json
+</code></pre></div></div>
+
+<p>These files insert at least one default organisation and user into the database. The inserted user name and password must match the <code class="language-plaintext highlighter-rouge">user_project</code> credentials in subsequent (non-setup) scheme files.</p>
+
+<p>You must also edit the records for inserting the initial processes – used for defining all other processes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/zzz/ai4sh/setup_db/json_ai4sh/process/processes_records_v10_sql.json
+</code></pre></div></div>
+
+<p>You must change the name of the <code class="language-plaintext highlighter-rouge">creator</code> to the name of a user you just defined in all records to be inserted. If the user is not found in the database when running this command, the script will return an error.</p>
+
+<h2 id="run-the-notebook">Run the notebook</h2>
+
+<p>With the scheme file edited and the notebook pointing to it, run all cells in <code class="language-plaintext highlighter-rouge">setup_db.ipynb</code>. The framework will connect to your postgreSQL cluster, create the database, and execute all process files in pilot file order.</p>
+
+<p>To delete and rebuild the database, use:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./setup/delete_db.ipynb
+</code></pre></div></div>
+
+<p>with a scheme file where <code class="language-plaintext highlighter-rouge">"delete": true</code>.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-31">March 31, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/setup_db/community/" class="pagination--pager" title="Community Schema">Previous</a>
+    
+    
+      <a href="/setup_db/landscape/" class="pagination--pager" title="Landscape Schema">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/xspatula" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/thomas-gumbricht-588a2a23" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://scholar.google.com/citations?user=v9-kWvcAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google-scholar" aria-hidden="true"></i> Google scholar</a></li>
+        
+      
+        
+          <li><a href="https://orcid.org/0000-0002-5125-4487" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-orcid" aria-hidden="true"></i> Orcid</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2013 - 2026 <a href="http://localhost:4000">Xspatula</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
