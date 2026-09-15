@@ -14,7 +14,7 @@ last_modified_at: 2026-08-21 08:00:00 +0200
 
 ## Process file
 
-**File**: `./setup/zzz/ai4sh/setup_processes/json_ai4sh/translate/insert_tabular_data_v10_sql.json`
+**File**: `./setup/zzz/ai4sh/setup_processes/json/translate/insert_tabular_data_v10_sql.json`
 
 ## Registered process
 

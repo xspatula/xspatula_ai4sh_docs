@@ -55,7 +55,7 @@ Each new table gets its own independent `manage_*` process via `add_process` —
 
 **Why independent processes, not the existing array-parameter fan-out mechanism.** `src/ai4sh/import_data/import_data.py`'s `_Define_specifics` already has code that infers a target junction table from a parameter name ending in `_array` and containing `__`, splitting it into multiple records automatically. It's flagged `# TG TODO` in the source and infers its target column via fragile string-splitting — not a mechanism worth adding new load-bearing usage to. This is a deliberate design choice, worth keeping documented here so a future reader doesn't "helpfully" wire a new array-shaped field through that mechanism instead of writing a proper `manage_*` process.
 
-**Pilot-list wiring**, for a reader replicating this pattern for a new column: in `ai4sh_setup_processes.txt`, the two `*_tag_v10_sql.json` files sit in the existing observation section, right after `sampling_log_v10_sql.json`. The two `cultivation_*_v10_sql.json` files got a **new** `### landscape ###` section, since `setup_processes` previously had no landscape-schema entries at all.
+**Pilot-list wiring**, for a reader replicating this pattern for a new column: in `setup_processes.txt`, the two `*_tag_v10_sql.json` files sit in the existing observation section, right after `sampling_log_v10_sql.json`. The two `cultivation_*_v10_sql.json` files got a **new** `### landscape ###` section, since `setup_processes` previously had no landscape-schema entries at all.
 
 ## Audit coverage
 

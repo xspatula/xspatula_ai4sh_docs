@@ -14,7 +14,7 @@ Root processes are named families that group related processes. Every process in
 
 ## Process file
 
-**File**: `./setup/zzz/ai4sh/setup_processes/json_ai4sh/root_process/root_processes_v10_sql.json`
+**File**: `./setup/zzz/ai4sh/setup_processes/json/root_process/root_processes_v10_sql.json`
 
 ## Registered root processes
 

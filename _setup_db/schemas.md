@@ -14,7 +14,7 @@ The AI4SH database is organised into 8 postgreSQL schemas. Schemas group related
 
 ## The schema process file
 
-**File**: `./setup/zzz/ai4sh/setup_db/json_ai4sh/schema/schema_v10_sql.json`
+**File**: `./setup/zzz/ai4sh/setup_db/json/schema/schema_v10_sql.json`
 
 This single file creates all 8 schemas using repeated calls to the `create_schema` process:
 

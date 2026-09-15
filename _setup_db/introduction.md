@@ -43,7 +43,7 @@ Open this notebook in VS Code or Jupyter Lab. It has an imports cell you can run
 The scheme file for setting up the AI4SH database is at:
 
 ```
-./setup/zzz/scheme_ai4sh_local_setup.json
+./setup/zzz/scheme_local_setup.json
 ```
 
 You must edit this file before running the notebook. At minimum change the postgreSQL superuser credentials and the database name. Note this scheme file's own passwords are plaintext (postgreSQL role credentials) — a different thing from the `community.user` password you'll set further below under [Default community records](#default-community-records), which must be a bcrypt hash; see [Bootstrap user][setup_community_bootstrap_user] if you're about to jump straight to running the notebook.
@@ -121,13 +121,13 @@ There are two pilot files, used by two different cells above:
 
 | Pilot file | Used by | Maintained |
 |---|---|---|
-| `db_xspatula_ai4sh_setup.txt` | "Setup database" cell (`job_setup_db.json`) | Hand-maintained |
-| `db_xspatula_ai4sh_audit.txt` | "Apply audit triggers" cell (`job_setup_audit.json`) | Auto-generated — its own header says "do not hand-edit" |
+| `db_setup.txt` | "Setup database" cell (`job_setup_db.json`) | Hand-maintained |
+| `db_audit.txt` | "Apply audit triggers" cell (`job_setup_audit.json`) | Auto-generated — its own header says "do not hand-edit" |
 
 ### The core database pilot file
 
 ```
-./setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_setup.txt
+./setup/zzz/ai4sh/setup_db/db_setup.txt
 ```
 
 This text file lists all process JSON files in the order they must be executed. The order matters because schemas must exist before tables, and reference tables before tables that reference them.
@@ -148,7 +148,7 @@ Each section is described in detail in the following pages.
 ### The audit pilot file — generated, not hand-edited
 
 ```
-./setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_audit.txt
+./setup/zzz/ai4sh/setup_db/db_audit.txt
 ```
 
 You never write this file yourself. Every table's own `create_table` definition may carry an
@@ -167,8 +167,8 @@ mechanism, including how to add auditing to a new table.
 Before running the notebook, also edit the default organisation and user records:
 
 ```
-./setup/zzz/ai4sh/setup_db/json_ai4sh/community/organisation_records_v10_sql.json
-./setup/zzz/ai4sh/setup_db/json_ai4sh/community/user_records_v10_sql.json
+./setup/zzz/ai4sh/setup_db/json/community/organisation_records_v10_sql.json
+./setup/zzz/ai4sh/setup_db/json/community/user_records_v10_sql.json
 ```
 
 These files insert at least one default organisation and user into the database. The inserted user name and password must match the `user_project` credentials in subsequent (non-setup) scheme files.
@@ -176,7 +176,7 @@ These files insert at least one default organisation and user into the database.
 You must also edit the records for inserting the initial processes -- used for defining all other processes:
 
 ```
-./setup/zzz/ai4sh/setup_db/json_ai4sh/process/processes_records_v10_sql.json
+./setup/zzz/ai4sh/setup_db/json/process/processes_records_v10_sql.json
 ```
 
 You must change the name of the `creator` to the name of a user you just defined in all records to be inserted. If the user is not found in the database when running this command, the script will return an error.

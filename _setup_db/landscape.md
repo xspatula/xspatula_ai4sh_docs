@@ -14,7 +14,7 @@ The AI4SH database uses two schemas for landscape data: `landscape_utility` hold
 
 ## Process files
 
-All 6 files live under `json_ai4sh/landscape/` — there is no separate `landscape_utility/`
+All 6 files live under `json/landscape/` — there is no separate `landscape_utility/`
 folder; files in this one folder create tables in both schemas:
 
 | File | Schema | Tables created |

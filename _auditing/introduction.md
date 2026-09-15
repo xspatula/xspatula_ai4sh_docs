@@ -105,7 +105,7 @@ This is almost certainly the role you want to connect DBeaver as for the queries
 
 Auditing is opt-in per table and applied in a separate step from database setup — see
 [Auditing setup][auditing_setup] for the full walkthrough, including the config files under
-`setup/zzz/ai4sh/setup_db/json_ai4sh/audit/` (these are now **generated build artifacts, not
+`setup/zzz/ai4sh/setup_db/json/audit/` (these are now **generated build artifacts, not
 hand-edited files** — the only thing you ever hand-edit is a table's own `"audit"` key).
 
 See [Auditing queries][auditing_queries] for how to actually read this log day-to-day, and [Setup DB][setup_db] for how the schemas and tables it audits are created in the first place.

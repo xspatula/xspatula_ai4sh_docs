@@ -25,7 +25,7 @@ The process setup is driven by the Jupyter notebook:
 This notebook uses a separate scheme file from the database setup:
 
 ```
-./setup/zzz/scheme_ai4sh_local_use.json
+./setup/zzz/scheme_local_use.json
 ```
 
 This scheme file uses ordinary user credentials (not the postgreSQL superuser) to connect to the already-created database.
@@ -35,7 +35,7 @@ This scheme file uses ordinary user credentials (not the postgreSQL superuser) t
 The job file for process setup points to:
 
 ```
-./setup/zzz/ai4sh/setup_processes/ai4sh_setup_processes.txt
+./setup/zzz/ai4sh/setup_processes/setup_processes.txt
 ```
 
 This pilot file lists the process JSON files to execute, grouped by schema. The execution order is:

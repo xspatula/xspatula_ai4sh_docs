@@ -16,7 +16,7 @@ This is distinct from the `manage_table_data` root: translate processes write JS
 
 ## Process file
 
-**File**: `./setup/zzz/ai4sh/setup_processes/json_ai4sh/translate/translate_tabular_data_v10_sql.json`
+**File**: `./setup/zzz/ai4sh/setup_processes/json/translate/translate_tabular_data_v10_sql.json`
 
 ## Registered process
 

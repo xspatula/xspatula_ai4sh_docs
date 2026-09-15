@@ -15,7 +15,7 @@ separate, optional step from creating the database at all.
 
 ## Declaring coverage on a table
 
-Every table's `create_table` definition (under `setup/zzz/ai4sh/setup_db/json_ai4sh/...`) may
+Every table's `create_table` definition (under `setup/zzz/ai4sh/setup_db/json/...`) may
 carry a sibling `"audit"` key:
 
 ```json
@@ -42,7 +42,7 @@ from it automatically.
 1. **"Setup database"** — the cell you already run to create/update every schema and table.
    As a side effect, it scans every table's `"audit"` key across the whole pilot list
    and (re)writes the per-schema `audit_triggers_<schema>_v10_sql.json` files, plus a
-   generated pilot file, `db_xspatula_ai4sh_audit.txt` (its own header says "do not
+   generated pilot file, `db_audit.txt` (its own header says "do not
    hand-edit" — treat it the same way you'd treat any other build artifact). This step is
    **pure file assembly** — it does not touch the database, create any audit objects, or need
    a live Postgres connection. After running only this cell, no audit triggers exist yet.
@@ -69,7 +69,7 @@ exist, cell 2 skips straight to applying the current trigger config.
 
 ## Config files: shipped vs. generated
 
-Everything lives under `setup/zzz/ai4sh/setup_db/json_ai4sh/audit/`, but the files there fall
+Everything lives under `setup/zzz/ai4sh/setup_db/json/audit/`, but the files there fall
 into two very different categories.
 
 **Shipped with the framework** — these 3 files come with xspatula itself and don't change per
@@ -95,7 +95,7 @@ each time from every table's `"audit"` key. For AI4SH today that's 7 files (ever
 | `audit_triggers_process_v10_sql.json` | `process` |
 | `audit_triggers_utility_v10_sql.json` | `utility` |
 
-Plus, at the pilot-file level: `setup/zzz/ai4sh/setup_db/db_xspatula_ai4sh_audit.txt` — the
+Plus, at the pilot-file level: `setup/zzz/ai4sh/setup_db/db_audit.txt` — the
 generated pilot file cell 2 runs. All 7 generated files (and the pilot file) are build
 artifacts. If you edit one by hand, the next "Setup database" run will overwrite your edit —
 change the source table's `"audit"` key instead.

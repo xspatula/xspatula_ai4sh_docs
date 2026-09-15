@@ -17,7 +17,7 @@ Observation utility processes register the operations for managing every referen
 Process files are located at:
 
 ```
-./setup/zzz/ai4sh/setup_processes/json_ai4sh/observation_utility/
+./setup/zzz/ai4sh/setup_processes/json/observation_utility/
 ```
 
 | File | Process registered | Target table | Min stratum |
@@ -55,7 +55,7 @@ Process files are located at:
 | `edna_sequencing_v10_sql.json` | `manage_metabarcoding_sequencing` | `observation_utility.sequencing` | 4 |
 | `edna_metabarcoding_pipeline_v10_sql.json` | `manage_metabarcoding_pipeline` | `observation_utility.metabarcoding_pipeline` | 4 |
 
-**Not yet in the pilot list.** These five `edna_*` process files exist on disk but, unlike every other file in this table, are not yet referenced by `ai4sh_setup_processes.txt` — running `setup_processes.ipynb` today will not register them. Add them to the pilot list before relying on the eDNA `manage_metabarcoding_*` processes.
+**Not yet in the pilot list.** These five `edna_*` process files exist on disk but, unlike every other file in this table, are not yet referenced by `setup_processes.txt` — running `setup_processes.ipynb` today will not register them. Add them to the pilot list before relying on the eDNA `manage_metabarcoding_*` processes.
 
 ## Access level
 

@@ -15,7 +15,7 @@ The `community` schema manages organisations and users. Some of this relies on t
 - `community/organisation_v10_sql.json` — registers `manage_organisation` against `community.organisation`
 - `community/user_v10_sql.json` — registers `manage_user` against `community.user`
 
-Both follow the same `add_process` pattern documented for `manage_person` in [Observation Processes][setup_process_observation], and are wired into the pilot list `ai4sh_setup_processes.txt` under a `### COMMUNITY ###` section, right after `utility/territory_v10_sql.json` and before `### OBSERVATION UTILITIES ###`.
+Both follow the same `add_process` pattern documented for `manage_person` in [Observation Processes][setup_process_observation], and are wired into the pilot list `setup_processes.txt` under a `### COMMUNITY ###` section, right after `utility/territory_v10_sql.json` and before `### OBSERVATION UTILITIES ###`.
 
 ## What the framework provides by default
 

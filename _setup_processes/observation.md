@@ -17,7 +17,7 @@ Observation processes register the operations for managing data in the `observat
 Process files are located at:
 
 ```
-./setup/zzz/ai4sh/setup_processes/json_ai4sh/observation/
+./setup/zzz/ai4sh/setup_processes/json/observation/
 ```
 
 | File | Process registered | Target table(s) | Min stratum |
