@@ -90,7 +90,7 @@ ORDER BY id;
 
 Three things are missing from the log **by design**, not by accident:
 
-- `INSERT`s on `observation`/`landscape` tables — those schemas audit `UPDATE`/`DELETE` only, see [Auditing][auditing_introduction].
+- `INSERT`s on the bulk-loaded tables — most `observation` tables (samples, measurements, spectra, eDNA ASVs and abundances) and `organism_utility.taxon` audit `UPDATE`/`DELETE` only, see [Auditing][auditing_introduction].
 - Anything on `audit.logged_actions` itself except `UPDATE`/`DELETE` — it audits itself, but never its own `INSERT` (the self-audit recursion gotcha, also covered on the previous page).
 - Anything at all on a table with no `"audit"` key — it simply isn't audited, see [Auditing setup][auditing_setup].
 

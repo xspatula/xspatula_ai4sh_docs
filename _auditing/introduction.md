@@ -62,8 +62,8 @@ inline, on its own `create_table` definition:
 No `"audit"` key at all (or one where every value is `false`) means that table simply isn't
 audited — see [Auditing setup][auditing_setup] for how this key is declared and applied.
 
-A snapshot of current coverage, verified against a live database on 2026-08-19 — **this is a
-snapshot, not a permanent list**; coverage is now driven by an inline key on each table rather
+A snapshot of current coverage, taken from the `"audit"` keys of the setup JSON files in the pilot `db_setup.txt` on 2026-10-01 — **this is a
+snapshot, not a permanent list**; coverage is driven by an inline key on each table rather
 than a fixed file, so it will keep changing as tables are added. Check current coverage
 yourself (query 8 in [Auditing queries][auditing_queries]) rather than trust a number written
 into documentation:
@@ -73,16 +73,21 @@ into documentation:
 | `community` | 5 | yes |
 | `process` | 9 | yes |
 | `utility` | 2 | yes |
-| `observation_utility` | 65 | yes |
-| `landscape_utility` | 17 | yes |
-| `observation` | 50 | no (`UPDATE`/`DELETE` only) |
-| `landscape` | 8 | no (`UPDATE`/`DELETE` only) |
+| `observation_utility` | 54 | yes |
+| `organism_utility` | 6 | yes, except `taxon` (`UPDATE`/`DELETE` only) |
+| `landscape_utility` | 16 | yes |
+| `observation` | 41 | 31 tables `UPDATE`/`DELETE` only; 10 tables also `INSERT` (see below) |
+| `landscape` | 2 | yes |
+| `organism` | 0 | — the schema has no tables yet, so there is nothing to audit |
 | `audit` (self-audit) | 1 | no, and never can be — see below |
 
 The rule in one sentence per group:
 
-- **Full coverage** (`community`, `process`, `utility`, `observation_utility`, `landscape_utility`) — admin/config data, or catalogue/reference tables (`indicator`, `taxa`, `apparatus`, `unit`, `land_use_order`, etc.) that get added one row at a time, usually by hand. Knowing when a new catalogue entry was created has real audit value.
-- **`UPDATE`/`DELETE` only** (`observation`, `landscape`) — bulk pipeline-written data: samples, measurements, spectra. Auditing every `INSERT` here would double the write volume on an import batch of thousands of rows, for no real audit gain — the row's own existence already proves it was created.
+- **Full coverage** (`community`, `process`, `utility`, `observation_utility`, `organism_utility`, `landscape_utility`, `landscape`) — admin/config data, or catalogue/reference tables (`indicator`, `apparatus`, `unit`, `software`, `taxonomy_reference`, `landuse_order`, etc.) that get added one row at a time, usually by hand. Knowing when a new catalogue entry was created has real audit value.
+- **`UPDATE`/`DELETE` only** — bulk pipeline-written data: samples, measurements, spectra, eDNA ASVs and abundances in `observation`, and the taxon tree `organism_utility.taxon`, which is bulk-loaded from eDNA lineages. Auditing every `INSERT` here would double the write volume on an import batch of thousands of rows, for no real audit gain — the row's own existence already proves it was created.
+- **Exceptions in `observation`** — the hand-entered provenance tables `person`, `campaign`, `campaign_meta`, `campaign_tag`, `campaign_method_tier`, `sampling_log`, `geolocation`, `observation_log`, and the macrofauna tables `monolith` and `macrofauna` are fully audited, including `INSERT`.
+
+The `organism` schema is created by the schema file but holds no tables (see [Organism schema][setup_db_organism]). When tables are added to it, give each an `"audit"` key like any other table: taxon-level observation values written in bulk follow the `UPDATE`/`DELETE`-only group.
 
 When adding a new table to the schema: a new catalogue/reference table follows the full-coverage group; a new bulk pipeline-written table follows the `UPDATE`/`DELETE`-only group. See [Auditing setup][auditing_setup] for the mechanics of declaring and applying this.
 
@@ -113,3 +118,4 @@ See [Auditing queries][auditing_queries] for how to actually read this log day-t
 [auditing_setup]: /auditing/setup/
 [auditing_queries]: /auditing/queries/
 [setup_db]: /setup_db/
+[setup_db_organism]: /setup_db/organism/

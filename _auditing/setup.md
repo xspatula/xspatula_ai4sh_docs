@@ -82,8 +82,9 @@ project or per table:
 | `audit_triggers_audit_v10_sql.json` | The `audit` schema's own self-audit trigger (see the self-audit gotcha above) |
 
 **Auto-generated on every "Setup database" run** — one file per audited schema, written fresh
-each time from every table's `"audit"` key. For AI4SH today that's 7 files (every schema except
-`audit` itself, which is covered by the shipped file above):
+each time from every table's `"audit"` key. For AI4SH today that's 8 files — every schema except
+`audit` itself, which is covered by the shipped file above, and `organism`, which has no tables yet
+and therefore gets no trigger file:
 
 | File | Schema |
 |---|---|
@@ -92,11 +93,12 @@ each time from every table's `"audit"` key. For AI4SH today that's 7 files (ever
 | `audit_triggers_landscape_utility_v10_sql.json` | `landscape_utility` |
 | `audit_triggers_observation_v10_sql.json` | `observation` |
 | `audit_triggers_observation_utility_v10_sql.json` | `observation_utility` |
+| `audit_triggers_organism_utility_v10_sql.json` | `organism_utility` |
 | `audit_triggers_process_v10_sql.json` | `process` |
 | `audit_triggers_utility_v10_sql.json` | `utility` |
 
 Plus, at the pilot-file level: `setup/zzz/ai4sh/setup_db/db_audit.txt` — the
-generated pilot file cell 2 runs. All 7 generated files (and the pilot file) are build
+generated pilot file cell 2 runs. All 8 generated files (and the pilot file) are build
 artifacts. If you edit one by hand, the next "Setup database" run will overwrite your edit —
 change the source table's `"audit"` key instead.
 
