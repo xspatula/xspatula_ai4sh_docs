@@ -33,7 +33,7 @@ After sequencing, reads are cleaned and grouped. Older pipelines cluster near-id
 k__Fungi|p__Ascomycota|c__Sordariomycetes|o__Hypocreales|f__Nectriaceae|g__Fusarium|s__
 ```
 
-Ranks the reference database cannot resolve are left empty (`s__` above), so the deepest resolved rank varies between ASVs.
+Ranks (taxonomic hierarchical levels) the reference database cannot resolve are left empty (`s__` above), so the deepest resolved rank varies between ASVs.
 
 ### Rarefaction
 
@@ -83,21 +83,7 @@ The central idea is to keep the **method** apart from the **results**. The metho
 
 ### How the tables connect
 
-```
-sampling_log
-  observation_log (provision ai4sh-metabarcoding)
-    observation (one per sample)
-      observation_measurement ──→ indicator            (19 summary indicators)
-      edna_asv_abundance ──→ edna_asv ──→ organism_utility.taxon ──→ taxon_rank
-                                   │                           └──→ taxonomy_reference
-                                   └──→ method_pipeline ──→ analysis_method ←── provision_indicator
-                                             │
-                                             └── method_pipeline_step ──→ lab_protocol
-                                                                     ├──→ edna_primer_pair
-                                                                     ├──→ software
-                                                                     └──→ taxonomy_reference
-      edna_run_step ──→ method_pipeline_step
-```
+![How the eDNA tables connect]({{ "/assets/media/edna/edna_overview.png" | relative_url }})
 
 The link to the ordinary indicator machinery runs through `analysis_method`: provision `ai4sh-metabarcoding` delivers 19 indicators via `provision_indicator`; 9 prokaryote indicators use analysis method `ai4sh 16s metabarcoding`, 10 fungal indicators use `ai4sh its metabarcoding`, and each analysis method has exactly one `method_pipeline`.
 

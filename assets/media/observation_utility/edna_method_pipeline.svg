@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1103" height="700" viewBox="0 0 1103 700" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill: #ffffff; stroke: #3a6ea5; stroke-width: 1.5; }
+    .head { stroke: #3a6ea5; stroke-width: 1.5; }
+    .title { font-size: 15px; font-weight: bold; fill: #1a1a1a; }
+    .title.ext { font-weight: normal; font-style: italic; fill: #444444; }
+    .field { font-size: 12px; fill: #333333; }
+    .edge { stroke: #3a6ea5; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .lbl { font-size: 11px; fill: #555555; }
+  </style>
+  <rect x="0" y="0" width="1103" height="700" fill="#ffffff"/>
+  <!-- analysis_method -->
+  <g>
+    <rect class="head" x="30" y="30" width="230" height="30" style="fill:#dcefdc"/>
+    <rect class="box" x="30" y="60" width="230" height="97"/>
+    <text class="title" x="42" y="50">analysis_method</text>
+    <text class="field" x="42" y="83">id (PK)</text>
+    <text class="field" x="42" y="100">name (UK)</text>
+    <text class="field" x="42" y="117">display_name</text>
+    <text class="field" x="42" y="134">standard_schema, standard_code</text>
+    <text class="field" x="42" y="151">url</text>
+  </g>
+  <!-- method_pipeline -->
+  <g>
+    <rect class="head" x="30" y="250" width="200" height="30" style="fill:#dcefdc"/>
+    <rect class="box" x="30" y="280" width="200" height="97"/>
+    <text class="title" x="42" y="270">method_pipeline</text>
+    <text class="field" x="42" y="303">id (PK)</text>
+    <text class="field" x="42" y="320">name (UK)</text>
+    <text class="field" x="42" y="337">version</text>
+    <text class="field" x="42" y="354">analysis_method_id (FK)</text>
+    <text class="field" x="42" y="371">url, doi, abstract</text>
+  </g>
+  <!-- method_pipeline_step -->
+  <g>
+    <rect class="head" x="360" y="200" width="270" height="30" style="fill:#dcefdc"/>
+    <rect class="box" x="360" y="230" width="270" height="199"/>
+    <text class="title" x="372" y="220">method_pipeline_step</text>
+    <text class="field" x="372" y="253">id (PK)</text>
+    <text class="field" x="372" y="270">method_pipeline_id (FK)</text>
+    <text class="field" x="372" y="287">step</text>
+    <text class="field" x="372" y="304">stage (laboratory | bioinformatics)</text>
+    <text class="field" x="372" y="321">name</text>
+    <text class="field" x="372" y="338">lab_protocol_id (FK)</text>
+    <text class="field" x="372" y="355">edna_primer_pair_id (FK)</text>
+    <text class="field" x="372" y="372">software_id (FK)</text>
+    <text class="field" x="372" y="389">taxonomy_reference_id (FK)</text>
+    <text class="field" x="372" y="406">parameters (JSONB)</text>
+    <text class="field" x="372" y="423">UNIQUE (method_pipeline_id, step)</text>
+  </g>
+  <!-- lab_protocol -->
+  <g>
+    <rect class="head" x="760" y="30" width="200" height="30" style="fill:#dcefdc"/>
+    <rect class="box" x="760" y="60" width="200" height="97"/>
+    <text class="title" x="772" y="50">lab_protocol</text>
+    <text class="field" x="772" y="83">id (PK)</text>
+    <text class="field" x="772" y="100">name (UK)</text>
+    <text class="field" x="772" y="117">protocol_type</text>
+    <text class="field" x="772" y="134">kit, manufacturer</text>
+    <text class="field" x="772" y="151">platform, strategy</text>
+  </g>
+  <!-- edna_primer_pair -->
+  <g>
+    <rect class="head" x="760" y="185" width="230" height="30" style="fill:#dcefdc"/>
+    <rect class="box" x="760" y="215" width="230" height="97"/>
+    <text class="title" x="772" y="205">edna_primer_pair</text>
+    <text class="field" x="772" y="238">id (PK)</text>
+    <text class="field" x="772" y="255">name (UK)</text>
+    <text class="field" x="772" y="272">marker_gene, target_region</text>
+    <text class="field" x="772" y="289">forward_name, forward_sequence</text>
+    <text class="field" x="772" y="306">reverse_name, reverse_sequence</text>
+  </g>
+  <!-- software -->
+  <g>
+    <rect class="head" x="760" y="340" width="200" height="30" style="fill:#dcefdc"/>
+    <rect class="box" x="760" y="370" width="200" height="80"/>
+    <text class="title" x="772" y="360">software</text>
+    <text class="field" x="772" y="393">id (PK)</text>
+    <text class="field" x="772" y="410">name, version</text>
+    <text class="field" x="772" y="427">alias (UK) = name version</text>
+    <text class="field" x="772" y="444">url, doi</text>
+  </g>
+  <!-- organism_utility.taxonomy_reference -->
+  <g>
+    <rect class="head" x="760" y="480" width="313" height="30" style="fill:#f4f4f4" stroke-dasharray="5,3"/>
+    <rect class="box" x="760" y="510" width="313" height="80" stroke-dasharray="5,3"/>
+    <text class="title ext" x="772" y="500">organism_utility.taxonomy_reference</text>
+    <text class="field" x="772" y="533">id (PK)</text>
+    <text class="field" x="772" y="550">name, version</text>
+    <text class="field" x="772" y="567">alias (UK) = name version</text>
+    <text class="field" x="772" y="584">marker_gene</text>
+  </g>
+  <path class="edge" d="M145,157 C145,209 130,198 130,250"/>
+  <path class="edge" d="M230,314 C298,314 292,246 360,246"/>
+  <path class="edge" d="M760,94 C654,94 736,308 630,308"/>
+  <path class="edge" d="M760,248 C692,248 698,328 630,328"/>
+  <path class="edge" d="M760,395 C692,395 698,349 630,349"/>
+  <path class="edge" d="M760,535 C676,535 714,369 630,369"/>
+  <rect x="30" y="620" width="18" height="12" style="fill:#dcefdc" stroke="#3a6ea5"/>
+  <text class="lbl" x="54" y="630">observation_utility</text>
+  <rect x="203" y="620" width="18" height="12" style="fill:#f4f4f4" stroke="#3a6ea5" stroke-dasharray="4,2"/>
+  <text class="lbl" x="227" y="630">table in another page / schema</text>
+  <text class="lbl" x="30" y="660">One method_pipeline per analysis_method (e.g. ai4sh-16s, ai4sh-its), with numbered steps.</text>
+  <text class="lbl" x="30" y="680">Each step references the lab protocol, primer pair, software version and taxonomy reference it used (all nullable).</text>
+</svg>

@@ -85,6 +85,8 @@ Key columns and constraints:
 | `method_pipeline` | `name`, `version` (default `'unspecified'`), `analysis_method_id`, `url`, `doi`, `abstract` | `name` UNIQUE; `analysis_method_id` NOT NULL |
 | `method_pipeline_step` | `method_pipeline_id`, `step`, `stage`, `name`, `lab_protocol_id`, `edna_primer_pair_id`, `software_id`, `taxonomy_reference_id`, `parameters` (JSONB, default `{}`), `abstract` | `UNIQUE (method_pipeline_id, step)`; `stage` ∈ {`laboratory`, `bioinformatics`}; the four references are nullable |
 
+![eDNA method catalogues and method pipelines]({{ "/assets/media/observation_utility/edna_method_pipeline.png" | relative_url }})
+
 **Structure only**: these setup files create the tables and — for `software`, `edna_primer_pair` and `lab_protocol` — insert a blank `id = 0` row; `method_pipeline_v10_sql.json` creates empty tables. The actual content (the two AI4SH pipelines `ai4sh-16s` and `ai4sh-its` with 12 steps each, 7 software tools, 2 primer pairs, 4 lab protocols) is inserted from Excel in the utility insert chain — see [eDNA method catalogues][edna_catalogues].
 
 A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existing `provision_indicator` mechanism: the summary indicators delivered by provision `ai4sh-metabarcoding` point to the analysis methods `ai4sh 16s metabarcoding` and `ai4sh its metabarcoding`, and each of those has exactly one pipeline. For the full eDNA picture, see [eDNA metabarcoding][setup_db_edna].

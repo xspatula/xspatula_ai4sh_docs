@@ -10,9 +10,11 @@ date: 2026-09-30 08:00:00 +0200
 last_modified_at: 2026-09-30 08:00:00 +0200
 ---
 
-The `organism_utility` schema holds the biological reference data of the database — *what* an organism is, as opposed to *how* it was observed. Think of it as a shared family tree: macrofauna counted by hand and fungi found by eDNA sequencing both point to the same `taxon` rows, so a genus is stored once regardless of the method that detected it.
+The `organism_utility` schema holds the biological reference data of the database — *what* an organism is, as opposed to *how* it was observed. Think of it as a shared family tree: macrofauna counted by hand and fungi found by eDNA sequencing both point to the same `taxon`, so a genus is stored once regardless of the method that detected it.
 
 The schema is deliberately limited to biology. Method catalogues — software, primers, lab protocols, pipelines — live in [observation_utility][setup_db_observation_utility], even when they are only used for organisms.
+
+![Organism utility schema]({{ "/assets/media/organism_utility/organism_utility.png" | relative_url }})
 
 ## Process files
 
@@ -115,8 +117,6 @@ Taxon functions are not yet linked to individual taxa or ASVs; the functional va
 | `observation.macrofauna` | `taxon_id` | `organism_utility.taxon` |
 | `observation.edna_asv` | `taxon_id` | `organism_utility.taxon` (deepest resolved rank) |
 | `observation_utility.method_pipeline_step` | `taxonomy_reference_id` | `organism_utility.taxonomy_reference` |
-
-Earlier versions of the database had duplicate taxonomy tables in `observation_utility` (`taxa`, `taxa_level`, `taxa_status`, `taxa_function`). These have been removed; `organism_utility` is the single source of taxonomy.
 
 [setup_db_observation_utility]: /setup_db/observation_utility/
 [setup_process_organism_utility]: /setup_process/organism_utility/

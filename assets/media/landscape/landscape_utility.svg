@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="810" height="540" viewBox="0 0 810 540" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill: #ffffff; stroke: #3a6ea5; stroke-width: 1.5; }
+    .head { stroke: #3a6ea5; stroke-width: 1.5; }
+    .title { font-size: 15px; font-weight: bold; fill: #1a1a1a; }
+    .title.ext { font-weight: normal; font-style: italic; fill: #444444; }
+    .field { font-size: 12px; fill: #333333; }
+    .edge { stroke: #3a6ea5; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .lbl { font-size: 11px; fill: #555555; }
+  </style>
+  <rect x="0" y="0" width="810" height="540" fill="#ffffff"/>
+  <!-- landuse_order -->
+  <g>
+    <rect class="head" x="30" y="30" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="30" y="60" width="200" height="63"/>
+    <text class="title" x="42" y="50">landuse_order</text>
+    <text class="field" x="42" y="83">id (PK)</text>
+    <text class="field" x="42" y="100">name (UK), alias (UK)</text>
+    <text class="field" x="42" y="117">display_name, abstract</text>
+  </g>
+  <!-- landuse_family -->
+  <g>
+    <rect class="head" x="30" y="180" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="30" y="210" width="200" height="80"/>
+    <text class="title" x="42" y="200">landuse_family</text>
+    <text class="field" x="42" y="233">id (PK)</text>
+    <text class="field" x="42" y="250">landuse_order_id (FK)</text>
+    <text class="field" x="42" y="267">name (UK), alias (UK)</text>
+    <text class="field" x="42" y="284">display_name, abstract</text>
+  </g>
+  <!-- landuse_genus -->
+  <g>
+    <rect class="head" x="30" y="350" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="30" y="380" width="200" height="80"/>
+    <text class="title" x="42" y="370">landuse_genus</text>
+    <text class="field" x="42" y="403">id (PK)</text>
+    <text class="field" x="42" y="420">landuse_family_id (FK)</text>
+    <text class="field" x="42" y="437">name (UK), alias (UK)</text>
+    <text class="field" x="42" y="454">display_name, abstract</text>
+  </g>
+  <!-- landcover_order -->
+  <g>
+    <rect class="head" x="300" y="30" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="300" y="60" width="200" height="63"/>
+    <text class="title" x="312" y="50">landcover_order</text>
+    <text class="field" x="312" y="83">id (PK)</text>
+    <text class="field" x="312" y="100">name (UK), alias (UK)</text>
+    <text class="field" x="312" y="117">display_name, abstract</text>
+  </g>
+  <!-- landcover_family -->
+  <g>
+    <rect class="head" x="300" y="180" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="300" y="210" width="200" height="80"/>
+    <text class="title" x="312" y="200">landcover_family</text>
+    <text class="field" x="312" y="233">id (PK)</text>
+    <text class="field" x="312" y="250">landcover_order_id (FK)</text>
+    <text class="field" x="312" y="267">name (UK), alias (UK)</text>
+    <text class="field" x="312" y="284">display_name, abstract</text>
+  </g>
+  <!-- landcover_genus -->
+  <g>
+    <rect class="head" x="300" y="350" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="300" y="380" width="200" height="80"/>
+    <text class="title" x="312" y="370">landcover_genus</text>
+    <text class="field" x="312" y="403">id (PK)</text>
+    <text class="field" x="312" y="420">landcover_family_id (FK)</text>
+    <text class="field" x="312" y="437">name (UK), alias (UK)</text>
+    <text class="field" x="312" y="454">display_name, abstract</text>
+  </g>
+  <!-- soil classification -->
+  <g>
+    <rect class="head" x="580" y="30" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="580" y="60" width="200" height="63"/>
+    <text class="title" x="592" y="50">soil classification</text>
+    <text class="field" x="592" y="83">soil_texture_usda</text>
+    <text class="field" x="592" y="100">soil_texture_isss</text>
+    <text class="field" x="592" y="117">reference_soil_group</text>
+  </g>
+  <!-- other catalogues -->
+  <g>
+    <rect class="head" x="580" y="170" width="200" height="30" style="fill:#e6ddf3"/>
+    <rect class="box" x="580" y="200" width="200" height="131"/>
+    <text class="title" x="592" y="190">other catalogues</text>
+    <text class="field" x="592" y="223">major_landform</text>
+    <text class="field" x="592" y="240">slope_position</text>
+    <text class="field" x="592" y="257">sky_condition</text>
+    <text class="field" x="592" y="274">ground_condition</text>
+    <text class="field" x="592" y="291">soil_preparation</text>
+    <text class="field" x="592" y="308">crop_growth_stage</text>
+    <text class="field" x="592" y="325">biogeo16_eu</text>
+  </g>
+  <path class="edge" d="M130,123 C130,159 130,144 130,180"/>
+  <path class="edge" d="M130,290 C130,327 130,313 130,350"/>
+  <path class="edge" d="M400,123 C400,159 400,144 400,180"/>
+  <path class="edge" d="M400,290 C400,327 400,313 400,350"/>
+  <text class="lbl" x="30" y="500">Land use and land cover are 3-level hierarchies (order &gt; family &gt; genus); all other catalogues are independent.</text>
+  <text class="lbl" x="30" y="520">Every catalogue table has id, name, alias, display_name and abstract.</text>
+</svg>

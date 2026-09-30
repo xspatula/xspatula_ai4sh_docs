@@ -39,7 +39,7 @@ The `observation` schema stores actual soil property data. Data is organised in 
 
 ## eDNA observation tables
 
-eDNA metabarcoding results use the normal hierarchy — dataset → campaign → sampling log → observation log (provision `ai4sh-metabarcoding`) → observation. The 19 summary indicators per sample (richness, Shannon, Simpson, Pielou, Chao1, functional predictions) are ordinary indicator values in `observation_measurement`. What is new is the community composition — which organisms were found and how abundant they were — held in three dedicated tables:
+eDNA metabarcoding results use the normal hierarchy — dataset → campaign → sampling log → observation log → observation. The 19 summary indicators per sample (richness, Shannon, Simpson, Pielou, Chao1, functional predictions) are ordinary indicator values in `observation_measurement`. What is new is the community composition — which organisms were found and how abundant they were — held in three dedicated tables:
 
 | Table | Columns | Constraints | Description |
 |---|---|---|---|
@@ -47,16 +47,18 @@ eDNA metabarcoding results use the normal hierarchy — dataset → campaign →
 | `edna_asv_abundance` | `observation_id`, `edna_asv_id`, `rel_abundance`, `read_count`, `raw_read_count` | PK `(observation_id, edna_asv_id)`; index on `edna_asv_id` | Abundance of an ASV in one observation. Only non-zero values are stored. `read_count` is the **rarefied** count; `raw_read_count` is empty until the lab delivers unrarefied counts |
 | `edna_run_step` | `observation_id`, `method_pipeline_step_id`, `reads_in`, `reads_out` | PK `(observation_id, method_pipeline_step_id)` | Reads entering and leaving each bioinformatics step per observation (e.g. DADA2 denoising stats). Created but empty |
 
+![eDNA observation tables]({{ "/assets/media/observation/edna.png" | relative_url }})
+
 All three are audited on `UPDATE` and `DELETE` only — the bulk `INSERT` of hundreds of thousands of abundance rows is not written to the audit log.
 
 The *method* behind these results (primers, kits, software versions, reference databases, parameters) is not repeated per record — it is reached through `edna_asv.method_pipeline_id` → `observation_utility.method_pipeline` → `method_pipeline_step`. See [eDNA metabarcoding][setup_db_edna] for the full picture.
 
-The `organism` folder also holds `observation_measurement_taxon_v10_sql.json`, which creates `observation.taxon_observation_measurement` (taxon-level indicator values). It is not in the pilot file — see [Organism][setup_db_organism].
+The `organism` folder also holds `observation_measurement_taxon_v10_sql.json`, which creates `observation.taxon_observation_measurement` (taxon-level indicator values). It is not in the pilot file and must be inserted as a utility beforehand — see [Organism][setup_db_organism].
 
 ## Table hierarchy
 
 `sample` and `observation_log` are **siblings** — both children of `sampling_log`, not one
-nested inside the other — and both converge as parallel foreign keys on `observation`:
+nested inside the other. This is needed because several different types of observations (each defined by its own `observation_log`) can be made on the same sample; it is also possible to repeat an observation of the same type on the same sample at a later time, again requiring a separate `observation_log`. To solve this in the database both `sample` and `observation_log` converge as parallel foreign keys on `observation`:
 
 ```
 data_source

@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1090" height="840" viewBox="0 0 1090 840" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill: #ffffff; stroke: #3a6ea5; stroke-width: 1.5; }
+    .head { stroke: #3a6ea5; stroke-width: 1.5; }
+    .title { font-size: 15px; font-weight: bold; fill: #1a1a1a; }
+    .title.ext { font-weight: normal; font-style: italic; fill: #444444; }
+    .field { font-size: 12px; fill: #333333; }
+    .edge { stroke: #3a6ea5; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .lbl { font-size: 11px; fill: #555555; }
+  </style>
+  <rect x="0" y="0" width="1090" height="840" fill="#ffffff"/>
+  <!-- landuse_observation -->
+  <g>
+    <rect class="head" x="30" y="30" width="200" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="30" y="60" width="200" height="97"/>
+    <text class="title" x="42" y="50">landuse_observation</text>
+    <text class="field" x="42" y="83">id (PK)</text>
+    <text class="field" x="42" y="100">sampling_log_id (FK)</text>
+    <text class="field" x="42" y="117">geolocation_id (FK)</text>
+    <text class="field" x="42" y="134">landuse_genus_id (FK)</text>
+    <text class="field" x="42" y="151">observed_at</text>
+  </g>
+  <!-- landcover_observation -->
+  <g>
+    <rect class="head" x="290" y="30" width="200" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="290" y="60" width="200" height="97"/>
+    <text class="title" x="302" y="50">landcover_observation</text>
+    <text class="field" x="302" y="83">id (PK)</text>
+    <text class="field" x="302" y="100">sampling_log_id (FK)</text>
+    <text class="field" x="302" y="117">geolocation_id (FK)</text>
+    <text class="field" x="302" y="134">landcover_genus_id (FK)</text>
+    <text class="field" x="302" y="151">observed_at</text>
+  </g>
+  <!-- sampling_weather -->
+  <g>
+    <rect class="head" x="560" y="30" width="202" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="560" y="60" width="202" height="97"/>
+    <text class="title" x="572" y="50">sampling_weather</text>
+    <text class="field" x="572" y="83">id (PK)</text>
+    <text class="field" x="572" y="100">geolocation_id (FK)</text>
+    <text class="field" x="572" y="117">sky_condition_id (FK)</text>
+    <text class="field" x="572" y="134">ground_condition_id (FK)</text>
+    <text class="field" x="572" y="151">precipitation, temperature</text>
+  </g>
+  <!-- landscape_geomorphology -->
+  <g>
+    <rect class="head" x="820" y="30" width="214" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="820" y="60" width="214" height="97"/>
+    <text class="title" x="832" y="50">landscape_geomorphology</text>
+    <text class="field" x="832" y="83">id (PK)</text>
+    <text class="field" x="832" y="100">geolocation_id (FK)</text>
+    <text class="field" x="832" y="117">slope, aspect</text>
+    <text class="field" x="832" y="134">major_landform_id (FK)</text>
+    <text class="field" x="832" y="151">slope_position_id (FK)</text>
+  </g>
+  <!-- observation.geolocation -->
+  <g>
+    <rect class="head" x="30" y="260" width="1030" height="30" style="fill:#f4f4f4" stroke-dasharray="5,3"/>
+    <rect class="box" x="30" y="290" width="1030" height="63" stroke-dasharray="5,3"/>
+    <text class="title ext" x="42" y="280">observation.geolocation</text>
+    <text class="field" x="42" y="313">id (PK)</text>
+    <text class="field" x="42" y="330">name (UK)</text>
+    <text class="field" x="42" y="347">x/y, latitude/longitude</text>
+  </g>
+  <!-- cultivation -->
+  <g>
+    <rect class="head" x="160" y="400" width="270" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="160" y="430" width="270" height="97"/>
+    <text class="title" x="172" y="420">cultivation</text>
+    <text class="field" x="172" y="453">id (PK)</text>
+    <text class="field" x="172" y="470">geolocation_id (FK)</text>
+    <text class="field" x="172" y="487">season_start_at, season_ended_at</text>
+    <text class="field" x="172" y="504">organic, regenerative</text>
+    <text class="field" x="172" y="521">irrigation, fertilisation, yield ...</text>
+  </g>
+  <!-- landscape_state -->
+  <g>
+    <rect class="head" x="640" y="400" width="270" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="640" y="430" width="270" height="131"/>
+    <text class="title" x="652" y="420">landscape_state</text>
+    <text class="field" x="652" y="453">id (PK)</text>
+    <text class="field" x="652" y="470">geolocation_id (FK)</text>
+    <text class="field" x="652" y="487">vegetation presence flags</text>
+    <text class="field" x="652" y="504">crop_growth_stage_id (FK)</text>
+    <text class="field" x="652" y="521">erosion flags</text>
+    <text class="field" x="652" y="538">erosion_conservation_measure_id (FK)</text>
+    <text class="field" x="652" y="555">cover percentages</text>
+  </g>
+  <!-- cultivation_crop -->
+  <g>
+    <rect class="head" x="30" y="600" width="209" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="30" y="630" width="209" height="80"/>
+    <text class="title" x="42" y="620">cultivation_crop</text>
+    <text class="field" x="42" y="653">id (PK)</text>
+    <text class="field" x="42" y="670">cultivation_id (FK)</text>
+    <text class="field" x="42" y="687">taxon_id (FK)</text>
+    <text class="field" x="42" y="704">role (main | catch | cover)</text>
+  </g>
+  <!-- cultivation_soil_preparation -->
+  <g>
+    <rect class="head" x="300" y="600" width="255" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="300" y="630" width="255" height="63"/>
+    <text class="title" x="312" y="620">cultivation_soil_preparation</text>
+    <text class="field" x="312" y="653">id (PK)</text>
+    <text class="field" x="312" y="670">cultivation_id (FK)</text>
+    <text class="field" x="312" y="687">soil_preparation_id (FK)</text>
+  </g>
+  <path class="edge" d="M112,260 C112,204 130,213 130,157"/>
+  <path class="edge" d="M370,260 C370,204 390,213 390,157"/>
+  <path class="edge" d="M627,260 C627,204 661,213 661,157"/>
+  <path class="edge" d="M906,260 C906,204 927,213 927,157"/>
+  <path class="edge" d="M288,353 C288,384 295,369 295,400"/>
+  <path class="edge" d="M772,353 C772,384 775,369 775,400"/>
+  <path class="edge" d="M295,527 C295,609 134,518 134,600"/>
+  <path class="edge" d="M295,527 C295,597 428,530 428,600"/>
+  <rect x="30" y="740" width="18" height="12" style="fill:#dbe7f5" stroke="#3a6ea5"/>
+  <text class="lbl" x="54" y="750">landscape</text>
+  <rect x="133" y="740" width="18" height="12" style="fill:#f4f4f4" stroke="#3a6ea5" stroke-dasharray="4,2"/>
+  <text class="lbl" x="157" y="750">table in another page / schema</text>
+  <text class="lbl" x="30" y="780">Every landscape observation is tied to a geolocation (not to a sample), so the history of a location can be recorded.</text>
+  <text class="lbl" x="30" y="800">FKs ending in _genus, _condition, _landform, _position, _stage, _measure and _preparation point to landscape_utility;</text>
+  <text class="lbl" x="30" y="820">cultivation_crop.taxon_id points to organism_utility.taxon.</text>
+</svg>

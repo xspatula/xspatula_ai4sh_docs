@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="689" viewBox="0 0 1180 689" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill: #ffffff; stroke: #3a6ea5; stroke-width: 1.5; }
+    .head { stroke: #3a6ea5; stroke-width: 1.5; }
+    .title { font-size: 15px; font-weight: bold; fill: #1a1a1a; }
+    .title.ext { font-weight: normal; font-style: italic; fill: #444444; }
+    .field { font-size: 12px; fill: #333333; }
+    .edge { stroke: #3a6ea5; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .lbl { font-size: 11px; fill: #555555; }
+  </style>
+  <rect x="0" y="0" width="1180" height="689" fill="#ffffff"/>
+  <!-- taxon_rank -->
+  <g>
+    <rect class="head" x="30" y="30" width="200" height="30" style="fill:#fbe3c8"/>
+    <rect class="box" x="30" y="60" width="200" height="80"/>
+    <text class="title" x="42" y="50">taxon_rank</text>
+    <text class="field" x="42" y="83">id (PK)</text>
+    <text class="field" x="42" y="100">name (UK)</text>
+    <text class="field" x="42" y="117">alias (UK)</text>
+    <text class="field" x="42" y="134">prefix (k__, p__ ...)</text>
+  </g>
+  <!-- taxon_status -->
+  <g>
+    <rect class="head" x="300" y="30" width="200" height="30" style="fill:#fbe3c8"/>
+    <rect class="box" x="300" y="60" width="200" height="63"/>
+    <text class="title" x="312" y="50">taxon_status</text>
+    <text class="field" x="312" y="83">id (PK)</text>
+    <text class="field" x="312" y="100">name (UK)</text>
+    <text class="field" x="312" y="117">abstract</text>
+  </g>
+  <!-- taxonomy_reference -->
+  <g>
+    <rect class="head" x="640" y="30" width="200" height="30" style="fill:#fbe3c8"/>
+    <rect class="box" x="640" y="60" width="200" height="114"/>
+    <text class="title" x="652" y="50">taxonomy_reference</text>
+    <text class="field" x="652" y="83">id (PK)</text>
+    <text class="field" x="652" y="100">name, version</text>
+    <text class="field" x="652" y="117">alias (UK)</text>
+    <text class="field" x="652" y="134">marker_gene</text>
+    <text class="field" x="652" y="151">url, doi</text>
+    <text class="field" x="652" y="168">UNIQUE (name, version)</text>
+  </g>
+  <!-- taxon -->
+  <g>
+    <rect class="head" x="300" y="250" width="240" height="30" style="fill:#fbe3c8"/>
+    <rect class="box" x="300" y="280" width="240" height="165"/>
+    <text class="title" x="312" y="270">taxon</text>
+    <text class="field" x="312" y="303">id (PK)</text>
+    <text class="field" x="312" y="320">parent_taxon_id (FK)</text>
+    <text class="field" x="312" y="337">taxon_rank_id (FK)</text>
+    <text class="field" x="312" y="354">taxon_status_id (FK)</text>
+    <text class="field" x="312" y="371">taxonomy_reference_id (FK)</text>
+    <text class="field" x="312" y="388">name</text>
+    <text class="field" x="312" y="405">scientific_name</text>
+    <text class="field" x="312" y="422">UNIQUE NULLS NOT DISTINCT</text>
+    <text class="field" x="312" y="439">    (parent_taxon_id, name)</text>
+  </g>
+  <!-- taxon_parity -->
+  <g>
+    <rect class="head" x="30" y="380" width="200" height="30" style="fill:#fbe3c8"/>
+    <rect class="box" x="30" y="410" width="200" height="63"/>
+    <text class="title" x="42" y="400">taxon_parity</text>
+    <text class="field" x="42" y="433">id (PK)</text>
+    <text class="field" x="42" y="450">src_taxa_id (FK)</text>
+    <text class="field" x="42" y="467">dst_taxa_id (FK)</text>
+  </g>
+  <!-- taxon_function -->
+  <g>
+    <rect class="head" x="950" y="30" width="200" height="30" style="fill:#fbe3c8"/>
+    <rect class="box" x="950" y="60" width="200" height="80"/>
+    <text class="title" x="962" y="50">taxon_function</text>
+    <text class="field" x="962" y="83">id (PK)</text>
+    <text class="field" x="962" y="100">name (UK)</text>
+    <text class="field" x="962" y="117">abstract</text>
+    <text class="field" x="962" y="134">(not yet linked to taxa)</text>
+  </g>
+  <!-- observation.macrofauna -->
+  <g>
+    <rect class="head" x="30" y="540" width="206" height="30" style="fill:#f4f4f4" stroke-dasharray="5,3"/>
+    <rect class="box" x="30" y="570" width="206" height="29" stroke-dasharray="5,3"/>
+    <text class="title ext" x="42" y="560">observation.macrofauna</text>
+    <text class="field" x="42" y="593">taxon_id (FK)</text>
+  </g>
+  <!-- observation.edna_asv -->
+  <g>
+    <rect class="head" x="330" y="540" width="200" height="30" style="fill:#f4f4f4" stroke-dasharray="5,3"/>
+    <rect class="box" x="330" y="570" width="200" height="29" stroke-dasharray="5,3"/>
+    <text class="title ext" x="342" y="560">observation.edna_asv</text>
+    <text class="field" x="342" y="593">taxon_id (FK)</text>
+  </g>
+  <!-- observation_utility.method_pipeline_step -->
+  <g>
+    <rect class="head" x="640" y="540" width="354" height="30" style="fill:#f4f4f4" stroke-dasharray="5,3"/>
+    <rect class="box" x="640" y="570" width="354" height="29" stroke-dasharray="5,3"/>
+    <text class="title ext" x="652" y="560">observation_utility.method_pipeline_step</text>
+    <text class="field" x="652" y="593">taxonomy_reference_id (FK)</text>
+  </g>
+  <path class="edge" d="M130,140 C130,226 214,289 300,289"/>
+  <path class="edge" d="M400,123 C400,190 420,183 420,250"/>
+  <path class="edge" d="M740,174 C740,274 640,308 540,308"/>
+  <path class="edge" d="M540,308 C600,298 600,348 540,338"/>
+  <text class="lbl" x="588" y="327">parent</text>
+  <path class="edge" d="M300,348 C254,348 276,426 230,426"/>
+  <path class="edge" d="M348,445 C348,552 133,433 133,540"/>
+  <path class="edge" d="M444,445 C444,498 430,487 430,540"/>
+  <path class="edge" d="M800,174 C800,349 817,365 817,540"/>
+  <rect x="30" y="629" width="18" height="12" style="fill:#fbe3c8" stroke="#3a6ea5"/>
+  <text class="lbl" x="54" y="639">organism_utility</text>
+  <rect x="182" y="629" width="18" height="12" style="fill:#f4f4f4" stroke="#3a6ea5" stroke-dasharray="4,2"/>
+  <text class="lbl" x="206" y="639">table in another page / schema</text>
+  <text class="lbl" x="30" y="669">taxon is a self-referencing tree: each node points to its parent; species store the epithet in name and the binomial in scientific_name.</text>
+</svg>

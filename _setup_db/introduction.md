@@ -60,42 +60,37 @@ You must edit this file before running the notebook. At minimum change the postg
     "db_users": [
       {
         "user_id": "community_admin",
-        "password": "guessing-rubble-garden-opera",
+        "password": "set_your_password_for_community_admin",
         "role": "community_admin"
       },
       {
         "user_id": "login_evaluation",
-        "password": "hippodrome-bicycle-concert-shuttle",
+        "password": "set_your_password_for_login_evaluation",
         "role": "login_evaluation"
       },
       {
-        "user_id": "user_cat_0",
-        "password": "tablecloth-summerleaf-riverbasin-vacuumcleaner",
-        "role": "user_cat_0"
-      },
-      {
         "user_id": "user_cat_1",
-        "password": "secret-parsimony-archipelago-hedgehog",
+        "password": "set_your_password_for_user_cat_1",
         "role": "user_cat_1"
       },
       {
         "user_id": "user_cat_2",
-        "password": "sailing-courageous-upsidedown-castle",
+        "password": "set_your_password_for_user_cat_2",
         "role": "user_cat_2"
       },
       {
         "user_id": "user_cat_3",
-        "password": "rollerscates-forever-skyline-coconut",
+        "password": "set_your_password_for_user_cat_3",
         "role": "user_cat_3"
       },
       {
         "user_id": "user_cat_4",
-        "password": "superfluid-altruistic-guitarplayer-climatechange",
+        "password": "set_your_password_for_user_cat_4",
         "role": "user_cat_4"
       },
       {
         "user_id": "user_cat_5",
-        "password": "fireplace-olympicgames-grassroot-luminescence",
+        "password": "set_your_password_for_user_cat_5",
         "role": "user_cat_5"
       }
     ]

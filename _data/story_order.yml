@@ -1,0 +1,89 @@
+# Flat reading order for the custom previous/next pagination in
+# _includes/post_pagination.html. It follows the collection order of the site:
+# the collections in the order of the main navigation (Setup DB, Audit,
+# Community, Setup processes, Loading data), and within each collection the
+# sidebar order in _data/navigation.yml. Loading data runs through its
+# sub-collections in the order of the "loading_data" sidebar.
+# Add new pages here in their intended reading position; a page missing from
+# this list simply gets no previous/next links rather than a wrong one.
+
+- /setup_db/
+- /setup_db/schemas/
+- /setup_db/utility/
+- /setup_db/community/
+- /setup_db/process/
+- /setup_db/observation_utility/
+- /setup_db/observation/
+- /setup_db/organism_utility/
+- /setup_db/organism/
+- /setup_db/landscape/
+- /setup_db/edna_metabarcoding/
+- /auditing/
+- /auditing/setup/
+- /auditing/queries/
+- /setup_community/
+- /setup_community/bootstrap_user/
+- /setup_community/smtp_email/
+- /setup_community/excel_intake/
+- /setup_community/register_notebook/
+- /setup_community/welcome_email/
+- /setup_process/
+- /setup_process/root_process/
+- /setup_process/translate/
+- /setup_process/insert/
+- /setup_process/path_resolution/
+- /setup_process/community/
+- /setup_process/utility/
+- /setup_process/observation_utility/
+- /setup_process/observation/
+- /setup_process/organism_utility/
+- /setup_process/organism/
+- /setup_process/schema_conventions/
+- /loading_data/
+- /utility/
+- /utility/insert_utility_data/
+- /utility/translate_general_utilities/
+- /utility/manage_general_utilities/
+- /utility/translate_observation_utilities/
+- /utility/manage_observation_utilities/
+- /utility/translate_observation_utilities_inherit/
+- /utility/manage_observation_utilities_inherit/
+- /dataset_meta/
+- /dataset_meta/insert_dataset_meta/
+- /dataset_meta/translate_dataset/
+- /dataset_meta/manage_data_source/
+- /dataset_meta/manage_person/
+- /dataset_meta/manage_dataset/
+- /dataset_meta/manage_campaign/
+- /dataset_meta/manage_sampling_log/
+- /sample/
+- /sample/insert_sample_data/
+- /sample/translate_geotag_sample/
+- /sample/manage_sample_geolocation/
+- /sample/manage_sample/
+- /wetlab/
+- /wetlab/insert_wetlab_data/
+- /wetlab/translate_ai4sh_wetlab_data/
+- /wetlab/manage_ai4sh_agrolab_obs_log/
+- /wetlab/manage_ai4sh_wetlab_data/
+- /spectra/
+- /spectra/manage_foss_ds2500_spectrometer/
+- /spectra/manage_foss_ds2500_obs_log/
+- /spectra/manage_foss_ds2500_obs/
+- /spectra/manage_neospectra_spectrometer/
+- /spectra/manage_neospectra_obs_log/
+- /spectra/manage_neospectra_obs/
+- /spectra/manage_ftir_spectrometer/
+- /spectra/manage_ftir_obs_log/
+- /spectra/manage_ftir_obs/
+- /spectra/manage_libs_spectrometer/
+- /spectra/manage_libs_obs_log/
+- /spectra/manage_libs_obs/
+- /edna/
+- /edna/prepare_edna_data/
+- /edna/edna_catalogues/
+- /edna/insert_edna_observation/
+- /edna/insert_taxon/
+- /edna/insert_edna_asv/
+- /all_data/
+- /insert_vs_translate/

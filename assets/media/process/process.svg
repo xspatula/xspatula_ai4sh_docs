@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1021" height="794" viewBox="0 0 1021 794" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill: #ffffff; stroke: #3a6ea5; stroke-width: 1.5; }
+    .head { stroke: #3a6ea5; stroke-width: 1.5; }
+    .title { font-size: 15px; font-weight: bold; fill: #1a1a1a; }
+    .title.ext { font-weight: normal; font-style: italic; fill: #444444; }
+    .field { font-size: 12px; fill: #333333; }
+    .edge { stroke: #3a6ea5; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .lbl { font-size: 11px; fill: #555555; }
+  </style>
+  <rect x="0" y="0" width="1021" height="794" fill="#ffffff"/>
+  <!-- community.user -->
+  <g>
+    <rect class="head" x="720" y="100" width="200" height="30" style="fill:#f4f4f4" stroke-dasharray="5,3"/>
+    <rect class="box" x="720" y="130" width="200" height="29" stroke-dasharray="5,3"/>
+    <text class="title ext" x="732" y="120">community.user</text>
+    <text class="field" x="732" y="153">user_name (UK)</text>
+  </g>
+  <!-- root_process -->
+  <g>
+    <rect class="head" x="400" y="30" width="200" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="400" y="60" width="200" height="80"/>
+    <text class="title" x="412" y="50">root_process</text>
+    <text class="field" x="412" y="83">id (PK)</text>
+    <text class="field" x="412" y="100">root_process (UK)</text>
+    <text class="field" x="412" y="117">title, label</text>
+    <text class="field" x="412" y="134">creator (FK)</text>
+  </g>
+  <!-- process -->
+  <g>
+    <rect class="head" x="390" y="250" width="220" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="390" y="280" width="220" height="114"/>
+    <text class="title" x="402" y="270">process</text>
+    <text class="field" x="402" y="303">id (PK)</text>
+    <text class="field" x="402" y="320">root_process (FK)</text>
+    <text class="field" x="402" y="337">process (UK)</text>
+    <text class="field" x="402" y="354">min_user_stratum</text>
+    <text class="field" x="402" y="371">title, label</text>
+    <text class="field" x="402" y="388">creator (FK)</text>
+  </g>
+  <!-- process_parameter -->
+  <g>
+    <rect class="head" x="30" y="190" width="202" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="30" y="220" width="202" height="114"/>
+    <text class="title" x="42" y="210">process_parameter</text>
+    <text class="field" x="42" y="243">id (PK)</text>
+    <text class="field" x="42" y="260">process (FK)</text>
+    <text class="field" x="42" y="277">parent, element, parameter</text>
+    <text class="field" x="42" y="294">parameter_type</text>
+    <text class="field" x="42" y="311">required</text>
+    <text class="field" x="42" y="328">default_value, hint</text>
+  </g>
+  <!-- process_parameter_set_value -->
+  <g>
+    <rect class="head" x="30" y="390" width="247" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="30" y="420" width="247" height="80"/>
+    <text class="title" x="42" y="410">process_parameter_set_value</text>
+    <text class="field" x="42" y="443">id (PK)</text>
+    <text class="field" x="42" y="460">process (FK)</text>
+    <text class="field" x="42" y="477">parent, element, parameter</text>
+    <text class="field" x="42" y="494">value, label</text>
+  </g>
+  <!-- process_parameter_minmax -->
+  <g>
+    <rect class="head" x="30" y="555" width="222" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="30" y="585" width="222" height="80"/>
+    <text class="title" x="42" y="575">process_parameter_minmax</text>
+    <text class="field" x="42" y="608">id (PK)</text>
+    <text class="field" x="42" y="625">process (FK)</text>
+    <text class="field" x="42" y="642">parent, element, parameter</text>
+    <text class="field" x="42" y="659">minval, maxval</text>
+  </g>
+  <!-- process_parameter_schema_table -->
+  <g>
+    <rect class="head" x="720" y="210" width="271" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="720" y="240" width="271" height="114"/>
+    <text class="title" x="732" y="230">process_parameter_schema_table</text>
+    <text class="field" x="732" y="263">id (PK)</text>
+    <text class="field" x="732" y="280">process (FK)</text>
+    <text class="field" x="732" y="297">parameter</text>
+    <text class="field" x="732" y="314">in_schema, in_table</text>
+    <text class="field" x="732" y="331">write</text>
+    <text class="field" x="732" y="348">array_column ...</text>
+  </g>
+  <!-- process_parameter_permission -->
+  <g>
+    <rect class="head" x="720" y="400" width="255" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="720" y="430" width="255" height="97"/>
+    <text class="title" x="732" y="420">process_parameter_permission</text>
+    <text class="field" x="732" y="453">id (PK)</text>
+    <text class="field" x="732" y="470">process (FK)</text>
+    <text class="field" x="732" y="487">parameter</text>
+    <text class="field" x="732" y="504">column_update</text>
+    <text class="field" x="732" y="521">column_delete</text>
+  </g>
+  <!-- process_parameter_inherit -->
+  <g>
+    <rect class="head" x="720" y="570" width="250" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="720" y="600" width="250" height="114"/>
+    <text class="title" x="732" y="590">process_parameter_inherit</text>
+    <text class="field" x="732" y="623">id (PK)</text>
+    <text class="field" x="732" y="640">process (FK)</text>
+    <text class="field" x="732" y="657">parameter</text>
+    <text class="field" x="732" y="674">src_schema, src_table, src_column</text>
+    <text class="field" x="732" y="691">search_column, search_object</text>
+    <text class="field" x="732" y="708">filter_column, filter_value</text>
+  </g>
+  <!-- process_parameter_auto_name -->
+  <g>
+    <rect class="head" x="390" y="555" width="247" height="30" style="fill:#dbe7f5"/>
+    <rect class="box" x="390" y="585" width="247" height="80"/>
+    <text class="title" x="402" y="575">process_parameter_auto_name</text>
+    <text class="field" x="402" y="608">id (PK)</text>
+    <text class="field" x="402" y="625">process (FK)</text>
+    <text class="field" x="402" y="642">parameter</text>
+    <text class="field" x="402" y="659">concat</text>
+  </g>
+  <path class="edge" d="M500,140 C500,200 500,190 500,250"/>
+  <text class="lbl" x="506" y="191">root_process</text>
+  <path class="edge" d="M720,118 C656,118 664,96 600,96"/>
+  <text class="lbl" x="666" y="103">creator</text>
+  <path class="edge" d="M720,144 C646,144 577,176 577,250"/>
+  <text class="lbl" x="654" y="193">creator</text>
+  <path class="edge" d="M390,300 C309,300 313,262 232,262"/>
+  <path class="edge" d="M390,329 C328,329 339,445 277,445"/>
+  <path class="edge" d="M390,358 C267,358 375,610 252,610"/>
+  <path class="edge" d="M610,300 C670,300 660,282 720,282"/>
+  <path class="edge" d="M610,329 C680,329 650,464 720,464"/>
+  <path class="edge" d="M610,358 C748,358 582,642 720,642"/>
+  <path class="edge" d="M500,394 C500,476 514,473 514,555"/>
+  <text class="lbl" x="30" y="754">Every parameter table references process.process by its unique name (process), not by id.</text>
+  <text class="lbl" x="30" y="774">root_process and process record their creator by community.user.user_name.</text>
+</svg>

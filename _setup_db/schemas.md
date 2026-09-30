@@ -39,16 +39,16 @@ This single file creates all 10 schemas using repeated calls to the `create_sche
 
 | Schema | Type | Purpose |
 |---|---|---|
-| `utility` | Framework default | General support catalogues shared across schemas (territory etc.) |
-| `community` | Framework default | Organisations and users; manages all database access |
-| `process` | Framework default | Process definitions and parameter specifications |
-| `audit` | Framework default | Audit when and by whom data in core tables were changed |
-| `landscape_utility` | AI4SH | Reference catalogues for landscape classification |
-| `landscape` | AI4SH | Landscape observations |
+| `utility` | Framework default | General support catalogues shared across schemas (territory etc.) — see [Utility][setup_db_utility] |
+| `community` | Framework default | Organisations and users; manages all database access — see [Community][setup_db_community] |
+| `process` | Framework default | Process definitions and parameter specifications — see [Process][setup_db_process] |
+| `audit` | Framework default | Audit when and by whom data in core tables were changed — see [Auditing][auditing] |
+| `landscape_utility` | AI4SH | Reference catalogues for landscape classification — see [Landscape][setup_db_landscape] |
+| `landscape` | AI4SH | Landscape observations — see [Landscape][setup_db_landscape] |
 | `organism_utility` | AI4SH | Biological reference data: the taxon tree, taxon ranks, status, functions and the taxonomy reference databases (e.g. SILVA, UNITE) — see [Organism utility][setup_db_organism_utility] |
 | `organism` | AI4SH | Reserved for organism-level observations; no tables in the setup pilot yet — see [Organism][setup_db_organism] |
-| `observation_utility` | AI4SH | Reference catalogues for FAIR-compliant soil data (units, methods, instruments, software, eDNA primer pairs, lab protocols, method pipelines, etc.) |
-| `observation` | AI4SH | Actual soil property data (datasets, campaigns, samples, observations, eDNA ASVs and abundances) |
+| `observation_utility` | AI4SH | Reference catalogues for FAIR-compliant soil data (units, methods, instruments, software, eDNA primer pairs, lab protocols, method pipelines, etc.) — see [Observation utility][setup_db_observation_utility] |
+| `observation` | AI4SH | Actual soil property data (datasets, campaigns, samples, observations, eDNA ASVs and abundances) — see [Observation][setup_db_observation] |
 
 The four **framework default** schemas (`utility`, `community`, `process`, `audit`) are created for every Xspatula database, not just AI4SH. Their table structure is the same as described in the [core framework documentation][setup_core_db_docs_schemas]. The remaining schemas are specific to the AI4SH project.
 
@@ -73,3 +73,8 @@ This is reflected in the execution order of the pilot file — utility and commu
 [setup_db_organism_utility]: /setup_db/organism_utility/
 [setup_db_organism]: /setup_db/organism/
 [setup_db_edna]: /setup_db/edna_metabarcoding/
+[setup_db_utility]: /setup_db/utility/
+[setup_db_community]: /setup_db/community/
+[setup_db_process]: /setup_db/process/
+[auditing]: /auditing/
+[setup_db_landscape]: /setup_db/landscape/
