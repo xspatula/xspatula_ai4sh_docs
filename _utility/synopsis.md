@@ -85,6 +85,19 @@ There are three sub-groups within observation utilities:
 | `provision_indicator.xlsx` | `provision_indicator` | `provision`, `indicator`, `analysis_method`, `unit` |
 | `provision_serial_nr.xlsx` | `provision_serial_nr` | `provision` |
 
+**eDNA method catalogues** (inserted last in the observation utility chain, section `EDNA UTILITIES` of `insert_observation_utility.txt`):
+
+| Excel file | Database table | Requires |
+|---|---|---|
+| `software.xlsx` | `observation_utility.software` | — |
+| `taxonomy_reference.xlsx` | `organism_utility.taxonomy_reference` | — |
+| `edna_primer_pair.xlsx` | `observation_utility.edna_primer_pair` | — |
+| `lab_protocol.xlsx` | `observation_utility.lab_protocol` | — |
+| `method_pipeline.xlsx` | `observation_utility.method_pipeline` | `analysis_method` |
+| `method_pipeline_step.xlsx` | `observation_utility.method_pipeline_step` | all of the above |
+
+How to fill these in is described in [eDNA method catalogues][edna_catalogues].
+
 Source: `./ai4sh/import_data/utility/observation/excel/`
 
 ## Required loading sequence
@@ -113,3 +126,4 @@ utilities → observation utilities with inheritance, translate and insert combi
 [Manage observation utilities]: /utility/manage_observation_utilities/
 [Translate observation utilities with inheritance]: /utility/translate_observation_utilities_inherit/
 [Manage observation utilities with inheritance]: /utility/manage_observation_utilities_inherit/
+[edna_catalogues]: /edna/edna_catalogues/

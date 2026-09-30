@@ -20,12 +20,12 @@ These two stages are also covered, with focus on creating the AI4SH database and
 To get started you need to clone or download the AI4SH data loading package from [GitHub][github]:
 
 ```bash
-git clone https://github.com/xspatula/load_ai4sh_db
+git clone https://github.com/xspatula/xspatula_ai4sh
 ```
 
 ## Outline of the AI4SH postgreSQL database
 
-The AI4SH postgres database contains 8 schemas:
+The AI4SH postgres database contains 10 schemas:
 
 - **utility** — support tables for general information used across schemas (default framework schema)
 - **community** — organisations and users; all users logging into the system must be registered here (default framework schema)
@@ -33,8 +33,10 @@ The AI4SH postgres database contains 8 schemas:
 - **audit** — logs who changed what, when, in every audited table (default framework schema)
 - **landscape_utility** — reference tables for landscape classification
 - **landscape** — landscape observations
-- **observation_utility** — catalogues and reference data required for FAIR-compliant soil observations (units, methods, instruments, taxa, eDNA metabarcoding methods, etc.)
-- **observation** — actual soil property data, organised through datasets, campaigns, samples and observations, including eDNA results
+- **observation_utility** — catalogues and reference data required for FAIR-compliant soil observations (units, methods, instruments, software, eDNA primer pairs, lab protocols, method pipelines, etc.)
+- **observation** — actual soil property data, organised through datasets, campaigns, samples and observations, including eDNA ASVs and abundances
+- **organism_utility** — the taxonomic backbone: taxon tree, ranks, status, functions and taxonomy reference databases (SILVA, UNITE)
+- **organism** — reserved for organism-level observations (no tables loaded yet)
 
 ## Seeding the database
 
@@ -56,9 +58,29 @@ Data is loaded in a mandatory sequence — each stage depends on records from th
 | [Sample data][sample] | `insert_ai4sh_sample_data.ipynb` | `load_ai4sh_sample_data.ipynb` | 5 |
 | [Wetlab data][wetlab] | `insert_ai4sh_wetlab_data.ipynb` | `load_ai4sh_wetlab_data.ipynb` | 5 |
 | [Spectral data][spectra] | — (manage-only, no translate step to collapse) | `load_ai4sh_spectral_data.ipynb` | 13 |
+| [eDNA metabarcoding][edna] | `insert_ai4sh_edna_data.ipynb` + `insert_ai4sh_taxon_data.ipynb` | — (translate cells available, disabled by default) | 7 |
 
 Alternatively, all stages can be run from a single notebook: `insert_ai4sh_data.ipynb`
 (single-step) or [`load_ai4sh_data.ipynb`][all_data] (2-step).
+
+## Including LUCAS data
+
+Earlier versions of this package also seeded and loaded the public [LUCAS][lucas_esdac] (Land Use/Cover Area frame Survey) topsoil data. LUCAS now lives in its own open source project, [xspatula_lucas][xspatula_lucas], documented at [xspatula_lucas_docs][xspatula_lucas_docs]. You do not need to seed or load LUCAS from this package.
+
+To have LUCAS and AI4SH data side by side, load both projects into **the same database**:
+
+1. Set up the database and register processes from this package (`xspatula_ai4sh`), as described under [Seeding the database](#seeding-the-database).
+2. Clone the LUCAS project next to it:
+
+   ```bash
+   git clone https://github.com/xspatula/xspatula_lucas
+   ```
+
+3. In `xspatula_lucas/setup/zzz/`, use the *use an existing database* scheme file (`scheme_local_use.json`) and set host, port, database name and credentials (or `.netrc` entry) to **the same database** you created for AI4SH. Do not run the LUCAS *setup* scheme — that creates a new database.
+4. In `./lucas/scheme_lucas.json`, set `user_project` to a user already registered in the AI4SH database.
+5. Load the utility, dataset metadata and LUCAS 2009/2015 campaigns following [xspatula_lucas_docs][xspatula_lucas_docs].
+
+LUCAS and AI4SH records are then separated by their dataset (`lucas` vs `ai4sh`) and share all utility catalogues (units, indicators, methods, taxa), which is what makes cross-dataset modelling possible.
 
 ## Single-step vs 2-step
 
@@ -97,7 +119,11 @@ _Funded by the European Union. The views and opinions expressed are those of the
 [sample]: /sample/
 [wetlab]: /wetlab/
 [spectra]: /spectra/
+[edna]: /edna/
 [all_data]: /all_data/
-[github]: https://github.com/xspatula/load_ai4sh_db
+[github]: https://github.com/xspatula/xspatula_ai4sh
 [xspatula]: https://xspatula.github.io
 [insert_vs_translate]: /insert_vs_translate/
+[xspatula_lucas]: https://github.com/xspatula/xspatula_lucas
+[xspatula_lucas_docs]: https://xspatula.github.io/xspatula_lucas_docs/
+[lucas_esdac]: https://esdac.jrc.ec.europa.eu/projects/lucas

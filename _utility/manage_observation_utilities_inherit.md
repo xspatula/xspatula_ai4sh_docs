@@ -56,7 +56,7 @@ manage_provision_serial_nr.json
 
 ## Manage process file structure
 
-### manage_provision.json (first entry)
+### manage_provision.json (example entry)
 
 A provision combines one apparatus, one provider, and one method tier into a named instrument–lab–professionality combination:
 
@@ -69,13 +69,13 @@ A provision combines one apparatus, one provider, and one method tier into a nam
       "delete": false,
       "overwrite": false,
       "parameters": {
-        "provider_id__provider_name": "metrohm",
+        "provider_id__provider_name": "foss",
         "apparatus_id__apparatus_name": "visnir",
         "method_tier_id__method_tier_name": "laboratory",
-        "name": "nirs xds rapid content analyzer",
-        "alias": "metrohm-nirs-xds",
-        "display_name": "NIRS XDS Rapid Content Analyzer",
-        "abstract": "VISNIR laboratory grade spectrometer",
+        "name": "foss nirs ds2500 l",
+        "alias": "foss ds2500 l",
+        "display_name": "FOSS NIRS DS2500 L",
+        "abstract": "NIR laboratory grade spectrometer",
         "laboratory": 1.0
       }
     }
@@ -83,7 +83,7 @@ A provision combines one apparatus, one provider, and one method tier into a nam
 }
 ```
 
-### manage_provision_indicator.json (first entry)
+### manage_provision_indicator.json (example entry)
 
 A provision indicator links a provision to the specific indicators it delivers, with the analysis method and unit for each:
 
@@ -96,9 +96,9 @@ A provision indicator links a provision to the specific indicators it delivers, 
       "delete": false,
       "overwrite": false,
       "parameters": {
-        "provision_id__provision_name": "metrohm-nirs-xds",
+        "provision_id__provision_name": "foss nirs ds2500 l",
         "indicator_id__indicator_name": "reflectance",
-        "analysis_method_id__analysis_method_name": "reflectance",
+        "analysis_method_id__analysis_method_name": "reflectance spectroscopy",
         "unit_id__unit_name": "unitless"
       }
     }
@@ -111,10 +111,10 @@ A provision indicator links a provision to the specific indicators it delivers, 
 Parameter keys containing `__` instruct the framework to resolve a foreign key by name rather than by ID:
 
 ```
-"provider_id__provider_name": "metrohm"
+"provider_id__provider_name": "foss"
 ```
 
-This means: look up the `provider` record where `provider_name = "metrohm"`, then use its `provider_id` for the insert. The referenced record must already exist. If it does not, the insert fails with a foreign key error — re-check that the prerequisite manage steps completed successfully.
+This means: look up the `provider` record where `provider_name = "foss"`, then use its `provider_id` for the insert. The referenced record must already exist. If it does not, the insert fails with a foreign key error — re-check that the prerequisite manage steps completed successfully.
 
 ## What gets inserted
 

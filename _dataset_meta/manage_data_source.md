@@ -45,20 +45,20 @@ The cell calls `process_file` directly rather than a `job_file` — there is one
       "delete": false,
       "overwrite": false,
       "parameters": {
-        "name": "european soil data centre (esdac), european commission, joint research centre jrc)",
-        "alias": "esdac-jrc",
-        "display_name": "ESDAC-JRC",
-        "url": "https://esdac.jrc.ec.europa.eu",
+        "name": "ai4soilhealth",
+        "alias": "ai4sh",
+        "display_name": "AI4SoilHealth",
+        "url": "https://ai4soilhealth.eu",
         "territory_id__territory_name": "eu",
-        "contact_name": "esdac - european commissiony",
-        "contact_email": "ec-esdac@jrc.ec.europa.eu"
+        "contact_name": "stockholm university",
+        "contact_email": "thomas.gumbricht@natgeo.su.se"
       }
     }
   ]
 }
 ```
 
-One JSON object is generated per row in `data_source.xlsx`. The `alias` field becomes the lookup name referenced by the `__` notation in downstream manage files (e.g. `"data_source_id__data_source_name": "esdac-jrc"`).
+One JSON object is generated per row in `data_source.xlsx`. Downstream manage files reference the data source through the `__` notation, e.g. `"data_source_id__data_source_name": "ai4soilhealth"` in the person and dataset files.
 
 ## Parameters
 

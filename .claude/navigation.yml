@@ -71,8 +71,5 @@ main:
   - title: "Spectra"
     url: /spectral_data/
     description: "Load AI4SoilHealth spectral data"
-  - title: "LUCAS"
-    url: /lucas_data/
-    description: "Load LUCAS complete data"
   - title: "About"
     url: https://xspatula.github.io/about/

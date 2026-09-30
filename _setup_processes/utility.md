@@ -40,10 +40,11 @@ Registers, updates, or deletes a territory record in `utility.territory`. Territ
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `name` | text | yes | Full territory name |
+| `display_name` | text | yes | Territory name to display |
 | `iso_code_a2` | text | yes | Two-letter ISO code (e.g. `SE`, `EU`) |
 | `iso_code_a2_ext` | text | yes | Extended two-letter code for sub-national or custom territories |
 
-The `name` is immutable after insertion. The ISO codes can be updated but the territory cannot be deleted once referenced by other records.
+The `name` is immutable after insertion. The `display_name` and ISO codes can be updated but the territory cannot be deleted once referenced by other records.
 
 ## Access level
 

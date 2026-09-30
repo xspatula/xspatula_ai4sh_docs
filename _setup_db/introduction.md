@@ -7,7 +7,7 @@ excerpt: "Seeding the AI4SoilHealth postgreSQL database using the Xspatula frame
 permalink: /setup_db/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
-last_modified_at: 2026-03-31 08:00:00 +0200
+last_modified_at: 2026-09-30 08:00:00 +0200
 ---
 
 Seeding the AI4SH database uses the same Xspatula JSON-driven workflow described in the [Xspatula python and DB model environment documentation][setup_core_db_docs]. What this site adds is the full set of AI4SH-specific process files that define the schemas, tables and processes for a comprehensive soil data repository.
@@ -18,10 +18,10 @@ Before running the AI4SH database setup you need:
 
 - A running postgreSQL installation where you are superuser — see [PostgreSQL setup][postgres]
 - The Xspatula framework installed and a working Anaconda environment — see [Anaconda setup][anaconda]
-- The `load_ai4sh_db` repository cloned to your machine:
+- The `xspatula_ai4sh` repository cloned to your machine:
 
 ```bash
-git clone https://github.com/xspatula/load_ai4sh_db
+git clone https://github.com/xspatula/xspatula_ai4sh
 ```
 
 ## The setup notebook
@@ -134,14 +134,16 @@ This text file lists all process JSON files in the order they must be executed. 
 
 The full execution order is:
 
-1. `schema/schema_v10_sql.json` — create all 8 schemas
+1. `schema/schema_v10_sql.json` — create all 10 schemas
 2. `utility/utility_v10_sql.json` — utility tables
 3. `utility/territory_v10_sql.json` — territory reference data
 4. `community/` — user categories, organisations and users
 5. `process/` — process and process parameter tables
-6. `observation_utility/` — 38 JSON files defining reference catalogue tables (independent first, then dependent), plus 9 eDNA metabarcoding catalogue files
-7. `observation/` — dataset, campaign, sample and observation tables, including eDNA observation tables
-8. `landscape/` — landscape utility and observation tables
+6. `observation_utility/` — reference catalogue tables (independent first, then dependent), ending with the eDNA catalogues `software`, `edna_primer_pair` and `lab_protocol`
+7. `organism_utility/` — taxonomy reference, taxon rank, taxon status, taxon, taxon parity and taxon function
+8. `observation_utility/method_pipeline_v10_sql.json` — method pipelines and their steps (after organism_utility, as steps reference `taxonomy_reference`)
+9. `observation/` — dataset, campaign, sample and observation tables, ending with the eDNA tables `edna_asv`, `edna_asv_abundance` and `edna_run_step`
+10. `landscape_utility/` and `landscape/` — landscape utility and observation tables
 
 Each section is described in detail in the following pages.
 

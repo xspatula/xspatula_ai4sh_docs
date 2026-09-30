@@ -44,22 +44,26 @@ if structured_process_D is not None:
       "delete": false,
       "overwrite": false,
       "parameters": {
-        "name": "land use and coverage area frame survey (lucas) topsoil data",
-        "alias": "lucas",
-        "display_name": "Land Use and Coverage Area frame Survey (LUCAS) topsoil data",
-        "data_source_id__data_source_name": "esdac-jrc",
-        "contact_name": "esdac - european commissiony",
-        "contact_email": "ec-esdac@jrc.ec.europa.eu",
-        "begin_date": 20090501,
-        "end_date": 20120801,
+        "name": "ai4soilhealth",
+        "alias": "ai4sh",
+        "display_name": "AI4SoilHealth",
+        "data_source_id__data_source_name": "ai4soilhealth",
+        "contact_name": "stockholm university",
+        "contact_email": "thomas.gumbricht@natgeo.su.se",
+        "begun_at": 20230101,
+        "ended_at": 20261231,
         "species_id__species_name": "soil",
         "profiling_id__profiling_name": "depth_cm",
-        "license_id__license_name": "jrc-lucas",
+        "setting_system_id__setting_system_name_array": "agricultural field",
+        "license_id__license_name": "mit",
         "substance_array": "soil",
         "keyword_array": "topsoil, soil health, soil health indicator, europe",
-        "url": "https://esdac.jrc.ec.europa.eu/resource-type/soil-point-data",
-        "abstract": "LUCAS topsoil survey data.",
+        "url": "https://ai4soilhealth.eu",
+        "abstract": "AI4SoilHealth…",
+        "field": 1.0,
+        "home": 1.0,
         "laboratory": 1,
+        "satellite": 1.0,
         "territory_id__territory_name": "eu",
         "spatial_reference_id__spatial_reference_name": "geographic"
       }
@@ -78,16 +82,20 @@ if structured_process_D is not None:
 | `data_source_id__data_source_name` | FK lookup: data source by alias |
 | `contact_name` | Dataset contact name |
 | `contact_email` | Dataset contact email |
-| `begin_date` | Start date as integer (`YYYYMMDD`) |
-| `end_date` | End date as integer (`YYYYMMDD`) |
+| `begun_at` | Start date as integer (`YYYYMMDD`) |
+| `ended_at` | End date as integer (`YYYYMMDD`) |
 | `species_id__species_name` | FK lookup: biological classification (typically `soil`) |
 | `profiling_id__profiling_name` | FK lookup: z-dimension profiling method (e.g. `depth_cm`) |
+| `setting_system_id__setting_system_name_array` | Comma-separated setting systems (e.g. `agricultural field`) |
 | `license_id__license_name` | FK lookup: license by name |
 | `substance_array` | Comma-separated substance keywords |
 | `keyword_array` | Comma-separated search keywords |
 | `url` | Dataset landing page |
 | `abstract` | Free-text description |
+| `field` | Flag: 1 if field observations are included |
+| `home` | Flag: 1 if home (e.g. slaking app) observations are included |
 | `laboratory` | Flag: 1 if laboratory analyses are included, 0 otherwise |
+| `satellite` | Flag: 1 if satellite-derived data are included |
 | `territory_id__territory_name` | FK lookup: geographic territory |
 | `spatial_reference_id__spatial_reference_name` | FK lookup: coordinate reference system |
 

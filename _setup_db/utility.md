@@ -19,7 +19,7 @@ Two process files create the utility schema content:
 | File | Purpose |
 |---|---|
 | `utility/utility_v10_sql.json` | Creates the utility tables |
-| `utility/utility_territory_v10_sql.json` | Inserts territory reference records |
+| `utility/territory_v10_sql.json` | Inserts territory reference records |
 
 ## Tables
 
@@ -37,7 +37,7 @@ Key columns:
 | `iso_code_a2` | TEXT | Territory iso code (or equivalent) |
 | `iso_code_a2_ext` | TEXT | Territory iso code or extended iso-code (or equivalent) |
 
-The `utility_territory_v10_sql.json` file pre-loads standard territory records so that the community user table can immediately reference valid territory IDs.
+The `territory_v10_sql.json` file pre-loads standard territory records so that the community user table can immediately reference valid territory IDs.
 
 ### foreign_key
 

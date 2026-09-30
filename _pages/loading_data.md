@@ -3,14 +3,14 @@ title: "Loading AI4SH Data"
 layout: single
 sidebar:
   nav: "loading_data"
-excerpt: "Overview of the six data-loading stages for the AI4SoilHealth database. Data must be loaded in the order shown — each stage depends on records from the previous one."
+excerpt: "Overview of the seven data-loading stages for the AI4SoilHealth database. Data must be loaded in the order shown — each stage depends on records from the previous one."
 permalink: /loading_data/
 author_profile: false
 date: 2026-06-15 08:00:00 +0200
-last_modified_at: 2026-06-15 08:00:00 +0200
+last_modified_at: 2026-09-30 08:00:00 +0200
 ---
 
-Loading AI4SH data into the database follows a strict dependency order. Each stage builds on records inserted by the previous one. The six stages below must be completed in sequence when populating the database from scratch.
+Loading AI4SH data into the database follows a strict dependency order. Each stage builds on records inserted by the previous one. The seven stages below must be completed in sequence when populating the database from scratch.
 
 All stages use the same [scheme file][scheme_file] to define the user and general settings:
 
@@ -24,7 +24,7 @@ Utility, dataset metadata, sample, and wetlab data can each be loaded two ways: 
 single-step `insert_ai4sh_*.ipynb` notebook (recommended default — reads a spreadsheet and
 inserts it in one step, INSERT-only, safe to re-run), or the original 2-step
 `load_ai4sh_*.ipynb` notebook (translate then manage — needed for `UPDATE`s or to
-hand-inspect the generated JSON first). Spectral data has no translate step either way — it's
+hand-inspect the generated JSON first). eDNA data is loaded single-step only (the taxon loader also offers a dual-step route). Spectral data has no translate step either way — it's
 manage-only, converted directly from instrument files. See
 [Single-step vs dual-step][insert_vs_translate] for the full comparison, and the notebook
 listed under each stage below for the single-step route.
@@ -33,7 +33,7 @@ listed under each stage below for the single-step route.
 
 ### 1. [Utility data]
 
-Utility data contains the controlled vocabularies and reference catalogues that all observation data depends on — territories, indicators, units, analysis methods, instruments, and provisions. **This stage must be completed first**, before any other data can be entered.
+Utility data contains the controlled vocabularies and reference catalogues that all observation data depends on — territories, indicators, units, analysis methods, instruments, provisions, and the eDNA method catalogues and pipelines (software, taxonomy references, primer pairs, lab protocols). **This stage must be completed first**, before any other data can be entered.
 
 Notebooks: `insert_ai4sh_utility_data.ipynb` (single-step) or `load_ai4sh_utility_data.ipynb` (2-step)
 
@@ -61,9 +61,17 @@ Spectral data covers four instrument types: FOSS DS2500 (NIR), Neospectra (NIR),
 
 Notebook: `load_ai4sh_spectral_data.ipynb`
 
-### 6. [All data in one go]
+### 6. [eDNA metabarcoding]
 
-A single notebook that runs all five stages above in the correct dependency order. Use it when loading a complete dataset from scratch in one session.
+eDNA metabarcoding data describes the soil microbial community — prokaryotes (16S rRNA) and fungi (ITS) — per sample: 19 summary indicators (diversity and functional groups), the taxon tree, and the abundance of every amplicon sequence variant (ASV). The laboratory delivers one Excel workbook, which is converted into xspatula source files by a command line script before loading. Requires stages 1–3; the eDNA method catalogues are part of stage 1.
+
+Order: run `edna_final_results_to_xspatula.py` → observation log and observations → taxa → ASVs.
+
+Notebooks: `insert_ai4sh_edna_data.ipynb` and `insert_ai4sh_taxon_data.ipynb` (single-step; the taxon notebook also has disabled dual-step cells)
+
+### 7. [All data in one go]
+
+A single notebook that runs stages 1–5 above in the correct dependency order. Use it when loading a complete dataset from scratch in one session. eDNA (stage 6) is not included; run its notebooks afterwards.
 
 Notebooks: `insert_ai4sh_data.ipynb` (single-step for utility/dataset metadata/sample/wetlab, still calling `manage_*` directly for spectra) or `load_ai4sh_data.ipynb` (2-step throughout)
 
@@ -74,4 +82,5 @@ Notebooks: `insert_ai4sh_data.ipynb` (single-step for utility/dataset metadata/s
 [Sample data]: /sample/
 [Wetlab data]: /wetlab/
 [Spectral data]: /spectra/
+[eDNA metabarcoding]: /edna/
 [All data in one go]: /all_data/

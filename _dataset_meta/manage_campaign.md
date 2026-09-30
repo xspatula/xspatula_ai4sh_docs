@@ -46,20 +46,26 @@ if structured_process_D is not None:
       "delete": false,
       "overwrite": false,
       "parameters": {
-        "dataset_id__dataset_name": "lucas",
-        "name": "lucas_eu_2009",
-        "display_name": "LUCAS 2009",
-        "begin_date": 20090501,
-        "end_date": 20091031,
-        "abstract": "LUCAS 2009 topsoil survey.",
+        "dataset_id__dataset_name": "ai4soilhealth",
+        "name": "ai4sh_se_loennstorp",
+        "display_name": "AI4SH SE Loennstorp",
+        "contact_name": "thomas gumbricht",
+        "contact_email": "thomas.gumbricht@natgeo.su.se",
+        "begun_at": 20240910,
+        "ended_at": 20240913,
+        "url": "https://ai4soilhealth.eu",
+        "abstract": "AI4SoilHealth",
+        "field": 1.0,
+        "home": 1.0,
         "laboratory": 1,
-        "territory_id__territory_name": "eu",
-        "site": "europe",
+        "satellite": 1.0,
+        "territory_id__territory_name": "se",
+        "site": "loennstorp",
         "spatial_reference_id__spatial_reference_name": "geographic",
-        "location_method_id__location_method_name": "gps",
-        "location_error": 1000,
+        "location_method_id__location_method_name": "map",
+        "location_error": 10,
         "location_error_unit_id__unit_name": "m",
-        "provision_id__provision_name_array": "metrohm-nirs-xds,lucas-wetlab-2009"
+        "provision_id__provision_name_array": "ai4sh-agrolab,foss ds2500 l,ai4sh-slu,ai4sh-metabarcoding,digit soil sear bob,best infiltration,microbiometer-classic,soil cylinder,slakes"
       }
     }
   ]
@@ -73,9 +79,13 @@ if structured_process_D is not None:
 | `dataset_id__dataset_name` | FK lookup: parent dataset by alias |
 | `name` | Campaign identifier (lowercase) |
 | `display_name` | Display label |
-| `begin_date` | Start date as integer (`YYYYMMDD`) |
-| `end_date` | End date as integer (`YYYYMMDD`) |
+| `contact_name` | Campaign contact name |
+| `contact_email` | Campaign contact email |
+| `begun_at` | Start date as integer (`YYYYMMDD`) |
+| `ended_at` | End date as integer (`YYYYMMDD`) |
+| `url` | Campaign or project landing page |
 | `abstract` | Free-text description |
+| `field`, `home`, `satellite` | Flags: 1 if that observation type is included |
 | `laboratory` | Flag: 1 if laboratory analyses included, 0 otherwise |
 | `territory_id__territory_name` | FK lookup: geographic territory |
 | `site` | Free-text site description |
@@ -90,7 +100,7 @@ if structured_process_D is not None:
 This parameter links a campaign to one or more provisions defined in the utility catalogues. Multiple provisions are listed as a comma-separated string:
 
 ```
-"provision_id__provision_name_array": "metrohm-nirs-xds,lucas-wetlab-2009"
+"provision_id__provision_name_array": "ai4sh-agrolab,foss ds2500 l,ai4sh-slu,ai4sh-metabarcoding"
 ```
 
 The framework resolves each name to its `provision_id` and creates a record in the campaign–provision junction table. All provisions listed here must already exist in `observation_utility.provision`.

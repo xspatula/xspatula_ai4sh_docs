@@ -21,7 +21,7 @@ last_modified_at: 2026-06-10 08:00:00 +0200
 
 ## Cell sequence
 
-The notebook contains 64 active cells (plus LUCAS cells which are disabled with `%%script false`). The active loading sequence mirrors the individual notebooks:
+The notebook contains 64 active cells (the cells for LUCAS are disabled with `%%script false`; LUCAS data is loaded from the separate repo `xspatula_lucas`, see [Including LUCAS data](/#including-lucas-data)). The active loading sequence mirrors the individual notebooks:
 
 | Stage | Cells | Notebook equivalent |
 |---|---|---|

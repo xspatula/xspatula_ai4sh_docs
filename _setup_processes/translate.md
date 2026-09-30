@@ -76,6 +76,11 @@ This is distinct from the `manage_table_data` root: translate processes write JS
 | `process` | text | yes | The target process that the generated JSON will call |
 | `tabular_data_path` | text | yes | Path to the source CSV or Excel file — resolved relative to the project root, see [Path resolution][setup_process_path_resolution] |
 | `dst_path` | text | yes | Destination path for the generated JSON process file — resolved relative to the project root, see [Path resolution][setup_process_path_resolution] |
+| `taxonomy_reference` | text | no | Only for target process `manage_taxon`: default taxonomy reference name (e.g. `silva`); overridden per row by a `taxonomy_reference` column |
+| `taxonomy_reference_version` | text | no (default `unspecified`) | Only for target process `manage_taxon`: default taxonomy reference version; overridden per row by a `taxonomy_reference_version` column |
+| `method_pipeline` | text | no | Only for target process `manage_edna_asv`: name of the `method_pipeline` that produced the ASVs (e.g. `ai4sh-16s`) |
+
+**Bulk targets.** For `manage_taxon` and `manage_edna_asv` the output is not one process call per row. The tabular file is converted into a canonical CSV (lineages or abundances) under `dst_path`, and the generated process call points to that CSV. The target process then loads it with PostgreSQL `COPY`. See [Organism utility processes][setup_process_organism_utility] and [Observation processes][setup_process_observation].
 
 ## How it works
 
@@ -100,3 +105,5 @@ Use `translate_tabular_data` when you have a large number of records to insert a
 Minimum user stratum: 3
 
 [setup_process_path_resolution]: /setup_process/path_resolution/
+[setup_process_organism_utility]: /setup_process/organism_utility/
+[setup_process_observation]: /setup_process/observation/

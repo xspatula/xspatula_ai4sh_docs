@@ -190,6 +190,8 @@ collections:
     output: true
   spectra:
     output: true
+  edna:
+    output: true
   all_data:
     output: true
 
@@ -251,6 +253,12 @@ defaults:
   - scope:
       path: ""
       type: spectra
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: edna
     values:
       layout: single
       author_profile: false

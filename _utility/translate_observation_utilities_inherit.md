@@ -22,10 +22,10 @@ The fifth utility step translates the three inheritance-dependent observation ut
 The manage process files produced in this step contain parameter keys with a double underscore (`__`) separator, for example:
 
 ```
-"provider_id__provider_name": "metrohm"
+"provider_id__provider_name": "foss"
 ```
 
-This tells the framework to look up the `provider` record where `provider_name = "metrohm"` and substitute its `provider_id` at insert time. The referenced record must already exist in the database — hence the dependency on the earlier manage step.
+This tells the framework to look up the `provider` record where `provider_name = "foss"` and substitute its `provider_id` at insert time. The referenced record must already exist in the database — hence the dependency on the earlier manage step.
 
 This mechanism avoids hard-coding database IDs in the JSON files. You work with human-readable names in the Excel source, and the framework resolves them to primary keys at runtime.
 

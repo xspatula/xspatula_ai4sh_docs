@@ -41,16 +41,18 @@ The job file for process setup points to:
 This pilot file lists the process JSON files to execute, grouped by schema. The execution order is:
 
 1. `root_process/` — define the process families
-2. `translate/` — translate tabular data process
+2. `translate/` — the translate and insert tabular data processes
 3. `utility/` — foreign key and territory management processes
-4. `observation_utility/` — 27 processes for managing observation utility catalogues
-5. `observation/` — processes for managing observation data
-6. `select/` — processes for selecting spectral data
-7. `plot/` — processes for plotting indicators and spectra
-8. `machine_learning/` — 12 processes for spectral preprocessing, outlier detection, and regression
-9. `landscape/` — landscape processes (files defined, not yet in pilot)
+4. `community/` — organisation and user management processes
+5. `observation_utility/` — processes for managing observation utility catalogues, including the eDNA catalogues (software, primer pairs, lab protocols) and method pipelines
+6. `organism_utility/` — `manage_taxonomy_reference` and the bulk taxon loader `manage_taxon`
+7. `observation/` — processes for managing observation data, including the bulk eDNA loader `manage_edna_asv`
+8. `landscape_utility/` and `landscape/` — landscape processes
+9. `select/` — processes for selecting spectral data
+10. `plot/` — processes for plotting indicators and spectra
+11. `machine_learning/` — processes for spectral preprocessing, outlier detection, and regression
 
-The eDNA workflow processes (`manage_metabarcoding_*`) now live alongside the rest of `observation_utility/` rather than in their own folder, since the `edna`/`edna_utility` schemas were folded into `observation`/`observation_utility` — see [Observation Utility Processes][setup_process_observation_utility]. Like the `landscape/` processes, they're defined but not yet in the pilot list.
+The eDNA processes are spread over three folders by the schema they write to: method catalogues and pipelines in `observation_utility/`, taxonomy in `organism_utility/`, and ASVs in `observation/` — see [Observation utility processes][setup_process_observation_utility], [Organism utility processes][setup_process_organism_utility] and [Observation processes][setup_process_observation].
 
 ## Process file structure
 
@@ -117,3 +119,5 @@ Key fields:
 
 [setup_db]: /setup_db/
 [setup_process_observation_utility]: /setup_process/observation_utility/
+[setup_process_organism_utility]: /setup_process/organism_utility/
+[setup_process_observation]: /setup_process/observation/

@@ -7,10 +7,10 @@ excerpt: "The observation schema stores actual soil property data, organised hie
 permalink: /setup_db/observation/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
-last_modified_at: 2026-03-31 08:00:00 +0200
+last_modified_at: 2026-09-30 08:00:00 +0200
 ---
 
-The `observation` schema stores actual soil property data. Data is organised in a strict hierarchy: an observation belongs to a sample, a sample belongs to a sampling log, a sampling log belongs to a campaign, a campaign belongs to a dataset. Every step in this chain must exist before the next can be created. All observation values link to reference records in `observation_utility`.
+The `observation` schema stores actual soil property data. Data is organised in a strict hierarchy: an observation belongs to a sample, a sample belongs to a sampling log, a sampling log belongs to a campaign, a campaign belongs to a dataset. Every step in this chain must exist before the next can be created. All observation values link to reference records in `observation_utility`, and taxon-resolved records (macrofauna, eDNA ASVs) also to `organism_utility.taxon`.
 
 ## Process files
 
@@ -18,46 +18,40 @@ The `observation` schema stores actual soil property data. Data is organised in 
 |---|---|---|
 | `observation/data_source_v10_sql.json` | `data_source` | Simplified copy of `community.organisation` — passive data suppliers who need not be full system users |
 | `observation/person_v10_sql.json` | `person` | Simplified copy of `community.user` with no login credentials — allows attributing data to non-registered persons (GDPR consideration) |
-| `observation/dataset_v10_sql.json` | `dataset` | Top-level grouping of related data (e.g. LUCAS, AI4SoilHealth) |
+| `observation/dataset_v10_sql.json` | `dataset`, `dataset_meta`, `dataset_tag`, `dataset_method_tier`, `dataset_location`, `dataset_setting_system` | Top-level grouping of related data (e.g. LUCAS, AI4SoilHealth), with companion tables mirroring those of campaign |
 | `observation/campaign_v10_sql.json` | `campaign`, `campaign_meta`, `campaign_tag`, `campaign_method_tier`, `campaign_location`, `campaign_provision`, `campaign_setting_system` | Child of dataset; captures details of a specific data collection effort |
-| `observation/sampling_log_v10_sql.json` | `sampling_log` | A sampling event — one or multiple samples taken with consistent methods over a period |
-| `observation/sample_geolocation_v10_sql.json` | `sample_geolocation` | Spatial coordinates for a geolocated sample |
-| `observation/sample_v10_sql.json` | `sample` | An individual sample acquired under a sampling log |
-| `observation/sample_z_profile_v10_sql.json` | `sample_profile` | Depth profile interval (profile_min, profile_max) for samples with a z-dimension |
+| `observation/sampling_log_v10_sql.json` | `sampling_log`, `sampling_log_setting_system` | A sampling event — one or multiple samples taken with consistent methods over a period |
+| `observation/sample_geolocation_v10_sql.json` | `geolocation` | Named spatial point (x/y, lat/lon, elevation, spatial reference). Note: file name and table name differ — the table is `geolocation`, not `sample_geolocation` |
+| `observation/sample_v10_sql.json` | `sample`, `sample_juxtaposition`, `sample_profile`, `sample_geotag`, `sample_composition`, `sample_proximity` | An individual sample acquired under a sampling log, with companion tables for setting, depth profile, link to a `geolocation`, composition and proximity |
+| `observation/sample_z_profile_v10_sql.json` | `sample_profile` | Stand-alone definition of the depth profile table (also created by `sample_v10_sql.json`); not in the pilot file |
 | `observation/sample_image_v10_sql.json` | `sample_image`, `sample_image_orientation` | Image records associated with samples, plus their orientation metadata |
 | `observation/observation_log_v10_sql.json` | `observation_log`, `observation_log_meta`, `observation_log_method_tier`, `observation_log_provision` | Links a sampling log directly to a provision; companion tables record the logistics (preparation, preservation, storage, transportation), method-tier flags, and — since a log's main `provision_id` is one column — any additional provisions used |
-| `observation/observation_v10_sql.json` | `observation`, `observation_temperature`, `observation_provision_serial_nr` | The actual measured value for a specific provision, plus companion tables for temperature context and the specific provision serial number used |
+| `observation/observation_v10_sql.json` | `observation`, `observation_temperature`, `observation_provision_serial_nr` | One observation event for a specific sample and provision, plus companion tables for temperature context and the specific provision serial number used |
 | `observation/spectra_v10_sql.json` | `spectra_scan` | Spectral scan metadata — signal statistics, spectroscopy method, and quality flags linked to an observation |
-| `observation/measurement_v10_sql.json` | `measurement` | General sensor or instrument measurements |
+| `observation/measurement_v10_sql.json` | `measurement`, `observation_measurement`, `observation_measurement_array` | Indicator values per observation (`observation_id`, `indicator_id`, `value`, `standard_deviation`, `n_repeat`); `observation_measurement` is the table filled by `manage_observation`, the `_array` variant holds array values |
 | `observation/microbiometer_measurement_v10_sql.json` | `microbiometer_measurement` | Microbiometer carbon content measurements linked to an observation |
-| `observation/infiltration_beerkan_v10_sql.json` | `infiltration_beerkan` | BeerKan ring infiltration measurements |
+| `observation/infiltration_beerkan_v10_sql.json` | `infiltration_beerkan`, `infiltration_beerkan_time` | BeerKan ring infiltration measurements and their time intervals |
 | `observation/slakes_v10_sql.json` | `app_aggregate_stability` | Aggregate stability measurements from the SLAKES app |
-| `observation/macrofauna_v10_sql.json` | `macrofauna` | Macrofauna count and biomass observations |
-| `observation/macrofauna_image_v10_sql.json` | `macrofauna_image` | Image records for automated macrofauna detection |
-| `observation/edna_v10_sql.json` | `edna_nucleotide`, `taxa_bioinformatics`, `edna_measurement`, `taxa_biodiversity_measurement` | Environmental DNA (eDNA) metabarcoding observations, see below |
-| `observation/edna_fastp_qc_v10_sql.json` | `edna_fastp_qc` | eDNA read quality-control step, see below |
-| `observation/edna_demux_trim_v10_sql.json` | `edna_feature_abundance` | eDNA demultiplex/trim pipeline output, see below |
-| `observation/edna_denoise_v10_sql.json` | `edna_denoise` | eDNA denoising pipeline step, see below |
-| `observation/edna_chimera_vsearch_v10_sql.json` | `edna_chimera_vsearch` | eDNA chimera detection (vsearch) pipeline step, see below |
-| `observation/edna_annotation_v10_sql.json` | `edna_annotation` | eDNA taxonomic annotation pipeline step, see below |
-| `observation/edna_merge_flash_v10_sql.json` | `edna_merge_count` | eDNA read-merging (FLASh) pipeline step, see below |
-| `observation/edna_taxa_abundance_v10_sql.json` | `edna_taxa_abundance` | eDNA taxon abundance pipeline output, see below |
-| `observation/edna_functional_abundance_v10_sql.json` | `edna_functional_abundance` | eDNA functional abundance pipeline output, see below |
+| `observation/macrofauna_v10_sql.json` | `monolith`, `macrofauna` | Excavated monoliths and the macrofauna counted in them; `macrofauna.taxon_id` references `organism_utility.taxon` |
+| `observation/macrofauna_image_v10_sql.json` | `observation_utility.macrofauna_image_setting` | Image settings for automated macrofauna detection (note: created in the `observation_utility` schema although the file sits here) |
+| `observation/edna_asv_v10_sql.json` | `edna_asv`, `edna_asv_abundance` | eDNA amplicon sequence variants and their abundance per observation — see below |
+| `observation/edna_run_step_v10_sql.json` | `edna_run_step` | eDNA reads in/out per bioinformatics step per observation — see below |
 
 ## eDNA observation tables
 
-| Table | Description |
-|---|---|
-| `edna_nucleotide` | Links a `sample` to a submitted nucleotide sequence — the archive it was deposited in and its accession code/URL |
-| `taxa_bioinformatics` | One bioinformatics run against an `edna_nucleotide` record: which `metabarcoding_pipeline`, which `bioinformatics` treatment, treatment date, and the taxon it resolved to |
-| `edna_measurement` | An indicator value attached to a regular `observation` record, specific to eDNA-derived measurements (value, standard deviation, number of repeats) |
-| `taxa_biodiversity_measurement` | The biodiversity value (e.g. relative abundance) produced by a `taxa_bioinformatics` run |
+eDNA metabarcoding results use the normal hierarchy — dataset → campaign → sampling log → observation log (provision `ai4sh-metabarcoding`) → observation. The 19 summary indicators per sample (richness, Shannon, Simpson, Pielou, Chao1, functional predictions) are ordinary indicator values in `observation_measurement`. What is new is the community composition — which organisms were found and how abundant they were — held in three dedicated tables:
 
-eDNA observations still use the same sample infrastructure as any other observation — dataset → campaign → sampling log → sample — the eDNA-specific tables attach to a `sample` and to the eDNA reference catalogues, not to a separate hierarchy.
+| Table | Columns | Constraints | Description |
+|---|---|---|---|
+| `edna_asv` | `method_pipeline_id`, `asv_key`, `taxon_id`, `lineage`, `sequence`, `sequence_md5` | `UNIQUE (method_pipeline_id, asv_key)`; `sequence_md5` UNIQUE; index on `taxon_id` | One row per amplicon sequence variant (ASV) and pipeline. `taxon_id` is the deepest resolved taxon of the lineage |
+| `edna_asv_abundance` | `observation_id`, `edna_asv_id`, `rel_abundance`, `read_count`, `raw_read_count` | PK `(observation_id, edna_asv_id)`; index on `edna_asv_id` | Abundance of an ASV in one observation. Only non-zero values are stored. `read_count` is the **rarefied** count; `raw_read_count` is empty until the lab delivers unrarefied counts |
+| `edna_run_step` | `observation_id`, `method_pipeline_step_id`, `reads_in`, `reads_out` | PK `(observation_id, method_pipeline_step_id)` | Reads entering and leaving each bioinformatics step per observation (e.g. DADA2 denoising stats). Created but empty |
 
-Beyond these 4 tables, 8 further tables cover the eDNA bioinformatics pipeline itself — read quality control, denoising, chimera detection, taxonomic annotation, and the resulting taxon/functional abundance outputs: `edna_fastp_qc`, `edna_feature_abundance`, `edna_denoise`, `edna_chimera_vsearch`, `edna_annotation`, `edna_merge_count`, `edna_taxa_abundance`, `edna_functional_abundance` (see the process-files table above for which file creates each).
+All three are audited on `UPDATE` and `DELETE` only — the bulk `INSERT` of hundreds of thousands of abundance rows is not written to the audit log.
 
-**Partly wired into process setup.** The 7 `manage_edna_*` process files for the `observation_utility` eDNA reference catalogues (`edna_sequence_library`, `edna_nucleotide_archive`, `edna_extraction`, `edna_purification`, `edna_amplification`, `edna_sequencing`, `edna_metabarcoding_pipeline`) **are** now registered and listed in the process pilot list, under an `### OBSERVATION UTILITIES eDNA ###` section — this table's data can be entered through the normal `manage_*` workflow. What's still missing: no `manage_*` process registrations exist yet for any of the 4 `observation`-schema eDNA tables above (`edna_nucleotide`, `taxa_bioinformatics`, `edna_measurement`, `taxa_biodiversity_measurement`), nor for the 8 pipeline-output tables just listed. Those 12 tables are created by `setup_db.ipynb`, but can't yet be entered through the normal `manage_*` process workflow — see [Observation Processes][setup_process_observation].
+The *method* behind these results (primers, kits, software versions, reference databases, parameters) is not repeated per record — it is reached through `edna_asv.method_pipeline_id` → `observation_utility.method_pipeline` → `method_pipeline_step`. See [eDNA metabarcoding][setup_db_edna] for the full picture.
+
+The `organism` folder also holds `observation_measurement_taxon_v10_sql.json`, which creates `observation.taxon_observation_measurement` (taxon-level indicator values). It is not in the pilot file — see [Organism][setup_db_organism].
 
 ## Table hierarchy
 
@@ -75,13 +69,19 @@ dataset (→ data_source)
     campaign_provision (→ campaign, observation_utility.provision)
     campaign_setting_system (→ campaign, observation_utility.setting_system)
     sampling_log (→ campaign)
-      sample_geolocation (→ sampling_log, observation_utility.spatial_reference)
       sample (→ sampling_log)                                    ─┐
+        sample_geotag (→ sample, geolocation)                     │
       observation_log (→ sampling_log, observation_utility.provision)  ├─ siblings
         observation_log_meta / _method_tier / _provision (→ observation_log) ─┘
 
+geolocation (→ observation_utility.spatial_reference)
+
 observation (→ sample, observation_log, observation_utility.provision)
   observation_temperature, observation_provision_serial_nr (→ observation)
+  observation_measurement (→ observation, observation_utility.indicator)
+  edna_asv_abundance (→ observation, edna_asv)
+    edna_asv (→ observation_utility.method_pipeline, organism_utility.taxon)
+  edna_run_step (→ observation, observation_utility.method_pipeline_step)
 ```
 
 See the diagram below for the same shape drawn visually.
@@ -113,9 +113,9 @@ The `campaign` table has six companion meta tables:
 
 A sampling log is a sampling event within a campaign, covering one or multiple samples taken with consistent methods. It records the responsible person and time window.
 
-### sample and sample_geolocation
+### sample and geolocation
 
-`sample` represents an individual physical sample. `sample_geolocation` optionally records its latitude, longitude, elevation, and spatial reference. Decoupled from `sample` so that non-geolocated samples are still representable.
+`sample` represents an individual physical sample. `geolocation` is a named spatial point (x/y, latitude/longitude, elevation, spatial reference), and `sample_geotag` links a sample to one. Decoupled from `sample` so that non-geolocated samples are still representable, and so that several samples (e.g. depths) can share one point.
 
 ### observation_log and observation
 
@@ -138,12 +138,14 @@ signal array, not a single value:
 Additional tables cover other non-standard observation types:
 
 - **infiltration_beerkan** — BeerKan ring infiltration test results
-- **macrofauna** and **macrofauna_image** — macrofauna counts, biomass, and associated image records
-- **measurement** — direct sensor readings (e.g. from a handheld spectral sensor)
-- **edna_nucleotide**, **taxa_bioinformatics**, **edna_measurement**, **taxa_biodiversity_measurement**, plus 8 eDNA pipeline-output tables — eDNA metabarcoding results, see [eDNA observation tables](#edna-observation-tables) above
+- **monolith** and **macrofauna** — excavated monoliths and macrofauna counts and biomass, resolved to `organism_utility.taxon`
+- **observation_measurement** — indicator values per observation, for all scalar results (wet chemistry, eDNA summary indicators etc.)
+- **edna_asv**, **edna_asv_abundance**, **edna_run_step** — eDNA metabarcoding community composition, see [eDNA observation tables](#edna-observation-tables) above
 
 
 [setup_db_observation_utility]: /setup_db/observation_utility/
 [setup_process_observation]: /setup_process/observation/
 [setup_process_schema_conventions]: /setup_process/schema_conventions/
 [spectra]: /spectra/
+[setup_db_edna]: /setup_db/edna_metabarcoding/
+[setup_db_organism]: /setup_db/organism/

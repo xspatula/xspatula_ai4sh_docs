@@ -44,19 +44,22 @@ if structured_process_D is not None:
       "delete": false,
       "overwrite": false,
       "parameters": {
-        "data_source_id__data_source_name": "esdac-jrc",
+        "data_source_id__data_source_name": "ai4soilhealth",
         "first_name": "fn",
-        "middle_name": "mn",
         "last_name": "ln",
-        "email": "ec-esdac@jrc.ec.europa.eu",
-        "territory_id__territory_name": "eu"
+        "email": "fn.ln@example.org",
+        "postal_address": "stockholm",
+        "territory_id__territory_name": "se",
+        "telephone": "+46 ...",
+        "department": "physical geography",
+        "position": "researcher"
       }
     }
   ]
 }
 ```
 
-One JSON object is generated per row in `person.xlsx`. Replace the placeholder names (`fn`, `mn`, `ln`) with actual person details in the source Excel file before translating.
+One JSON object is generated per row in `person.xlsx`. The example above uses placeholders (`fn`, `ln`, e-mail, telephone); enter the actual person details in the source Excel file.
 
 ## Parameters
 
@@ -67,7 +70,11 @@ One JSON object is generated per row in `person.xlsx`. Replace the placeholder n
 | `middle_name` | Middle name (optional; use empty string if absent) |
 | `last_name` | Family name |
 | `email` | Contact email |
+| `postal_address` | Postal address (optional) |
 | `territory_id__territory_name` | FK lookup: territory by name |
+| `telephone` | Telephone (optional) |
+| `department` | Department (optional) |
+| `position` | Position (optional) |
 
 ## Next step
 
