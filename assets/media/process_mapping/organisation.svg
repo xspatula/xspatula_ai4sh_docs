@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="666" viewBox="0 0 1140 666" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/></marker></defs>
+<style>
+.gtitle { font-size: 14px; font-weight: bold; fill: #1a1a1a; }
+.sub { font-size: 12px; font-style: italic; fill: #555555; }
+.hd { font-size: 12px; font-weight: bold; fill: #1a1a1a; }
+.cell { font-size: 12px; fill: #333333; }
+.note { font-size: 12.5px; fill: #1a1a1a; }
+.lbl { font-size: 11px; fill: #555555; }
+.badge { font-size: 12px; font-weight: bold; fill: #ffffff; }
+.edge { stroke: #3a6ea5; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+</style>
+<rect x="0" y="0" width="1140" height="666" fill="#ffffff"/>
+<text class="gtitle" x="30" y="52" text-anchor="start">organisation.xlsx</text>
+<text class="sub" x="183" y="52" text-anchor="start">(Sheet1)</text>
+<rect x="30" y="60" width="160" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="76" text-anchor="start">name</text>
+<rect x="30" y="84" width="160" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="100" text-anchor="start">Stockholm University</text>
+<rect x="190" y="60" width="55" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="198" y="76" text-anchor="start">alias</text>
+<rect x="190" y="84" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="198" y="100" text-anchor="start">SU</text>
+<rect x="245" y="60" width="111" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="253" y="76" text-anchor="start">url</text>
+<rect x="245" y="84" width="111" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="253" y="100" text-anchor="start">https://su.se</text>
+<rect x="356" y="60" width="118" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="364" y="76" text-anchor="start">postal_address</text>
+<rect x="356" y="84" width="118" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="364" y="100" text-anchor="start">Stockholm</text>
+<rect x="474" y="60" width="216" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="hd" x="482" y="76" text-anchor="start">territory_id__territory_name</text>
+<rect x="474" y="84" width="216" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="482" y="100" text-anchor="start">sweden</text>
+<circle cx="771" cy="66" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="70" text-anchor="middle">1</text>
+<text class="note" x="790" y="70" text-anchor="start">A column named &lt;column&gt;__&lt;search column&gt;</text>
+<text class="note" x="790" y="88" text-anchor="start">holds a foreign key given by name,</text>
+<text class="note" x="790" y="106" text-anchor="start">not by id: territory_id__territory_name.</text>
+<path class="edge" d="M200,112 L200,176"/>
+<text class="gtitle" x="30" y="192" text-anchor="start">process.process_parameter_schema_table</text>
+<rect x="30" y="200" width="153" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="216" text-anchor="start">process</text>
+<rect x="30" y="224" width="153" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="240" text-anchor="start">manage_organisation</text>
+<rect x="30" y="248" width="153" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="264" text-anchor="start">manage_organisation</text>
+<rect x="183" y="200" width="258" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="191" y="216" text-anchor="start">parameter</text>
+<rect x="183" y="224" width="258" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="191" y="240" text-anchor="start">name, alias, url, postal_address …</text>
+<rect x="183" y="248" width="258" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="191" y="264" text-anchor="start">territory_id__territory_name</text>
+<rect x="441" y="200" width="83" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="449" y="216" text-anchor="start">in_schema</text>
+<rect x="441" y="224" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="449" y="240" text-anchor="start">community</text>
+<rect x="441" y="248" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="449" y="264" text-anchor="start">community</text>
+<rect x="524" y="200" width="104" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="532" y="216" text-anchor="start">in_table</text>
+<rect x="524" y="224" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="532" y="240" text-anchor="start">organisation</text>
+<rect x="524" y="248" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="532" y="264" text-anchor="start">organisation</text>
+<rect x="628" y="200" width="55" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="636" y="216" text-anchor="start">write</text>
+<rect x="628" y="224" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="636" y="240" text-anchor="start">true</text>
+<rect x="628" y="248" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="636" y="264" text-anchor="start">true</text>
+<circle cx="771" cy="211" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="215" text-anchor="middle">2</text>
+<text class="note" x="790" y="215" text-anchor="start">All parameters of manage_organisation</text>
+<text class="note" x="790" y="233" text-anchor="start">are written to community.organisation.</text>
+<rect x="30" y="312" width="690" height="162" rx="6" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="gtitle" x="42" y="332" text-anchor="start">Foreign key lookup: territory_id__territory_name = sweden</text>
+<text class="cell" x="42" y="352" text-anchor="start">split at '__'  →  column territory_id; strip '_id'  →  table territory</text>
+<text class="cell" x="42" y="374" text-anchor="start">find the schema of table territory  →  utility.territory</text>
+<text class="cell" x="42" y="396" text-anchor="start">search its unique text columns for 'sweden'  →  name = 'sweden'  →  id 217 (example)</text>
+<text class="cell" x="42" y="418" text-anchor="start">if no table matches the column name: look up the column in utility.foreign_key</text>
+<text class="cell" x="42" y="440" text-anchor="start">    (dst_schema, dst_table, dst_search_column, dst_alt_search_column), e.g. src_unit_id → unit</text>
+<text class="cell" x="42" y="462" text-anchor="start">blank, 'none' or 'null'  →  id 0 (the unknown/none record)</text>
+<circle cx="771" cy="328" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="332" text-anchor="middle">3</text>
+<text class="note" x="790" y="332" text-anchor="start">Before writing, the name is confirmed</text>
+<text class="note" x="790" y="350" text-anchor="start">in the referenced table and replaced by</text>
+<text class="note" x="790" y="368" text-anchor="start">its id. If it is not found, the row is</text>
+<text class="note" x="790" y="386" text-anchor="start">rejected with a foreign key error and</text>
+<text class="note" x="790" y="404" text-anchor="start">nothing is written.</text>
+<path class="edge" d="M200,478 L200,534"/>
+<text class="gtitle" x="30" y="550" text-anchor="start">community.organisation</text>
+<rect x="30" y="558" width="104" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="574" text-anchor="start">id</text>
+<rect x="30" y="582" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="598" text-anchor="start">new (SERIAL)</text>
+<rect x="134" y="558" width="160" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="142" y="574" text-anchor="start">name</text>
+<rect x="134" y="582" width="160" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="142" y="598" text-anchor="start">stockholm university</text>
+<rect x="294" y="558" width="55" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="302" y="574" text-anchor="start">alias</text>
+<rect x="294" y="582" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="302" y="598" text-anchor="start">su</text>
+<rect x="349" y="558" width="111" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="357" y="574" text-anchor="start">url</text>
+<rect x="349" y="582" width="111" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="357" y="598" text-anchor="start">https://su.se</text>
+<rect x="460" y="558" width="118" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="468" y="574" text-anchor="start">postal_address</text>
+<rect x="460" y="582" width="118" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="468" y="598" text-anchor="start">stockholm</text>
+<rect x="578" y="558" width="104" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="586" y="574" text-anchor="start">territory_id</text>
+<rect x="578" y="582" width="104" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="586" y="598" text-anchor="start">217</text>
+<circle cx="771" cy="560" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="564" text-anchor="middle">4</text>
+<text class="note" x="790" y="564" text-anchor="start">The target table stores territory_id = 217,</text>
+<text class="note" x="790" y="582" text-anchor="start">a real foreign key to utility.territory.id.</text>
+<text class="lbl" x="30" y="636">manage_organisation: one Excel row → one row in one table; the foreign key is given by name and stored as id.</text>
+</svg>

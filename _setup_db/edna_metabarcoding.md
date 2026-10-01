@@ -83,7 +83,7 @@ The central idea is to keep the **method** apart from the **results**. The metho
 
 ### How the tables connect
 
-![How the eDNA tables connect]({{ "/assets/media/edna/edna_overview.png" | relative_url }})
+[![How the eDNA tables connect]({{ "/assets/media/edna/edna_overview.png" | relative_url }})]({{ "/assets/media/edna/edna_overview.png" | relative_url }})
 
 The link to the ordinary indicator machinery runs through `analysis_method`: provision `ai4sh-metabarcoding` delivers 19 indicators via `provision_indicator`; 9 prokaryote indicators use analysis method `ai4sh 16s metabarcoding`, 10 fungal indicators use `ai4sh its metabarcoding`, and each analysis method has exactly one `method_pipeline`.
 

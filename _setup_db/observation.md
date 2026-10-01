@@ -47,7 +47,7 @@ eDNA metabarcoding results use the normal hierarchy — dataset → campaign →
 | `edna_asv_abundance` | `observation_id`, `edna_asv_id`, `rel_abundance`, `read_count`, `raw_read_count` | PK `(observation_id, edna_asv_id)`; index on `edna_asv_id` | Abundance of an ASV in one observation. Only non-zero values are stored. `read_count` is the **rarefied** count; `raw_read_count` is empty until the lab delivers unrarefied counts |
 | `edna_run_step` | `observation_id`, `method_pipeline_step_id`, `reads_in`, `reads_out` | PK `(observation_id, method_pipeline_step_id)` | Reads entering and leaving each bioinformatics step per observation (e.g. DADA2 denoising stats). Created but empty |
 
-![eDNA observation tables]({{ "/assets/media/observation/edna.png" | relative_url }})
+[![eDNA observation tables]({{ "/assets/media/observation/edna.png" | relative_url }})]({{ "/assets/media/observation/edna.png" | relative_url }})
 
 All three are audited on `UPDATE` and `DELETE` only — the bulk `INSERT` of hundreds of thousands of abundance rows is not written to the audit log.
 
@@ -88,7 +88,7 @@ observation (→ sample, observation_log, observation_utility.provision)
 
 See the diagram below for the same shape drawn visually.
 
-![Sample and observation_log both feed observation]({{ "/assets/media/observation/sampling_log.png" | relative_url }})
+[![Sample and observation_log both feed observation]({{ "/assets/media/observation/sampling_log.png" | relative_url }})]({{ "/assets/media/observation/sampling_log.png" | relative_url }})
 
 ## Key tables in detail
 

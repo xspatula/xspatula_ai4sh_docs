@@ -52,8 +52,6 @@ This pilot file lists the process JSON files to execute, grouped by schema. The 
 10. `plot/` — processes for plotting indicators and spectra
 11. `machine_learning/` — processes for spectral preprocessing, outlier detection, and regression
 
-The eDNA processes are spread over three folders by the schema they write to: method catalogues and pipelines in `observation_utility/`, taxonomy in `organism_utility/`, and ASVs in `observation/` — see [Observation utility processes][setup_process_observation_utility], [Organism utility processes][setup_process_organism_utility] and [Observation processes][setup_process_observation].
-
 ## Process file structure
 
 Every process definition JSON file follows the same structure. A process is registered using the `manage_process` action with a `parameters` block describing the operation, and a `nodes` block describing each parameter it accepts:
@@ -90,6 +88,12 @@ Every process definition JSON file follows the same structure. A process is regi
               "permission": {
                 "update": false,
                 "delete": false
+              },
+              {
+                "parameter": "..."
+              },
+              {
+                "parameter": "..."
               }
             }
           ]

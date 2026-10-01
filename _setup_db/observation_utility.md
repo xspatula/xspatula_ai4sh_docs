@@ -85,7 +85,7 @@ Key columns and constraints:
 | `method_pipeline` | `name`, `version` (default `'unspecified'`), `analysis_method_id`, `url`, `doi`, `abstract` | `name` UNIQUE; `analysis_method_id` NOT NULL |
 | `method_pipeline_step` | `method_pipeline_id`, `step`, `stage`, `name`, `lab_protocol_id`, `edna_primer_pair_id`, `software_id`, `taxonomy_reference_id`, `parameters` (JSONB, default `{}`), `abstract` | `UNIQUE (method_pipeline_id, step)`; `stage` ∈ {`laboratory`, `bioinformatics`}; the four references are nullable |
 
-![eDNA method catalogues and method pipelines]({{ "/assets/media/observation_utility/edna_method_pipeline.png" | relative_url }})
+[![eDNA method catalogues and method pipelines]({{ "/assets/media/observation_utility/edna_method_pipeline.png" | relative_url }})]({{ "/assets/media/observation_utility/edna_method_pipeline.png" | relative_url }})
 
 **Structure only**: these setup files create the tables and — for `software`, `edna_primer_pair` and `lab_protocol` — insert a blank `id = 0` row; `method_pipeline_v10_sql.json` creates empty tables. The actual content (the two AI4SH pipelines `ai4sh-16s` and `ai4sh-its` with 12 steps each, 7 software tools, 2 primer pairs, 4 lab protocols) is inserted from Excel in the utility insert chain — see [eDNA method catalogues][edna_catalogues].
 
@@ -95,11 +95,11 @@ A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existin
 
 **Provision** is the central linking concept in observation_utility. A provision combines an `apparatus` (what instrument/tool), a `provider` (what service or supplier), and a `method_tier` (what level of professionality). A `provision_indicator` then specifies exactly which measurable quantities a provision delivers, with associated analysis method and unit. Every observation in the `observation` schema links back to a provision.
 
-![Provision schema]({{ "/assets/media/observation_utility/provision.png" | relative_url }})
+[![Provision schema]({{ "/assets/media/observation_utility/provision.png" | relative_url }})]({{ "/assets/media/observation_utility/provision.png" | relative_url }})
 
 **Indicator** represents a single measurable result (e.g. soil pH, organic carbon %). Indicators belong to a `quantity` (the physical property type). The same indicator can be delivered by multiple provisions, and one indicator can be declared equivalent to another via `indicator_parity` (`src_indicator_id`/`dst_indicator_id`, both referencing `indicator`) — useful when two differently-named indicators from different sources measure the same thing.
 
-![Indicator schema]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})
+[![Indicator schema]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})
 
 **Profiling** describes z-dimension sampling profiles (soil cores, sediment cores, ice cores) by specifying depth increments in a given unit. Samples with a profile dimension reference a profiling record.
 

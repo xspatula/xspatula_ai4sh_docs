@@ -58,6 +58,7 @@ Process files are located at:
 
 All files above are listed in the pilot file `setup_processes.txt`. The last five register the eDNA method catalogues and pipelines (see [eDNA metabarcoding][setup_db_edna]); in the pilot they follow `manage_setting_system`, and `manage_method_pipeline_step` comes after `manage_method_pipeline`, `manage_software`, `manage_edna_primer_pair` and `manage_lab_protocol` it references. `manage_taxonomy_reference`, also referenced by pipeline steps, is registered in [organism_utility][setup_process_organism_utility].
 
+{% capture notice-2 %}
 ## Access level
 
 Most observation utility management processes require a minimum user stratum of 4. This reflects that catalogue management (adding new instrument types, methods, units, etc.) is an administrative-level operation, not something an ordinary data contributor should be able to do. Incorrect or inconsistent catalogue entries would break the referential integrity of all observations that reference them.
@@ -67,6 +68,11 @@ Two exceptions:
 - `manage_spatial_reference` requires stratum **5** — a wrong spatial reference silently misplaces every geolocation that uses it.
 - `manage_software`, `manage_method_pipeline` and `manage_method_pipeline_step` require only stratum **3**.
 
+{% endcapture %}
+
+<div class="notice">{{ notice-2 | markdownify }}</div>
+
+{% capture notice-2 %}
 ## Key processes in detail
 
 ### manage_apparatus
@@ -156,6 +162,10 @@ Registers one numbered step of a pipeline. Blank reference cells mean "not appli
 | `abstract` | text | no | yes | Description of the step |
 
 Software and taxonomy references are looked up by **alias including the version**. If a version is changed in the software catalogue but not in the step (or vice versa), the lookup fails and the step is reported as an error.
+
+{% endcapture %}
+
+<div class="notice">{{ notice-2 | markdownify }}</div>
 
 [setup_db_edna]: /setup_db/edna_metabarcoding/
 [setup_process_organism_utility]: /setup_process/organism_utility/

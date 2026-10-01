@@ -14,7 +14,7 @@ The `organism_utility` schema holds the biological reference data of the databas
 
 The schema is deliberately limited to biology. Method catalogues — software, primers, lab protocols, pipelines — live in [observation_utility][setup_db_observation_utility], even when they are only used for organisms.
 
-![Organism utility schema]({{ "/assets/media/organism_utility/organism_utility.png" | relative_url }})
+[![Organism utility schema]({{ "/assets/media/organism_utility/organism_utility.png" | relative_url }})]({{ "/assets/media/organism_utility/organism_utility.png" | relative_url }})
 
 ## Process files
 

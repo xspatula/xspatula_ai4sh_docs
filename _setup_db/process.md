@@ -40,7 +40,7 @@ The process schema defines 9 tables that together fully describe every operation
 | `process_parameter_inherit` | Default parameter values drawn automatically from another table |
 | `process_parameter_auto_name` | Default convention for parameter name |
 
-![Process schema]({{ "/assets/media/process/process.png" | relative_url }})
+[![Process schema]({{ "/assets/media/process/process.png" | relative_url }})]({{ "/assets/media/process/process.png" | relative_url }})
 
 `process_parameter_set_value` and `process_parameter_minmax` are not compulsory.
 

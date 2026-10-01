@@ -44,8 +44,26 @@ Process files are located at:
 
 Files marked *no* exist on disk but are not listed in `setup_processes.txt`, so `setup_processes.ipynb` does not register them.
 
-The eDNA **summary indicators** need no dedicated process: they are indicator columns in the file passed to `manage_observation`, written to `observation_measurement`. The eDNA **community composition** (ASVs and their abundances) is loaded in bulk by `manage_edna_asv`, described below.
+**Side note:**
+The eDNA summary indicators need no dedicated process: they are indicator columns in the file passed to `manage_observation`, written to `observation_measurement`. The eDNA community composition (ASVs and their abundances) is loaded in bulk by `manage_edna_asv`, described below.
+{: .notice}
 
+## Data entry sequence
+
+To enter a complete soil observation, the following sequence must be followed:
+
+1. `manage_data_source` (if the data source is new)
+2. `manage_dataset`
+3. `manage_campaign`
+4. `manage_sampling_log`
+5. `manage_geolocation`, then a `manage_*_sample` variant
+6. `manage_observation_log`
+7. `manage_observation`
+8. eDNA only: `manage_taxon` (see [organism_utility][setup_process_organism_utility]), then `manage_edna_asv`
+
+If any step in this chain is missing, the foreign key constraints prevent entry of the subsequent records. This enforced chain is what ensures FAIR data compliance — every observation can be traced back to a fully documented campaign and sampling event.
+
+{% capture notice-2 %}
 ## Access levels
 
 Access levels reflect the operational role of each process:
@@ -54,7 +72,11 @@ Access levels reflect the operational role of each process:
 - Stratum 2: `manage_data_source`, `manage_sampling_log`, `manage_observation_log`, `manage_observation`, `manage_measurement_array`, `manage_beerkan_observation`, `manage_beerkan_infiltration_interval`, `manage_aggregate_app_observation` — regular data entry operations
 - Stratum 3: `manage_dataset`, `manage_campaign`, `manage_geolocation`, `manage_sample_geotag`, `manage_edna_asv` — campaign-level management and bulk loads
 - Stratum 4: `manage_*_sample`, `manage_dataset_tag`, `manage_campaign_tag`, `manage_sample_image_orientation`, `manage_quantity`, `manage_measurement` — elevated operations requiring administrative oversight
+{% endcapture %}
 
+<div class="notice">{{ notice-2 | markdownify }}</div>
+
+{% capture notice-2 %}
 ## Key processes in detail
 
 ### manage_data_source
@@ -105,6 +127,10 @@ Registers an individual physical sample under a `sampling_log`. There is no sing
 
 `manage_observation_log` registers the connection between a sampling log and the provision used to analyse its samples, along with sample handling logistics (preservation, storage, transportation). `manage_observation` then registers one observation per sample and stores its indicator values in `observation_measurement`. Indicator columns are named `@<indicator alias>` in the source file; each value must be consistent with the unit defined in the matching `provision_indicator`.
 
+The figure follows one row of the Agrolab wetlab file through `manage_observation`. The process writes to two tables: `observation` (the main table, written first) and `observation_measurement` (the child table). Foreign keys given by name are confirmed and replaced by ids — the sample is looked up within the sampling log of the given observation log. The new `observation.id` is then passed to the child table, where every `@indicator` column becomes its own row. For the general mechanism, see [How Excel columns reach the database][setup_process_utility_mapping].
+
+[![Excel row to observation and observation_measurement]({{ "/assets/media/process_mapping/observation.png" | relative_url }})]({{ "/assets/media/process_mapping/observation.png" | relative_url }})
+
 ### manage_geolocation and manage_sample_geotag
 
 `manage_geolocation` registers a named spatial point in `observation.geolocation`:
@@ -142,23 +168,15 @@ Behaviour:
 
 The process is routed to its bulk importer (`import_edna_asv.py`) through `BULK_PROCESS_D` in `src/ai4sh/import_data/import_data.py`. For how to run it, see [Insert ASVs][edna_insert_asv].
 
-## Data entry sequence
+{% endcapture %}
 
-To enter a complete soil observation, the following sequence must be followed:
+<div class="notice">{{ notice-2 | markdownify }}</div>
 
-1. `manage_data_source` (if the data source is new)
-2. `manage_dataset`
-3. `manage_campaign`
-4. `manage_sampling_log`
-5. `manage_geolocation`, then a `manage_*_sample` variant
-6. `manage_observation_log`
-7. `manage_observation`
-8. eDNA only: `manage_taxon` (see [organism_utility][setup_process_organism_utility]), then `manage_edna_asv`
 
-If any step in this chain is missing, the foreign key constraints prevent entry of the subsequent records. This enforced chain is what ensures FAIR data compliance — every observation can be traced back to a fully documented campaign and sampling event.
 
 
 [setup_db_observation]: /setup_db/observation/
 [setup_process_observation_utility]: /setup_process/observation_utility/
 [setup_process_organism_utility]: /setup_process/organism_utility/
 [edna_insert_asv]: /edna/insert_edna_asv/
+[setup_process_utility_mapping]: /setup_process/utility/#how-excel-columns-reach-the-database

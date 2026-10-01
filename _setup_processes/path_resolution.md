@@ -3,18 +3,18 @@ title: "Path Resolution"
 layout: single
 sidebar:
   nav: "setup_processes"
-excerpt: "Every relative path in a scheme, job, pilot, or process file resolves against the project root — one anchor, one mental model, as of 2026-08-15. This page states the rule and the two exceptions."
+excerpt: "Every relative path in a scheme, job, pilot, or process file resolves against the project root — one anchor, one mental model. This page states the rule and the two exceptions."
 permalink: /setup_process/path_resolution/
 author_profile: false
 date: 2026-08-15 08:00:00 +0200
 last_modified_at: 2026-08-15 08:00:00 +0200
 ---
 
-Every JSON file in this framework — scheme, job/project, pilot, and individual process files — can reference other files or directories by relative path. Before 2026-08-15, exactly what a given relative path was anchored to depended on which field you were looking at, and sometimes on how deeply a file happened to be nested. That's been harmonised into a single rule.
+Every JSON file in this framework — scheme, job/project, pilot, and individual process files — can reference other files or directories by relative path. The download version of the AI4SoilHealth framework have all paths set to relative - facilitating the setup and avoiding syntax differences between operating systems. For your own projects, or for Ai4SoilHealth, you can move the project specific definitions and files to any other path and then just change to absolute, or relative, paths for your own framework.
 
 ## The rule
 
-> Every relative path anywhere in the scheme → job(project) → pilot → process chain is relative to the **project root** — the directory `project_path` (in the scheme file) resolves to. This includes `job_folder`, `process_sub_folder`, `pilot_file`, every entry in a pilot list/file, and — as of 2026-08-15 — a process file's own in-parameter paths (`tabular_data_path`, `dst_path` on a `translate_tabular_data` process).
+> Every relative path anywhere in the scheme → job(project) → pilot → process chain is relative to the **project root** — the directory `project_path` (in the scheme file) resolves to. This includes `job_folder`, `process_sub_folder`, `pilot_file`, every entry in a pilot list/file, and a process file's own in-parameter paths (`tabular_data_path`, `dst_path` on a `translate_tabular_data` process).
 
 One anchor, one mental model: you never need to count `../` levels based on how deeply a file happens to be nested, and moving a process file to a different folder never silently breaks its own internal paths.
 
@@ -41,6 +41,7 @@ All notation-aware resolution goes through `Get_project_path`/`Full_path_locate`
 | `/` | Absolute — returned unchanged |
 | bare (no recognised prefix) | Joined onto the anchor directly |
 
+{% capture notice-2 %}
 ## Worked example
 
 Given a project root at `~/GitHub_xspatula/xspatula_ai4sh/ai4sh/`, a `tabular_data_path` of:
@@ -50,5 +51,8 @@ import_data/dataset/excel/data_source.xlsx
 ```
 
 resolves to `~/GitHub_xspatula/xspatula_ai4sh/ai4sh/import_data/dataset/excel/data_source.xlsx` — regardless of which directory the process JSON file that names it happens to live in. This is the form used throughout the `translate_*` pages on this site; see [Translate Processes][setup_process_translate] for the `tabular_data_path`/`dst_path` parameters themselves.
+{% endcapture %}
+
+<div class="notice">{{ notice-2 | markdownify }}</div>
 
 [setup_process_translate]: /setup_process/translate/

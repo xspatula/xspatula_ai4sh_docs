@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="988" viewBox="0 0 1260 988" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/></marker></defs>
+<style>
+.gtitle { font-size: 14px; font-weight: bold; fill: #1a1a1a; }
+.sub { font-size: 12px; font-style: italic; fill: #555555; }
+.hd { font-size: 12px; font-weight: bold; fill: #1a1a1a; }
+.cell { font-size: 12px; fill: #333333; }
+.note { font-size: 12.5px; fill: #1a1a1a; }
+.lbl { font-size: 11px; fill: #555555; }
+.badge { font-size: 12px; font-weight: bold; fill: #ffffff; }
+.edge { stroke: #3a6ea5; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+</style>
+<rect x="0" y="0" width="1260" height="988" fill="#ffffff"/>
+<text class="gtitle" x="30" y="52" text-anchor="start">AI4SH_observation_agrolab.xlsx</text>
+<rect x="30" y="60" width="300" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="76" text-anchor="start">observation_log_id__observation_log_name</text>
+<rect x="30" y="84" width="300" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="100" text-anchor="start">ai4sh_dk_foulum_2024@ai4sh-agrolab</text>
+<rect x="330" y="60" width="174" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="hd" x="338" y="76" text-anchor="start">sample_id__sample_name</text>
+<rect x="330" y="84" width="174" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="338" y="100" text-anchor="start">366-2-c5@0-20</text>
+<rect x="504" y="60" width="97" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="512" y="76" text-anchor="start">observed_at</text>
+<rect x="504" y="84" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="512" y="100" text-anchor="start">20250201</text>
+<rect x="601" y="60" width="69" height="24" fill="#e6ddf3" stroke="#3a6ea5"/>
+<text class="hd" x="609" y="76" text-anchor="start">@ph-h2o</text>
+<rect x="601" y="84" width="69" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="609" y="100" text-anchor="start">5.9</text>
+<rect x="670" y="60" width="41" height="24" fill="#e6ddf3" stroke="#3a6ea5"/>
+<text class="hd" x="678" y="76" text-anchor="start">@ec</text>
+<rect x="670" y="84" width="41" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="678" y="100" text-anchor="start">32</text>
+<rect x="711" y="60" width="62" height="24" fill="#e6ddf3" stroke="#3a6ea5"/>
+<text class="hd" x="719" y="76" text-anchor="start">@c-org</text>
+<rect x="711" y="84" width="62" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="719" y="100" text-anchor="start">2.18</text>
+<path class="edge" d="M200,112 L200,176"/>
+<text class="gtitle" x="30" y="192" text-anchor="start">process.process_parameter_schema_table</text>
+<text class="sub" x="359" y="192" text-anchor="start">(process = manage_observation)</text>
+<rect x="30" y="200" width="342" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="216" text-anchor="start">parameter</text>
+<rect x="30" y="224" width="342" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="240" text-anchor="start">observation_log_id__observation_log_name</text>
+<rect x="30" y="248" width="342" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="264" text-anchor="start">sample_id__sample_name</text>
+<rect x="30" y="272" width="342" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="288" text-anchor="start">provision_id__provision_name (default inherit)</text>
+<rect x="30" y="296" width="342" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="312" text-anchor="start">observed_at</text>
+<rect x="30" y="320" width="342" height="24" fill="#e6ddf3" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="336" text-anchor="start">@  (any @indicator column)</text>
+<rect x="372" y="200" width="97" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="380" y="216" text-anchor="start">in_schema</text>
+<rect x="372" y="224" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="380" y="240" text-anchor="start">observation</text>
+<rect x="372" y="248" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="380" y="264" text-anchor="start">observation</text>
+<rect x="372" y="272" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="380" y="288" text-anchor="start">observation</text>
+<rect x="372" y="296" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="380" y="312" text-anchor="start">observation</text>
+<rect x="372" y="320" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="380" y="336" text-anchor="start">observation</text>
+<rect x="469" y="200" width="181" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="477" y="216" text-anchor="start">in_table</text>
+<rect x="469" y="224" width="181" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="477" y="240" text-anchor="start">observation</text>
+<rect x="469" y="248" width="181" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="477" y="264" text-anchor="start">observation</text>
+<rect x="469" y="272" width="181" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="477" y="288" text-anchor="start">observation</text>
+<rect x="469" y="296" width="181" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="477" y="312" text-anchor="start">observation</text>
+<rect x="469" y="320" width="181" height="24" fill="#e6ddf3" stroke="#3a6ea5"/>
+<text class="cell" x="477" y="336" text-anchor="start">observation_measurement</text>
+<rect x="650" y="200" width="55" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="658" y="216" text-anchor="start">write</text>
+<rect x="650" y="224" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="658" y="240" text-anchor="start">true</text>
+<rect x="650" y="248" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="658" y="264" text-anchor="start">true</text>
+<rect x="650" y="272" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="658" y="288" text-anchor="start">true</text>
+<rect x="650" y="296" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="658" y="312" text-anchor="start">true</text>
+<rect x="650" y="320" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="658" y="336" text-anchor="start">true</text>
+<circle cx="911" cy="211" r="11" fill="#3a6ea5"/>
+<text class="badge" x="911" y="215" text-anchor="middle">1</text>
+<text class="note" x="930" y="215" text-anchor="start">The process writes to two tables. The one</text>
+<text class="note" x="930" y="233" text-anchor="start">with the shortest name (observation) is</text>
+<text class="note" x="930" y="251" text-anchor="start">the main table and is written first.</text>
+<rect x="30" y="384" width="760" height="96" rx="6" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="gtitle" x="42" y="404" text-anchor="start">Main table: resolve foreign keys, then write observation</text>
+<text class="cell" x="42" y="424" text-anchor="start">observation_log_id__observation_log_name  →  observation.observation_log.id  = 12 (example)</text>
+<text class="cell" x="42" y="446" text-anchor="start">sample_id__sample_name  →  the sample of that name in the observation log's sampling log  →  id 845</text>
+<text class="cell" x="42" y="468" text-anchor="start">provision_id  →  inherited from the observation log  →  ai4sh-agrolab</text>
+<circle cx="911" cy="400" r="11" fill="#3a6ea5"/>
+<text class="badge" x="911" y="404" text-anchor="middle">2</text>
+<text class="note" x="930" y="404" text-anchor="start">Names are confirmed and replaced by ids.</text>
+<text class="note" x="930" y="422" text-anchor="start">The observation row is inserted and the</text>
+<text class="note" x="930" y="440" text-anchor="start">database returns its id (e.g. 5001).</text>
+<path class="edge" d="M200,484 L200,530"/>
+<text class="gtitle" x="30" y="546" text-anchor="start">observation.observation</text>
+<rect x="30" y="554" width="90" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="570" text-anchor="start">id</text>
+<rect x="30" y="578" width="90" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="594" text-anchor="start">5001 (new)</text>
+<rect x="120" y="554" width="146" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="128" y="570" text-anchor="start">observation_log_id</text>
+<rect x="120" y="578" width="146" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="128" y="594" text-anchor="start">12</text>
+<rect x="266" y="554" width="83" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="274" y="570" text-anchor="start">sample_id</text>
+<rect x="266" y="578" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="274" y="594" text-anchor="start">845</text>
+<rect x="349" y="554" width="104" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="357" y="570" text-anchor="start">provision_id</text>
+<rect x="349" y="578" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="357" y="594" text-anchor="start">7</text>
+<rect x="453" y="554" width="97" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="461" y="570" text-anchor="start">observed_at</text>
+<rect x="453" y="578" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="461" y="594" text-anchor="start">2025-02-01</text>
+<rect x="30" y="642" width="760" height="96" rx="6" fill="#efe9f8" stroke="#3a6ea5"/>
+<text class="gtitle" x="42" y="662" text-anchor="start">Child table: @indicator columns become rows</text>
+<text class="cell" x="42" y="682" text-anchor="start">each @column header is an indicator name or alias: ph-h2o, ec, c-org</text>
+<text class="cell" x="42" y="704" text-anchor="start">valid indicators are those the provision delivers (provision_indicator)  →  indicator ids</text>
+<text class="cell" x="42" y="726" text-anchor="start">one row per @column: the new observation id + indicator_id + value; '&lt;0.5' is stored as 0.25</text>
+<circle cx="911" cy="658" r="11" fill="#3a6ea5"/>
+<text class="badge" x="911" y="662" text-anchor="middle">3</text>
+<text class="note" x="930" y="662" text-anchor="start">The child table gets the main table id</text>
+<text class="note" x="930" y="680" text-anchor="start">(observation_id = 5001), so the wide Excel</text>
+<text class="note" x="930" y="698" text-anchor="start">row becomes several narrow rows.</text>
+<text class="note" x="930" y="716" text-anchor="start">An unknown indicator stops the import.</text>
+<path class="edge" d="M200,742 L200,788"/>
+<text class="gtitle" x="30" y="804" text-anchor="start">observation.observation_measurement</text>
+<rect x="30" y="812" width="118" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="828" text-anchor="start">observation_id</text>
+<rect x="30" y="836" width="118" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="852" text-anchor="start">5001</text>
+<rect x="30" y="860" width="118" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="876" text-anchor="start">5001</text>
+<rect x="30" y="884" width="118" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="900" text-anchor="start">5001</text>
+<rect x="148" y="812" width="104" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="156" y="828" text-anchor="start">indicator_id</text>
+<rect x="148" y="836" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="156" y="852" text-anchor="start">31  (ph-h2o)</text>
+<rect x="148" y="860" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="156" y="876" text-anchor="start">32  (ec)</text>
+<rect x="148" y="884" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="156" y="900" text-anchor="start">33  (c-org)</text>
+<rect x="252" y="812" width="55" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="260" y="828" text-anchor="start">value</text>
+<rect x="252" y="836" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="260" y="852" text-anchor="start">5.9</text>
+<rect x="252" y="860" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="260" y="876" text-anchor="start">32</text>
+<rect x="252" y="884" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="260" y="900" text-anchor="start">2.18</text>
+<text class="lbl" x="30" y="938">manage_observation: one Excel row → one observation row plus one measurement row per @indicator column.</text>
+<text class="lbl" x="30" y="958">All ids are examples.</text>
+</svg>

@@ -72,18 +72,27 @@ Registered right after `translate_tabular_data_v10_sql.json` in the pilot list, 
 
 ## Parameters
 
+### General parameters
+
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `process` | text | yes | The target process that the row data is applied through (e.g. `manage_territory`) |
 | `tabular_data_path` | text | yes | Path to the source CSV or Excel file — resolved relative to the project root, see [Path resolution][setup_process_path_resolution] |
 | `dst_path` | text | yes | Destination path for the generated **staging** JSON file — resolved relative to the project root, see [Path resolution][setup_process_path_resolution] |
-| `taxonomy_reference` | text | no | Only for target process `manage_taxon`: default taxonomy reference name (e.g. `silva`); overridden per row by a `taxonomy_reference` column |
-| `taxonomy_reference_version` | text | no (default `unspecified`) | Only for target process `manage_taxon`: default taxonomy reference version; overridden per row by a `taxonomy_reference_version` column |
-| `method_pipeline` | text | no | Only for target process `manage_edna_asv`: name of the `method_pipeline` that produced the ASVs (e.g. `ai4sh-16s`) |
 
-**Bulk targets.** For `manage_taxon` and `manage_edna_asv` the output is not one process call per row. The tabular file is converted into a canonical CSV (lineages or abundances) under `dst_path`, and the generated process call points to that CSV. The target process then loads it with PostgreSQL `COPY`. See [Organism utility processes][setup_process_organism_utility] and [Observation processes][setup_process_observation].
+### eDNA metabarcoding parameters
 
-Identical shape to `translate_tabular_data`'s parameters — same names, same types, same resolution rules.
+Three optional parameters are used only when the target `process` is one of the bulk eDNA loaders:
+
+| Parameter | Type | Required | Target process | Description |
+|---|---|---|---|---|
+| `taxonomy_reference` | text | no | `manage_taxon` | Default taxonomy reference name (e.g. `silva`); overridden per row by a `taxonomy_reference` column |
+| `taxonomy_reference_version` | text | no (default `unspecified`) | `manage_taxon` | Default taxonomy reference version; overridden per row by a `taxonomy_reference_version` column |
+| `method_pipeline` | text | no | `manage_edna_asv` | Name of the `method_pipeline` that produced the ASVs (e.g. `ai4sh-16s`) |
+
+**Side note:**
+For `manage_taxon` and `manage_edna_asv` the output is not one process call per row. The tabular file is converted into a canonical CSV (lineages or abundances) under `dst_path`, and the generated process call points to that CSV. The target process then loads it with PostgreSQL `COPY`. See [Organism utility processes][setup_process_organism_utility] and [Observation processes][setup_process_observation].
+{: .notice}
 
 ## How it works
 

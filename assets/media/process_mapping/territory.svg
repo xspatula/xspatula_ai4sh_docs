@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="586" viewBox="0 0 1140 586" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3a6ea5"/></marker></defs>
+<style>
+.gtitle { font-size: 14px; font-weight: bold; fill: #1a1a1a; }
+.sub { font-size: 12px; font-style: italic; fill: #555555; }
+.hd { font-size: 12px; font-weight: bold; fill: #1a1a1a; }
+.cell { font-size: 12px; fill: #333333; }
+.note { font-size: 12.5px; fill: #1a1a1a; }
+.lbl { font-size: 11px; fill: #555555; }
+.badge { font-size: 12px; font-weight: bold; fill: #ffffff; }
+.edge { stroke: #3a6ea5; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+</style>
+<rect x="0" y="0" width="1140" height="586" fill="#ffffff"/>
+<text class="gtitle" x="30" y="52" text-anchor="start">territory.xlsx</text>
+<text class="sub" x="158" y="52" text-anchor="start">(Sheet1, one row per record)</text>
+<rect x="30" y="60" width="62" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="76" text-anchor="start">name</text>
+<rect x="30" y="84" width="62" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="100" text-anchor="start">Sweden</text>
+<rect x="92" y="60" width="104" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="100" y="76" text-anchor="start">display_name</text>
+<rect x="92" y="84" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="100" y="100" text-anchor="start">Sweden</text>
+<rect x="196" y="60" width="97" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="204" y="76" text-anchor="start">iso_code_a2</text>
+<rect x="196" y="84" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="204" y="100" text-anchor="start">se</text>
+<rect x="293" y="60" width="125" height="24" fill="#dcefdc" stroke="#3a6ea5"/>
+<text class="hd" x="301" y="76" text-anchor="start">iso_code_a2_ext</text>
+<rect x="293" y="84" width="125" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="301" y="100" text-anchor="start">se</text>
+<circle cx="771" cy="66" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="70" text-anchor="middle">1</text>
+<text class="note" x="790" y="70" text-anchor="start">Each column header is a parameter name</text>
+<text class="note" x="790" y="88" text-anchor="start">of the target process manage_territory.</text>
+<path class="edge" d="M200,112 L200,176"/>
+<text class="gtitle" x="30" y="192" text-anchor="start">process.process_parameter_schema_table</text>
+<rect x="30" y="200" width="132" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="216" text-anchor="start">process</text>
+<rect x="30" y="224" width="132" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="240" text-anchor="start">manage_territory</text>
+<rect x="30" y="248" width="132" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="264" text-anchor="start">manage_territory</text>
+<rect x="30" y="272" width="132" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="288" text-anchor="start">manage_territory</text>
+<rect x="30" y="296" width="132" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="312" text-anchor="start">manage_territory</text>
+<rect x="162" y="200" width="125" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="170" y="216" text-anchor="start">parameter</text>
+<rect x="162" y="224" width="125" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="170" y="240" text-anchor="start">name</text>
+<rect x="162" y="248" width="125" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="170" y="264" text-anchor="start">display_name</text>
+<rect x="162" y="272" width="125" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="170" y="288" text-anchor="start">iso_code_a2</text>
+<rect x="162" y="296" width="125" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="170" y="312" text-anchor="start">iso_code_a2_ext</text>
+<rect x="287" y="200" width="83" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="295" y="216" text-anchor="start">in_schema</text>
+<rect x="287" y="224" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="295" y="240" text-anchor="start">utility</text>
+<rect x="287" y="248" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="295" y="264" text-anchor="start">utility</text>
+<rect x="287" y="272" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="295" y="288" text-anchor="start">utility</text>
+<rect x="287" y="296" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="295" y="312" text-anchor="start">utility</text>
+<rect x="370" y="200" width="83" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="378" y="216" text-anchor="start">in_table</text>
+<rect x="370" y="224" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="378" y="240" text-anchor="start">territory</text>
+<rect x="370" y="248" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="378" y="264" text-anchor="start">territory</text>
+<rect x="370" y="272" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="378" y="288" text-anchor="start">territory</text>
+<rect x="370" y="296" width="83" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="378" y="312" text-anchor="start">territory</text>
+<rect x="453" y="200" width="55" height="24" fill="#dbe7f5" stroke="#3a6ea5"/>
+<text class="hd" x="461" y="216" text-anchor="start">write</text>
+<rect x="453" y="224" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="461" y="240" text-anchor="start">true</text>
+<rect x="453" y="248" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="461" y="264" text-anchor="start">true</text>
+<rect x="453" y="272" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="461" y="288" text-anchor="start">true</text>
+<rect x="453" y="296" width="55" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="461" y="312" text-anchor="start">true</text>
+<circle cx="771" cy="211" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="215" text-anchor="middle">2</text>
+<text class="note" x="790" y="215" text-anchor="start">The registered process says where each</text>
+<text class="note" x="790" y="233" text-anchor="start">parameter is written: schema.table and</text>
+<text class="note" x="790" y="251" text-anchor="start">whether it is written at all (write).</text>
+<path class="edge" d="M200,324 L200,380"/>
+<text class="gtitle" x="30" y="396" text-anchor="start">utility.territory</text>
+<rect x="30" y="404" width="104" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="38" y="420" text-anchor="start">id</text>
+<rect x="30" y="428" width="104" height="24" fill="#fff4c2" stroke="#3a6ea5"/>
+<text class="cell" x="38" y="444" text-anchor="start">new (SERIAL)</text>
+<rect x="134" y="404" width="62" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="142" y="420" text-anchor="start">name</text>
+<rect x="134" y="428" width="62" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="142" y="444" text-anchor="start">sweden</text>
+<rect x="196" y="404" width="104" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="204" y="420" text-anchor="start">display_name</text>
+<rect x="196" y="428" width="104" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="204" y="444" text-anchor="start">Sweden</text>
+<rect x="300" y="404" width="97" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="308" y="420" text-anchor="start">iso_code_a2</text>
+<rect x="300" y="428" width="97" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="308" y="444" text-anchor="start">se</text>
+<rect x="397" y="404" width="125" height="24" fill="#fbe3c8" stroke="#3a6ea5"/>
+<text class="hd" x="405" y="420" text-anchor="start">iso_code_a2_ext</text>
+<rect x="397" y="428" width="125" height="24" fill="#ffffff" stroke="#3a6ea5"/>
+<text class="cell" x="405" y="444" text-anchor="start">se</text>
+<circle cx="771" cy="400" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="404" text-anchor="middle">3</text>
+<text class="note" x="790" y="404" text-anchor="start">Search the table on its unique columns</text>
+<text class="note" x="790" y="422" text-anchor="start">(name, iso_code_a2_ext). Not found: INSERT;</text>
+<text class="note" x="790" y="440" text-anchor="start">the database assigns the id. Found: skip</text>
+<text class="note" x="790" y="458" text-anchor="start">(or UPDATE if "overwrite": true).</text>
+<circle cx="771" cy="486" r="11" fill="#3a6ea5"/>
+<text class="badge" x="771" y="490" text-anchor="middle">4</text>
+<text class="note" x="790" y="490" text-anchor="start">Text is lowercased (Sweden → sweden),</text>
+<text class="note" x="790" y="508" text-anchor="start">except display_name, abstract, title,</text>
+<text class="note" x="790" y="526" text-anchor="start">label, url and primer sequences.</text>
+<text class="lbl" x="30" y="556">manage_territory: one Excel row → one row in one table, no foreign keys.</text>
+</svg>

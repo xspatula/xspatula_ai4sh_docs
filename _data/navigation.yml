@@ -1,5 +1,5 @@
 setup_db:
-  - title: Setup AI4SoilHealth database
+  - title: Setup database
     children:
       - title: "Introduction"
         url: /setup_db/
@@ -35,7 +35,7 @@ auditing:
         url: /auditing/queries/
 
 setup_community:
-  - title: Setup AI4SoilHealth community
+  - title: Setup community
     children:
       - title: "Introduction"
         url: /setup_community/
@@ -51,7 +51,7 @@ setup_community:
         url: /setup_community/welcome_email/
 
 setup_processes:
-  - title: Setup AI4SoilHealth processes
+  - title: Setup processes
     children:
       - title: "Introduction"
         url: /setup_process/
@@ -177,7 +177,7 @@ spectra:
         url: /spectra/manage_libs_obs/
 
 edna:
-  - title: Load eDNA metabarcoding data
+  - title: Load eDNA data
     children:
       - title: "Synopsis"
         url: /edna/

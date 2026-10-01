@@ -25,7 +25,7 @@ Process files are located at:
 | `taxonomy_reference_v10_sql.json` | `manage_taxonomy_reference` | `organism_utility.taxonomy_reference` | 3 |
 | `taxon_v10_sql.json` | `manage_taxon` | `organism_utility.taxon` (bulk COPY) | 3 |
 
-Both are listed in `setup_processes.txt` in the section `### ORGANISM UTILITIES ###`, after the observation utilities and before the observation processes.
+Both are listed in `setup_processes.txt`.
 
 ## manage_taxonomy_reference
 

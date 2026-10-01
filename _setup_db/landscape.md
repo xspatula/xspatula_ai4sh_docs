@@ -53,7 +53,7 @@ The `landscape_utility` schema holds the reference catalogues for landscape clas
 
 The reference tables in `landscape_utility` must be populated before any `landscape` observation records can be inserted, because landscape observations reference these catalogues through foreign keys.
 
-![Landscape utility schema]({{ "/assets/media/landscape/landscape_utility.png" | relative_url }})
+[![Landscape utility schema]({{ "/assets/media/landscape/landscape_utility.png" | relative_url }})]({{ "/assets/media/landscape/landscape_utility.png" | relative_url }})
 
 ## Schema: landscape
 
@@ -70,7 +70,7 @@ Six more tables are defined in `observation_v10_sql.json` but not yet created (s
 
 These observations help contextualise soil property measurements — the same soil property can behave differently under different land use or cover conditions.
 
-![Landscape schema]({{ "/assets/media/landscape/landscape.png" | relative_url }})
+[![Landscape schema]({{ "/assets/media/landscape/landscape.png" | relative_url }})]({{ "/assets/media/landscape/landscape.png" | relative_url }})
 
 ## Relationship to observation schema
 
