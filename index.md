@@ -109,7 +109,7 @@ This work was done as part of the AI4SoilHealth project, funded by the European 
 _Funded by the European Union. The views and opinions expressed are those of the authors only and do not necessarily reflect those of the European Union or the European Research Executive Agency._
 {% endcapture %}
 
-<div class="{: .notice--info}">{{ notice-3 | markdownify }}</div>
+<div class="notice--info">{{ notice-3 | markdownify }}</div>
 
 [fair]: https://www.go-fair.org/fair-principles/
 [ai4sh]: https:/ai4soilhealth.eu
