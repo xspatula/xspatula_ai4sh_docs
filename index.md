@@ -129,6 +129,4 @@ _Funded by the European Union. The views and opinions expressed are those of the
 [github]: https://github.com/xspatula/xspatula_ai4sh
 [xspatula]: https://xspatula.github.io
 [insert_vs_translate]: /insert_vs_translate/
-[xspatula_lucas]: https://github.com/xspatula/xspatula_lucas
 [xspatula_lucas_docs]: https://xspatula.github.io/xspatula_lucas_docs/
-[lucas_esdac]: https://esdac.jrc.ec.europa.eu/projects/lucas
