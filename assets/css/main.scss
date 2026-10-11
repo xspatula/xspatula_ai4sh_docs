@@ -38,3 +38,11 @@ search: false
   background-color: transparent;
   box-shadow: none;
 }
+
+/* Code blocks: fenced code blocks at the same font size as the tables above. Kept in monospace so indentation in JSON/paths lines up. */
+.page__content div.highlighter-rouge,
+.page__content figure.highlight,
+.archive div.highlighter-rouge,
+.archive figure.highlight {
+  font-size: $type-size-6 * 0.75;   // 0.5625em, as the tables
+}
