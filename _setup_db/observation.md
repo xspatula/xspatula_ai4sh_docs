@@ -90,6 +90,7 @@ See the diagram below for the same shape drawn visually.
 
 [![Sample and observation_log both feed observation]({{ "/assets/media/observation/sampling_log.png" | relative_url }})]({{ "/assets/media/observation/sampling_log.png" | relative_url }})
 
+{% capture notice-2 %}
 ## Key tables in detail
 
 ### dataset
@@ -145,7 +146,9 @@ Additional tables cover other non-standard observation types:
 - **monolith** and **macrofauna** — excavated monoliths and macrofauna counts and biomass, resolved to `organism_utility.taxon`
 - **observation_measurement** — indicator values per observation, for all scalar results (wet chemistry, eDNA summary indicators etc.)
 - **edna_asv**, **edna_asv_abundance**, **edna_run_step** — eDNA metabarcoding community composition, see [eDNA observation tables](#edna-observation-tables) above
+{% endcapture %}
 
+<div class="notice">{{ notice-2 | markdownify }}</div>
 
 [setup_db_observation_utility]: /setup_db/observation_utility/
 [setup_process_observation]: /setup_process/observation/

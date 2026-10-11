@@ -91,6 +91,7 @@ Key columns and constraints:
 
 A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existing `provision_indicator` mechanism: the summary indicators delivered by provision `ai4sh-metabarcoding` point to the analysis methods `ai4sh 16s metabarcoding` and `ai4sh its metabarcoding`, and each of those has exactly one pipeline. For the full eDNA picture, see [eDNA metabarcoding][setup_db_edna].
 
+{% capture notice-2 %}
 ## Key concepts
 
 **Provision** is the central linking concept in observation_utility. A provision combines an `apparatus` (what instrument/tool), a `provider` (what service or supplier), and a `method_tier` (what level of professionality). A `provision_indicator` then specifies exactly which measurable quantities a provision delivers, with associated analysis method and unit. Every observation in the `observation` schema links back to a provision. Each provision also has a globally unique `tag`, used to compose observation log tags (see [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }})).
@@ -102,6 +103,9 @@ A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existin
 [![Indicator schema]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})
 
 **Profiling** describes z-dimension sampling profiles (soil cores, sediment cores, ice cores) by specifying depth increments in a given unit. Samples with a profile dimension reference a profiling record.
+{% endcapture %}
+
+<div class="notice">{{ notice-2 | markdownify }}</div>
 
 [setup_db_organism_utility]: /setup_db/organism_utility/
 [setup_db_edna]: /setup_db/edna_metabarcoding/

@@ -14,12 +14,12 @@ last_modified_at: 2026-08-15 08:00:00 +0200
 
 Registering a new user through [Excel intake][setup_community_excel_intake] and [Register notebook][setup_community_register_notebook] runs through a registered process, `manage_user` — and running any process requires an already-logged-in `community.user`. That's fine for the second user onwards, but the *first* user can't log in before they exist. Someone has to be seeded directly.
 
-That first-user seed still happens the old way: hand-editing
+That first-user seed must be created by hand-editing
 `setup/zzz/ai4sh/setup_db/json/community/user_records_v10_sql.json` and running `setup_db.ipynb`.
 
 ## Passwords are bcrypt hashes now, not plaintext
 
-`community.user.password` used to be compared as plaintext (`WHERE password = %s`). It now stores a bcrypt hash, verified in Python after the row is fetched. That's safer, but it also means there's no way to just type a password directly into `user_records_v10_sql.json` any more — only a hash belongs in that column.
+`community.user.password` stores a bcrypt hash, verified in Python after the row is fetched. That's safer, but it also means there's no way to just type a password directly into `user_records_v10_sql.json` — only a hash belongs in that column.
 
 ## Hashing a password by hand: setup/hash_password.py
 

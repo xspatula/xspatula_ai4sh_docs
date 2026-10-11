@@ -6,7 +6,7 @@ excerpt: "The EU-funded AI4SoilHealth (AI4SH) project (2022-2026) collected soil
 
 # AI4SH in-situ data handling and modelling with Xspatula
 
-The EU-funded [AI4SoilHealth (AI4SH)][ai4sh] project (2022-2026) collected and analysed soil data from field sampling across Europe. Different in-situ, home and laboratory tiered methods were applied for analysing the samples. To accommodate this data with [FAIR (Findability, Accessibility, Interoperability, and Reuse)][fair] principles the [Xspatula framework][xspatula] provides a comprehensive PostgreSQL database and a JSON-driven Python workflow for seeding a database, loading AI4SH data and then apply Machine Learning for modelling key soil properties from spectra and with various home and field based sensors. This site documents how to create, seed, load data and model soil properties using a postgreSQL database and Machine Learning using the Xspatula framework.
+The EU-funded [AI4SoilHealth (AI4SH)][ai4sh] project (2022-2026) collected and analysed soil data from field sampling across Europe. Different in-situ, home and laboratory tiered methods were applied for analysing the samples. To accommodate this data with [FAIR (Findability, Accessibility, Interoperability, and Reuse)][fair] principles the [Xspatula framework][xspatula] provides a comprehensive PostgreSQL database and a JSON-driven Python workflow for seeding a database, loading AI4SH data and then apply Machine Learning for modelling key soil properties from traditional laboratory analysis, spectra and various home and field based sensors. This site documents how to create, seed, load data and model soil properties using a postgreSQL database and Machine Learning using the Xspatula framework.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ The first two stages, setting up a postgreSQl database and register processes in
 
 These two stages are also covered, with focus on creating the AI4SH database and its core processes, in this site.
 
-To get started you need to clone or download the AI4SH data loading package from [GitHub][github]:
+To get started you need to clone or download the AI4SH framework package from [GitHub][github]:
 
 ```bash
 git clone https://github.com/xspatula/xspatula_ai4sh
@@ -35,7 +35,7 @@ The AI4SH postgres database contains 10 schemas:
 - **landscape** — landscape observations
 - **observation_utility** — catalogues and reference data required for FAIR-compliant soil observations (units, methods, instruments, software, eDNA primer pairs, lab protocols, method pipelines, etc.)
 - **observation** — actual soil property data, organised through datasets, campaigns, samples and observations, including eDNA ASVs and abundances
-- **organism_utility** — the taxonomic backbone: taxon tree, ranks, status, functions and taxonomy reference databases (SILVA, UNITE)
+- **organism_utility** — the taxonomic backbone: taxon tree, ranks, status, functions and taxonomy reference databases for environmental DNA (e.g. SILVA, UNITE)
 - **organism** — reserved for organism-level observations (no tables loaded yet)
 
 ## Seeding the database
@@ -49,7 +49,7 @@ Both stages use the Xspatula JSON-driven workflow: a _scheme file_ points to a _
 
 ## Data loading overview
 
-Data is loaded in a mandatory sequence — each stage depends on records from the previous one. Each stage below can be loaded via a single-step notebook (recommended default) or the original 2-step translate-then-manage notebook:
+Data is loaded in a mandatory sequence — each stage depends on records from the previous one. Each stage below can be loaded via a single-step notebook (recommended default) or a 2-step translate-then-manage notebook (mainly for updating existing records):
 
 | Stage | Single-step notebook | 2-step notebook | Pages |
 |---|---|---|---|
@@ -65,8 +65,6 @@ Alternatively, all stages can be run from a single notebook: `insert_ai4sh_data.
 
 ## Including LUCAS data
 
-Earlier versions of this package also seeded and loaded the public [LUCAS][lucas_esdac] (Land Use/Cover Area frame Survey) topsoil data. LUCAS now lives in its own open source project, [xspatula_lucas][xspatula_lucas], documented at [xspatula_lucas_docs][xspatula_lucas_docs]. You do not need to seed or load LUCAS from this package.
-
 To have LUCAS and AI4SH data side by side, load both projects into **the same database**:
 
 1. Set up the database and register processes from this package (`xspatula_ai4sh`), as described under [Seeding the database](#seeding-the-database).
@@ -75,18 +73,21 @@ To have LUCAS and AI4SH data side by side, load both projects into **the same da
    ```bash
    git clone https://github.com/xspatula/xspatula_lucas
    ```
-
-3. In `xspatula_lucas/setup/zzz/`, use the *use an existing database* scheme file (`scheme_local_use.json`) and set host, port, database name and credentials (or `.netrc` entry) to **the same database** you created for AI4SH. Do not run the LUCAS *setup* scheme — that creates a new database.
-4. In `./lucas/scheme_lucas.json`, set `user_project` to a user already registered in the AI4SH database.
-5. Load the utility, dataset metadata and LUCAS 2009/2015 campaigns following [xspatula_lucas_docs][xspatula_lucas_docs].
+3. In `xspatula_lucas/setup/zzz/`, replace `scheme_local_setup.json` with a copy of the  same file from the `xspatula_ai4sh` project; make sure that no process is set to overwrite or delete, and run the `setup_db` to create the LUCAS specific database entries.
+4. Repeat the same procedure as in 3. for setup_processes to insert LUCAS specific processing.
+5. Download the LUCAS data you want to use and run the Command Line Interface script (s) under `lucas/prepare_lucas_data`.
+6. In `./lucas/scheme_lucas.json`, set `user_project` to a user already registered in the AI4SH database.
+7. Load the utility, dataset metadata and LUCAS 2009/2015 campaigns following [xspatula_lucas_docs][xspatula_lucas_docs].
 
 LUCAS and AI4SH records are then separated by their dataset (`lucas` vs `ai4sh`) and share all utility catalogues (units, indicators, methods, taxa), which is what makes cross-dataset modelling possible.
+
+You can also do it the other way around, first setting up and loading LUCAS and then adding AI4SH to the LUCAS framework.
 
 ## Single-step vs 2-step
 
 Every data-loading operation that starts from a spreadsheet can go through the database one of
 two ways — a single-step `insert_tabular_data` route (reads Excel/CSV and inserts it
-immediately, INSERT-only) or the original 2-step translate-then-manage route (supports `UPDATE`
+immediately, INSERT-only) or a 2-step translate-then-manage route (supports `UPDATE`
 and lets you hand-inspect the generated JSON first):
 
 ```
@@ -100,11 +101,15 @@ PostgreSQL database                        JSON process files
 See [Single-step vs dual-step][insert_vs_translate] for the full comparison and which one to
 use when.
 
+{% capture notice-3 %}
 ## Acknowledgments and Funding
 
 This work was done as part of the AI4SoilHealth project, funded by the European Union's Horizon Europe Research and Innovation Programme under Grant Agreement No. 101086179.
 
 _Funded by the European Union. The views and opinions expressed are those of the authors only and do not necessarily reflect those of the European Union or the European Research Executive Agency._
+{% endcapture %}
+
+<div class="{: .notice--info}">{{ notice-3 | markdownify }}</div>
 
 [fair]: https://www.go-fair.org/fair-principles/
 [ai4sh]: https:/ai4soilhealth.eu

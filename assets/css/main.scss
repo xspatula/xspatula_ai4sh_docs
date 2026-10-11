@@ -14,8 +14,10 @@ search: false
 
 /* Tables: the same look as a table inside a .notice block — smaller font so
    wide tables fit, on a light background. Applied to every table in the page
-   content, so tables are written as plain Markdown. */
-.page__content table {
+   content (.page__content on single pages, .archive on the home page), so
+   tables are written as plain Markdown. */
+.page__content table,
+.archive table {
   font-size: $type-size-6 * 0.75;   // 0.5625em, as a table inside .notice
   padding: 1em;
   background-color: mix($background-color, $light-gray, $notice-background-mix);
@@ -29,7 +31,8 @@ search: false
 
 /* A table that is still wrapped in a .notice block keeps the theme size,
    so it is not shrunk twice. */
-.page__content .notice table {
+.page__content .notice table,
+.archive .notice table {
   font-size: $type-size-6;
   padding: 0;
   background-color: transparent;

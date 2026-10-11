@@ -40,6 +40,7 @@ The job file for process setup points to:
 
 This pilot file lists the process JSON files to execute, grouped by schema. The execution order is:
 
+{% capture notice-2 %}
 1. `root_process/` — define the process families
 2. `translate/` — the translate and insert tabular data processes
 3. `utility/` — foreign key and territory management processes
@@ -51,6 +52,9 @@ This pilot file lists the process JSON files to execute, grouped by schema. The 
 9. `select/` — processes for selecting spectral data
 10. `plot/` — processes for plotting indicators and spectra
 11. `machine_learning/` — processes for spectral preprocessing, outlier detection, and regression
+{% endcapture %}
+ 
+<div class="notice">{{ notice-2 | markdownify }}</div>
 
 ## Process file structure
 

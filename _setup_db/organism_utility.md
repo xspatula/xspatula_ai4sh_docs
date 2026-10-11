@@ -18,8 +18,6 @@ The schema is deliberately limited to biology. Method catalogues — software, p
 
 ## Process files
 
-All six files are in the `### ORGANISM UTILITIES ###` section of the pilot file `db_setup.txt`, placed after the observation utilities and before the method pipelines and the observation schema (both of which reference `taxon` or `taxonomy_reference`).
-
 | File | Table created | Dependencies | Seeded content |
 |---|---|---|---|
 | `organism_utility/taxonomy_reference_v10_sql.json` | `taxonomy_reference` | none | blank `id = 0` row only |
