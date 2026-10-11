@@ -8,7 +8,7 @@ excerpt: "Inserting dataset records into the AI4SH database. A dataset is the to
 permalink: /dataset_meta/manage_dataset/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-11 08:00:00 +0200
 ---
 
 A dataset is the top-level grouping for data contributed by a single data source, typically with a coherent thematic scope (e.g. LUCAS topsoil, a national soil survey, a project-specific campaign series). Every campaign must belong to a dataset.
@@ -46,6 +46,7 @@ if structured_process_D is not None:
       "parameters": {
         "name": "ai4soilhealth",
         "alias": "ai4sh",
+        "tag": "PLACEHOLDER",
         "display_name": "AI4SoilHealth",
         "data_source_id__data_source_name": "ai4soilhealth",
         "contact_name": "stockholm university",
@@ -77,7 +78,8 @@ if structured_process_D is not None:
 | Parameter | Description |
 |---|---|
 | `name` | Full name of the dataset (lowercase) |
-| `alias` | Short identifier used for FK lookup in campaign manage files |
+| `alias` | Short identifier used for FK lookup in campaign manage files; also the first part of auto-named campaign names. No `_` or `@` |
+| `tag` | **New, required.** Short, globally unique key for machines; the first part of auto-named campaign tags. No `_`, `@`, capitals or blanks, under 16 characters |
 | `display_name` | Display label |
 | `data_source_id__data_source_name` | FK lookup: data source by alias |
 | `contact_name` | Dataset contact name |
@@ -99,6 +101,13 @@ if structured_process_D is not None:
 | `territory_id__territory_name` | FK lookup: geographic territory |
 | `spatial_reference_id__spatial_reference_name` | FK lookup: coordinate reference system |
 
+## Name, alias and tag
+
+The dataset `name` is free text for people; the `tag` is the short key that the [automatic naming][auto_naming] builds campaign, sampling log and observation log tags from. A campaign can refer to its dataset by name, tag or alias in `dataset_id__dataset_name`.
+
+**PLACEHOLDER:** the AI4SH dataset tag is not yet set in `dataset.xlsx`.
+{: .notice--warning}
+
 ## Next step
 
 Proceed to [Manage campaign].
@@ -106,3 +115,4 @@ Proceed to [Manage campaign].
 [Manage data source]: /dataset_meta/manage_data_source/
 [Load utility data]: /utility/
 [Manage campaign]: /dataset_meta/manage_campaign/
+[auto_naming]: /setup_process/auto_naming/

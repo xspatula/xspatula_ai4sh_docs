@@ -96,16 +96,18 @@ See the diagram below for the same shape drawn visually.
 
 A dataset is a coherent collection of data from one or more campaigns — for example, LUCAS 2009–2022 or the AI4SoilHealth project. Datasets are associated with a `data_source`.
 
-Key columns: `id`, `data_source_id`, `name`, `alias`, `status_code`.
+Key columns: `id`, `data_source_id`, `name`, `alias`, `tag`, `status_code`.
 
 ### campaign
 
 A campaign is a child of a dataset where sampling methods may vary in detail. For example, LUCAS 2009 and LUCAS 2015 are two campaigns within the LUCAS dataset. Each AI4SH pilot site is a separate campaign.
 
+Besides `name`, a campaign has a globally unique `tag` and a `datetime_tag` (the time part of the tag). Both `name` and `tag` can be composed automatically, see [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
+
 The `campaign` table has six companion meta tables:
 
 - **campaign_meta** — abstract, DOI, URL, keywords, time series flag, license, taxonomic scope
-- **campaign_tag** — free-text tags (substance or keyword), one row per tag — the junction-table replacement for what used to be array columns, see [Schema conventions][setup_process_schema_conventions]
+- **campaign_tag** — free-text tags (substance or keyword), one row per tag — the junction-table replacement for what used to be array columns, see [Schema conventions]({{ "/setup_process/schema_conventions/" | relative_url }})
 - **campaign_method_tier** — boolean flags for which method tiers (in-situ, in-home, in-lab, from-drone, from-satellite, etc.) are used in the campaign
 - **campaign_location** — geographic bounding box and spatial reference
 - **campaign_provision** — which provisions (instrument+provider+method_tier combinations) are used
@@ -113,7 +115,7 @@ The `campaign` table has six companion meta tables:
 
 ### sampling_log
 
-A sampling log is a sampling event within a campaign, covering one or multiple samples taken with consistent methods. It records the responsible person and time window.
+A sampling log is a sampling event within a campaign, covering one or multiple samples taken with consistent methods. It records the responsible person and time window. Its `name` is unique within the campaign; its `tag` is globally unique.
 
 ### sample and geolocation
 
@@ -121,7 +123,7 @@ A sampling log is a sampling event within a campaign, covering one or multiple s
 
 ### observation_log and observation
 
-`observation_log` links directly to `sampling_log` (not to `sample`) and to a provision (instrument + service + method tier); its companion tables record the sample handling chain (preparation, preservation, storage, transportation via `observation_log_meta`), method-tier flags, and any additional provisions used beyond the log's own `provision_id`.
+`observation_log` links directly to `sampling_log` (not to `sample`) and to a provision (instrument + service + method tier); its companion tables record the sample handling chain (preparation, preservation, storage, transportation via `observation_log_meta`), method-tier flags, and any additional provisions used beyond the log's own `provision_id`. Its `tag` (`<sampling log tag>@<provision tag>`) is unique per sampling log.
 
 `sample` and `observation_log` are **siblings**, both children of `sampling_log` — `observation_log` is not a child of `sample`. `observation` itself carries three foreign keys — `sample_id`, `observation_log_id`, and `provision_id` — converging both branches: it's the actual numeric or text result for a specific sample, recorded under a specific observation log, from a specific provision. There is no `provision_indicator` column on `observation` itself; which indicator a value represents is determined by the `provision_id` in context of that provision's registered `provision_indicator` records.
 
@@ -132,7 +134,7 @@ signal array, not a single value:
 
 - **spectra_scan** — `signal_mean` and `signal_standard_deviation` array columns plus
   `spectroscopy_method_id`, linked directly to `observation`. Covers the FOSS DS2500,
-  Neospectra, FTIR, and LIBS instrument families documented in the [Spectra][spectra]
+  Neospectra, FTIR, and LIBS instrument families documented in the [Spectra]({{ "/spectra/" | relative_url }})
   collection.
 
 ### Specialised observation tables

@@ -8,7 +8,7 @@ excerpt: "Inserting sampling log records into the AI4SH database. A sampling log
 permalink: /dataset_meta/manage_sampling_log/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-11 08:00:00 +0200
 ---
 
 A sampling log records a specific sampling operation within a campaign — the tools used, the date range, and the responsible contacts. Individual samples (with geolocations) are later linked to a sampling log.
@@ -43,10 +43,9 @@ if structured_process_D is not None:
       "delete": false,
       "overwrite": false,
       "parameters": {
-        "campaign_id__campaign_name": "ai4sh_se_loennstorp",
+        "campaign_id__campaign_name": "PLACEHOLDER (campaign name, tag or alias)",
         "contact_name": "thomasg",
         "contact_email": "thomas.gumbricht@natgeo.us.se",
-        "name": "ai4sh_se_loennstorp_2024",
         "abstract": "AI4SH in-situ sampling",
         "sampling_tool_array": "spade,auger",
         "begin_date": 20240910,
@@ -63,14 +62,19 @@ One JSON object is generated per row in `sampling_log.xlsx`. The file typically 
 
 | Parameter | Description |
 |---|---|
-| `campaign_id__campaign_name` | FK lookup: parent campaign by name |
+| `campaign_id__campaign_name` | FK lookup: parent campaign by name, tag or alias |
 | `contact_name` | Name of the person responsible for this sampling operation |
 | `contact_email` | Email of the responsible person |
-| `name` | Sampling log identifier (lowercase, must be unique within the campaign) |
+| `name` | Optional. Left out or `auto`: composed as `<campaign name> <campaign territory code>`. Unique within the campaign |
+| `tag` | Optional. Left out or `auto`: composed as `<campaign tag>_<campaign territory code>`. Globally unique |
 | `abstract` | Free-text description of the sampling operation |
 | `sampling_tool_array` | Comma-separated list of sampling tools used (e.g. `spade,auger`) |
 | `begin_date` | Start date as integer (`YYYYMMDD`) |
 | `end_date` | End date as integer (`YYYYMMDD`) |
+
+## Automatic naming
+
+`name` and `tag` are left out in the example above, so both are composed from the parent campaign and the territory code in its `campaign_location`. A hand-written `name` or `tag` containing `_` or `@` is rejected unless it equals the auto name. If a campaign name exists in more than one dataset, give the campaign tag instead. See [Automatic naming and tags][auto_naming].
 
 ## The `sampling_tool_array` field
 
@@ -85,3 +89,4 @@ All dataset metadata is now loaded. Proceed to [Load sample data] to register th
 [Manage campaign]: /dataset_meta/manage_campaign/
 [Load sample data]: /sample/
 [insert_dataset_meta]: /dataset_meta/insert_dataset_meta/
+[auto_naming]: /setup_process/auto_naming/

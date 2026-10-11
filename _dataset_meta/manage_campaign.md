@@ -8,7 +8,7 @@ excerpt: "Inserting campaign records into the AI4SH database. A campaign is a bo
 permalink: /dataset_meta/manage_campaign/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-11 08:00:00 +0200
 ---
 
 A campaign is a bounded data collection effort — defined by dates, geographic scope, and the instruments used — that belongs to a dataset. Every sampling log must reference a campaign.
@@ -47,7 +47,7 @@ if structured_process_D is not None:
       "overwrite": false,
       "parameters": {
         "dataset_id__dataset_name": "ai4soilhealth",
-        "name": "ai4sh_se_loennstorp",
+        "datetime_tag": "PLACEHOLDER",
         "display_name": "AI4SH SE Loennstorp",
         "contact_name": "thomas gumbricht",
         "contact_email": "thomas.gumbricht@natgeo.su.se",
@@ -76,8 +76,10 @@ if structured_process_D is not None:
 
 | Parameter | Description |
 |---|---|
-| `dataset_id__dataset_name` | FK lookup: parent dataset by alias |
-| `name` | Campaign identifier (lowercase) |
+| `dataset_id__dataset_name` | FK lookup: parent dataset by name, tag or alias |
+| `datetime_tag` | **New, required.** Time part of the campaign tag (e.g. a year). No `_`, `@`, capitals or blanks |
+| `name` | Optional. Left out or `auto`: composed as `<dataset alias> <datetime_tag>` |
+| `tag` | Optional. Left out or `auto`: composed as `<dataset tag>_<datetime_tag>`. Globally unique |
 | `display_name` | Display label |
 | `contact_name` | Campaign contact name |
 | `contact_email` | Campaign contact email |
@@ -94,6 +96,13 @@ if structured_process_D is not None:
 | `location_error` | Positional accuracy value |
 | `location_error_unit_id__unit_name` | FK lookup: unit for `location_error` (e.g. `m`) |
 | `provision_id__provision_name_array` | Comma-separated list of provision aliases — links this campaign to all the instruments and labs used |
+
+## Automatic naming
+
+`name` and `tag` are left out in the example above, so both are composed automatically. A hand-written `name` or `tag` containing `_` or `@` is rejected unless it equals the auto name — the old names such as `ai4sh_se_loennstorp` are therefore no longer accepted. `territory_id__territory_name` is also needed downstream: its territory code becomes part of the sampling log name and tag. See [Automatic naming and tags][auto_naming].
+
+**PLACEHOLDER:** the AI4SH `datetime_tag` values are not yet set in `campaign.xlsx`.
+{: .notice--warning}
 
 ## The `provision_id__provision_name_array` field
 
@@ -112,3 +121,4 @@ Proceed to [Manage sampling log].
 [Manage dataset]: /dataset_meta/manage_dataset/
 [Load utility data]: /utility/
 [Manage sampling log]: /dataset_meta/manage_sampling_log/
+[auto_naming]: /setup_process/auto_naming/

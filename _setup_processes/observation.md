@@ -7,7 +7,7 @@ excerpt: "Observation processes register all data management operations for the 
 permalink: /setup_process/observation/
 author_profile: false
 date: 2026-04-07 08:00:00 +0200
-last_modified_at: 2026-09-30 08:00:00 +0200
+last_modified_at: 2026-10-11 08:00:00 +0200
 ---
 
 Observation processes register the operations for managing data in the `observation` schema. These processes follow the same data hierarchy as the tables themselves: you must be able to manage datasets before campaigns, campaigns before sampling logs, and so on down to individual observations.
@@ -39,10 +39,15 @@ Process files are located at:
 | `quantity_v10_sql.json` | `manage_quantity` | duplicate of the observation utility `manage_quantity` | 4 | no |
 | `measurement_reference_v10_sql.json` | `manage_measurement_reference_array` / `manage_measurement_reference` | `observation.measurement` | 2 / 4 | no |
 | `observation_reference_v10_sql.json` | `manage_observation_reference` | `observation.observation` + reference tables | 2 | no |
+| `slakes_v10_sql.json` | `manage_app_aggregate_stability_observation` | `observation.app_aggregate_stability`, `observation` | 2 | no |
 | `beerkan_infiltration_v10_sql.json` | `manage_beerkan_observation` / `manage_beerkan_infiltration_interval` | `observation.infiltration_beerkan`, `infiltration_beerkan_time` | 2 | no |
 | `aggregate_app_observation_v10_sql.json` | `manage_aggregate_app_observation` | `observation.app_aggregate_stability`, `observation`, `observation_measurement` | 2 | no |
 
 Files marked *no* exist on disk but are not listed in `setup_processes.txt`, so `setup_processes.ipynb` does not register them.
+
+**Automatic naming:**
+Campaign, sampling log and observation log names and tags are composed automatically from their parents; the slakes, aggregate app and Beerkan processes use the same rules to find their observation log. See [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
+{: .notice}
 
 **Side note:**
 The eDNA summary indicators need no dedicated process: they are indicator columns in the file passed to `manage_observation`, written to `observation_measurement`. The eDNA community composition (ASVs and their abundances) is loaded in bulk by `manage_edna_asv`, described below.
@@ -69,7 +74,7 @@ If any step in this chain is missing, the foreign key constraints prevent entry 
 Access levels reflect the operational role of each process:
 
 - Stratum 1: `manage_person` — minimal privilege for attributing data to individuals
-- Stratum 2: `manage_data_source`, `manage_sampling_log`, `manage_observation_log`, `manage_observation`, `manage_measurement_array`, `manage_beerkan_observation`, `manage_beerkan_infiltration_interval`, `manage_aggregate_app_observation` — regular data entry operations
+- Stratum 2: `manage_data_source`, `manage_sampling_log`, `manage_observation_log`, `manage_observation`, `manage_measurement_array`, `manage_beerkan_observation`, `manage_beerkan_infiltration_interval`, `manage_aggregate_app_observation`, `manage_app_aggregate_stability_observation` — regular data entry operations
 - Stratum 3: `manage_dataset`, `manage_campaign`, `manage_geolocation`, `manage_sample_geotag`, `manage_edna_asv` — campaign-level management and bulk loads
 - Stratum 4: `manage_*_sample`, `manage_dataset_tag`, `manage_campaign_tag`, `manage_sample_image_orientation`, `manage_quantity`, `manage_measurement` — elevated operations requiring administrative oversight
 {% endcapture %}
@@ -95,21 +100,24 @@ A dataset is the top-level grouping of related data. Required parameters:
 - `data_source_id__data_source_name` — the data source owning the dataset
 - `name` — unique dataset name
 - `alias` — short identifier (e.g. "AI4SH", "LUCAS")
+- `tag` — short, globally unique key used to compose campaign tags (no `_`, `@` or blanks), see [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }})
 
 ### manage_campaign
 
 Registers a campaign (child of a dataset) and its metadata. The `manage_campaign` process handles the core `campaign` table. The same call also writes the companion tables `campaign_meta`, `campaign_tag`, `campaign_method_tier`, `campaign_location`, `campaign_provision` and `campaign_setting_system`. Extra tags can be added later with `manage_campaign_tag` (`campaign_id__campaign_name`, `tag`, `tag_type` = `substance` or `keyword`); `manage_dataset_tag` does the same for datasets.
 
 Required parameters include:
-- `dataset_id__dataset_name` — the parent dataset
-- `name` — campaign name
+- `dataset_id__dataset_name` — the parent dataset (name, tag or alias)
+- `datetime_tag` — time part of the campaign tag (e.g. a year)
 - `contact_name`, `contact_email`
+
+`name` and `tag` are optional: left out or set to `auto`, they are composed from the dataset alias/tag and `datetime_tag`. See [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
 
 ### manage_sampling_log
 
 Registers a sampling event within a campaign. A sampling log is the bridge between the organisational structure (campaign) and individual physical samples.
 
-Required parameters: `campaign_id`, `person_id`, start and end date, and method references.
+Required parameter: `campaign_id__campaign_name` (name, tag or alias of the campaign). `name` and `tag` are optional: left out or set to `auto`, they are composed from the campaign name/tag and the campaign territory code. See [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
 
 ### manage_sample variants
 
@@ -125,17 +133,21 @@ Registers an individual physical sample under a `sampling_log`. There is no sing
 
 ### manage_observation_log and manage_observation
 
-`manage_observation_log` registers the connection between a sampling log and the provision used to analyse its samples, along with sample handling logistics (preservation, storage, transportation). `manage_observation` then registers one observation per sample and stores its indicator values in `observation_measurement`. Indicator columns are named `@<indicator alias>` in the source file; each value must be consistent with the unit defined in the matching `provision_indicator`.
+`manage_observation_log` registers the connection between a sampling log and the provision used to analyse its samples, along with sample handling logistics (preservation, storage, transportation). Its `name` and `tag` are auto named as `<sampling log>@<provision>` unless given. `manage_observation` then registers one observation per sample and stores its indicator values in `observation_measurement`. Indicator columns are named `@<indicator alias>` in the source file; each value must be consistent with the unit defined in the matching `provision_indicator`.
 
-The figure follows one row of the Agrolab wetlab file through `manage_observation`. The process writes to two tables: `observation` (the main table, written first) and `observation_measurement` (the child table). Foreign keys given by name are confirmed and replaced by ids — the sample is looked up within the sampling log of the given observation log. The new `observation.id` is then passed to the child table, where every `@indicator` column becomes its own row. For the general mechanism, see [How Excel columns reach the database][setup_process_utility_mapping].
+The figure follows one row of the Agrolab wetlab file through `manage_observation`. The process writes to two tables: `observation` (the main table, written first) and `observation_measurement` (the child table). Foreign keys given by name are confirmed and replaced by ids — the sample is looked up within the sampling log of the given observation log. The new `observation.id` is then passed to the child table, where every `@indicator` column becomes its own row. For the general mechanism, see [How Excel columns reach the database]({{ "/setup_process/utility/#how-excel-columns-reach-the-database" | relative_url }}).
 
 [![Excel row to observation and observation_measurement]({{ "/assets/media/process_mapping/observation.png" | relative_url }})]({{ "/assets/media/process_mapping/observation.png" | relative_url }})
+
+### Slakes, aggregate app and Beerkan observations
+
+`manage_app_aggregate_stability_observation` (slakes), `manage_aggregate_app_observation` and `manage_beerkan_observation` leave `observation_log_id__observation_log_name` as `auto`. It is composed as `<sampling log tag>@slakes` or `<sampling log tag>@beerkan` and looked up among the existing observation logs. See [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
 
 ### manage_geolocation and manage_sample_geotag
 
 `manage_geolocation` registers a named spatial point in `observation.geolocation`:
 
-- `name` — unique name of the point
+- `name` — unique name of the point; the only name allowed to contain `_` and `@` (see [the geolocation exception]({{ "/setup_process/auto_naming/#reserved-separators-and-the-geolocation-exception" | relative_url }}))
 - `x_coordinate`, `y_coordinate` — coordinates in the given spatial reference
 - `spatial_reference_id__spatial-reference_name` — spatial reference (default `geographic`)
 - `latitude`, `longitude` — optional WGS 84 (EPSG:4326) coordinates
@@ -166,7 +178,7 @@ Behaviour:
 - **All or nothing.** The load aborts without writing anything if an observation is not found, a lineage has no matching taxon (load taxa with `manage_taxon` first), or an existing `asv_key` now carries a different lineage.
 - Each ASV is linked to the deepest resolved taxon of its lineage.
 
-The process is routed to its bulk importer (`import_edna_asv.py`) through `BULK_PROCESS_D` in `src/ai4sh/import_data/import_data.py`. For how to run it, see [Insert ASVs][edna_insert_asv].
+The process is routed to its bulk importer (`import_edna_asv.py`) through `BULK_PROCESS_D` in `src/ai4sh/import_data/import_data.py`. For how to run it, see [Insert ASVs]({{ "/edna/insert_edna_asv/" | relative_url }}).
 
 {% endcapture %}
 

@@ -93,7 +93,7 @@ A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existin
 
 ## Key concepts
 
-**Provision** is the central linking concept in observation_utility. A provision combines an `apparatus` (what instrument/tool), a `provider` (what service or supplier), and a `method_tier` (what level of professionality). A `provision_indicator` then specifies exactly which measurable quantities a provision delivers, with associated analysis method and unit. Every observation in the `observation` schema links back to a provision.
+**Provision** is the central linking concept in observation_utility. A provision combines an `apparatus` (what instrument/tool), a `provider` (what service or supplier), and a `method_tier` (what level of professionality). A `provision_indicator` then specifies exactly which measurable quantities a provision delivers, with associated analysis method and unit. Every observation in the `observation` schema links back to a provision. Each provision also has a globally unique `tag`, used to compose observation log tags (see [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }})).
 
 [![Provision schema]({{ "/assets/media/observation_utility/provision.png" | relative_url }})]({{ "/assets/media/observation_utility/provision.png" | relative_url }})
 

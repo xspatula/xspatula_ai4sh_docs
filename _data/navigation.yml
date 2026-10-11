@@ -77,6 +77,8 @@ setup_processes:
         url: /setup_process/organism/
       - title: "Schema conventions"
         url: /setup_process/schema_conventions/
+      - title: "Automatic naming and tags"
+        url: /setup_process/auto_naming/
 
 utility:
   - title: Load utility data

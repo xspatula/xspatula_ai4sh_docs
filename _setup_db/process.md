@@ -38,13 +38,13 @@ The process schema defines 9 tables that together fully describe every operation
 | `process_parameter_schema_table` | The target `schema.table` that a parameter writes to |
 | `process_parameter_permission` | Whether a parameter value can be updated or deleted after insertion |
 | `process_parameter_inherit` | Default parameter values drawn automatically from another table |
-| `process_parameter_auto_name` | Default convention for parameter name |
+| `process_parameter_auto_name` | Rule (`concat`) for composing a parameter value, e.g. a name or tag, from parent records |
 
 [![Process schema]({{ "/assets/media/process/process.png" | relative_url }})]({{ "/assets/media/process/process.png" | relative_url }})
 
 `process_parameter_set_value` and `process_parameter_minmax` are not compulsory.
 
-`process_parameter_inherit` and `process_parameter_auto_name` are not compulsory and are further ignored if the user define explicit values when calling them.
+`process_parameter_inherit` and `process_parameter_auto_name` are not compulsory. An inherit rule only applies when the parameter value is `inherit`, and an auto name rule only when the value is `auto` (or the parameter is left out and its default is `auto`); explicit values are used as given. One exception: an explicit `name`, `alias` or `tag` containing `_` or `@` is rejected unless it equals the auto name. A failed auto name lookup stops the process. See [Automatic naming and tags][setup_process_auto_naming].
 
 ## Bootstrap processes
 
@@ -63,3 +63,4 @@ For the full technical description of the process schema tables and how process 
 [setup_processes]: /setup_process/
 [setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
 [default_community_record]: ../index.html#default-community-records
+[setup_process_auto_naming]: /setup_process/auto_naming/
