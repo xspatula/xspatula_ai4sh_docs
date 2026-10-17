@@ -197,5 +197,5 @@ with a scheme file where `"delete": true`.
 [netrc]: https://xspatula.github.io/setup_core_db_docs/setup_db/netrc/
 [scheme_file]:https://xspatula.github.io/setup_core_db_docs/framework/scheme_file/
 [job_file]:https://xspatula.github.io/setup_core_db_docs/framework/job_file//
-[auditing_setup]: /auditing/setup/
-[setup_community_bootstrap_user]: /setup_community/bootstrap_user/
+[auditing_setup]: {{ site.baseurl }}/auditing/setup/
+[setup_community_bootstrap_user]: {{ site.baseurl }}/setup_community/bootstrap_user/

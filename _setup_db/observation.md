@@ -150,9 +150,9 @@ Additional tables cover other non-standard observation types:
 
 <div class="notice">{{ notice-2 | markdownify }}</div>
 
-[setup_db_observation_utility]: /setup_db/observation_utility/
-[setup_process_observation]: /setup_process/observation/
-[setup_process_schema_conventions]: /setup_process/schema_conventions/
-[spectra]: /spectra/
-[setup_db_edna]: /setup_db/edna_metabarcoding/
-[setup_db_organism]: /setup_db/organism/
+[setup_db_observation_utility]: {{ site.baseurl }}/setup_db/observation_utility/
+[setup_process_observation]: {{ site.baseurl }}/setup_process/observation/
+[setup_process_schema_conventions]: {{ site.baseurl }}/setup_process/schema_conventions/
+[spectra]: {{ site.baseurl }}/spectra/
+[setup_db_edna]: {{ site.baseurl }}/setup_db/edna_metabarcoding/
+[setup_db_organism]: {{ site.baseurl }}/setup_db/organism/

@@ -8,7 +8,7 @@ excerpt: "Inserting FOSS DS2500 spectral observations into the AI4SH database. E
 permalink: /spectra/manage_foss_ds2500_obs/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Each observation record stores one spectral scan — a 4200-element reflectance array covering 400–2500 nm — linked to a sample and an observation log. Multiple sub-samples and replicates per sample are common: each is a separate process file and a separate database record.
@@ -20,7 +20,7 @@ Each observation record stores one spectral scan — a 4200-element reflectance 
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage FOSS DS2500 observation** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.3 Load FOSS DS2500 spectra observations** runs:
 
 ```python
 job_file = 'import_data/DS2500_spectra/job_DS2500_observation.json'
@@ -39,7 +39,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/DS2500_spectra/observation",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_pilot.txt"
   }
 }
@@ -53,7 +53,7 @@ if structured_process_D is not None:
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/DS2500_spectra/observation/process/ai4sh_ch_lens_2025@foss ds2500 l_ds2_lens@0-5_a_1_none_20251023_observation.json`
+**Path**: `./ai4sh/import_data/DS2500_spectra/observation/manage_process/ai4sh_ch_lens_2025@foss ds2500 l_ds2_lens@0-5_a_1_none_20251023_observation.json`
 
 ```json
 {
@@ -103,6 +103,6 @@ The `none` segment represents the filter used (no filter in most cases).
 
 Proceed to [Manage Neospectra spectrometer] to continue with the next instrument.
 
-[Manage FOSS DS2500 observation log]: /spectra/manage_foss_ds2500_obs_log/
-[Load sample data]: /sample/
-[Manage Neospectra spectrometer]: /spectra/manage_neospectra_spectrometer/
+[Manage FOSS DS2500 observation log]: {{ site.baseurl }}/spectra/manage_foss_ds2500_obs_log/
+[Load sample data]: {{ site.baseurl }}/sample/
+[Manage Neospectra spectrometer]: {{ site.baseurl }}/spectra/manage_neospectra_spectrometer/

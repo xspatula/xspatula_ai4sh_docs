@@ -8,7 +8,7 @@ excerpt: "Summary of the Bruker Invenio S FTIR spectrometer and its data range. 
 permalink: /spectra/manage_ftir_spectrometer/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 The Bruker Invenio S is a benchtop Fourier Transform Infrared (FTIR) spectrometer operating in the mid-infrared (MIR) range. It covers approximately 2501–16686 nm (4000–600 cm⁻¹) at ~0.9 nm resolution, producing 2383-element spectral arrays stored in ascending wavelength order. FTIR requires milled samples (`ds2m` preparation) for optimal performance.
@@ -19,7 +19,7 @@ The `bruker invenio s ftir` provision and its `provision_serial_nr` must exist f
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage FTIR spectrometer** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.7 Load Bruker Invenio S FTIR spectrometer** runs:
 
 ```python
 job_file = 'import_data/FTIR_spectra/job_ftir_spectrometer.json'
@@ -38,7 +38,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/FTIR_spectra/spectrometer",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_spectrometer_pilot.txt"
   }
 }
@@ -46,7 +46,7 @@ if structured_process_D is not None:
 
 ## Process file
 
-**Path**: `./ai4sh/import_data/FTIR_spectra/spectrometer/process/bruker-invenio-s-ftir_spectrometer.json`
+**Path**: `./ai4sh/import_data/FTIR_spectra/spectrometer/manage_process/bruker-invenio-s-ftir_spectrometer.json`
 
 ```json
 {
@@ -81,5 +81,5 @@ The `wavelength_array` contains 2383 values from 2501.1 to 16685.8 nm in ~0.9 nm
 
 Proceed to [Manage FTIR observation log].
 
-[Load utility data]: /utility/
-[Manage FTIR observation log]: /spectra/manage_ftir_obs_log/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage FTIR observation log]: {{ site.baseurl }}/spectra/manage_ftir_obs_log/

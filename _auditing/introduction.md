@@ -115,7 +115,7 @@ hand-edited files** — the only thing you ever hand-edit is a table's own `"aud
 
 See [Auditing queries][auditing_queries] for how to actually read this log day-to-day, and [Setup DB][setup_db] for how the schemas and tables it audits are created in the first place.
 
-[auditing_setup]: /auditing/setup/
-[auditing_queries]: /auditing/queries/
-[setup_db]: /setup_db/
-[setup_db_organism]: /setup_db/organism/
+[auditing_setup]: {{ site.baseurl }}/auditing/setup/
+[auditing_queries]: {{ site.baseurl }}/auditing/queries/
+[setup_db]: {{ site.baseurl }}/setup_db/
+[setup_db_organism]: {{ site.baseurl }}/setup_db/organism/

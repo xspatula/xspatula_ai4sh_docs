@@ -21,7 +21,7 @@ An observation log record bridges a sampling log (a field collection event) and 
 
 ## Notebook cell
 
-In `load_ai4sh_wetlab_data.ipynb`, the **Manage Agrolab observation log** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_wetlab_data.ipynb`, the **Manage Agrolab observation log** cell runs:
 
 ```python
 process_file = 'import_data/wetlab/agrolab/manage_process/manage_observation_log.json'
@@ -86,7 +86,7 @@ When `name` is set to `"auto"`, the framework generates the observation log name
 
 Proceed to [Manage Agrolab observation].
 
-[Translate Agrolab wetlab data]: /wetlab/translate_ai4sh_wetlab_data/
-[Load utility data]: /utility/
-[Load dataset metadata]: /dataset_meta/
-[Manage Agrolab observation]: /wetlab/manage_ai4sh_wetlab_data/
+[Translate Agrolab wetlab data]: {{ site.baseurl }}/wetlab/translate_ai4sh_wetlab_data/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Load dataset metadata]: {{ site.baseurl }}/dataset_meta/
+[Manage Agrolab observation]: {{ site.baseurl }}/wetlab/manage_ai4sh_wetlab_data/

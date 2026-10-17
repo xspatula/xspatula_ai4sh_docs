@@ -163,4 +163,4 @@ separator_exempt_D = {'manage_geolocation': ['name']}
 [core_worked_example]: https://xspatula.github.io/xspatula_core_docs/setup_processes/auto_naming/#worked-example
 [core_errors]: https://xspatula.github.io/xspatula_core_docs/setup_processes/auto_naming/#errors
 [core_requirements]: https://xspatula.github.io/xspatula_core_docs/setup_processes/auto_naming/#requirements
-[setup_process_schema_conventions]: /setup_process/schema_conventions/
+[setup_process_schema_conventions]: {{ site.baseurl }}/setup_process/schema_conventions/

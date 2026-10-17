@@ -43,6 +43,6 @@ Community records are referenced by:
 These two tables in the `observation` schema are intentionally decoupled from the full `community.user` table, allowing attribution of data to people who are not system users.
 
 
-[setup_db_process]: /setup_db/process/
-[setup_process_observation]: /setup_process/observation/
-[setup_community]: /setup_community/
+[setup_db_process]: {{ site.baseurl }}/setup_db/process/
+[setup_process_observation]: {{ site.baseurl }}/setup_process/observation/
+[setup_community]: {{ site.baseurl }}/setup_community/

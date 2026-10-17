@@ -19,7 +19,7 @@ Run [Translate observation utilities with inheritance] first. The `apparatus`, `
 
 ## Notebook cell
 
-In `load_ai4sh_utility_data.ipynb`, the **Manage observation utilities with inheritance** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_utility_data.ipynb`, the **Manage observation utilities with inheritance** cell runs:
 
 ```python
 job_file = 'import_data/utility/job_manage_observation_utility_inherit.json'
@@ -128,6 +128,6 @@ This means: look up the `provider` record where `provider_name = "foss"`, then u
 
 All utility data is now loaded. Proceed to [Load dataset metadata] to register data sources, persons, datasets, campaigns, and sampling logs.
 
-[Translate observation utilities with inheritance]: /utility/translate_observation_utilities_inherit/
-[Manage observation utilities]: /utility/manage_observation_utilities/
-[Load dataset metadata]: /dataset_meta/
+[Translate observation utilities with inheritance]: {{ site.baseurl }}/utility/translate_observation_utilities_inherit/
+[Manage observation utilities]: {{ site.baseurl }}/utility/manage_observation_utilities/
+[Load dataset metadata]: {{ site.baseurl }}/dataset_meta/

@@ -53,6 +53,6 @@ Two ways to get the hash into the database, depending on where you are in the se
 
 This is a manual, admin-only escape hatch for bootstrapping — not something wired into the Excel intake, and not something an ordinary user ever touches. The Excel-based registration flow deliberately never sees or sets a plaintext password at all; every subsequent user gets one generated and emailed automatically, covered in [Welcome email][setup_community_welcome_email].
 
-[setup_community_excel_intake]: /setup_community/excel_intake/
-[setup_community_register_notebook]: /setup_community/register_notebook/
-[setup_community_welcome_email]: /setup_community/welcome_email/
+[setup_community_excel_intake]: {{ site.baseurl }}/setup_community/excel_intake/
+[setup_community_register_notebook]: {{ site.baseurl }}/setup_community/register_notebook/
+[setup_community_welcome_email]: {{ site.baseurl }}/setup_community/welcome_email/

@@ -8,7 +8,7 @@ excerpt: "Summary of the FOSS Micral LIBS spectrometer and its data range. Requi
 permalink: /spectra/manage_libs_spectrometer/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 The FOSS Micral is a Laser-Induced Breakdown Spectroscopy (LIBS) instrument. Unlike the reflectance spectrometers, LIBS measures elemental emission intensities in the ultraviolet and visible range. It covers 178–427 nm at 0.1 nm resolution, producing 2491-element arrays of raw emission intensity values (not reflectance). LIBS ablates the sample surface with a laser pulse and records the resulting atomic emission spectrum.
@@ -19,7 +19,7 @@ The `foss micral` provision must exist from [Load utility data].
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage LIBS spectrometer** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.10 Load FOSS Micral (LIBS) spectrometer** runs:
 
 ```python
 job_file = 'import_data/LIBS_spectra/job_libs_spectrometer.json'
@@ -38,7 +38,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/LIBS_spectra/spectrometer",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_spectrometer_pilot.txt"
   }
 }
@@ -46,7 +46,7 @@ if structured_process_D is not None:
 
 ## Process file
 
-**Path**: `./ai4sh/import_data/LIBS_spectra/spectrometer/process/foss-micral_spectrometer.json`
+**Path**: `./ai4sh/import_data/LIBS_spectra/spectrometer/manage_process/foss-micral_spectrometer.json`
 
 ```json
 {
@@ -84,5 +84,5 @@ LIBS observations store emission intensity counts, not reflectance values in the
 
 Proceed to [Manage LIBS observation log].
 
-[Load utility data]: /utility/
-[Manage LIBS observation log]: /spectra/manage_libs_obs_log/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage LIBS observation log]: {{ site.baseurl }}/spectra/manage_libs_obs_log/

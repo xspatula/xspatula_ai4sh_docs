@@ -107,6 +107,6 @@ A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existin
 
 <div class="notice">{{ notice-2 | markdownify }}</div>
 
-[setup_db_organism_utility]: /setup_db/organism_utility/
-[setup_db_edna]: /setup_db/edna_metabarcoding/
-[edna_catalogues]: /edna/edna_catalogues/
+[setup_db_organism_utility]: {{ site.baseurl }}/setup_db/organism_utility/
+[setup_db_edna]: {{ site.baseurl }}/setup_db/edna_metabarcoding/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/

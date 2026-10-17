@@ -119,8 +119,8 @@ ORDER BY s.step;
 - **Step parameters are placeholders.** Most bioinformatics steps list their parameter names with `null` values (e.g. `min_phred_score`, `trunc_len_forward`) until the lab reports them.
 - **Functional assignments per taxon** are not stored; functional groups are available only as the summary indicators per sample.
 
-[edna]: /edna/
-[edna_catalogues]: /edna/edna_catalogues/
-[setup_db_observation_utility]: /setup_db/observation_utility/
-[setup_db_organism_utility]: /setup_db/organism_utility/
-[setup_db_observation]: /setup_db/observation/
+[edna]: {{ site.baseurl }}/edna/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[setup_db_observation_utility]: {{ site.baseurl }}/setup_db/observation_utility/
+[setup_db_organism_utility]: {{ site.baseurl }}/setup_db/organism_utility/
+[setup_db_observation]: {{ site.baseurl }}/setup_db/observation/

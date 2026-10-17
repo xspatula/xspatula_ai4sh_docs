@@ -8,23 +8,22 @@ excerpt: "Overview of the utility data types and the required loading sequence b
 permalink: /utility/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Utility data provides the controlled vocabularies and reference catalogues that all observation data depends on. Every observation record must reference — an indicator, a unit and a provision (e.g. instrument, tool or laboratory analysis method). Utility data must therefore be fully loaded before any dataset, sample, or observation data can be entered.
 
-Two notebooks can load this data — pick one:
+Utility data is loaded by block **1. Utilities** of the single loading notebook (see [Load all data][all_data]):
 
 ```
-./ai4sh/import_data/insert_ai4sh_utility_data.ipynb   (single-step, recommended default)
-./ai4sh/import_data/load_ai4sh_utility_data.ipynb     (2-step translate + manage)
+./ai4sh/import_data/insert_ai4sh_data.ipynb   block 1, cells 1.1–1.4
 ```
 
-**Which one should I use?** Use `insert_ai4sh_utility_data.ipynb` unless you need to `UPDATE`
-an existing record or want to hand-inspect/edit the generated JSON before it's applied — the
-single-step route is INSERT-only by construction, so it's always safe to re-run. Use
-`load_ai4sh_utility_data.ipynb`'s 2-step route for `UPDATE`s or manual inspection. See
-[Insert utility data][insert_utility_data] for the single-step walkthrough and
+The block uses the single-step `insert_tabular_data` route, which is INSERT-only by construction
+and therefore always safe to re-run. If you need to `UPDATE` an existing record or want to
+hand-inspect the generated JSON before it's applied, use the 2-step notebook
+`./ai4sh/import_data/more_notebooks/load_ai4sh_utility_data.ipynb` instead. See
+[Insert utility data][insert_utility_data] for the block 1 walkthrough and
 [Single-step vs dual-step][insert_vs_translate] for the full comparison.
 
 ## Two groups of utility data
@@ -33,11 +32,12 @@ Utility data is split into two groups with different purposes and storage locati
 
 ### General utilities
 
-General utilities contain reference data used across the whole framework, not just observations. For the AI4SH project this group contains a single table:
+General utilities contain reference data used across the whole framework, not just observations. For the AI4SH project this group contains two tables:
 
 | Excel file | Database table | Description |
 |---|---|---|
 | `territory.xlsx` | `utility.territory` | Countries and regions (ISO codes) |
+| `foreign_key.xlsx` | `utility.foreign_key` | Non-standard foreign key lookups (single-step route only) |
 
 Source: `./ai4sh/import_data/utility/general/excel/`
 
@@ -74,6 +74,7 @@ There are three sub-groups within observation utilities:
 | `classification_family.xlsx` | `classification_family` | `classification_order` |
 | `classification_genus.xlsx` | `classification_genus` | `classification_family` |
 | `indicator.xlsx` | `indicator` | `quantity` |
+| `indicator_parity.xlsx` | `indicator_parity` | `indicator` |
 | `juxtaposition.xlsx` | `juxtaposition` | `setting_system` |
 | `profiling.xlsx` | `profiling` | `unit` |
 
@@ -100,15 +101,25 @@ How to fill these in is described in [eDNA method catalogues][edna_catalogues].
 
 Source: `./ai4sh/import_data/utility/observation/excel/`
 
+### Landscape utilities
+
+Landscape utilities are catalogues for land use, land cover, land form, biogeography etc. AI4SoilHealth delivers no landscape data; the catalogues are loaded for completeness and for merging with [LUCAS data]({{ site.baseurl }}/#including-lucas-data). As shipped, cell 1.4 inserts `biogeo16`, `landuse` and `landcover`; the other landscape catalogues are listed in the pilot file but switched off.
+
+Source: `./ai4sh/import_data/utility/landscape/excel/`
+
 ## Required loading sequence
 
 Same dependency order either way — general utilities, then independent/dependent observation
-utilities, then the inheritance-dependent ones.
+utilities, then the inheritance-dependent ones, then landscape utilities.
 
-**Single step** (default): **[Insert utility data]** — 3 cells, general utilities → observation
-utilities → observation utilities with inheritance, translate and insert combined.
+**Single step** (default): **[Insert utility data]** — block 1 of `insert_ai4sh_data.ipynb`, translate and insert combined:
 
-**2-step** (for `UPDATE`s or manual inspection), 6 cells:
+1. **Cell 1.1** Load general utilities
+2. **Cell 1.2** Load observation utilities
+3. **Cell 1.3** Load observation utilities with inheritance
+4. **Cell 1.4** Load landscape utility
+
+**2-step** (for `UPDATE`s or manual inspection), 6 cells in `more_notebooks/load_ai4sh_utility_data.ipynb`:
 
 1. **[Translate general utilities]** — Excel → JSON for `territory`
 2. **[Manage general utilities]** — Insert `territory` into the database
@@ -117,13 +128,14 @@ utilities → observation utilities with inheritance, translate and insert combi
 5. **[Translate observation utilities with inheritance]** — Excel → JSON for `provision`, `provision_indicator`, `provision_serial_nr`
 6. **[Manage observation utilities with inheritance]** — Insert those tables into the database
 
-[Insert utility data]: /utility/insert_utility_data/
-[insert_utility_data]: /utility/insert_utility_data/
-[insert_vs_translate]: /insert_vs_translate/
-[Translate general utilities]: /utility/translate_general_utilities/
-[Manage general utilities]: /utility/manage_general_utilities/
-[Translate observation utilities]: /utility/translate_observation_utilities/
-[Manage observation utilities]: /utility/manage_observation_utilities/
-[Translate observation utilities with inheritance]: /utility/translate_observation_utilities_inherit/
-[Manage observation utilities with inheritance]: /utility/manage_observation_utilities_inherit/
-[edna_catalogues]: /edna/edna_catalogues/
+[Insert utility data]: {{ site.baseurl }}/utility/insert_utility_data/
+[insert_utility_data]: {{ site.baseurl }}/utility/insert_utility_data/
+[insert_vs_translate]: {{ site.baseurl }}/insert_vs_translate/
+[Translate general utilities]: {{ site.baseurl }}/utility/translate_general_utilities/
+[Manage general utilities]: {{ site.baseurl }}/utility/manage_general_utilities/
+[Translate observation utilities]: {{ site.baseurl }}/utility/translate_observation_utilities/
+[Manage observation utilities]: {{ site.baseurl }}/utility/manage_observation_utilities/
+[Translate observation utilities with inheritance]: {{ site.baseurl }}/utility/translate_observation_utilities_inherit/
+[Manage observation utilities with inheritance]: {{ site.baseurl }}/utility/manage_observation_utilities_inherit/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[all_data]: {{ site.baseurl }}/all_data/

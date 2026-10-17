@@ -19,10 +19,10 @@ All five dataset metadata tables are translated in a single notebook cell. The j
 
 ## Notebook cell
 
-In `load_ai4sh_dataset_meta.ipynb`, the **Translate dataset** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_dataset_meta.ipynb`, the **Translate dataset** cell runs:
 
 ```python
-job_file = 'import_data/dataset/job_translate_dataset.json'
+job_file = 'import_data/dataset_metadata/job_translate_dataset_metadata.json'
 
 structured_process_D, scheme_params_D = Initiate_process(notebook_path, scheme_file, job_file)
 
@@ -32,21 +32,21 @@ if structured_process_D is not None:
 
 ## Job file
 
-**Path**: `./ai4sh/import_data/dataset/job_translate_dataset.json`
+**Path**: `./ai4sh/import_data/dataset_metadata/job_translate_dataset_metadata.json`
 
 ```json
 {
   "process": {
-    "job_folder": "import_data/dataset",
+    "job_folder": "import_data/dataset_metadata",
     "process_sub_folder": "process",
-    "pilot_file": "translate_dataset.txt"
+    "pilot_file": "translate_dataset_metadata.txt"
   }
 }
 ```
 
 ## Pilot file
 
-**Path**: `./ai4sh/import_data/dataset/translate_dataset.txt`
+**Path**: `./ai4sh/import_data/dataset_metadata/translate_dataset_metadata.txt`
 
 ```
 data_source.json
@@ -62,7 +62,7 @@ The order follows the loading dependency: data source and person before dataset,
 
 All five translate process files share the same structure. Example for `data_source.json`:
 
-**Path**: `./ai4sh/import_data/dataset/process/data_source.json`
+**Path**: `./ai4sh/import_data/dataset_metadata/process/data_source.json`
 
 ```json
 {
@@ -72,15 +72,15 @@ All five translate process files share the same structure. Example for `data_sou
       "overwrite": false,
       "parameters": {
         "process": "manage_data_source",
-        "tabular_data_path": "import_data/dataset/excel/data_source.xlsx",
-        "dst_path": "import_data/dataset/manage_process"
+        "tabular_data_path": "import_data/dataset_metadata/excel/data_source.xlsx",
+        "dst_path": "import_data/dataset_metadata/manage_process"
       }
     }
   ]
 }
 ```
 
-`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution]. Each translate process reads its Excel source file and writes the resulting manage process file to `./ai4sh/import_data/dataset/manage_process/`.
+`tabular_data_path` and `dst_path` are resolved relative to the project root, not to this process file's own directory — see [Path resolution][setup_process_path_resolution]. Each translate process reads its Excel source file and writes the resulting manage process file to `./ai4sh/import_data/dataset_metadata/manage_process/`.
 
 ## Output
 
@@ -100,7 +100,7 @@ Proceed to [Manage data source] to begin inserting records into the database.
 
 **Or, do it in one step instead**: [Insert dataset metadata][insert_dataset_meta] covers the same five tables via the single-step `insert_tabular_data` route, with no separate manage step.
 
-[Load utility data]: /utility/
-[Manage data source]: /dataset_meta/manage_data_source/
-[setup_process_path_resolution]: /setup_process/path_resolution/
-[insert_dataset_meta]: /dataset_meta/insert_dataset_meta/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage data source]: {{ site.baseurl }}/dataset_meta/manage_data_source/
+[setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/
+[insert_dataset_meta]: {{ site.baseurl }}/dataset_meta/insert_dataset_meta/

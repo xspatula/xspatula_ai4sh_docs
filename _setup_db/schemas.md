@@ -68,13 +68,13 @@ This is reflected in the execution order of the pilot file — utility and commu
 
 
 [setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
-[setup_db_observation_utility]: /setup_db/observation_utility/
-[setup_db_observation]: /setup_db/observation/
-[setup_db_organism_utility]: /setup_db/organism_utility/
-[setup_db_organism]: /setup_db/organism/
-[setup_db_edna]: /setup_db/edna_metabarcoding/
-[setup_db_utility]: /setup_db/utility/
-[setup_db_community]: /setup_db/community/
-[setup_db_process]: /setup_db/process/
-[auditing]: /auditing/
-[setup_db_landscape]: /setup_db/landscape/
+[setup_db_observation_utility]: {{ site.baseurl }}/setup_db/observation_utility/
+[setup_db_observation]: {{ site.baseurl }}/setup_db/observation/
+[setup_db_organism_utility]: {{ site.baseurl }}/setup_db/organism_utility/
+[setup_db_organism]: {{ site.baseurl }}/setup_db/organism/
+[setup_db_edna]: {{ site.baseurl }}/setup_db/edna_metabarcoding/
+[setup_db_utility]: {{ site.baseurl }}/setup_db/utility/
+[setup_db_community]: {{ site.baseurl }}/setup_db/community/
+[setup_db_process]: {{ site.baseurl }}/setup_db/process/
+[auditing]: {{ site.baseurl }}/auditing/
+[setup_db_landscape]: {{ site.baseurl }}/setup_db/landscape/

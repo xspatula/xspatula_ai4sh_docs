@@ -8,7 +8,7 @@ excerpt: "Inserting LIBS spectral observations into the AI4SH database. Each rec
 permalink: /spectra/manage_libs_obs/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Each LIBS observation record stores one spectral shot — a 2491-element emission intensity array covering 178–427 nm — linked to a sample and an observation log. LIBS values are raw photon counts (intensity), not reflectance; values are typically in the thousands. Multiple replicates per sample are common.
@@ -20,7 +20,7 @@ Each LIBS observation record stores one spectral shot — a 2491-element emissio
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage LIBS observation** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.12 Load FOSS Micral observations** runs:
 
 ```python
 job_file = 'import_data/LIBS_spectra/job_libs_observation.json'
@@ -39,7 +39,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/LIBS_spectra/observation",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_pilot.txt"
   }
 }
@@ -47,7 +47,7 @@ if structured_process_D is not None:
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/LIBS_spectra/observation/process/ai4sh_ch_lens_2026@libs_ds2c_lens@0-5_a_0_none_20260213_observation.json`
+**Path**: `./ai4sh/import_data/LIBS_spectra/observation/manage_process/ai4sh_ch_lens_2026@libs_ds2c_lens@0-5_a_0_none_20260213_observation.json`
 
 ```json
 {
@@ -88,6 +88,6 @@ Unlike the reflectance instruments, LIBS observations do not include a `provisio
 
 All four instruments are now loaded. All spectral observations are stored in the AI4SH database linked to their samples, observation logs, and spectrometer records. To load all data types in a single notebook, see [Load all data].
 
-[Manage LIBS observation log]: /spectra/manage_libs_obs_log/
-[Load sample data]: /sample/
-[Load all data]: /all_data/
+[Manage LIBS observation log]: {{ site.baseurl }}/spectra/manage_libs_obs_log/
+[Load sample data]: {{ site.baseurl }}/sample/
+[Load all data]: {{ site.baseurl }}/all_data/

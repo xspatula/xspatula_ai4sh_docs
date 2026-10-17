@@ -19,10 +19,10 @@ A sampling log records a specific sampling operation within a campaign — the t
 
 ## Notebook cell
 
-In `load_ai4sh_dataset_meta.ipynb`, the **Manage sampling logs** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_dataset_meta.ipynb`, the **Manage sampling logs** cell runs:
 
 ```python
-process_file = 'import_data/dataset/manage_process/manage_sampling_log.json'
+process_file = 'import_data/dataset_metadata/manage_process/manage_sampling_log.json'
 
 structured_process_D, scheme_params_D = Initiate_process(notebook_path, scheme_file, process_file)
 
@@ -32,7 +32,7 @@ if structured_process_D is not None:
 
 ## Manage process file
 
-**Path**: `./ai4sh/import_data/dataset/manage_process/manage_sampling_log.json`
+**Path**: `./ai4sh/import_data/dataset_metadata/manage_process/manage_sampling_log.json`
 
 ```json
 {
@@ -86,7 +86,7 @@ All dataset metadata is now loaded. Proceed to [Load sample data] to register th
 
 **Or, do it in one step instead**: [Insert dataset metadata][insert_dataset_meta] covers all five dataset metadata tables, including this one, via the single-step `insert_tabular_data` route.
 
-[Manage campaign]: /dataset_meta/manage_campaign/
-[Load sample data]: /sample/
-[insert_dataset_meta]: /dataset_meta/insert_dataset_meta/
-[auto_naming]: /setup_process/auto_naming/
+[Manage campaign]: {{ site.baseurl }}/dataset_meta/manage_campaign/
+[Load sample data]: {{ site.baseurl }}/sample/
+[insert_dataset_meta]: {{ site.baseurl }}/dataset_meta/insert_dataset_meta/
+[auto_naming]: {{ site.baseurl }}/setup_process/auto_naming/

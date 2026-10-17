@@ -60,7 +60,7 @@ After the community and process schemas are seeded, the [setup processes][setup_
 For the full technical description of the process schema tables and how process files reference them, see the [core framework documentation][setup_core_db_docs_schemas].
 
 
-[setup_processes]: /setup_process/
+[setup_processes]: {{ site.baseurl }}/setup_process/
 [setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
-[default_community_record]: ../index.html#default-community-records
-[setup_process_auto_naming]: /setup_process/auto_naming/
+[default_community_record]: {{ site.baseurl }}/setup_db/#default-community-records
+[setup_process_auto_naming]: {{ site.baseurl }}/setup_process/auto_naming/

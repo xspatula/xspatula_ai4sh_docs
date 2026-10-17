@@ -20,7 +20,7 @@ Observation records store the actual soil property measurements. Each record lin
 
 ## Notebook cell
 
-In `load_ai4sh_wetlab_data.ipynb`, the **Manage Agrolab observation** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_wetlab_data.ipynb`, the **Manage Agrolab observation** cell runs:
 
 ```python
 process_file = 'import_data/wetlab/agrolab/manage_process/manage_observation.json'
@@ -113,7 +113,7 @@ All wetlab data is now loaded. Proceed to [Load spectral data] to add spectrosco
 
 **Or, do it in one step instead**: [Insert wetlab data][insert_wetlab_data] covers both wetlab tables, including this one, via the single-step `insert_tabular_data` route.
 
-[Manage Agrolab observation log]: /wetlab/manage_ai4sh_agrolab_obs_log/
-[Load sample data]: /sample/
-[Load spectral data]: /spectra/
-[insert_wetlab_data]: /wetlab/insert_wetlab_data/
+[Manage Agrolab observation log]: {{ site.baseurl }}/wetlab/manage_ai4sh_agrolab_obs_log/
+[Load sample data]: {{ site.baseurl }}/sample/
+[Load spectral data]: {{ site.baseurl }}/spectra/
+[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/

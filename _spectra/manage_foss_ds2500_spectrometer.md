@@ -8,7 +8,7 @@ excerpt: "Summary of the FOSS DS2500 NIR spectrometer and its data range. Requir
 permalink: /spectra/manage_foss_ds2500_spectrometer/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 The FOSS DS2500 is a benchtop visible and near-infrared (Vis-NIR) reflectance spectrometer. It covers 400–2500 nm at 0.5 nm resolution, producing 4200-element spectral arrays. In the AI4SH project it is used for soil analysis on dried and sieved samples in the laboratory.
@@ -21,7 +21,7 @@ The `foss ds2500 l` provision and its `provision_serial_nr` (`au`) must exist fr
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage FOSS DS2500 spectrometer** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.1 Load FOSS DS2500 spectrometer** runs:
 
 ```python
 job_file = 'import_data/DS2500_spectra/job_DS2500_spectrometer.json'
@@ -40,7 +40,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/DS2500_spectra/spectrometer",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_spectrometer_pilot.txt"
   }
 }
@@ -58,7 +58,7 @@ One entry — one spectrometer record.
 
 ## Process file
 
-**Path**: `./ai4sh/import_data/DS2500_spectra/spectrometer/process/foss-ds2500-l_au_spectrometer.json`
+**Path**: `./ai4sh/import_data/DS2500_spectra/spectrometer/manage_process/foss-ds2500-l_au_spectrometer.json`
 
 ```json
 {
@@ -94,5 +94,5 @@ The `wavelength_array` contains 4200 values from 400.0 to 2499.5 nm in 0.5 nm st
 
 Proceed to [Manage FOSS DS2500 observation log].
 
-[Load utility data]: /utility/
-[Manage FOSS DS2500 observation log]: /spectra/manage_foss_ds2500_obs_log/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage FOSS DS2500 observation log]: {{ site.baseurl }}/spectra/manage_foss_ds2500_obs_log/

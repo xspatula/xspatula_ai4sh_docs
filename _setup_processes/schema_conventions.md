@@ -65,5 +65,5 @@ All four new tables audit `UPDATE`/`DELETE` only, matching the existing rule for
 
 This was a schema-only change — zero live rows existed in any of the replaced array columns, so no data migration was needed. Verified with a full `delete_db` → `setup_db` → `setup_processes` cycle, real test rows through each new process (correct FK resolution by name), and a deliberately bad lookup rejected cleanly with no row inserted.
 
-[setup_process_root_process]: /setup_process/root_process/
-[auditing_introduction]: /auditing/
+[setup_process_root_process]: {{ site.baseurl }}/setup_process/root_process/
+[auditing_introduction]: {{ site.baseurl }}/auditing/

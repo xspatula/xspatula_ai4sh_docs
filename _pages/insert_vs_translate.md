@@ -7,7 +7,7 @@ excerpt: "Two ways to get spreadsheet data into the AI4SH database: a single-ste
 permalink: /insert_vs_translate/
 author_profile: false
 date: 2026-08-21 08:00:00 +0200
-last_modified_at: 2026-08-21 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Every collection under [Loading data][loading_data] that starts from an Excel or CSV
@@ -56,34 +56,43 @@ Full mechanism details: [Insert process][setup_process_insert] (single step) and
 
 ## Where each route exists today
 
-| Collection | Single-step notebook | Dual-step pages |
+The single-step route is the one used by `./ai4sh/import_data/insert_ai4sh_data.ipynb`. The
+dual-step notebooks are kept in `./ai4sh/import_data/more_notebooks/`.
+
+{% capture notice-1 %}
+| Collection | Single step: `insert_ai4sh_data.ipynb` | Dual step: `more_notebooks/` |
 |---|---|---|
-| [Utility][utility] | `insert_ai4sh_utility_data.ipynb` — see [Insert utility data][insert_utility_data] | [Translate general utilities][translate_general_utilities] etc. |
-| [Dataset metadata][dataset_meta] | `insert_ai4sh_dataset_meta.ipynb` — see [Insert dataset metadata][insert_dataset_meta] | [Translate dataset][translate_dataset] etc. |
-| [Sample][sample] | `insert_ai4sh_sample_data.ipynb` — see [Insert sample data][insert_sample_data] | [Translate geotag sample][translate_geotag_sample] etc. |
-| [Wetlab][wetlab] | `insert_ai4sh_wetlab_data.ipynb` — see [Insert wetlab data][insert_wetlab_data] | [Translate Agrolab wetlab data][translate_ai4sh_wetlab_data] etc. |
-| [Spectra][spectra] | — | Manage-only, no translate step at all |
-| [All data][all_data] | `insert_ai4sh_data.ipynb` | `load_ai4sh_data.ipynb` |
+| [Utility]({{ site.baseurl }}/utility/) | Cells 1.1–1.4 — see [Insert utility data]({{ site.baseurl }}/utility/insert_utility_data/) | `load_ai4sh_utility_data.ipynb` — [Translate general utilities]({{ site.baseurl }}/utility/translate_general_utilities/) etc. |
+| [Dataset metadata]({{ site.baseurl }}/dataset_meta/) | Cell 2.1 — see [Insert dataset metadata]({{ site.baseurl }}/dataset_meta/insert_dataset_meta/) | `load_ai4sh_dataset_meta.ipynb` — [Translate dataset]({{ site.baseurl }}/dataset_meta/translate_dataset/) etc. |
+| [Sample]({{ site.baseurl }}/sample/) | Cell 3.1 — see [Insert sample data]({{ site.baseurl }}/sample/insert_sample_data/) | `load_ai4sh_sample_data.ipynb` — [Translate geotag sample]({{ site.baseurl }}/sample/translate_geotag_sample/) etc. |
+| [Wetlab]({{ site.baseurl }}/wetlab/) | Cell 3.2.1 — see [Insert wetlab data]({{ site.baseurl }}/wetlab/insert_wetlab_data/) | `load_ai4sh_wetlab_data.ipynb` — [Translate Agrolab wetlab data]({{ site.baseurl }}/wetlab/translate_ai4sh_wetlab_data/) etc. |
+| [Spectra]({{ site.baseurl }}/spectra/) | Cells 3.3.1–3.3.12 (manage-only) | Manage-only, no translate step at all |
+| [eDNA]({{ site.baseurl }}/edna/) | Cells 3.4.1–3.4.6 | `insert_ai4sh_taxon_data.ipynb` has disabled translate/manage cells for the taxa |
+| [All data]({{ site.baseurl }}/all_data/) | All blocks | `load_ai4sh_data.ipynb` |
+{% endcapture %}
+
+<div class="notice">{{ notice-1 | markdownify }}</div>
 
 **Spectra never had a translate step to begin with** — spectral instrument files are converted
 to `manage_*` JSON directly by dedicated converters, not by translating a spreadsheet. There's
 nothing for `insert_tabular_data` to collapse there, so the single-step/dual-step distinction
 on this page doesn't apply to spectra.
 
-[loading_data]: /loading_data/
-[setup_process_insert]: /setup_process/insert/
-[setup_process_translate]: /setup_process/translate/
-[utility]: /utility/
-[dataset_meta]: /dataset_meta/
-[sample]: /sample/
-[wetlab]: /wetlab/
-[spectra]: /spectra/
-[all_data]: /all_data/
-[insert_utility_data]: /utility/insert_utility_data/
-[insert_dataset_meta]: /dataset_meta/insert_dataset_meta/
-[insert_sample_data]: /sample/insert_sample_data/
-[insert_wetlab_data]: /wetlab/insert_wetlab_data/
-[translate_general_utilities]: /utility/translate_general_utilities/
-[translate_dataset]: /dataset_meta/translate_dataset/
-[translate_geotag_sample]: /sample/translate_geotag_sample/
-[translate_ai4sh_wetlab_data]: /wetlab/translate_ai4sh_wetlab_data/
+[loading_data]: {{ site.baseurl }}/loading_data/
+[setup_process_insert]: {{ site.baseurl }}/setup_process/insert/
+[setup_process_translate]: {{ site.baseurl }}/setup_process/translate/
+[utility]: {{ site.baseurl }}/utility/
+[dataset_meta]: {{ site.baseurl }}/dataset_meta/
+[sample]: {{ site.baseurl }}/sample/
+[wetlab]: {{ site.baseurl }}/wetlab/
+[spectra]: {{ site.baseurl }}/spectra/
+[all_data]: {{ site.baseurl }}/all_data/
+[edna]: {{ site.baseurl }}/edna/
+[insert_utility_data]: {{ site.baseurl }}/utility/insert_utility_data/
+[insert_dataset_meta]: {{ site.baseurl }}/dataset_meta/insert_dataset_meta/
+[insert_sample_data]: {{ site.baseurl }}/sample/insert_sample_data/
+[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/
+[translate_general_utilities]: {{ site.baseurl }}/utility/translate_general_utilities/
+[translate_dataset]: {{ site.baseurl }}/dataset_meta/translate_dataset/
+[translate_geotag_sample]: {{ site.baseurl }}/sample/translate_geotag_sample/
+[translate_ai4sh_wetlab_data]: {{ site.baseurl }}/wetlab/translate_ai4sh_wetlab_data/

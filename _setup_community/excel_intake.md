@@ -54,5 +54,5 @@ ai4sh/user_management/user/excel/
 
 Neither exists after a fresh clone — a blank spreadsheet gets created by hand the first time (or copied from an existing project once one exists). This is intentional: a filled-in sheet contains real people's personal data, which has no business being committed to the repository.
 
-[dataset_meta]: /dataset_meta/
-[setup_community_welcome_email]: /setup_community/welcome_email/
+[dataset_meta]: {{ site.baseurl }}/dataset_meta/
+[setup_community_welcome_email]: {{ site.baseurl }}/setup_community/welcome_email/

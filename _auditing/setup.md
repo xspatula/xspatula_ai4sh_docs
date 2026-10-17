@@ -120,4 +120,4 @@ A dry-run script, `setup/scripts/verify_audit_system.py`, does the equivalent ch
 touching the database — useful if you want to confirm the assembled trigger-config files match
 every table's declared `"audit"` key before applying anything.
 
-[auditing_introduction]: /auditing/
+[auditing_introduction]: {{ site.baseurl }}/auditing/

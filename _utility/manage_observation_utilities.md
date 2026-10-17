@@ -20,7 +20,7 @@ Run [Translate observation utilities] first to generate the manage process files
 
 ## Notebook cell
 
-In `load_ai4sh_utility_data.ipynb`, the **Manage observation utilities** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_utility_data.ipynb`, the **Manage observation utilities** cell runs:
 
 ```python
 job_file = 'import_data/utility/job_manage_observation_utility.json'
@@ -138,5 +138,5 @@ These flags are set during the translate step from corresponding columns in the 
 
 Proceed to [Translate observation utilities with inheritance] to handle `provision`, `provision_indicator`, and `provision_serial_nr`.
 
-[Translate observation utilities]: /utility/translate_observation_utilities/
-[Translate observation utilities with inheritance]: /utility/translate_observation_utilities_inherit/
+[Translate observation utilities]: {{ site.baseurl }}/utility/translate_observation_utilities/
+[Translate observation utilities with inheritance]: {{ site.baseurl }}/utility/translate_observation_utilities_inherit/

@@ -21,7 +21,7 @@ A geolocated profile sample ties together a sampling log (the collection event),
 
 ## Notebook cell
 
-In `load_ai4sh_sample_data.ipynb`, the **Manage samples** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_sample_data.ipynb`, the **Manage samples** cell runs:
 
 ```python
 process_file = 'import_data/sample/manage_process/manage_geolocated_profile_sample.json'
@@ -90,9 +90,9 @@ All sample data is now loaded. Proceed to [Load wetlab data] or [Load spectral d
 
 **Or, do it in one step instead**: [Insert sample data][insert_sample_data] covers both sample tables, including this one, via the single-step `insert_tabular_data` route.
 
-[Manage sample geolocation]: /sample/manage_sample_geolocation/
-[Manage sampling log]: /dataset_meta/manage_sampling_log/
-[Load utility data]: /utility/
-[Load wetlab data]: /wetlab/
-[Load spectral data]: /spectra/
-[insert_sample_data]: /sample/insert_sample_data/
+[Manage sample geolocation]: {{ site.baseurl }}/sample/manage_sample_geolocation/
+[Manage sampling log]: {{ site.baseurl }}/dataset_meta/manage_sampling_log/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Load wetlab data]: {{ site.baseurl }}/wetlab/
+[Load spectral data]: {{ site.baseurl }}/spectra/
+[insert_sample_data]: {{ site.baseurl }}/sample/insert_sample_data/

@@ -31,7 +31,7 @@ This mechanism avoids hard-coding database IDs in the JSON files. You work with 
 
 ## Notebook cell
 
-In `load_ai4sh_utility_data.ipynb`, the **Translate observation utilities with inheritance** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_utility_data.ipynb`, the **Translate observation utilities with inheritance** cell runs:
 
 ```python
 job_file = 'import_data/utility/job_translate_observation_utility_inherit.json'
@@ -122,6 +122,6 @@ Three manage process files are written to `./ai4sh/import_data/utility/observati
 
 Proceed to [Manage observation utilities with inheritance] to insert these records into the database.
 
-[Manage observation utilities]: /utility/manage_observation_utilities/
-[Manage observation utilities with inheritance]: /utility/manage_observation_utilities_inherit/
-[setup_process_path_resolution]: /setup_process/path_resolution/
+[Manage observation utilities]: {{ site.baseurl }}/utility/manage_observation_utilities/
+[Manage observation utilities with inheritance]: {{ site.baseurl }}/utility/manage_observation_utilities_inherit/
+[setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/

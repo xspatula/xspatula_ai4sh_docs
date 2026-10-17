@@ -19,7 +19,7 @@ Both sample Excel files are translated in a single notebook cell. Unlike most ot
 
 ## Notebook cell
 
-In `load_ai4sh_sample_data.ipynb`, the **Translate geotag sample** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_sample_data.ipynb`, the **Translate geotag sample** cell runs:
 
 ```python
 process_file = 'import_data/sample/process/translate_geotag_sample.json'
@@ -92,7 +92,7 @@ Proceed to [Manage sample geolocation].
 
 **Or, do it in one step instead**: [Insert sample data][insert_sample_data] covers both tables via the single-step `insert_tabular_data` route, with no separate manage step.
 
-[Load dataset metadata]: /dataset_meta/
-[Manage sample geolocation]: /sample/manage_sample_geolocation/
-[setup_process_path_resolution]: /setup_process/path_resolution/
-[insert_sample_data]: /sample/insert_sample_data/
+[Load dataset metadata]: {{ site.baseurl }}/dataset_meta/
+[Manage sample geolocation]: {{ site.baseurl }}/sample/manage_sample_geolocation/
+[setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/
+[insert_sample_data]: {{ site.baseurl }}/sample/insert_sample_data/

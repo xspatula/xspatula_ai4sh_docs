@@ -8,7 +8,7 @@ excerpt: "How to fill in the Excel catalogues that describe the eDNA method — 
 permalink: /edna/edna_catalogues/
 author_profile: false
 date: 2026-09-30 08:00:00 +0200
-last_modified_at: 2026-09-30 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 The eDNA *method* is described once, in six Excel catalogues, before any results are loaded. Together they reproduce the methods section of a paper as data. Every ASV loaded later points to a pipeline, and the pipeline's steps point to the kit, the primers, the software version and the reference database that were used.
@@ -23,7 +23,7 @@ All files are in:
 ./ai4sh/import_data/utility/observation/excel/
 ```
 
-They are inserted by the utility insert chain, **not** by the eDNA notebooks. `insert_ai4sh_utility_data.ipynb` runs the job `utility/job_insert_observation_utility.json`, whose pilot file `insert_observation_utility.txt` ends with an `EDNA UTILITIES` section:
+They are inserted by the utility insert chain, **not** by the eDNA notebooks. Cell **1.2 Load observation utilities** of `insert_ai4sh_data.ipynb` runs the job `utility/job_insert_observation_utility.json`, whose pilot file `insert_observation_utility.txt` ends with an `EDNA UTILITIES` section:
 
 ```
 software.json
@@ -188,4 +188,4 @@ Make the same change in the Excel sheets, so that a database rebuilt from scratc
 
 `.gitignore` excludes `ai4sh/import_data/utility/`. The Excel files in this folder are tracked only because they were force-added (`git add -f`). New sheets you create there must be force-added too, or they will be missing from the repository.
 
-[insert_taxon]: /edna/insert_taxon/
+[insert_taxon]: {{ site.baseurl }}/edna/insert_taxon/

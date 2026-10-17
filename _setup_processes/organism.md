@@ -22,6 +22,6 @@ Organism-related data is currently handled by processes in other schemas:
 | Taxon tree | `manage_taxon` (bulk) | [Organism utility processes][setup_process_organism_utility] |
 | eDNA ASVs and abundances | `manage_edna_asv` (bulk) | [Observation processes][setup_process_observation] |
 
-[setup_db_organism]: /setup_db/organism/
-[setup_process_organism_utility]: /setup_process/organism_utility/
-[setup_process_observation]: /setup_process/observation/
+[setup_db_organism]: {{ site.baseurl }}/setup_db/organism/
+[setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/
+[setup_process_observation]: {{ site.baseurl }}/setup_process/observation/

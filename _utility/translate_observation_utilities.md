@@ -19,7 +19,7 @@ The third utility step translates all observation utility catalogues — except 
 
 ## Notebook cell
 
-In `load_ai4sh_utility_data.ipynb`, the **Translate observation utilities** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_utility_data.ipynb`, the **Translate observation utilities** cell runs:
 
 ```python
 job_file = 'import_data/utility/job_translate_observation_utility.json'
@@ -139,6 +139,6 @@ Running this cell generates 20 manage process files in `./ai4sh/import_data/util
 
 Proceed to [Manage observation utilities] to insert these catalogues into the database.
 
-[Manage general utilities]: /utility/manage_general_utilities/
-[Manage observation utilities]: /utility/manage_observation_utilities/
-[setup_process_path_resolution]: /setup_process/path_resolution/
+[Manage general utilities]: {{ site.baseurl }}/utility/manage_general_utilities/
+[Manage observation utilities]: {{ site.baseurl }}/utility/manage_observation_utilities/
+[setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/

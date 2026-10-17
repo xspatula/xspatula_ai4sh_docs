@@ -8,7 +8,7 @@ excerpt: "Inserting FOSS DS2500 observation log records into the AI4SH database.
 permalink: /spectra/manage_foss_ds2500_obs_log/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 An observation log record links a sampling log to the FOSS DS2500 provision, recording how samples were prepared and stored before scanning. One observation log is created per sampling-log/preparation combination. Individual spectral scans reference these log records.
@@ -21,7 +21,7 @@ An observation log record links a sampling log to the FOSS DS2500 provision, rec
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage FOSS DS2500 observation log** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.2 Load FOSS DS2500 observation log** runs:
 
 ```python
 job_file = 'import_data/DS2500_spectra/job_DS2500_observation_log.json'
@@ -40,7 +40,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/DS2500_spectra/observation_log",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_log_pilot.txt"
   }
 }
@@ -61,7 +61,7 @@ ai4sh_fi_jokioinen_2024@foss ds2500 l_ds2_observation_log.json
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/DS2500_spectra/observation_log/process/ai4sh_dk_foulum_2024@foss ds2500 l_ds2_observation_log.json`
+**Path**: `./ai4sh/import_data/DS2500_spectra/observation_log/manage_process/ai4sh_dk_foulum_2024@foss ds2500 l_ds2_observation_log.json`
 
 ```json
 {
@@ -102,7 +102,7 @@ ai4sh_fi_jokioinen_2024@foss ds2500 l_ds2_observation_log.json
 
 Proceed to [Manage FOSS DS2500 observation].
 
-[Manage FOSS DS2500 spectrometer]: /spectra/manage_foss_ds2500_spectrometer/
-[Load dataset metadata]: /dataset_meta/
-[Load utility data]: /utility/
-[Manage FOSS DS2500 observation]: /spectra/manage_foss_ds2500_obs/
+[Manage FOSS DS2500 spectrometer]: {{ site.baseurl }}/spectra/manage_foss_ds2500_spectrometer/
+[Load dataset metadata]: {{ site.baseurl }}/dataset_meta/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage FOSS DS2500 observation]: {{ site.baseurl }}/spectra/manage_foss_ds2500_obs/

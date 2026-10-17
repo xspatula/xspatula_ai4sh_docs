@@ -35,5 +35,5 @@ Nothing in the current AI4SH loading chain writes to this table — eDNA communi
 
 For the biological reference data (taxon tree, ranks, functions), see [Organism utility][setup_db_organism_utility].
 
-[setup_db_observation]: /setup_db/observation/
-[setup_db_organism_utility]: /setup_db/organism_utility/
+[setup_db_observation]: {{ site.baseurl }}/setup_db/observation/
+[setup_db_organism_utility]: {{ site.baseurl }}/setup_db/organism_utility/

@@ -22,10 +22,10 @@ The campaign record is also where the link between a dataset and its analytical 
 
 ## Notebook cell
 
-In `load_ai4sh_dataset_meta.ipynb`, the **Manage campaigns** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_dataset_meta.ipynb`, the **Manage campaigns** cell runs:
 
 ```python
-process_file = 'import_data/dataset/manage_process/manage_campaign.json'
+process_file = 'import_data/dataset_metadata/manage_process/manage_campaign.json'
 
 structured_process_D, scheme_params_D = Initiate_process(notebook_path, scheme_file, process_file)
 
@@ -35,7 +35,7 @@ if structured_process_D is not None:
 
 ## Manage process file
 
-**Path**: `./ai4sh/import_data/dataset/manage_process/manage_campaign.json`
+**Path**: `./ai4sh/import_data/dataset_metadata/manage_process/manage_campaign.json`
 
 ```json
 {
@@ -118,7 +118,7 @@ The framework resolves each name to its `provision_id` and creates a record in t
 
 Proceed to [Manage sampling log].
 
-[Manage dataset]: /dataset_meta/manage_dataset/
-[Load utility data]: /utility/
-[Manage sampling log]: /dataset_meta/manage_sampling_log/
-[auto_naming]: /setup_process/auto_naming/
+[Manage dataset]: {{ site.baseurl }}/dataset_meta/manage_dataset/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage sampling log]: {{ site.baseurl }}/dataset_meta/manage_sampling_log/
+[auto_naming]: {{ site.baseurl }}/setup_process/auto_naming/

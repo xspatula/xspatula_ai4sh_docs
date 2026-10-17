@@ -26,10 +26,10 @@ This collection covers the workshop-scale replacement: organisations and users f
 4. [Register notebook][setup_community_register_notebook] — the admin's review-and-run workflow
 5. [Welcome email][setup_community_welcome_email] — what a newly registered user actually receives
 
-[dataset_meta]: /dataset_meta/
-[setup_process_community]: /setup_process/community/
-[setup_community_bootstrap_user]: /setup_community/bootstrap_user/
-[setup_community_smtp_email]: /setup_community/smtp_email/
-[setup_community_excel_intake]: /setup_community/excel_intake/
-[setup_community_register_notebook]: /setup_community/register_notebook/
-[setup_community_welcome_email]: /setup_community/welcome_email/
+[dataset_meta]: {{ site.baseurl }}/dataset_meta/
+[setup_process_community]: {{ site.baseurl }}/setup_process/community/
+[setup_community_bootstrap_user]: {{ site.baseurl }}/setup_community/bootstrap_user/
+[setup_community_smtp_email]: {{ site.baseurl }}/setup_community/smtp_email/
+[setup_community_excel_intake]: {{ site.baseurl }}/setup_community/excel_intake/
+[setup_community_register_notebook]: {{ site.baseurl }}/setup_community/register_notebook/
+[setup_community_welcome_email]: {{ site.baseurl }}/setup_community/welcome_email/

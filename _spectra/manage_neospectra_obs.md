@@ -8,7 +8,7 @@ excerpt: "Inserting Neospectra spectral observations into the AI4SH database. Ea
 permalink: /spectra/manage_neospectra_obs/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Each Neospectra observation record stores one spectral scan — a 257-element reflectance array covering ~1350–2550 nm — linked to a sample and an observation log. Multiple sub-samples and replicates are common; each is a separate process file.
@@ -20,7 +20,7 @@ Each Neospectra observation record stores one spectral scan — a 257-element re
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage Neospectra observation** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.6 Load Neospectra observations** runs:
 
 ```python
 job_file = 'import_data/neospectra/job_neospectra_observation.json'
@@ -39,7 +39,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/neospectra/observation",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_pilot.txt"
   }
 }
@@ -47,7 +47,7 @@ if structured_process_D is not None:
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/neospectra/observation/process/ai4sh_dk_foulum_2024@neospectra_ds2_219-c5@0-20_a_0_none_20241106_observation.json`
+**Path**: `./ai4sh/import_data/neospectra/observation/manage_process/ai4sh_dk_foulum_2024@neospectra_ds2_219-c5@0-20_a_0_none_20241106_observation.json`
 
 ```json
 {
@@ -88,6 +88,6 @@ Unlike the FOSS DS2500, the Neospectra observation does not include a `provision
 
 Proceed to [Manage FTIR spectrometer] to continue with the FTIR instrument.
 
-[Manage Neospectra observation log]: /spectra/manage_neospectra_obs_log/
-[Load sample data]: /sample/
-[Manage FTIR spectrometer]: /spectra/manage_ftir_spectrometer/
+[Manage Neospectra observation log]: {{ site.baseurl }}/spectra/manage_neospectra_obs_log/
+[Load sample data]: {{ site.baseurl }}/sample/
+[Manage FTIR spectrometer]: {{ site.baseurl }}/spectra/manage_ftir_spectrometer/

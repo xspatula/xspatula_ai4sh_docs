@@ -19,7 +19,7 @@ Run [Translate geotag sample] first.
 
 ## Notebook cell
 
-In `load_ai4sh_sample_data.ipynb`, the **Manage sample geolocation** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_sample_data.ipynb`, the **Manage sample geolocation** cell runs:
 
 ```python
 process_file = 'import_data/sample/manage_process/manage_geolocation.json'
@@ -70,5 +70,5 @@ The AI4SH project uses the pattern `site@tag` for geolocation names (e.g. `es_ar
 
 Proceed to [Manage samples].
 
-[Translate geotag sample]: /sample/translate_geotag_sample/
-[Manage samples]: /sample/manage_sample/
+[Translate geotag sample]: {{ site.baseurl }}/sample/translate_geotag_sample/
+[Manage samples]: {{ site.baseurl }}/sample/manage_sample/

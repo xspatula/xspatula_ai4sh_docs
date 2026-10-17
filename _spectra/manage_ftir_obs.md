@@ -8,7 +8,7 @@ excerpt: "Inserting FTIR spectral observations into the AI4SH database. Each rec
 permalink: /spectra/manage_ftir_obs/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Each FTIR observation record stores one spectral scan — a 2383-element reflectance array covering 2501–16686 nm — linked to a sample and an observation log. The spectral array is stored in ascending wavelength order.
@@ -20,7 +20,7 @@ Each FTIR observation record stores one spectral scan — a 2383-element reflect
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage FTIR observation** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.9 Load Bruker Invenio S FTIR observations** runs:
 
 ```python
 job_file = 'import_data/FTIR_spectra/job_ftir_observation.json'
@@ -39,7 +39,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/FTIR_spectra/observation",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_pilot.txt"
   }
 }
@@ -47,7 +47,7 @@ if structured_process_D is not None:
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/FTIR_spectra/observation/process/ai4sh_ch_lens_2026@ftir_ds2m_lens@0-5_a_1_none_20260513_observation.json`
+**Path**: `./ai4sh/import_data/FTIR_spectra/observation/manage_process/ai4sh_ch_lens_2026@ftir_ds2m_lens@0-5_a_1_none_20260513_observation.json`
 
 ```json
 {
@@ -88,6 +88,6 @@ if structured_process_D is not None:
 
 Proceed to [Manage LIBS spectrometer] to continue with the final instrument.
 
-[Manage FTIR observation log]: /spectra/manage_ftir_obs_log/
-[Load sample data]: /sample/
-[Manage LIBS spectrometer]: /spectra/manage_libs_spectrometer/
+[Manage FTIR observation log]: {{ site.baseurl }}/spectra/manage_ftir_obs_log/
+[Load sample data]: {{ site.baseurl }}/sample/
+[Manage LIBS spectrometer]: {{ site.baseurl }}/spectra/manage_libs_spectrometer/

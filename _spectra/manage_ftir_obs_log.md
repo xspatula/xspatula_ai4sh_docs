@@ -8,7 +8,7 @@ excerpt: "Inserting FTIR observation log records into the AI4SH database. Each r
 permalink: /spectra/manage_ftir_obs_log/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 A FTIR observation log links a sampling log to the `bruker invenio s ftir` provision. FTIR requires milled samples, so the preparation is `ds2m` (dried, sieved to 2 mm, then milled) rather than the `ds2` used by the NIR instruments.
@@ -21,7 +21,7 @@ A FTIR observation log links a sampling log to the `bruker invenio s ftir` provi
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage FTIR observation log** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.8 Load Bruker Invenio S FTIR observation log** runs:
 
 ```python
 job_file = 'import_data/FTIR_spectra/job_ftir_observation_log.json'
@@ -40,7 +40,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/FTIR_spectra/observation_log",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_log_pilot.txt"
   }
 }
@@ -48,7 +48,7 @@ if structured_process_D is not None:
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/FTIR_spectra/observation_log/process/ai4sh_ch_lens_2026@ftir_ds2m_observation_log.json`
+**Path**: `./ai4sh/import_data/FTIR_spectra/observation_log/manage_process/ai4sh_ch_lens_2026@ftir_ds2m_observation_log.json`
 
 ```json
 {
@@ -91,7 +91,7 @@ if structured_process_D is not None:
 
 Proceed to [Manage FTIR observation].
 
-[Manage FTIR spectrometer]: /spectra/manage_ftir_spectrometer/
-[Load dataset metadata]: /dataset_meta/
-[Load utility data]: /utility/
-[Manage FTIR observation]: /spectra/manage_ftir_obs/
+[Manage FTIR spectrometer]: {{ site.baseurl }}/spectra/manage_ftir_spectrometer/
+[Load dataset metadata]: {{ site.baseurl }}/dataset_meta/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage FTIR observation]: {{ site.baseurl }}/spectra/manage_ftir_obs/

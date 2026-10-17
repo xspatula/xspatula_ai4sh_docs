@@ -8,7 +8,7 @@ excerpt: "Inserting Neospectra observation log records into the AI4SH database. 
 permalink: /spectra/manage_neospectra_obs_log/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 A Neospectra observation log links a sampling log to the `neospectra` provision. Unlike the laboratory instruments, Neospectra records use `home: 1` instead of `laboratory: 1` to indicate that the instrument can be operated outside a controlled laboratory environment.
@@ -21,7 +21,7 @@ A Neospectra observation log links a sampling log to the `neospectra` provision.
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage Neospectra observation log** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.5 Load Neospectra observation log** runs:
 
 ```python
 job_file = 'import_data/neospectra/job_neospectra_observation_log.json'
@@ -40,7 +40,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/neospectra/observation_log",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_log_pilot.txt"
   }
 }
@@ -48,7 +48,7 @@ if structured_process_D is not None:
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/neospectra/observation_log/process/ai4sh_dk_foulum_2024@neospectra_ds2_observation_log.json`
+**Path**: `./ai4sh/import_data/neospectra/observation_log/manage_process/ai4sh_dk_foulum_2024@neospectra_ds2_observation_log.json`
 
 ```json
 {
@@ -89,7 +89,7 @@ if structured_process_D is not None:
 
 Proceed to [Manage Neospectra observation].
 
-[Manage Neospectra spectrometer]: /spectra/manage_neospectra_spectrometer/
-[Load dataset metadata]: /dataset_meta/
-[Load utility data]: /utility/
-[Manage Neospectra observation]: /spectra/manage_neospectra_obs/
+[Manage Neospectra spectrometer]: {{ site.baseurl }}/spectra/manage_neospectra_spectrometer/
+[Load dataset metadata]: {{ site.baseurl }}/dataset_meta/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage Neospectra observation]: {{ site.baseurl }}/spectra/manage_neospectra_obs/

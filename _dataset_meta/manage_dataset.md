@@ -20,10 +20,10 @@ A dataset is the top-level grouping for data contributed by a single data source
 
 ## Notebook cell
 
-In `load_ai4sh_dataset_meta.ipynb`, the **Manage dataset** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_dataset_meta.ipynb`, the **Manage dataset** cell runs:
 
 ```python
-process_file = 'import_data/dataset/manage_process/manage_dataset.json'
+process_file = 'import_data/dataset_metadata/manage_process/manage_dataset.json'
 
 structured_process_D, scheme_params_D = Initiate_process(notebook_path, scheme_file, process_file)
 
@@ -33,7 +33,7 @@ if structured_process_D is not None:
 
 ## Manage process file
 
-**Path**: `./ai4sh/import_data/dataset/manage_process/manage_dataset.json`
+**Path**: `./ai4sh/import_data/dataset_metadata/manage_process/manage_dataset.json`
 
 ```json
 {
@@ -112,7 +112,7 @@ The dataset `name` is free text for people; the `tag` is the short key that the 
 
 Proceed to [Manage campaign].
 
-[Manage data source]: /dataset_meta/manage_data_source/
-[Load utility data]: /utility/
-[Manage campaign]: /dataset_meta/manage_campaign/
-[auto_naming]: /setup_process/auto_naming/
+[Manage data source]: {{ site.baseurl }}/dataset_meta/manage_data_source/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage campaign]: {{ site.baseurl }}/dataset_meta/manage_campaign/
+[auto_naming]: {{ site.baseurl }}/setup_process/auto_naming/

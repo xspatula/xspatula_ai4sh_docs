@@ -116,7 +116,7 @@ Taxon functions are not yet linked to individual taxa or ASVs; the functional va
 | `observation.edna_asv` | `taxon_id` | `organism_utility.taxon` (deepest resolved rank) |
 | `observation_utility.method_pipeline_step` | `taxonomy_reference_id` | `organism_utility.taxonomy_reference` |
 
-[setup_db_observation_utility]: /setup_db/observation_utility/
-[setup_process_organism_utility]: /setup_process/organism_utility/
-[edna_catalogues]: /edna/edna_catalogues/
-[edna_insert_taxon]: /edna/insert_taxon/
+[setup_db_observation_utility]: {{ site.baseurl }}/setup_db/observation_utility/
+[setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[edna_insert_taxon]: {{ site.baseurl }}/edna/insert_taxon/

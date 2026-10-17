@@ -4,14 +4,14 @@ layout: single
 sidebar:
   nav: "edna"
   nav2: "loading_data"
-excerpt: "insert_ai4sh_edna_data.ipynb inserts one eDNA observation log per sampling log, then one observation per sample with its 19 summary indicators."
+excerpt: "Cells 3.4.3–3.4.4 of insert_ai4sh_data.ipynb insert one eDNA observation log per sampling log, then one observation per sample with its 19 summary indicators."
 permalink: /edna/insert_edna_observation/
 author_profile: false
 date: 2026-09-30 08:00:00 +0200
-last_modified_at: 2026-09-30 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
-The first two cells of `insert_ai4sh_edna_data.ipynb` load the per-sample summary of the eDNA analysis. This works exactly like the [wetlab data][insert_wetlab_data]: first an observation log that links each sampling log to the metabarcoding provision, then one observation per sample carrying the indicator values.
+Cells 3.4.3 and 3.4.4 of `insert_ai4sh_data.ipynb` load the per-sample summary of the eDNA analysis. This works exactly like the [wetlab data][insert_wetlab_data]: first an observation log that links each sampling log to the metabarcoding provision, then one observation per sample carrying the indicator values.
 
 ## Prerequisites
 
@@ -19,15 +19,13 @@ The first two cells of `insert_ai4sh_edna_data.ipynb` load the per-sample summar
 - [Load sample data] is complete.
 - Provision `ai4sh-metabarcoding` and its 19 `provision_indicator` records exist (see [eDNA method catalogues][edna_catalogues]).
 
-## Notebook
+## Notebook cells
 
 ```
-./ai4sh/import_data/insert_ai4sh_edna_data.ipynb
+./ai4sh/import_data/insert_ai4sh_data.ipynb   block 3.4, cells 3.4.3 and 3.4.4
 ```
 
-After the shared imports cell and the scheme-file cell (`scheme_file = '../scheme_ai4sh.json'`), run:
-
-### Insert eDNA observation log
+### Cell 3.4.3 Load eDNA observation log
 
 ```python
 process_file = 'import_data/eDNA/insert_process/insert_eDNA_observation_log.json'
@@ -58,7 +56,7 @@ The process file:
 
 This inserts one observation log per sampling log. Its name is generated automatically as `<sampling log>@ai4sh-metabarcoding`, for example `ai4sh_dk_foulum_2024@ai4sh-metabarcoding`.
 
-### Insert eDNA observation
+### Cell 3.4.4 Load eDNA summary observation
 
 The same cell pattern with `process_file = 'import_data/eDNA/insert_process/insert_eDNA_observation.json'`. The target process is `manage_observation`, reading `AI4SH_observation_eDNA.xlsx`.
 
@@ -91,10 +89,11 @@ You should see one row per sampling log, with at most 19 values per observation.
 
 ## Next step
 
-Proceed to [Insert taxa].
+Proceed to [Insert ASVs] (cells 3.4.5–3.4.6). The taxa (cells 3.4.1–3.4.2, [Insert taxa]) must be loaded before the ASVs.
 
-[insert_wetlab_data]: /wetlab/insert_wetlab_data/
-[Prepare eDNA data]: /edna/prepare_edna_data/
-[Load sample data]: /sample/
-[edna_catalogues]: /edna/edna_catalogues/
-[Insert taxa]: /edna/insert_taxon/
+[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/
+[Prepare eDNA data]: {{ site.baseurl }}/edna/prepare_edna_data/
+[Load sample data]: {{ site.baseurl }}/sample/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[Insert taxa]: {{ site.baseurl }}/edna/insert_taxon/
+[Insert ASVs]: {{ site.baseurl }}/edna/insert_edna_asv/

@@ -8,21 +8,21 @@ excerpt: "Overview of Agrolab wet laboratory data loading. Soil chemical propert
 permalink: /wetlab/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Wet laboratory (Agrolab) data contains chemically determined soil properties measured per sample — pH, organic carbon, nitrogen, texture fractions, ions, and more. Each measurement is anchored to a sample through an observation log that records which laboratory protocol and provision were used.
 
-Two notebooks can load this data — pick one:
+Agrolab data is loaded by block **3.2** of the single loading notebook (see [Load all data][all_data]):
 
 ```
-./ai4sh/import_data/insert_ai4sh_wetlab_data.ipynb   (single-step, recommended default)
-./ai4sh/import_data/load_ai4sh_wetlab_data.ipynb     (2-step translate + manage)
+./ai4sh/import_data/insert_ai4sh_data.ipynb   block 3.2, cell 3.2.1
 ```
 
-**Which one should I use?** Use `insert_ai4sh_wetlab_data.ipynb` unless you need to `UPDATE` an
-existing record or want to hand-inspect/edit the generated JSON before it's applied — the
-single-step route is INSERT-only by construction, so it's always safe to re-run. See
+The cell uses the single-step `insert_tabular_data` route, which is INSERT-only by construction
+and therefore always safe to re-run. If you need to `UPDATE` an existing record or want to
+hand-inspect the generated JSON before it's applied, use the 2-step notebook
+`./ai4sh/import_data/more_notebooks/load_ai4sh_wetlab_data.ipynb` instead. See
 [Insert wetlab data][insert_wetlab_data] for the single-step walkthrough and
 [Single-step vs dual-step][insert_vs_translate] for the full comparison.
 
@@ -41,9 +41,9 @@ Both files are translated in a single process file call, then managed separately
 
 ## Required loading sequence
 
-**Single step** (default): **[Insert wetlab data]** — 2 cells, observation log then observation, translate and insert combined.
+**Single step** (default): **[Insert wetlab data]** — **cell 3.2.1 Load Agrolab (wetlab) observation data**, one process file with observation log then observation, translate and insert combined.
 
-**2-step** (for `UPDATE`s or manual inspection), 3 cells:
+**2-step** (for `UPDATE`s or manual inspection), 3 cells in `more_notebooks/load_ai4sh_wetlab_data.ipynb`:
 
 1. **[Translate Agrolab wetlab data]** — translate both Excel files to JSON in one call
 2. **[Manage Agrolab observation log]** — insert observation log records linking sampling logs to the Agrolab provision
@@ -53,10 +53,12 @@ Both files are translated in a single process file call, then managed separately
 
 [Load sample data] must be complete. Observation utility records (provision, provision_indicator, preparation, preservation, storage, transportation) must exist from [Load utility data].
 
-[Insert wetlab data]: /wetlab/insert_wetlab_data/
-[insert_vs_translate]: /insert_vs_translate/
-[Translate Agrolab wetlab data]: /wetlab/translate_ai4sh_wetlab_data/
-[Manage Agrolab observation log]: /wetlab/manage_ai4sh_agrolab_obs_log/
-[Manage Agrolab observation]: /wetlab/manage_ai4sh_wetlab_data/
-[Load sample data]: /sample/
-[Load utility data]: /utility/
+[Insert wetlab data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/
+[insert_vs_translate]: {{ site.baseurl }}/insert_vs_translate/
+[Translate Agrolab wetlab data]: {{ site.baseurl }}/wetlab/translate_ai4sh_wetlab_data/
+[Manage Agrolab observation log]: {{ site.baseurl }}/wetlab/manage_ai4sh_agrolab_obs_log/
+[Manage Agrolab observation]: {{ site.baseurl }}/wetlab/manage_ai4sh_wetlab_data/
+[Load sample data]: {{ site.baseurl }}/sample/
+[Load utility data]: {{ site.baseurl }}/utility/
+[all_data]: {{ site.baseurl }}/all_data/
+[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/

@@ -4,7 +4,7 @@ layout: single
 sidebar:
   nav: "utility"
   nav2: "loading_data"
-excerpt: "Translating the territory Excel file to a JSON process file using the load_ai4sh_utility_data notebook. This is the first of six utility loading steps."
+excerpt: "Translating the territory Excel file to a JSON process file using the 2-step notebook more_notebooks/load_ai4sh_utility_data.ipynb. This is the first of six utility loading steps."
 permalink: /utility/translate_general_utilities/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
@@ -15,7 +15,7 @@ The first utility step translates the general utility Excel file (`territory.xls
 
 ## Notebook cell
 
-In `load_ai4sh_utility_data.ipynb`, the **Translate general utilities** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_utility_data.ipynb`, the **Translate general utilities** cell runs:
 
 ```python
 job_file = 'import_data/utility/job_translate_general_utility.json'
@@ -97,6 +97,6 @@ After running this cell, proceed to [Manage general utilities] to insert the ter
 
 **Or, do it in one step instead**: [Insert utility data][insert_utility_data] covers the same territory table (and the rest of utility) via the single-step `insert_tabular_data` route, with no separate manage step.
 
-[Manage general utilities]: /utility/manage_general_utilities/
-[setup_process_path_resolution]: /setup_process/path_resolution/
-[insert_utility_data]: /utility/insert_utility_data/
+[Manage general utilities]: {{ site.baseurl }}/utility/manage_general_utilities/
+[setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/
+[insert_utility_data]: {{ site.baseurl }}/utility/insert_utility_data/

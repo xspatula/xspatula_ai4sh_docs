@@ -72,5 +72,5 @@ Both processes require a minimum user stratum of 5. This is the highest operatio
 
 <div class="notice">{{ notice-2 | markdownify }}</div>
 
-[setup_process_community]: /setup_process/community/
-[setup_process_observation_manage]: /setup_process/observation/#manage_observation_log-and-manage_observation
+[setup_process_community]: {{ site.baseurl }}/setup_process/community/
+[setup_process_observation_manage]: {{ site.baseurl }}/setup_process/observation/#manage_observation_log-and-manage_observation

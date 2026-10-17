@@ -187,8 +187,8 @@ The process is routed to its bulk importer (`import_edna_asv.py`) through `BULK_
 
 
 
-[setup_db_observation]: /setup_db/observation/
-[setup_process_observation_utility]: /setup_process/observation_utility/
-[setup_process_organism_utility]: /setup_process/organism_utility/
-[edna_insert_asv]: /edna/insert_edna_asv/
-[setup_process_utility_mapping]: /setup_process/utility/#how-excel-columns-reach-the-database
+[setup_db_observation]: {{ site.baseurl }}/setup_db/observation/
+[setup_process_observation_utility]: {{ site.baseurl }}/setup_process/observation_utility/
+[setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/
+[edna_insert_asv]: {{ site.baseurl }}/edna/insert_edna_asv/
+[setup_process_utility_mapping]: {{ site.baseurl }}/setup_process/utility/#how-excel-columns-reach-the-database

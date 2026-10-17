@@ -19,10 +19,10 @@ Run [Translate dataset] first. The `utility.territory` table must be populated (
 
 ## Notebook cell
 
-In `load_ai4sh_dataset_meta.ipynb`, the **Manage data source** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_dataset_meta.ipynb`, the **Manage data source** cell runs:
 
 ```python
-process_file = 'import_data/dataset/manage_process/manage_data_source.json'
+process_file = 'import_data/dataset_metadata/manage_process/manage_data_source.json'
 
 structured_process_D, scheme_params_D = Initiate_process(notebook_path, scheme_file, process_file)
 
@@ -34,7 +34,7 @@ The cell calls `process_file` directly rather than a `job_file` — there is one
 
 ## Manage process file
 
-**Path**: `./ai4sh/import_data/dataset/manage_process/manage_data_source.json`
+**Path**: `./ai4sh/import_data/dataset_metadata/manage_process/manage_data_source.json`
 
 ```json
 {
@@ -76,6 +76,6 @@ One JSON object is generated per row in `data_source.xlsx`. Downstream manage fi
 
 Proceed to [Manage persons].
 
-[Translate dataset]: /dataset_meta/translate_dataset/
-[Load utility data]: /utility/
-[Manage persons]: /dataset_meta/manage_person/
+[Translate dataset]: {{ site.baseurl }}/dataset_meta/translate_dataset/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage persons]: {{ site.baseurl }}/dataset_meta/manage_person/

@@ -4,11 +4,11 @@ layout: single
 sidebar:
   nav: "edna"
   nav2: "loading_data"
-excerpt: "insert_ai4sh_taxon_data.ipynb bulk-loads the prokaryote (SILVA) and fungal (UNITE) lineages into organism_utility.taxon, rank by rank. Must run before the ASVs."
+excerpt: "Cells 3.4.1–3.4.2 of insert_ai4sh_data.ipynb bulk-load the prokaryote (SILVA) and fungal (UNITE) lineages into organism_utility.taxon, rank by rank. Must run before the ASVs."
 permalink: /edna/insert_taxon/
 author_profile: false
 date: 2026-09-30 08:00:00 +0200
-last_modified_at: 2026-09-30 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Every ASV carries a lineage such as `k__Bacteria|p__Bacillota|…|g__Niallia|s__`. Before ASVs can be loaded, every name in those lineages must exist in the taxon tree `organism_utility.taxon`. This step builds the tree from the two lineage files written by the CLI.
@@ -21,13 +21,13 @@ It must run **before** [Insert ASVs]: the ASV loader looks up each lineage's dee
 - Taxonomy references `silva unspecified` and `unite unspecified` exist (see [eDNA method catalogues][edna_catalogues]).
 - The process `manage_taxon` is registered (see [Organism utility processes][setup_process_organism_utility]).
 
-## Notebook
+## Notebook cells
 
 ```
-./ai4sh/import_data/insert_ai4sh_taxon_data.ipynb
+./ai4sh/import_data/insert_ai4sh_data.ipynb   block 3.4, cells 3.4.1 and 3.4.2
 ```
 
-After the imports and scheme-file cells, the notebook has two single-step cells, one per organism group:
+Block 3.4 starts with two single-step cells, one per organism group — **3.4.1 Load prokaryote taxa (SILVA)**:
 
 ```python
 process_file = 'import_data/eDNA/insert_process/insert_taxon_prokaryotes.json'
@@ -38,7 +38,7 @@ if structured_process_D is not None:
     Run_process(structured_process_D, scheme_params_D)
 ```
 
-and the same cell pattern with `insert_taxon_fungi.json`. The process files:
+and **3.4.2 Load fungal taxa (UNITE)**, the same cell pattern with `insert_taxon_fungi.json`. The process files:
 
 | File | `tabular_data_path` | `dst_path` | Taxonomy reference |
 |---|---|---|---|
@@ -76,12 +76,12 @@ The whole load is one transaction: it completes, or it leaves the table untouche
 
 ## Dual-step alternative
 
-The notebook also has two cells, disabled with `%%script false`, that split the work so you can inspect the result before loading:
+The separate notebook `./ai4sh/import_data/more_notebooks/insert_ai4sh_taxon_data.ipynb` has two extra cells, disabled with `%%script false`, that split the work so you can inspect the result before loading:
 
 1. **Translate** — `import_data/eDNA/process/translate_taxon_prokaryotes.json` and `…_fungi.json` (`translate_tabular_data`) write `taxon_lineage.csv` and a `manage_taxon.json` to `import_data/eDNA/manage_process/taxon_<group>/`.
 2. **Manage** — run `import_data/eDNA/manage_process/taxon_<group>/manage_taxon.json` to load the CSV.
 
-Remove the `%%script false` line to enable them. Use either the single-step or the dual-step route, not both.
+Remove the `%%script false` line to enable them. Use either the single-step cells 3.4.1–3.4.2 or the dual-step route, not both.
 
 ## Check
 
@@ -103,9 +103,10 @@ This should return several rows with different genera.
 
 ## Next step
 
-Proceed to [Insert ASVs].
+Proceed to [Insert eDNA observations] (cells 3.4.3–3.4.4), then [Insert ASVs] (cells 3.4.5–3.4.6).
 
-[Insert ASVs]: /edna/insert_edna_asv/
-[Prepare eDNA data]: /edna/prepare_edna_data/
-[edna_catalogues]: /edna/edna_catalogues/
-[setup_process_organism_utility]: /setup_process/organism_utility/
+[Insert ASVs]: {{ site.baseurl }}/edna/insert_edna_asv/
+[Insert eDNA observations]: {{ site.baseurl }}/edna/insert_edna_observation/
+[Prepare eDNA data]: {{ site.baseurl }}/edna/prepare_edna_data/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/

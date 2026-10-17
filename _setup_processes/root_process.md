@@ -57,4 +57,4 @@ Translation processes convert data between formats (e.g. from a tabular spreadsh
 
 The root process is part of the primary key structure for process lookup. When the framework receives a process call it uses both the `root_process_id` and the `process_id` to find the correct Python function to execute. Root processes serve as a grouping mechanism in the user interface — all processes under `manage_table_data` can be presented together as the "data management" operations for a given schema.
 
-[setup_process_insert]: /setup_process/insert/
+[setup_process_insert]: {{ site.baseurl }}/setup_process/insert/

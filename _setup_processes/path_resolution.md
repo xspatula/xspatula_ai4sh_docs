@@ -47,12 +47,12 @@ All notation-aware resolution goes through `Get_project_path`/`Full_path_locate`
 Given a project root at `~/GitHub_xspatula/xspatula_ai4sh/ai4sh/`, a `tabular_data_path` of:
 
 ```
-import_data/dataset/excel/data_source.xlsx
+import_data/dataset_metadata/excel/data_source.xlsx
 ```
 
-resolves to `~/GitHub_xspatula/xspatula_ai4sh/ai4sh/import_data/dataset/excel/data_source.xlsx` — regardless of which directory the process JSON file that names it happens to live in. This is the form used throughout the `translate_*` pages on this site; see [Translate Processes][setup_process_translate] for the `tabular_data_path`/`dst_path` parameters themselves.
+resolves to `~/GitHub_xspatula/xspatula_ai4sh/ai4sh/import_data/dataset_metadata/excel/data_source.xlsx` — regardless of which directory the process JSON file that names it happens to live in. This is the form used throughout the `translate_*` pages on this site; see [Translate Processes][setup_process_translate] for the `tabular_data_path`/`dst_path` parameters themselves.
 {% endcapture %}
 
 <div class="notice">{{ notice-2 | markdownify }}</div>
 
-[setup_process_translate]: /setup_process/translate/
+[setup_process_translate]: {{ site.baseurl }}/setup_process/translate/

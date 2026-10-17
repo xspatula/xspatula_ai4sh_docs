@@ -157,6 +157,6 @@ A sample flagged with *no exact rarefaction depth* is suspect: its abundances do
 
 ## Next step
 
-Proceed to [Insert eDNA observations].
+Proceed to [Insert taxa] (cells 3.4.1–3.4.2 of `insert_ai4sh_data.ipynb`).
 
-[Insert eDNA observations]: /edna/insert_edna_observation/
+[Insert taxa]: {{ site.baseurl }}/edna/insert_taxon/

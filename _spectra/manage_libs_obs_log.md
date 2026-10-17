@@ -8,7 +8,7 @@ excerpt: "Inserting LIBS observation log records into the AI4SH database. Each r
 permalink: /spectra/manage_libs_obs_log/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 A LIBS observation log links a sampling log to the `foss micral` provision. LIBS uses compressed pellets of milled soil (`ds2c` preparation — dried, sieved, and compressed) rather than the sieved or milled powders used by the NIR and FTIR instruments.
@@ -21,7 +21,7 @@ A LIBS observation log links a sampling log to the `foss micral` provision. LIBS
 
 ## Notebook cell
 
-In `load_ai4sh_spectral_data.ipynb`, the **Manage LIBS observation log** cell runs:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, block **3.3 AI4SH spectral data**, cell **3.3.11 Load FOSS Micral observation log** runs:
 
 ```python
 job_file = 'import_data/LIBS_spectra/job_libs_observation_log.json'
@@ -40,7 +40,7 @@ if structured_process_D is not None:
 {
   "process": {
     "job_folder": "import_data/LIBS_spectra/observation_log",
-    "process_sub_folder": "process",
+    "process_sub_folder": "manage_process",
     "pilot_file": "xspatula_add_observation_log_pilot.txt"
   }
 }
@@ -48,7 +48,7 @@ if structured_process_D is not None:
 
 ## Process file example
 
-**Path**: `./ai4sh/import_data/LIBS_spectra/observation_log/process/ai4sh_ch_lens_2026@libs_ds2c_observation_log.json`
+**Path**: `./ai4sh/import_data/LIBS_spectra/observation_log/manage_process/ai4sh_ch_lens_2026@libs_ds2c_observation_log.json`
 
 ```json
 {
@@ -91,7 +91,7 @@ Note: LIBS observation logs do not include `storage_id__storage_name` or `transp
 
 Proceed to [Manage LIBS observation].
 
-[Manage LIBS spectrometer]: /spectra/manage_libs_spectrometer/
-[Load dataset metadata]: /dataset_meta/
-[Load utility data]: /utility/
-[Manage LIBS observation]: /spectra/manage_libs_obs/
+[Manage LIBS spectrometer]: {{ site.baseurl }}/spectra/manage_libs_spectrometer/
+[Load dataset metadata]: {{ site.baseurl }}/dataset_meta/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage LIBS observation]: {{ site.baseurl }}/spectra/manage_libs_obs/

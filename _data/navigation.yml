@@ -187,10 +187,10 @@ edna:
         url: /edna/prepare_edna_data/
       - title: "eDNA method catalogues"
         url: /edna/edna_catalogues/
-      - title: "Insert eDNA observations"
-        url: /edna/insert_edna_observation/
       - title: "Insert taxa"
         url: /edna/insert_taxon/
+      - title: "Insert eDNA observations"
+        url: /edna/insert_edna_observation/
       - title: "Insert ASVs"
         url: /edna/insert_edna_asv/
 

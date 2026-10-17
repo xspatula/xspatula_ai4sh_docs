@@ -8,21 +8,21 @@ excerpt: "Overview of the dataset metadata hierarchy and the required loading se
 permalink: /dataset_meta/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 Dataset metadata describes the provenance of all soil observations: who collected them, under what organisational umbrella, in which campaign, and at which sampling operation. This chain of records must be in place before any sample position or observation value can be entered.
 
-Two notebooks can load this data — pick one:
+Dataset metadata is loaded by block **2. Dataset metadata** of the single loading notebook (see [Load all data][all_data]):
 
 ```
-./ai4sh/import_data/insert_ai4sh_dataset_meta.ipynb   (single-step, recommended default)
-./ai4sh/import_data/load_ai4sh_dataset_meta.ipynb     (2-step translate + manage)
+./ai4sh/import_data/insert_ai4sh_data.ipynb   block 2, cell 2.1
 ```
 
-**Which one should I use?** Use `insert_ai4sh_dataset_meta.ipynb` unless you need to `UPDATE`
-an existing record or want to hand-inspect/edit the generated JSON before it's applied — the
-single-step route is INSERT-only by construction, so it's always safe to re-run. See
+The cell uses the single-step `insert_tabular_data` route, which is INSERT-only by construction
+and therefore always safe to re-run. If you need to `UPDATE` an existing record or want to
+hand-inspect the generated JSON before it's applied, use the 2-step notebook
+`./ai4sh/import_data/more_notebooks/load_ai4sh_dataset_meta.ipynb` instead. See
 [Insert dataset metadata][insert_dataset_meta] for the single-step walkthrough and
 [Single-step vs dual-step][insert_vs_translate] for the full comparison.
 
@@ -50,7 +50,7 @@ Persons are registered independently and referenced by campaigns and sampling lo
 
 ## Source files
 
-All five Excel files are in `./ai4sh/import_data/dataset/excel/`:
+All five Excel files are in `./ai4sh/import_data/dataset_metadata/excel/`:
 
 | File | Database table |
 |---|---|
@@ -65,11 +65,12 @@ All five Excel files are in `./ai4sh/import_data/dataset/excel/`:
 Same dependency order either way — data source and person before dataset, dataset before
 campaign, campaign before sampling log.
 
-**Single step** (default): **[Insert dataset metadata]** — 5 cells, one per table, translate
-and insert combined, no shared job file.
+**Single step** (default): **[Insert dataset metadata]** — **cell 2.1 Load dataset metadata**, one
+`job_file` whose pilot file inserts all five tables in order, translate and insert combined.
 
-**2-step** (for `UPDATE`s or manual inspection), 6 cells — all five tables translated in a
-single notebook cell, then each manage step uses a direct `process_file` call, one per cell:
+**2-step** (for `UPDATE`s or manual inspection), 6 cells in `more_notebooks/load_ai4sh_dataset_meta.ipynb` —
+all five tables translated in a single notebook cell, then each manage step uses a direct
+`process_file` call, one per cell:
 
 1. **[Translate dataset]** — single cell translates all five tables to JSON
 2. **[Manage data source]** — insert data source records
@@ -80,13 +81,14 @@ single notebook cell, then each manage step uses a direct `process_file` call, o
 
 After completing either route, proceed to [Load sample data] to register individual sample positions.
 
-[Insert dataset metadata]: /dataset_meta/insert_dataset_meta/
-[insert_dataset_meta]: /dataset_meta/insert_dataset_meta/
-[insert_vs_translate]: /insert_vs_translate/
-[Translate dataset]: /dataset_meta/translate_dataset/
-[Manage data source]: /dataset_meta/manage_data_source/
-[Manage persons]: /dataset_meta/manage_person/
-[Manage dataset]: /dataset_meta/manage_dataset/
-[Manage campaign]: /dataset_meta/manage_campaign/
-[Manage sampling log]: /dataset_meta/manage_sampling_log/
-[Load sample data]: /sample/
+[Insert dataset metadata]: {{ site.baseurl }}/dataset_meta/insert_dataset_meta/
+[insert_dataset_meta]: {{ site.baseurl }}/dataset_meta/insert_dataset_meta/
+[insert_vs_translate]: {{ site.baseurl }}/insert_vs_translate/
+[Translate dataset]: {{ site.baseurl }}/dataset_meta/translate_dataset/
+[Manage data source]: {{ site.baseurl }}/dataset_meta/manage_data_source/
+[Manage persons]: {{ site.baseurl }}/dataset_meta/manage_person/
+[Manage dataset]: {{ site.baseurl }}/dataset_meta/manage_dataset/
+[Manage campaign]: {{ site.baseurl }}/dataset_meta/manage_campaign/
+[Manage sampling log]: {{ site.baseurl }}/dataset_meta/manage_sampling_log/
+[Load sample data]: {{ site.baseurl }}/sample/
+[all_data]: {{ site.baseurl }}/all_data/

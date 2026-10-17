@@ -4,11 +4,11 @@ layout: single
 sidebar:
   nav: "edna"
   nav2: "loading_data"
-excerpt: "The last two cells of insert_ai4sh_edna_data.ipynb bulk-load the amplicon sequence variants and their abundance per observation for the 16S and ITS pipelines, then verify the load."
+excerpt: "Cells 3.4.5–3.4.6 of insert_ai4sh_data.ipynb bulk-load the amplicon sequence variants and their abundance per observation for the 16S and ITS pipelines, then verify the load."
 permalink: /edna/insert_edna_asv/
 author_profile: false
 date: 2026-09-30 08:00:00 +0200
-last_modified_at: 2026-09-30 08:00:00 +0200
+last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
 The last step loads the community composition: which ASVs were found in which sample, and how abundant each was. The data goes into `observation.edna_asv` (one row per ASV and pipeline) and `observation.edna_asv_abundance` (one row per ASV and observation, non-zero values only). With several hundred thousand abundance rows, this uses the bulk process `manage_edna_asv`, which loads with PostgreSQL `COPY`.
@@ -21,7 +21,7 @@ The last step loads the community composition: which ASVs were found in which sa
 
 ## Notebook cells
 
-In `./ai4sh/import_data/insert_ai4sh_edna_data.ipynb`, after the two observation cells:
+In `./ai4sh/import_data/insert_ai4sh_data.ipynb`, the last two cells of block 3.4 — **3.4.5 Load eDNA ASV prokaryote abundances**:
 
 ```python
 process_file = 'import_data/eDNA/insert_process/insert_asv_prokaryotes.json'
@@ -32,7 +32,7 @@ if structured_process_D is not None:
     Run_process(structured_process_D, scheme_params_D)
 ```
 
-and the same cell pattern with `insert_asv_fungi.json`.
+and **3.4.6 Load eDNA ASV fungal abundances**, the same cell pattern with `insert_asv_fungi.json`.
 
 | File | `tabular_data_path` | `dst_path` | `method_pipeline` |
 |---|---|---|---|
@@ -135,7 +135,7 @@ This query counts only ASVs resolved to genus level. ASVs resolved to species le
 
 See [eDNA metabarcoding][setup_db_edna] for the full list.
 
-[Insert eDNA observations]: /edna/insert_edna_observation/
-[Insert taxa]: /edna/insert_taxon/
-[edna_catalogues]: /edna/edna_catalogues/
-[setup_db_edna]: /setup_db/edna_metabarcoding/
+[Insert eDNA observations]: {{ site.baseurl }}/edna/insert_edna_observation/
+[Insert taxa]: {{ site.baseurl }}/edna/insert_taxon/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[setup_db_edna]: {{ site.baseurl }}/setup_db/edna_metabarcoding/

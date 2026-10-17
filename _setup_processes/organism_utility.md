@@ -97,7 +97,7 @@ For how to run it on the AI4SH eDNA data, see [Insert taxa][edna_insert_taxon].
 
 If `setup_processes.ipynb` reports that parameter `taxonomy_reference` (or `method_pipeline`) is not defined, the translate/insert processes were registered before these parameters were added. Set `"overwrite": true` once in `translate/insert_tabular_data_v10_sql.json` and `translate/translate_tabular_data_v10_sql.json`, rerun `setup_processes.ipynb`, and set it back to `false`.
 
-[setup_db_organism_utility]: /setup_db/organism_utility/
-[setup_process_insert]: /setup_process/insert/
-[edna_catalogues]: /edna/edna_catalogues/
-[edna_insert_taxon]: /edna/insert_taxon/
+[setup_db_organism_utility]: {{ site.baseurl }}/setup_db/organism_utility/
+[setup_process_insert]: {{ site.baseurl }}/setup_process/insert/
+[edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[edna_insert_taxon]: {{ site.baseurl }}/edna/insert_taxon/

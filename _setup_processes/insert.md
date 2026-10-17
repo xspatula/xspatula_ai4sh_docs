@@ -117,7 +117,7 @@ Use `translate_tabular_data` plus a separate manage step (the existing 2-step ro
 
 Minimum user stratum: 3
 
-[setup_process_translate]: /setup_process/translate/
-[setup_process_path_resolution]: /setup_process/path_resolution/
-[setup_process_organism_utility]: /setup_process/organism_utility/
-[setup_process_observation]: /setup_process/observation/
+[setup_process_translate]: {{ site.baseurl }}/setup_process/translate/
+[setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/
+[setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/
+[setup_process_observation]: {{ site.baseurl }}/setup_process/observation/

@@ -20,10 +20,10 @@ Person records register the named individuals responsible for data collection an
 
 ## Notebook cell
 
-In `load_ai4sh_dataset_meta.ipynb`, the **Manage persons** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_dataset_meta.ipynb`, the **Manage persons** cell runs:
 
 ```python
-process_file = 'import_data/dataset/manage_process/manage_person.json'
+process_file = 'import_data/dataset_metadata/manage_process/manage_person.json'
 
 structured_process_D, scheme_params_D = Initiate_process(notebook_path, scheme_file, process_file)
 
@@ -33,7 +33,7 @@ if structured_process_D is not None:
 
 ## Manage process file
 
-**Path**: `./ai4sh/import_data/dataset/manage_process/manage_person.json`
+**Path**: `./ai4sh/import_data/dataset_metadata/manage_process/manage_person.json`
 
 ```json
 {
@@ -80,6 +80,6 @@ One JSON object is generated per row in `person.xlsx`. The example above uses pl
 
 Proceed to [Manage dataset].
 
-[Manage data source]: /dataset_meta/manage_data_source/
-[Load utility data]: /utility/
-[Manage dataset]: /dataset_meta/manage_dataset/
+[Manage data source]: {{ site.baseurl }}/dataset_meta/manage_data_source/
+[Load utility data]: {{ site.baseurl }}/utility/
+[Manage dataset]: {{ site.baseurl }}/dataset_meta/manage_dataset/

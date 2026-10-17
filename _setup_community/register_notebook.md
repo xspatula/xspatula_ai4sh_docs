@@ -18,7 +18,7 @@ last_modified_at: 2026-08-15 08:00:00 +0200
 
 ## What the notebook does
 
-The notebook mirrors the same translate-then-manage pattern used by [Dataset meta][dataset_meta]'s `load_ai4sh_dataset_meta.ipynb`, applied to organisations and users:
+The notebook mirrors the same translate-then-manage pattern used by [Dataset meta][dataset_meta]'s 2-step notebook `more_notebooks/load_ai4sh_dataset_meta.ipynb`, applied to organisations and users:
 
 1. **Translate `organisation.xlsx`** — `translate_tabular_data` reads the spreadsheet and generates `organisation/manage_process/manage_organisation.json`, one process block per accepted row.
 2. **Insert organisations** — runs that generated file through the registered `manage_organisation` process, inserting each row into `community.organisation`.
@@ -32,8 +32,8 @@ Because this runs through the normal login flow (not the raw-superuser `setup_db
 
 `translate_tabular_data` runs with `overwrite: false` by default, so re-running step 1 or 3 after the target JSON file already exists is a no-op — it won't pick up corrections made to the spreadsheet. If a spreadsheet was corrected and needs re-translating, delete the stale `manage_process/*.json` file first, then re-run that translate cell.
 
-[setup_community_excel_intake]: /setup_community/excel_intake/
-[setup_community_smtp_email]: /setup_community/smtp_email/
-[setup_community_welcome_email]: /setup_community/welcome_email/
-[dataset_meta]: /dataset_meta/
-[auditing_introduction]: /auditing/
+[setup_community_excel_intake]: {{ site.baseurl }}/setup_community/excel_intake/
+[setup_community_smtp_email]: {{ site.baseurl }}/setup_community/smtp_email/
+[setup_community_welcome_email]: {{ site.baseurl }}/setup_community/welcome_email/
+[dataset_meta]: {{ site.baseurl }}/dataset_meta/
+[auditing_introduction]: {{ site.baseurl }}/auditing/

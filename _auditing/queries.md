@@ -106,5 +106,5 @@ GROUP BY 1, 2
 ORDER BY 1, 2;
 ```
 
-[auditing_introduction]: /auditing/
-[auditing_setup]: /auditing/setup/
+[auditing_introduction]: {{ site.baseurl }}/auditing/
+[auditing_setup]: {{ site.baseurl }}/auditing/setup/

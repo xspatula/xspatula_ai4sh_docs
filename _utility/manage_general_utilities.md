@@ -19,7 +19,7 @@ Run [Translate general utilities] first to generate `manage_territory.json`.
 
 ## Notebook cell
 
-In `load_ai4sh_utility_data.ipynb`, the **Manage general utilities** cell runs:
+In the 2-step notebook `./ai4sh/import_data/more_notebooks/load_ai4sh_utility_data.ipynb`, the **Manage general utilities** cell runs:
 
 ```python
 process_file = 'import_data/utility/general/manage_process/manage_territory.json'
@@ -84,6 +84,6 @@ Proceed to [Translate observation utilities] to convert the observation utility 
 
 **Or, do it in one step instead**: [Insert utility data][insert_utility_data] runs this same territory insert (and the rest of utility) via the single-step `insert_tabular_data` route, with no separate translate step and no file to hand-edit.
 
-[Translate general utilities]: /utility/translate_general_utilities/
-[Translate observation utilities]: /utility/translate_observation_utilities/
-[insert_utility_data]: /utility/insert_utility_data/
+[Translate general utilities]: {{ site.baseurl }}/utility/translate_general_utilities/
+[Translate observation utilities]: {{ site.baseurl }}/utility/translate_observation_utilities/
+[insert_utility_data]: {{ site.baseurl }}/utility/insert_utility_data/

@@ -49,19 +49,22 @@ Both stages use the Xspatula JSON-driven workflow: a _scheme file_ points to a _
 
 ## Data loading overview
 
-Data is loaded in a mandatory sequence — each stage depends on records from the previous one. Each stage below can be loaded via a single-step notebook (recommended default) or a 2-step translate-then-manage notebook (mainly for updating existing records):
+Data is loaded in a mandatory sequence — each stage depends on records from the previous one. All stages are loaded from a single notebook, `./ai4sh/import_data/insert_ai4sh_data.ipynb`, divided into numbered blocks and cells (see [Load all data][all_data]):
 
-| Stage | Single-step notebook | 2-step notebook | Pages |
+{% capture notice-1 %}
+| Stage | Notebook block | Cells | Pages |
 |---|---|---|---|
-| [Utility data][utility] | `insert_ai4sh_utility_data.ipynb` | `load_ai4sh_utility_data.ipynb` | 8 |
-| [Dataset metadata][dataset_meta] | `insert_ai4sh_dataset_meta.ipynb` | `load_ai4sh_dataset_meta.ipynb` | 8 |
-| [Sample data][sample] | `insert_ai4sh_sample_data.ipynb` | `load_ai4sh_sample_data.ipynb` | 5 |
-| [Wetlab data][wetlab] | `insert_ai4sh_wetlab_data.ipynb` | `load_ai4sh_wetlab_data.ipynb` | 5 |
-| [Spectral data][spectra] | — (manage-only, no translate step to collapse) | `load_ai4sh_spectral_data.ipynb` | 13 |
-| [eDNA metabarcoding][edna] | `insert_ai4sh_edna_data.ipynb` + `insert_ai4sh_taxon_data.ipynb` | — (translate cells available, disabled by default) | 7 |
+| [Utility data]({{ site.baseurl }}/utility/) | 1. Utilities | 1.1–1.4 | 8 |
+| [Dataset metadata]({{ site.baseurl }}/dataset_meta/) | 2. Dataset metadata | 2.1 | 8 |
+| [Sample data]({{ site.baseurl }}/sample/) | 3. Load AI4SH data | 3.1 | 5 |
+| [Wetlab data]({{ site.baseurl }}/wetlab/) | 3.2 Laboratory and field observations | 3.2.1 (3.2.2–3.2.9 other sources) | 5 |
+| [Spectral data]({{ site.baseurl }}/spectra/) | 3.3 AI4SH spectral data | 3.3.1–3.3.12 | 13 |
+| [eDNA metabarcoding]({{ site.baseurl }}/edna/) | 3.4 AI4SH eDNA data | 3.4.1–3.4.6 | 7 |
+{% endcapture %}
 
-Alternatively, all stages can be run from a single notebook: `insert_ai4sh_data.ipynb`
-(single-step) or [`load_ai4sh_data.ipynb`][all_data] (2-step).
+<div class="notice">{{ notice-1 | markdownify }}</div>
+
+The notebook uses the single-step route throughout (spectra call `manage_*` directly). The 2-step translate-then-manage notebooks, mainly for updating existing records, are kept in `./ai4sh/import_data/more_notebooks/`.
 
 ## Including LUCAS data
 
@@ -117,16 +120,16 @@ _Funded by the European Union. The views and opinions expressed are those of the
 [setup_core_db_docs_framework]: https://xspatula.github.io/setup_core_db_docs/framework/
 [setup_core_db]:https://xspatula.github.io/setup_core_db_docs/setup_db/
 [setup_core_processes]:https://xspatula.github.io/setup_core_db_docs/setup_processes/
-[setup_db]: /setup_db/
-[setup_process]: /setup_process/
-[utility]: /utility/
-[dataset_meta]: /dataset_meta/
-[sample]: /sample/
-[wetlab]: /wetlab/
-[spectra]: /spectra/
-[edna]: /edna/
-[all_data]: /all_data/
+[setup_db]: {{ site.baseurl }}/setup_db/
+[setup_process]: {{ site.baseurl }}/setup_process/
+[utility]: {{ site.baseurl }}/utility/
+[dataset_meta]: {{ site.baseurl }}/dataset_meta/
+[sample]: {{ site.baseurl }}/sample/
+[wetlab]: {{ site.baseurl }}/wetlab/
+[spectra]: {{ site.baseurl }}/spectra/
+[edna]: {{ site.baseurl }}/edna/
+[all_data]: {{ site.baseurl }}/all_data/
 [github]: https://github.com/xspatula/xspatula_ai4sh
 [xspatula]: https://xspatula.github.io
-[insert_vs_translate]: /insert_vs_translate/
+[insert_vs_translate]: {{ site.baseurl }}/insert_vs_translate/
 [xspatula_lucas_docs]: https://xspatula.github.io/xspatula_lucas_docs/

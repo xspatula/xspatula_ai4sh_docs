@@ -125,7 +125,7 @@ Key fields:
 | `permission.delete` | Whether the record can be deleted |
 
 
-[setup_db]: /setup_db/
-[setup_process_observation_utility]: /setup_process/observation_utility/
-[setup_process_organism_utility]: /setup_process/organism_utility/
-[setup_process_observation]: /setup_process/observation/
+[setup_db]: {{ site.baseurl }}/setup_db/
+[setup_process_observation_utility]: {{ site.baseurl }}/setup_process/observation_utility/
+[setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/
+[setup_process_observation]: {{ site.baseurl }}/setup_process/observation/

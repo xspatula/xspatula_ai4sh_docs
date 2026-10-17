@@ -167,5 +167,5 @@ Software and taxonomy references are looked up by **alias including the version*
 
 <div class="notice">{{ notice-2 | markdownify }}</div>
 
-[setup_db_edna]: /setup_db/edna_metabarcoding/
-[setup_process_organism_utility]: /setup_process/organism_utility/
+[setup_db_edna]: {{ site.baseurl }}/setup_db/edna_metabarcoding/
+[setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/
