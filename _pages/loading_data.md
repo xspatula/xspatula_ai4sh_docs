@@ -10,6 +10,9 @@ date: 2026-06-15 08:00:00 +0200
 last_modified_at: 2026-10-18 08:00:00 +0200
 ---
 
+**Shortcut with a premade database:** if an AI4SoilHealth partner gives you a dump of a loaded AI4SH database, restore it instead of running the load data notebook (`insert_ai4sh_data.ipynb`). See [Dump once, restore in minutes][ai4sh_dump]. The AI4SH data may only be shared within the project partners.
+{: .notice--info}
+
 Loading AI4SH data into the database follows a strict dependency order. Each stage builds on records inserted by the previous one. The seven stages below must be completed in sequence when populating the database from scratch.
 
 All stages use the same [scheme file][scheme_file] to define the user and general settings:
@@ -66,7 +69,7 @@ Notebook block: **3.3 AI4SH spectral data**, cells 3.3.1–3.3.12
 
 ### 6. [eDNA metabarcoding]
 
-eDNA metabarcoding data describes the soil microbial community — prokaryotes (16S rRNA) and fungi (ITS) — per sample: 19 summary indicators (diversity and functional groups), the taxon tree, and the abundance of every amplicon sequence variant (ASV). The laboratory delivers one Excel workbook, which is converted into xspatula source files by a command line script before loading. 
+eDNA metabarcoding data describes the soil microbial community — prokaryotes (16S rRNA) and fungi (ITS) — per sample: 19 summary indicators (diversity and functional groups), the taxon tree, and the abundance of every amplicon sequence variant (ASV). The laboratory delivers one Excel workbook, which is converted into xspatula source files by a command line script before loading.
 
 Order: run `edna_final_results_to_xspatula.py` → taxa → observation log and observations → ASVs.
 

@@ -14,9 +14,6 @@ Seeding the AI4SH database uses the same Xspatula JSON-driven workflow described
 
 ## Prerequisites
 
-**Shortcut with a premade database:** if an AI4SoilHealth partner gives you a dump of a loaded AI4SH database, restore it instead of running this setup, the process setup and the data import. See [Dump once, restore in minutes][ai4sh_dump]. The AI4SH data may only be shared within the project partners.
-{: .notice--info}
-
 Before running the AI4SH database setup you need:
 
 - A running postgreSQL installation where you are superuser — see [PostgreSQL setup][postgres]
@@ -26,6 +23,9 @@ Before running the AI4SH database setup you need:
 ```bash
 git clone https://github.com/xspatula/xspatula_ai4sh
 ```
+
+**Shortcut with a premade database:** if an AI4SoilHealth partner gives you a dump of a loaded AI4SH database, restore it instead of running the setup notebook, the process setup and the data import. See [Dump once, restore in minutes][ai4sh_dump]. The AI4SH data may only be shared within the project partners.
+{: .notice--info}
 
 ## The setup notebook
 
