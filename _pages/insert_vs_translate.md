@@ -65,7 +65,7 @@ dual-step notebooks are kept in `./ai4sh/import_data/more_notebooks/`.
 | [Utility]({{ site.baseurl }}/utility/) | Cells 1.1–1.4 — see [Insert utility data]({{ site.baseurl }}/utility/insert_utility_data/) | `load_ai4sh_utility_data.ipynb` — [Translate general utilities]({{ site.baseurl }}/utility/translate_general_utilities/) etc. |
 | [Dataset metadata]({{ site.baseurl }}/dataset_meta/) | Cell 2.1 — see [Insert dataset metadata]({{ site.baseurl }}/dataset_meta/insert_dataset_meta/) | `load_ai4sh_dataset_meta.ipynb` — [Translate dataset]({{ site.baseurl }}/dataset_meta/translate_dataset/) etc. |
 | [Sample]({{ site.baseurl }}/sample/) | Cell 3.1 — see [Insert sample data]({{ site.baseurl }}/sample/insert_sample_data/) | `load_ai4sh_sample_data.ipynb` — [Translate geotag sample]({{ site.baseurl }}/sample/translate_geotag_sample/) etc. |
-| [Wetlab]({{ site.baseurl }}/wetlab/) | Cell 3.2.1 — see [Insert wetlab data]({{ site.baseurl }}/wetlab/insert_wetlab_data/) | `load_ai4sh_wetlab_data.ipynb` — [Translate Agrolab wetlab data]({{ site.baseurl }}/wetlab/translate_ai4sh_wetlab_data/) etc. |
+| [Observation]({{ site.baseurl }}/observation/) | Cells 3.2.1, 3.2.6–3.2.9 — see [Insert Agrolab data]({{ site.baseurl }}/observation/insert_agrolab/) etc. | `load_ai4sh_wetlab_data.ipynb` — [Translate Agrolab data]({{ site.baseurl }}/observation/translate_agrolab/) etc. (Agrolab as the worked example) |
 | [Spectra]({{ site.baseurl }}/spectra/) | Cells 3.3.1–3.3.12 (manage-only) | Manage-only, no translate step at all |
 | [eDNA]({{ site.baseurl }}/edna/) | Cells 3.4.1–3.4.6 | `insert_ai4sh_taxon_data.ipynb` has disabled translate/manage cells for the taxa |
 | [All data]({{ site.baseurl }}/all_data/) | All blocks | `load_ai4sh_data.ipynb` |
@@ -84,15 +84,15 @@ on this page doesn't apply to spectra.
 [utility]: {{ site.baseurl }}/utility/
 [dataset_meta]: {{ site.baseurl }}/dataset_meta/
 [sample]: {{ site.baseurl }}/sample/
-[wetlab]: {{ site.baseurl }}/wetlab/
+[observation]: {{ site.baseurl }}/observation/
 [spectra]: {{ site.baseurl }}/spectra/
 [all_data]: {{ site.baseurl }}/all_data/
 [edna]: {{ site.baseurl }}/edna/
 [insert_utility_data]: {{ site.baseurl }}/utility/insert_utility_data/
 [insert_dataset_meta]: {{ site.baseurl }}/dataset_meta/insert_dataset_meta/
 [insert_sample_data]: {{ site.baseurl }}/sample/insert_sample_data/
-[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/
+[insert_wetlab_data]: {{ site.baseurl }}/observation/insert_agrolab/
 [translate_general_utilities]: {{ site.baseurl }}/utility/translate_general_utilities/
 [translate_dataset]: {{ site.baseurl }}/dataset_meta/translate_dataset/
 [translate_geotag_sample]: {{ site.baseurl }}/sample/translate_geotag_sample/
-[translate_ai4sh_wetlab_data]: {{ site.baseurl }}/wetlab/translate_ai4sh_wetlab_data/
+[translate_ai4sh_wetlab_data]: {{ site.baseurl }}/observation/translate_agrolab/

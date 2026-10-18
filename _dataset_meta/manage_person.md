@@ -1,5 +1,5 @@
 ---
-title: "Manage Persons"
+title: "Dataset Metadata: Manage Persons"
 layout: single
 sidebar:
   nav: "dataset_meta"

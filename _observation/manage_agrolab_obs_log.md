@@ -2,20 +2,20 @@
 title: "Manage Agrolab Observation Log"
 layout: single
 sidebar:
-  nav: "wetlab"
+  nav: "observation"
   nav2: "loading_data"
 excerpt: "Inserting Agrolab observation log records into the AI4SH database. Each record links a sampling log to the Agrolab provision and records laboratory handling metadata."
-permalink: /wetlab/manage_ai4sh_agrolab_obs_log/
+permalink: /observation/manage_agrolab_obs_log/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-17 08:00:00 +0200
 ---
 
 An observation log record bridges a sampling log (a field collection event) and a provision (a laboratory protocol). For the Agrolab wetlab data, each entry records which sampling log's samples were analysed, under which protocol, and how they were handled in the lab. Individual observations are later linked to these log records.
 
 ## Prerequisites
 
-- [Translate Agrolab wetlab data] must be complete.
+- [Translate Agrolab data] must be complete.
 - The Agrolab provision (`ai4sh-agrolab`) and its indicators must exist from [Load utility data].
 - Sampling logs must exist from [Load dataset metadata].
 
@@ -86,7 +86,7 @@ When `name` is set to `"auto"`, the framework generates the observation log name
 
 Proceed to [Manage Agrolab observation].
 
-[Translate Agrolab wetlab data]: {{ site.baseurl }}/wetlab/translate_ai4sh_wetlab_data/
+[Translate Agrolab data]: {{ site.baseurl }}/observation/translate_agrolab/
 [Load utility data]: {{ site.baseurl }}/utility/
 [Load dataset metadata]: {{ site.baseurl }}/dataset_meta/
-[Manage Agrolab observation]: {{ site.baseurl }}/wetlab/manage_ai4sh_wetlab_data/
+[Manage Agrolab observation]: {{ site.baseurl }}/observation/manage_agrolab_obs/

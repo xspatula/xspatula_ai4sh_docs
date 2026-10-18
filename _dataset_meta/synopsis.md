@@ -38,15 +38,15 @@ data_source
                       └── sample  (belongs to one sampling_log — loaded separately)
 ```
 
-Persons are registered independently and referenced by campaigns and sampling logs.
+Persons are registered independently and referenced by campaigns and sampling logs. The persons entered here do not need to be registered users.
 
 | Table | Description |
 |---|---|
 | `observation.data_source` | The organisation or individual who owns and provides the data |
 | `observation.person` | Named contacts responsible for data collection and analysis |
 | `observation.dataset` | Top-level grouping of data from one source, usually thematically coherent |
-| `observation.campaign` | A bounded sampling and observation effort within a dataset |
-| `observation.sampling_log` | A specific sampling operation (tools, dates, persons) within a campaign |
+| `observation.campaign` | A place (territory and optional site) sampled within a dataset |
+| `observation.sampling_log` | One sampling of a campaign at a given time (`datetime_tag`, tools, dates, persons) |
 
 ## Source files
 

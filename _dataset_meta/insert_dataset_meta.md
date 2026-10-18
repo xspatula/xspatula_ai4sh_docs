@@ -1,5 +1,5 @@
 ---
-title: "Insert Dataset Metadata (Single Step)"
+title: "Load Dataset Metadata"
 layout: single
 sidebar:
   nav: "dataset_meta"

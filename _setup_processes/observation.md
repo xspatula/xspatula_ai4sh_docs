@@ -106,18 +106,25 @@ A dataset is the top-level grouping of related data. Required parameters:
 
 Registers a campaign (child of a dataset) and its metadata. The `manage_campaign` process handles the core `campaign` table. The same call also writes the companion tables `campaign_meta`, `campaign_tag`, `campaign_method_tier`, `campaign_location`, `campaign_provision` and `campaign_setting_system`. Extra tags can be added later with `manage_campaign_tag` (`campaign_id__campaign_name`, `tag`, `tag_type` = `substance` or `keyword`); `manage_dataset_tag` does the same for datasets.
 
-Required parameters include:
-- `dataset_id__dataset_name` — the parent dataset (name, tag or alias)
-- `datetime_tag` — time part of the campaign tag (e.g. a year)
-- `contact_name`, `contact_email`
+A campaign is a **place**: a territory and an optional site within a dataset. The time of sampling belongs to the sampling log, not the campaign.
 
-`name` and `tag` are optional: left out or set to `auto`, they are composed from the dataset alias/tag and `datetime_tag`. See [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
+Required parameters:
+- `dataset_id__dataset_name` — the parent dataset (name, tag or alias)
+- `provision_id__provision_name_array` — the provisions used in the campaign
+
+Parameters that build the name and tag:
+- `territory_id__territory_name` — the territory (name or ISO code); its `iso_code_a2_ext` goes into the tag
+- `site` — optional site within the territory (lower case letters, digits, `.` and `-` only, as it becomes part of the tag)
+
+`name` and `tag` are optional: left out or set to `auto`, they are composed as `<dataset alias> <territory name> <site>` and `<dataset tag>_<territory code>_<site>`. A missing territory gives `no location` / `0`; a missing site is dropped together with its separator. Most other parameters (contact, url, abstract, license, spatial reference ...) are inherited from the dataset when left out. See [Manage campaign]({{ "/dataset_meta/manage_campaign/" | relative_url }}) for the full parameter list and [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
 
 ### manage_sampling_log
 
-Registers a sampling event within a campaign. A sampling log is the bridge between the organisational structure (campaign) and individual physical samples.
+Registers one sampling of a campaign at a given time. A sampling log is the bridge between the place (campaign) and individual physical samples; a site sampled in 2024 and 2025 has two sampling logs.
 
-Required parameter: `campaign_id__campaign_name` (name, tag or alias of the campaign). `name` and `tag` are optional: left out or set to `auto`, they are composed from the campaign name/tag and the campaign territory code. See [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
+Required parameter: `campaign_id__campaign_name` (name, tag or alias of the campaign). The time is given as `datetime_tag`: `YYYY`, `YYYYMM`, `YYYYMMDD` or `YYYYMMDDhhmmss`, or `0` (default) for no date; any other value is rejected. The process also takes `display_name`, `url`, `abstract`, `sampling_tool_array`, `begun_at` and `ended_at`.
+
+`name`, `tag` and `display_name` are optional: left out or set to `auto`, they are composed as `<campaign name> <datetime_tag>`, `<campaign tag>_<datetime_tag>` and `<campaign display name> <datetime_tag>` (no date gives `no date` / `0`). See [Manage sampling log]({{ "/dataset_meta/manage_sampling_log/" | relative_url }}) and [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
 
 ### manage_sample variants
 

@@ -134,19 +134,27 @@ sample:
       - title: "Manage samples"
         url: /sample/manage_sample/
 
-wetlab:
-  - title: Load wetlab data
+observation:
+  - title: Load observation data
     children:
       - title: "Synopsis"
-        url: /wetlab/
-      - title: "Insert wetlab data"
-        url: /wetlab/insert_wetlab_data/
-      - title: "Translate wetlab data"
-        url: /wetlab/translate_ai4sh_wetlab_data/
+        url: /observation/
+      - title: "Insert Agrolab data"
+        url: /observation/insert_agrolab/
+      - title: "Translate Agrolab data"
+        url: /observation/translate_agrolab/
       - title: "Manage Agrolab obs. log"
-        url: /wetlab/manage_ai4sh_agrolab_obs_log/
+        url: /observation/manage_agrolab_obs_log/
       - title: "Manage Agrolab observation"
-        url: /wetlab/manage_ai4sh_wetlab_data/
+        url: /observation/manage_agrolab_obs/
+      - title: "Insert Digit Soil data"
+        url: /observation/insert_digitsoil/
+      - title: "Insert BEST infiltration"
+        url: /observation/insert_best_infiltration/
+      - title: "Insert Microbiometer data"
+        url: /observation/insert_microbiometer/
+      - title: "Insert aggregate stability"
+        url: /observation/insert_aggregate_stability/
 
 spectra:
   - title: Load spectral data
@@ -209,8 +217,8 @@ loading_data:
         url: /dataset_meta/
       - title: "Sample"
         url: /sample/
-      - title: "Wetlab"
-        url: /wetlab/
+      - title: "Observation"
+        url: /observation/
       - title: "Spectra"
         url: /spectra/
       - title: "eDNA"

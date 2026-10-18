@@ -86,13 +86,13 @@ The example file contains 670 entries — one per sample across all AI4SH field 
 
 ## Next step
 
-All sample data is now loaded. Proceed to [Load wetlab data] or [Load spectral data] to add analytical observations.
+All sample data is now loaded. Proceed to [Load observation data] or [Load spectral data] to add analytical observations.
 
 **Or, do it in one step instead**: [Insert sample data][insert_sample_data] covers both sample tables, including this one, via the single-step `insert_tabular_data` route.
 
 [Manage sample geolocation]: {{ site.baseurl }}/sample/manage_sample_geolocation/
 [Manage sampling log]: {{ site.baseurl }}/dataset_meta/manage_sampling_log/
 [Load utility data]: {{ site.baseurl }}/utility/
-[Load wetlab data]: {{ site.baseurl }}/wetlab/
+[Load observation data]: {{ site.baseurl }}/observation/
 [Load spectral data]: {{ site.baseurl }}/spectra/
 [insert_sample_data]: {{ site.baseurl }}/sample/insert_sample_data/

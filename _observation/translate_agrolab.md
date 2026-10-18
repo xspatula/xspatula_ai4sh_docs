@@ -1,14 +1,14 @@
 ---
-title: "Translate Wetlab Data"
+title: "Translate Agrolab Data"
 layout: single
 sidebar:
-  nav: "wetlab"
+  nav: "observation"
   nav2: "loading_data"
 excerpt: "Translating both Agrolab Excel files to JSON process files in a single process_file call. Covers the observation log structure, the provision link, and the '@'-prefixed value column format."
-permalink: /wetlab/translate_ai4sh_wetlab_data/
+permalink: /observation/translate_agrolab/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-17 08:00:00 +0200
 ---
 
 Both Agrolab Excel files are translated in a single notebook cell. Like the [sample translate step], this cell calls a `process_file` directly — the translate process file contains two entries, one per table.
@@ -113,11 +113,11 @@ Two manage process files are written:
 
 Proceed to [Manage Agrolab observation log].
 
-**Or, do it in one step instead**: [Insert wetlab data][insert_wetlab_data] covers both tables via the single-step `insert_tabular_data` route, with no separate manage step.
+**Or, do it in one step instead**: [Insert Agrolab data][insert_wetlab_data] covers both tables via the single-step `insert_tabular_data` route, with no separate manage step.
 
 [sample translate step]: {{ site.baseurl }}/sample/translate_geotag_sample/
 [Load sample data]: {{ site.baseurl }}/sample/
 [Load utility data]: {{ site.baseurl }}/utility/
-[Manage Agrolab observation log]: {{ site.baseurl }}/wetlab/manage_ai4sh_agrolab_obs_log/
+[Manage Agrolab observation log]: {{ site.baseurl }}/observation/manage_agrolab_obs_log/
 [setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/
-[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/
+[insert_wetlab_data]: {{ site.baseurl }}/observation/insert_agrolab/

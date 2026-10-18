@@ -61,6 +61,6 @@ For the full technical description of the process schema tables and how process 
 
 
 [setup_processes]: {{ site.baseurl }}/setup_process/
-[setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
+[setup_core_db_docs_schemas]: https://xspatula.github.io/xspatula_core_docs/setup_db/schemas_tables/
 [default_community_record]: {{ site.baseurl }}/setup_db/#default-community-records
 [setup_process_auto_naming]: {{ site.baseurl }}/setup_process/auto_naming/

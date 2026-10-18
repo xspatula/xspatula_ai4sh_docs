@@ -92,6 +92,6 @@ The `user_name` in this file must match the `user_name` in the `user_project` cr
 
 For the full framework treatment of the community schema and its role in authentication, see the [core framework documentation][setup_core_db_docs_schemas].
 
-[setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
+[setup_core_db_docs_schemas]: https://xspatula.github.io/xspatula_core_docs/setup_db/schemas_tables/
 [setup_community_bootstrap_user]: {{ site.baseurl }}/setup_community/bootstrap_user/
 [setup_community_introduction]: {{ site.baseurl }}/setup_community/

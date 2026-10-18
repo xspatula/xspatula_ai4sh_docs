@@ -105,6 +105,16 @@ Source: `./ai4sh/import_data/utility/observation/excel/`
 
 Landscape utilities are catalogues for land use, land cover, land form, biogeography etc. AI4SoilHealth delivers no landscape data; the catalogues are loaded for completeness and for merging with [LUCAS data]({{ site.baseurl }}/#including-lucas-data). As shipped, cell 1.4 inserts `biogeo16`, `landuse` and `landcover`; the other landscape catalogues are listed in the pilot file but switched off.
 
+Land cover and land use are ranked classifications (order → family → genus), stored like taxa in one table per scheme. `landcover.xlsx` and `landuse.xlsx` hold one row per class, with the columns `class_rank_id__class_rank_name`, `parent_<scheme>_id__<scheme>_alias`, `name`, `alias`, `tag`, `display_name` and `abstract`. A parent row must come before its children; an order has no parent. Example rows from `landcover.xlsx`:
+
+| `class_rank_id__class_rank_name` | `parent_landcover_id__landcover_alias` | `name` | `alias` | `tag` |
+|---|---|---|---|---|
+| `order` | | `cropland` | `b` | `cropland` |
+| `family` | `b` | `cultivated cropland` | `b10` | `cultivated` |
+| `genus` | `b10` | `common wheat` | `b11` | `wheat` |
+
+See [Landscape schema]({{ site.baseurl }}/setup_db/landscape/).
+
 Source: `./ai4sh/import_data/utility/landscape/excel/`
 
 ## Required loading sequence

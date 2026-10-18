@@ -14,6 +14,9 @@ Seeding the AI4SH database uses the same Xspatula JSON-driven workflow described
 
 ## Prerequisites
 
+**Shortcut with a premade database:** if an AI4SoilHealth partner gives you a dump of a loaded AI4SH database, restore it instead of running this setup, the process setup and the data import. See [Dump once, restore in minutes][ai4sh_dump]. The AI4SH data may only be shared within the project partners.
+{: .notice--info}
+
 Before running the AI4SH database setup you need:
 
 - A running postgreSQL installation where you are superuser — see [PostgreSQL setup][postgres]
@@ -191,11 +194,12 @@ To delete and rebuild the database, use:
 with a scheme file where `"delete": true`.
 
 
-[setup_core_db_docs]: https://xspatula.github.io/setup_core_db_docs/
-[postgres]: https://xspatula.github.io/setup_core_db_docs/setup_db/postgres/
-[anaconda]: https://xspatula.github.io/setup_core_db_docs/setup_db/anaconda/
-[netrc]: https://xspatula.github.io/setup_core_db_docs/setup_db/netrc/
-[scheme_file]:https://xspatula.github.io/setup_core_db_docs/framework/scheme_file/
-[job_file]:https://xspatula.github.io/setup_core_db_docs/framework/job_file//
+[setup_core_db_docs]: https://xspatula.github.io/xspatula_core_docs/
+[ai4sh_dump]: {{ site.baseurl }}/all_data/#dump-once-restore-in-minutes
+[postgres]: https://xspatula.github.io/xspatula_core_docs/setup_db/postgres/
+[anaconda]: https://xspatula.github.io/xspatula_core_docs/setup_db/anaconda/
+[netrc]: https://xspatula.github.io/xspatula_core_docs/setup_db/netrc/
+[scheme_file]:https://xspatula.github.io/xspatula_core_docs/framework/scheme_file/
+[job_file]:https://xspatula.github.io/xspatula_core_docs/framework/job_file/
 [auditing_setup]: {{ site.baseurl }}/auditing/setup/
 [setup_community_bootstrap_user]: {{ site.baseurl }}/setup_community/bootstrap_user/

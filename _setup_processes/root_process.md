@@ -53,8 +53,22 @@ All data management operations — inserting, updating, and deleting records in 
 
 Translation processes convert data between formats (e.g. from a tabular spreadsheet to the JSON process file format expected by the framework). As a rule, translation processes do not write to the database directly — they prepare data for subsequent processes that do — with the one `insert_tabular_data` exception noted above.
 
+## Root processes registered with their processes
+
+Further roots are registered at the top of the process files that use them, rather than in `root_processes_v10_sql.json`:
+
+| Root process | Registered in | Processes |
+|---|---|---|
+| `select_data` | each `select/*.json` file | `select_spectra`, `select_indicator`, `select_spectra_only`, `select_indicator_only`, `select_covariate_only`, `compile_dataset` |
+| `pandas` | `pandas/pandas_inspect_v10_sql.json` | `inspect_pandas_dataset` |
+| `plot` | `plot/plot_v10_sql.json` | `plot_indicators`, `plot_spectra` and two scatter correction comparison plots |
+| `machine_learning` | each `machine_learning/*.json` file | spectral preprocessing, outlier detection, feature selection and regression |
+
+See [Select, compile and inspect][setup_process_select] for one line per select process.
+
 ## Why root processes matter
 
 The root process is part of the primary key structure for process lookup. When the framework receives a process call it uses both the `root_process_id` and the `process_id` to find the correct Python function to execute. Root processes serve as a grouping mechanism in the user interface — all processes under `manage_table_data` can be presented together as the "data management" operations for a given schema.
 
 [setup_process_insert]: {{ site.baseurl }}/setup_process/insert/
+[setup_process_select]: {{ site.baseurl }}/setup_process/#select-compile-and-inspect

@@ -11,12 +11,8 @@ date: 2026-08-21 08:00:00 +0200
 last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
-Block **1. Utilities** of `./ai4sh/import_data/insert_ai4sh_data.ipynb` (see [Load all data][all_data])
-is the single-step alternative to the 6-cell translate-then-manage walkthrough covered by
-[Translate general utilities][translate_general_utilities], [Manage general utilities][manage_general_utilities],
-and the observation-utility page pairs. Each of its cells does in one step what previously took a
-translate cell and a manage cell — see [Insert process][setup_process_insert] for the mechanism
-this relies on.
+Block **1. Utilities** of `./ai4sh/import_data/insert_ai4sh_data.ipynb`; each of its cells inserts data in one step — see [Insert process][setup_process_insert] for the mechanism this relies on. For the more controlled dual step alternative, allowing updates and deleting, see [Load all data][all_data] and the translate-then-manage walkthrough covered by
+[Translate general utilities][translate_general_utilities] and [Manage general utilities][manage_general_utilities]. 
 
 ## Which route to use
 

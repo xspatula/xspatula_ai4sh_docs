@@ -19,8 +19,8 @@ The `observation` schema stores actual soil property data. Data is organised in 
 | `observation/data_source_v10_sql.json` | `data_source` | Simplified copy of `community.organisation` — passive data suppliers who need not be full system users |
 | `observation/person_v10_sql.json` | `person` | Simplified copy of `community.user` with no login credentials — allows attributing data to non-registered persons (GDPR consideration) |
 | `observation/dataset_v10_sql.json` | `dataset`, `dataset_meta`, `dataset_tag`, `dataset_method_tier`, `dataset_location`, `dataset_setting_system` | Top-level grouping of related data (e.g. LUCAS, AI4SoilHealth), with companion tables mirroring those of campaign |
-| `observation/campaign_v10_sql.json` | `campaign`, `campaign_meta`, `campaign_tag`, `campaign_method_tier`, `campaign_location`, `campaign_provision`, `campaign_setting_system` | Child of dataset; captures details of a specific data collection effort |
-| `observation/sampling_log_v10_sql.json` | `sampling_log`, `sampling_log_setting_system` | A sampling event — one or multiple samples taken with consistent methods over a period |
+| `observation/campaign_v10_sql.json` | `campaign`, `campaign_meta`, `campaign_tag`, `campaign_method_tier`, `campaign_location`, `campaign_provision`, `campaign_setting_system` | Child of dataset; the place (territory and optional site) where data are collected |
+| `observation/sampling_log_v10_sql.json` | `sampling_log`, `sampling_log_setting_system` | One sampling of a campaign at a given time (`datetime_tag`) — one or multiple samples taken with consistent methods over a period |
 | `observation/sample_geolocation_v10_sql.json` | `geolocation` | Named spatial point (x/y, lat/lon, elevation, spatial reference). Note: file name and table name differ — the table is `geolocation`, not `sample_geolocation` |
 | `observation/sample_v10_sql.json` | `sample`, `sample_juxtaposition`, `sample_profile`, `sample_geotag`, `sample_composition`, `sample_proximity` | An individual sample acquired under a sampling log, with companion tables for setting, depth profile, link to a `geolocation`, composition and proximity |
 | `observation/sample_z_profile_v10_sql.json` | `sample_profile` | Stand-alone definition of the depth profile table (also created by `sample_v10_sql.json`); not in the pilot file |
@@ -28,7 +28,7 @@ The `observation` schema stores actual soil property data. Data is organised in 
 | `observation/observation_log_v10_sql.json` | `observation_log`, `observation_log_meta`, `observation_log_method_tier`, `observation_log_provision` | Links a sampling log directly to a provision; companion tables record the logistics (preparation, preservation, storage, transportation), method-tier flags, and — since a log's main `provision_id` is one column — any additional provisions used |
 | `observation/observation_v10_sql.json` | `observation`, `observation_temperature`, `observation_provision_serial_nr` | One observation event for a specific sample and provision, plus companion tables for temperature context and the specific provision serial number used |
 | `observation/spectra_v10_sql.json` | `spectra_scan` | Spectral scan metadata — signal statistics, spectroscopy method, and quality flags linked to an observation |
-| `observation/measurement_v10_sql.json` | `measurement`, `observation_measurement`, `observation_measurement_array` | Indicator values per observation (`observation_id`, `indicator_id`, `value`, `standard_deviation`, `n_repeat`); `observation_measurement` is the table filled by `manage_observation`, the `_array` variant holds array values |
+| `observation/measurement_v10_sql.json` | `observation_measurement`, `observation_measurement_array`, `observation_classification` | Indicator values per observation (`observation_id`, `indicator_id`, `value`, `standard_deviation`, `n_repeat`); `observation_measurement` is the table filled by `manage_observation`, the `_array` variant holds array values, and `observation_classification` holds nominal classes (`value_id` → `observation_utility.nominal_classification`). Bulk tables: audited on `UPDATE`/`DELETE` only |
 | `observation/microbiometer_measurement_v10_sql.json` | `microbiometer_measurement` | Microbiometer carbon content measurements linked to an observation |
 | `observation/infiltration_beerkan_v10_sql.json` | `infiltration_beerkan`, `infiltration_beerkan_time` | BeerKan ring infiltration measurements and their time intervals |
 | `observation/slakes_v10_sql.json` | `app_aggregate_stability` | Aggregate stability measurements from the SLAKES app |
@@ -81,6 +81,7 @@ geolocation (→ observation_utility.spatial_reference)
 observation (→ sample, observation_log, observation_utility.provision)
   observation_temperature, observation_provision_serial_nr (→ observation)
   observation_measurement (→ observation, observation_utility.indicator)
+  observation_classification (→ observation, observation_utility.indicator, observation_utility.nominal_classification)
   edna_asv_abundance (→ observation, edna_asv)
     edna_asv (→ observation_utility.method_pipeline, organism_utility.taxon)
   edna_run_step (→ observation, observation_utility.method_pipeline_step)
@@ -101,22 +102,22 @@ Key columns: `id`, `data_source_id`, `name`, `alias`, `tag`, `status_code`.
 
 ### campaign
 
-A campaign is a child of a dataset where sampling methods may vary in detail. For example, LUCAS 2009 and LUCAS 2015 are two campaigns within the LUCAS dataset. Each AI4SH pilot site is a separate campaign.
+A campaign is a child of a dataset and represents a **place**: a territory and, optionally, a site. Each AI4SH pilot site is a separate campaign. The time of sampling is not part of the campaign; it belongs to the [sampling log](#sampling_log). For example, LUCAS 2009 and LUCAS 2015 are two sampling logs of the single campaign `lucas european union`.
 
-Besides `name`, a campaign has a globally unique `tag` and a `datetime_tag` (the time part of the tag). Both `name` and `tag` can be composed automatically, see [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}).
+Besides `name`, a campaign has a globally unique `tag`. Both are composed automatically from the dataset, the territory and the optional site (e.g. `ai4sh_se_loennstorp`), see [Automatic naming and tags]({{ "/setup_process/auto_naming/" | relative_url }}). A campaign has no `datetime_tag`.
 
 The `campaign` table has six companion meta tables:
 
 - **campaign_meta** — abstract, DOI, URL, keywords, time series flag, license, taxonomic scope
 - **campaign_tag** — free-text tags (substance or keyword), one row per tag — the junction-table replacement for what used to be array columns, see [Schema conventions]({{ "/setup_process/schema_conventions/" | relative_url }})
 - **campaign_method_tier** — boolean flags for which method tiers (in-situ, in-home, in-lab, from-drone, from-satellite, etc.) are used in the campaign
-- **campaign_location** — geographic bounding box and spatial reference
+- **campaign_location** — territory, site, geographic bounding box and spatial reference
 - **campaign_provision** — which provisions (instrument+provider+method_tier combinations) are used
 - **campaign_setting_system** — which setting systems (field, forest, lake, etc.) apply
 
 ### sampling_log
 
-A sampling log is a sampling event within a campaign, covering one or multiple samples taken with consistent methods. It records the responsible person and time window. Its `name` is unique within the campaign; its `tag` is globally unique.
+A sampling log is one sampling of a campaign at a given time, covering one or multiple samples taken with consistent methods. It records the responsible person and time window, and a `datetime_tag` (`TEXT NOT NULL`: `YYYY`, `YYYYMM`, `YYYYMMDD` or `YYYYMMDDhhmmss`, `0` for no date) that is the time part of its name and tag. It also has a `display_name` and a `url` (e.g. the data release of the sampling year). Its `name` is unique within the campaign; its `tag` (`<campaign tag>_<datetime_tag>`, e.g. `ai4sh_se_loennstorp_2024`) is globally unique.
 
 ### sample and geolocation
 
@@ -145,6 +146,7 @@ Additional tables cover other non-standard observation types:
 - **infiltration_beerkan** — BeerKan ring infiltration test results
 - **monolith** and **macrofauna** — excavated monoliths and macrofauna counts and biomass, resolved to `organism_utility.taxon`
 - **observation_measurement** — indicator values per observation, for all scalar results (wet chemistry, eDNA summary indicators etc.)
+- **observation_classification** — nominal classes per observation and indicator (e.g. a soil texture class), referencing `observation_utility.nominal_classification`
 - **edna_asv**, **edna_asv_abundance**, **edna_run_step** — eDNA metabarcoding community composition, see [eDNA observation tables](#edna-observation-tables) above
 {% endcapture %}
 

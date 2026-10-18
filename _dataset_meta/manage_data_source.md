@@ -1,5 +1,5 @@
 ---
-title: "Manage Data Source"
+title: "Dataset Metadata: Manage Data Source"
 layout: single
 sidebar:
   nav: "dataset_meta"

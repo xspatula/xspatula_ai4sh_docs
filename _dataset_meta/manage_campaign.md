@@ -1,17 +1,17 @@
 ---
-title: "Manage Campaign"
+title: "Dataset Metadata: Manage Campaign"
 layout: single
 sidebar:
   nav: "dataset_meta"
   nav2: "loading_data"
-excerpt: "Inserting campaign records into the AI4SH database. A campaign is a bounded sampling and observation effort within a dataset, linking the dataset to the provisions used for analysis."
+excerpt: "Inserting campaign records into the AI4SH database. A campaign is the place (territory and site) where a dataset is sampled, and links the dataset to the provisions used for analysis."
 permalink: /dataset_meta/manage_campaign/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-10-11 08:00:00 +0200
+last_modified_at: 2026-10-17 08:00:00 +0200
 ---
 
-A campaign is a bounded data collection effort — defined by dates, geographic scope, and the instruments used — that belongs to a dataset. Every sampling log must reference a campaign.
+A campaign is a **place** within a dataset: a territory and, optionally, a site. In AI4SH each pilot site is one campaign. The **time** part lives one level down: each sampling of the campaign at a given date is a [sampling log][Manage sampling log], identified by its `datetime_tag`. A pilot site sampled in 2024 and again in 2025 is therefore one campaign with two sampling logs. Every sampling log must reference a campaign.
 
 The campaign record is also where the link between a dataset and its analytical provisions (instruments and labs) is established, via the `provision_id__provision_name_array` parameter.
 
@@ -47,7 +47,7 @@ if structured_process_D is not None:
       "overwrite": false,
       "parameters": {
         "dataset_id__dataset_name": "ai4soilhealth",
-        "datetime_tag": "PLACEHOLDER",
+        "name": "ai4sh-se-loennstorp",
         "display_name": "AI4SH SE Loennstorp",
         "contact_name": "thomas gumbricht",
         "contact_email": "thomas.gumbricht@natgeo.su.se",
@@ -55,10 +55,10 @@ if structured_process_D is not None:
         "ended_at": 20240913,
         "url": "https://ai4soilhealth.eu",
         "abstract": "AI4SoilHealth",
-        "field": 1.0,
-        "home": 1.0,
+        "field": 1,
+        "home": 1,
         "laboratory": 1,
-        "satellite": 1.0,
+        "satellite": 1,
         "territory_id__territory_name": "se",
         "site": "loennstorp",
         "spatial_reference_id__spatial_reference_name": "geographic",
@@ -72,37 +72,49 @@ if structured_process_D is not None:
 }
 ```
 
+This is the first of the twelve AI4SH campaigns (one per pilot site) that `campaign.xlsx` generates. `tag` is left out and is therefore composed automatically (see below).
+
 ## Parameters
 
 | Parameter | Description |
 |---|---|
-| `dataset_id__dataset_name` | FK lookup: parent dataset by name, tag or alias |
-| `datetime_tag` | **New, required.** Time part of the campaign tag (e.g. a year). No `_`, `@`, capitals or blanks |
-| `name` | Optional. Left out or `auto`: composed as `<dataset alias> <datetime_tag>` |
-| `tag` | Optional. Left out or `auto`: composed as `<dataset tag>_<datetime_tag>`. Globally unique |
-| `display_name` | Display label |
-| `contact_name` | Campaign contact name |
+| `dataset_id__dataset_name` | **Required.** FK lookup: parent dataset by name, tag or alias |
+| `name` | Optional. Left out or `auto`: composed as `<dataset alias> <territory name> <site>`. Unique within the dataset |
+| `tag` | Optional. Left out or `auto`: composed as `<dataset tag>_<territory code>_<site>`. Globally unique |
+| `display_name` | Optional. Left out or `auto`: composed as `<dataset alias> <territory name>` |
+| `territory_id__territory_name` | FK lookup: the territory of the campaign (name or ISO code, e.g. `se`). Part of the auto name and tag |
+| `site` | Name of the site within the territory (e.g. `loennstorp`). Part of the auto name and tag |
+| `contact_name` | Campaign contact name; left out it is inherited from the dataset |
 | `contact_email` | Campaign contact email |
-| `begun_at` | Start date as integer (`YYYYMMDD`) |
-| `ended_at` | End date as integer (`YYYYMMDD`) |
-| `url` | Campaign or project landing page |
-| `abstract` | Free-text description |
-| `field`, `home`, `satellite` | Flags: 1 if that observation type is included |
-| `laboratory` | Flag: 1 if laboratory analyses included, 0 otherwise |
-| `territory_id__territory_name` | FK lookup: geographic territory |
-| `site` | Free-text site description |
-| `spatial_reference_id__spatial_reference_name` | FK lookup: coordinate reference system |
-| `location_method_id__location_method_name` | FK lookup: geolocation method |
+| `begun_at` | Start date (`YYYYMMDD`) |
+| `ended_at` | End date (`YYYYMMDD`) |
+| `url` | Campaign or project landing page; inherited from the dataset if left out |
+| `abstract` | Free-text description; inherited from the dataset if left out |
+| `field`, `home`, `laboratory`, `drone`, `satellite`, `document`, `senses`, `auxiliary` | Flags: 1 if that type of observation is included, default 0 |
+| `time_series` | 1 if the campaign is part of a time series (the dataset must then also be flagged as time series) |
+| `spatial_reference_id__spatial_reference_name` | FK lookup: coordinate reference system; inherited from the dataset if left out |
+| `location_method_id__location_method_name` | FK lookup: geolocation method (e.g. `gps`, `map`) |
 | `location_error` | Positional accuracy value |
-| `location_error_unit_id__unit_name` | FK lookup: unit for `location_error` (e.g. `m`) |
-| `provision_id__provision_name_array` | Comma-separated list of provision aliases — links this campaign to all the instruments and labs used |
+| `location_error_unit_id__unit_name` | FK lookup: unit for `location_error` (default `m`) |
+| `provision_id__provision_name_array` | **Required.** Comma-separated list of provision aliases — links this campaign to all the instruments and labs used |
+
+The parameters `species_id__species_name`, `profiling_id__profiling_name`, `setting_system_id__setting_system_name_array`, `license_id__license_name`, `substance_array`, `keyword_array` and `doi` are also accepted; left out they are inherited from the dataset.
+
+A campaign has **no** `datetime_tag`. It moved to the [sampling log][Manage sampling log] when campaigns became places and sampling logs became samplings in time.
+{: .notice--info}
 
 ## Automatic naming
 
-`name` and `tag` are left out in the example above, so both are composed automatically. A hand-written `name` or `tag` containing `_` or `@` is rejected unless it equals the auto name — the old names such as `ai4sh_se_loennstorp` are therefore no longer accepted. `territory_id__territory_name` is also needed downstream: its territory code becomes part of the sampling log name and tag. See [Automatic naming and tags][auto_naming].
+| Parameter | Auto concat | Empty territory | Empty site |
+|---|---|---|---|
+| `name` | `'%s %s %s' %(dataset_id__dataset_alias, territory_id__territory_name, site?)` | `no location` | dropped with its separator |
+| `tag` | `'%s_%s_%s' %(dataset_id__dataset_tag, territory_id__territory_iso_code_a2_ext, site?)` | `0` | dropped with its separator |
 
-**PLACEHOLDER:** the AI4SH `datetime_tag` values are not yet set in `campaign.xlsx`.
-{: .notice--warning}
+The territory part of the tag is the extended ISO code (`iso_code_a2_ext`), e.g. `se` or `gb-eng`. A value given by hand that becomes part of a tag (here `site`) may only hold lower case letters, digits, `.` and `-`.
+
+A hand-written `name` or `tag` containing `_` or `@` is rejected unless it equals the auto name. The AI4SH campaigns therefore give a hyphenated `name` (e.g. `ai4sh-se-loennstorp`), which is accepted, and leave `tag` to be composed. For the example above that gives the tag `ai4sh_se_loennstorp` (dataset tag `ai4sh`, territory code `se`, site `loennstorp`).
+
+The campaign `name` and `tag` are inherited downstream: the [sampling log][Manage sampling log] adds its `datetime_tag` to them. See [Automatic naming and tags][auto_naming].
 
 ## The `provision_id__provision_name_array` field
 

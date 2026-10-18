@@ -67,15 +67,34 @@ Key columns:
 | `dst_search_column` | TEXT | The column where the foreign key is found |
 | `dst_alt_search_column` | TEXT | Alternative columns where the foreign key is found |
 
+Two rows handle the self references of the ranked land classifications in `landscape_utility` (see [Landscape schema][setup_db_landscape]). A parameter such as `parent_landcover_id__landcover_alias` cannot resolve through the table name convention, because there is no table `parent_landcover`:
+
+| `foreign_key` | `dst_schema` | `dst_table` | `dst_search_column` | `dst_alt_search_column` |
+|---|---|---|---|---|
+| `parent_landcover_id` | `landscape_utility` | `landcover` | `alias` | `tag` |
+| `parent_landuse_id` | `landscape_utility` | `landuse` | `alias` | `tag` |
+
+#### Empty and unresolved values
+
+When a record is imported, each foreign key parameter is resolved to an id (`_Convert_id_code` in `src/postgres/pg_common.py`):
+
+- An empty `parent_*` key (e.g. the parent of a land cover order, the top rank) is inserted as NULL.
+- Every other empty foreign key resolves to id `0`, the "none" row of catalogues such as `observation_utility.setting_system` (`0`, `no setting`).
+- A value that is not found stops that record with `❌ ERROR Can not find foreign key value <value> for <parameter>`. Earlier, the unresolved key reached the INSERT and Postgres reported a confusing `column "..." does not exist`.
+
+See [Foreign key][core_foreign_key] in the core documentation for the general rules.
+
 ## Role in the database
 
 The utility schema is referenced by:
 
 - `community.user` — links users to a territory
-- `observation.campaign_location` — geographic extent of a campaign
+- `observation.campaign_location` — territory, site and geographic extent of a campaign
 - Potentially any other table that needs geographic context
 - Any process where the foreign_key definition does not adhere to standard syntax
 
 For the full table specification of the default utility schema, see the [core framework documentation][setup_core_db_docs_schemas].
 
-[setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
+[setup_core_db_docs_schemas]: https://xspatula.github.io/xspatula_core_docs/setup_db/schemas_tables/
+[setup_db_landscape]: {{ site.baseurl }}/setup_db/landscape/
+[core_foreign_key]: https://xspatula.github.io/xspatula_core_docs/setup_db/foreign_key/

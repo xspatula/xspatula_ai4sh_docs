@@ -1,5 +1,5 @@
 ---
-title: "Translate Dataset"
+title: "Dataset Metadata: Translate Dataset"
 layout: single
 sidebar:
   nav: "dataset_meta"

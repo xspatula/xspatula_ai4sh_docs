@@ -11,7 +11,7 @@ date: 2026-09-30 08:00:00 +0200
 last_modified_at: 2026-10-16 08:00:00 +0200
 ---
 
-Cells 3.4.3 and 3.4.4 of `insert_ai4sh_data.ipynb` load the per-sample summary of the eDNA analysis. This works exactly like the [wetlab data][insert_wetlab_data]: first an observation log that links each sampling log to the metabarcoding provision, then one observation per sample carrying the indicator values.
+Cells 3.4.3 and 3.4.4 of `insert_ai4sh_data.ipynb` load the per-sample summary of the eDNA analysis. This works exactly like the [Agrolab data][insert_wetlab_data]: first an observation log that links each sampling log to the metabarcoding provision, then one observation per sample carrying the indicator values.
 
 ## Prerequisites
 
@@ -91,7 +91,7 @@ You should see one row per sampling log, with at most 19 values per observation.
 
 Proceed to [Insert ASVs] (cells 3.4.5–3.4.6). The taxa (cells 3.4.1–3.4.2, [Insert taxa]) must be loaded before the ASVs.
 
-[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/
+[insert_wetlab_data]: {{ site.baseurl }}/observation/insert_agrolab/
 [Prepare eDNA data]: {{ site.baseurl }}/edna/prepare_edna_data/
 [Load sample data]: {{ site.baseurl }}/sample/
 [edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/

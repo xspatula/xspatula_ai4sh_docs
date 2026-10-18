@@ -1,5 +1,5 @@
 ---
-title: "Insert Sample Data (Single Step)"
+title: "Insert Sample Data"
 layout: single
 sidebar:
   nav: "sample"

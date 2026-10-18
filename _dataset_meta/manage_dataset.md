@@ -1,5 +1,5 @@
 ---
-title: "Manage Dataset"
+title: "Dataset Metadata: Manage Dataset"
 layout: single
 sidebar:
   nav: "dataset_meta"
@@ -46,7 +46,7 @@ if structured_process_D is not None:
       "parameters": {
         "name": "ai4soilhealth",
         "alias": "ai4sh",
-        "tag": "PLACEHOLDER",
+        "tag": "ai4sh",
         "display_name": "AI4SoilHealth",
         "data_source_id__data_source_name": "ai4soilhealth",
         "contact_name": "stockholm university",
@@ -105,8 +105,7 @@ if structured_process_D is not None:
 
 The dataset `name` is free text for people; the `tag` is the short key that the [automatic naming][auto_naming] builds campaign, sampling log and observation log tags from. A campaign can refer to its dataset by name, tag or alias in `dataset_id__dataset_name`.
 
-**PLACEHOLDER:** the AI4SH dataset tag is not yet set in `dataset.xlsx`.
-{: .notice--warning}
+The AI4SH dataset has the tag `ai4sh`, so every AI4SH campaign tag starts with `ai4sh_` (e.g. `ai4sh_se_loennstorp`).
 
 ## Next step
 

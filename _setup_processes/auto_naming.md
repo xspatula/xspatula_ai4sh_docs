@@ -7,12 +7,12 @@ excerpt: "Datasets, campaigns, sampling logs, provisions and observation logs ca
 permalink: /setup_process/auto_naming/
 author_profile: false
 date: 2026-10-11 08:00:00 +0200
-last_modified_at: 2026-10-11 08:00:00 +0200
+last_modified_at: 2026-10-17 08:00:00 +0200
 ---
 
 This page summarises automatic naming (`auto_name`) as it applies to AI4SH. The rules are shared with all Xspatula projects and are described in full in the core documentation, [Automatic naming and tags][core_auto_naming]. Each section below links to the matching part of that page.
 
-**Status:** the code and process definitions are ported to `xspatula_ai4sh` (branch `feature/tag-auto-naming`), but the AI4SH Excel sources are not yet updated and the chain has not been tested live. Values marked **PLACEHOLDER** are to be filled in after the live test.
+**Status:** the code, process definitions and AI4SH Excel sources are updated (campaign = place, sampling log = time), but the AI4SH database has not yet been rebuilt with them. The AI4SH examples below are composed from the concat rules and the Excel files; values marked **PLACEHOLDER** are to be confirmed after the rebuild.
 {: .notice--warning}
 
 ## Name and tag
@@ -35,9 +35,11 @@ The tag columns are new Excel columns (and process parameters). ([Full descripti
 |---|---|---|---|---|
 | dataset | `tag` | yes | you | globally |
 | provision | `tag` | yes | you | globally |
-| campaign | `datetime_tag` | yes | you | — |
+| campaign | `territory_id__territory_name` | no (`no location` / `0` if empty) | you | — |
+| campaign | `site` | no (dropped if empty) | you | — |
 | campaign | `name`, `tag` | no | auto (or you) | `tag` globally |
-| sampling_log | `name`, `tag` | no | auto (or you) | `tag` globally |
+| sampling_log | `datetime_tag` | no (`0` = no date, the default) | you | — |
+| sampling_log | `name`, `tag`, `display_name` | no | auto (or you) | `tag` globally |
 | observation_log | `name`, `tag` | no | auto (or you) | `tag` per sampling log |
 {% endcapture %}
 
@@ -45,7 +47,7 @@ The tag columns are new Excel columns (and process parameters). ([Full descripti
 
 A `name` or `tag` is composed automatically when it is set to `auto`, or when the column is left out (the default value is `auto`).
 
-The `datetime_tag` is the time part of the campaign tag (e.g. a year). The process definitions carry a `format` block for the tags (no underscore, no `@`, no capitals, no blanks), but **no code enforces it yet**. Keep to it by hand.
+The campaign is the **place** and the sampling log the **time**: `datetime_tag` is the time part of the sampling log tag. It must be `0` (no date) or `YYYY`, `YYYYMM`, `YYYYMMDD` or `YYYYMMDDhhmmss`; anything else is rejected. A value given by hand that becomes part of a composed tag (e.g. `site`, `datetime_tag`) may only hold lower case letters, digits, `.` and `-`.
 
 ## The naming chain
 
@@ -54,34 +56,39 @@ Each level builds its name and tag from the level above:
 {% capture notice-2 %}
 | Level | `name` concat | `tag` concat |
 |---|---|---|
-| campaign | `'%s %s' %(dataset_id__dataset_alias, datetime_tag)` | `'%s_%s' %(dataset_id__dataset_tag, datetime_tag)` |
-| sampling_log | `'%s %s' %(campaign_id__campaign_name, campaign_territory_id)` | `'%s_%s' %(campaign_id__campaign_tag, campaign_territory_id)` |
+| campaign | `'%s %s %s' %(dataset_id__dataset_alias, territory_id__territory_name, site?)` | `'%s_%s_%s' %(dataset_id__dataset_tag, territory_id__territory_iso_code_a2_ext, site?)` |
+| sampling_log | `'%s %s' %(campaign_id__campaign_name, datetime_tag)` | `'%s_%s' %(campaign_id__campaign_tag, datetime_tag)` |
 | observation_log | `'%s@%s' %(sampling_log_id__sampling_log_name, provision_id__provision_name)` | `'%s@%s' %(sampling_log_id__sampling_log_tag, provision_id__provision_tag)` |
 {% endcapture %}
 
 <div class="notice">{{ notice-2 | markdownify }}</div>
 
-`campaign_territory_id` is the territory code of the campaign, read from `observation.campaign_location` (written when the campaign is registered with `territory_id__territory_name`). ([Full description][core_concat_arguments])
+`site?` is optional: if it is empty, it is dropped together with the separator before it. A missing territory gives `no location` in a name and `0` in a tag; a missing `datetime_tag` gives `no date` / `0`. The territory is a normal foreign key argument: `territory_id__territory_iso_code_a2_ext` returns the `iso_code_a2_ext` of the territory given in `territory_id__territory_name`. The earlier special argument `campaign_territory_id`, which read the territory from `observation.campaign_location`, is gone. ([Full description][core_concat_arguments])
 
-The pattern, as tested in the LUCAS project:
+The pattern, as run in the LUCAS project:
 
 ```
 dataset tag      lucas
-campaign         lucas 2009     / lucas_2009
-sampling_log     lucas 2009 eu  / lucas_2009_eu
-observation_log  tag lucas_2009_eu@xds
+campaign         lucas european union       / lucas_eu
+sampling_log     lucas european union 2009  / lucas_eu_2009
+observation_log  tag lucas_eu_2009@foss-xds-rca
 ```
 
-The AI4SH equivalent, once the Excel sources carry tags:
+LUCAS 2009 and LUCAS 2015 are two sampling logs of the one campaign `lucas european union`.
+
+In AI4SH each pilot site is a campaign (dataset + territory + site) and each sampling year is a sampling log. The AI4SH campaigns give a hyphenated `name` by hand (e.g. `ai4sh-se-loennstorp`) and leave the tag to be composed. For Lönnstorp, sampled in 2024 and measured on the FOSS DS2500:
 
 ```
-dataset tag      ai4sh                                (PLACEHOLDER: dataset tag)
-campaign         ai4sh <datetime_tag> / ai4sh_<datetime_tag>   (PLACEHOLDER: datetime_tag)
-sampling_log     ai4sh <datetime_tag> se / ai4sh_<datetime_tag>_se
-observation_log  tag ai4sh_<datetime_tag>_se@<provision tag>   (PLACEHOLDER: provision tag)
+dataset tag      ai4sh
+campaign         ai4sh-se-loennstorp                     / ai4sh_se_loennstorp
+sampling_log     ai4sh-se-loennstorp 2024                / ai4sh_se_loennstorp_2024
+observation_log  tag ai4sh_se_loennstorp_2024@foss-ds2500-l
 ```
 
-The AI4SH dataset alias is `ai4sh` and the Lönnstorp campaign territory is `se`; the tags themselves are not yet set. ([Worked example][core_worked_example])
+A site sampled in two years, e.g. Neretva in 2024 and 2025, has one campaign `ai4sh_hr_neretva` and the two sampling logs `ai4sh_hr_neretva_2024` and `ai4sh_hr_neretva_2025`. ([Worked example][core_worked_example])
+
+**PLACEHOLDER:** confirm the AI4SH names and tags against the database after the rebuild.
+{: .notice--warning}
 
 ## Example: the sampling_log auto_name block
 
@@ -94,12 +101,12 @@ The `auto_name` block sits on the parameter in the process definition (`sampling
   "required": false,
   "default_value": "auto",
   "auto_name": {
-    "concat": "'%s_%s' %(campaign_id__campaign_tag, campaign_territory_id)"
+    "concat": "'%s_%s' %(campaign_id__campaign_tag, datetime_tag)"
   }
 }
 ```
 
-The format string must be in single quotes. Arguments named `<table>_id__<table>_<column>` return that column of the record given by `<table>_id__<table>_name`; any other argument is taken from the process parameters as given. ([Full description][core_concat_arguments])
+The format string must be in single quotes. Arguments named `<table>_id__<table>_<column>` return that column of the record given by `<table>_id__<table>_name`; any other argument (here `datetime_tag`) is taken from the process parameters as given. An argument ending in `?` is optional. ([Full description][core_concat_arguments])
 
 ## Slakes, aggregate app and Beerkan observations
 
@@ -115,7 +122,7 @@ The app-based observation processes do not compose a new name; they use auto nam
 
 <div class="notice">{{ notice-2 | markdownify }}</div>
 
-The composed value is looked up as name, tag or alias of an existing observation log. It therefore only resolves if the observation log was auto named with a provision whose tag is exactly `slakes` or `beerkan`. **PLACEHOLDER:** the provision tags for the slakes app and the Beerkan infiltration method are not yet set; they must be `slakes` and `beerkan` for these lookups to work.
+The composed value is looked up as name, tag or alias of an existing observation log. It therefore only resolves if the observation log was auto named with a provision whose tag is exactly `slakes` or `beerkan`. In `provision.xlsx` the slakes app has the tag `slakes`, but the Beerkan method (`beerkan estimation of soil hydraulic properties`) has the tag `best-infiltration`. **PLACEHOLDER:** either the provision tag or the Beerkan concat must change before `manage_beerkan_observation` can find its observation log.
 
 ## Reserved separators and the geolocation exception
 

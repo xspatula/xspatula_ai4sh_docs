@@ -2,13 +2,13 @@
 title: "Manage Agrolab Observation"
 layout: single
 sidebar:
-  nav: "wetlab"
+  nav: "observation"
   nav2: "loading_data"
-excerpt: "Inserting Agrolab wetlab observation records into the AI4SH database. Each record links a sample to a set of measured soil properties via an observation log."
-permalink: /wetlab/manage_ai4sh_wetlab_data/
+excerpt: "Inserting Agrolab wet laboratory observation records into the AI4SH database. Each record links a sample to a set of measured soil properties via an observation log."
+permalink: /observation/manage_agrolab_obs/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-06-10 08:00:00 +0200
+last_modified_at: 2026-10-17 08:00:00 +0200
 ---
 
 Observation records store the actual soil property measurements. Each record links a sample to an observation log and carries the measured values as `@`-prefixed fields that map to provision indicators. One row in the source Excel file produces one observation record per sample.
@@ -109,11 +109,12 @@ The `sample_id__sample_name` FK uses the pattern `<tag>@<profile_min>-<profile_m
 
 ## Next step
 
-All wetlab data is now loaded. Proceed to [Load spectral data] to add spectroscopic observations.
+The Agrolab data is now loaded. Continue with the other sources in [Load observation data][observation], or proceed to [Load spectral data].
 
-**Or, do it in one step instead**: [Insert wetlab data][insert_wetlab_data] covers both wetlab tables, including this one, via the single-step `insert_tabular_data` route.
+**Or, do it in one step instead**: [Insert Agrolab data][insert_wetlab_data] covers both Agrolab tables, including this one, via the single-step `insert_tabular_data` route.
 
-[Manage Agrolab observation log]: {{ site.baseurl }}/wetlab/manage_ai4sh_agrolab_obs_log/
+[Manage Agrolab observation log]: {{ site.baseurl }}/observation/manage_agrolab_obs_log/
 [Load sample data]: {{ site.baseurl }}/sample/
 [Load spectral data]: {{ site.baseurl }}/spectra/
-[insert_wetlab_data]: {{ site.baseurl }}/wetlab/insert_wetlab_data/
+[insert_wetlab_data]: {{ site.baseurl }}/observation/insert_agrolab/
+[observation]: {{ site.baseurl }}/observation/

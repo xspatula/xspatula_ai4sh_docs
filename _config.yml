@@ -112,6 +112,7 @@ exclude:
   - Rakefile
   - README
   - tmp
+  - notes
   - /docs
   - /test
 keep_files:
@@ -189,7 +190,7 @@ collections:
     output: true
   sample:
     output: true
-  wetlab:
+  observation:
     output: true
   spectra:
     output: true
@@ -261,7 +262,7 @@ defaults:
       author_profile: false
   - scope:
       path: ""
-      type: wetlab
+      type: observation
     values:
       layout: single
       author_profile: false

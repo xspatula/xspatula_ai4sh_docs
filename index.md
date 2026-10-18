@@ -57,7 +57,7 @@ Data is loaded in a mandatory sequence — each stage depends on records from th
 | [Utility data]({{ site.baseurl }}/utility/) | 1. Utilities | 1.1–1.4 | 8 |
 | [Dataset metadata]({{ site.baseurl }}/dataset_meta/) | 2. Dataset metadata | 2.1 | 8 |
 | [Sample data]({{ site.baseurl }}/sample/) | 3. Load AI4SH data | 3.1 | 5 |
-| [Wetlab data]({{ site.baseurl }}/wetlab/) | 3.2 Laboratory and field observations | 3.2.1 (3.2.2–3.2.9 other sources) | 5 |
+| [Observation data]({{ site.baseurl }}/observation/) | 3.2 Laboratory and field observations | 3.2.1, 3.2.6–3.2.9 (3.2.2–3.2.5 pending) | 9 |
 | [Spectral data]({{ site.baseurl }}/spectra/) | 3.3 AI4SH spectral data | 3.3.1–3.3.12 | 13 |
 | [eDNA metabarcoding]({{ site.baseurl }}/edna/) | 3.4 AI4SH eDNA data | 3.4.1–3.4.6 | 7 |
 {% endcapture %}
@@ -65,6 +65,8 @@ Data is loaded in a mandatory sequence — each stage depends on records from th
 <div class="notice">{{ notice-1 | markdownify }}</div>
 
 The notebook uses the single-step route throughout (spectra call `manage_*` directly). The 2-step translate-then-manage notebooks, mainly for updating existing records, are kept in `./ai4sh/import_data/more_notebooks/`.
+
+When everything is loaded, [dump the database][ai4sh_dump] once. Restoring a dump takes minutes and replaces the setup and the import ([Dump and restore][dump_restore] on the core docs site).
 
 ## Including LUCAS data
 
@@ -104,6 +106,10 @@ PostgreSQL database                        JSON process files
 See [Single-step vs dual-step][insert_vs_translate] for the full comparison and which one to
 use when.
 
+## Data access
+
+The AI4SH data has no licence yet. It has not been reviewed and verified, and may at present only be shared within the [AI4SoilHealth][ai4sh] project partners. This covers the source files, a database dump holding the data, and any files extracted from it. See [AI4SH data: partners only][ai4sh_partners].
+
 {% capture notice-3 %}
 ## Acknowledgments and Funding
 
@@ -115,17 +121,20 @@ _Funded by the European Union. The views and opinions expressed are those of the
 <div class="notice--info">{{ notice-3 | markdownify }}</div>
 
 [fair]: https://www.go-fair.org/fair-principles/
-[ai4sh]: https:/ai4soilhealth.eu
-[setup_core_db_docs]: https://xspatula.github.io/setup_core_db_docs/
-[setup_core_db_docs_framework]: https://xspatula.github.io/setup_core_db_docs/framework/
-[setup_core_db]:https://xspatula.github.io/setup_core_db_docs/setup_db/
-[setup_core_processes]:https://xspatula.github.io/setup_core_db_docs/setup_processes/
+[ai4sh]: https://ai4soilhealth.eu
+[ai4sh_dump]: {{ site.baseurl }}/all_data/#dump-once-restore-in-minutes
+[ai4sh_partners]: {{ site.baseurl }}/all_data/#ai4sh-data-partners-only
+[dump_restore]: https://xspatula.github.io/xspatula_core_docs/setup_db/dump_restore/
+[setup_core_db_docs]: https://xspatula.github.io/xspatula_core_docs/
+[setup_core_db_docs_framework]: https://xspatula.github.io/xspatula_core_docs/framework/
+[setup_core_db]:https://xspatula.github.io/xspatula_core_docs/setup_db/
+[setup_core_processes]:https://xspatula.github.io/xspatula_core_docs/setup_processes/
 [setup_db]: {{ site.baseurl }}/setup_db/
 [setup_process]: {{ site.baseurl }}/setup_process/
 [utility]: {{ site.baseurl }}/utility/
 [dataset_meta]: {{ site.baseurl }}/dataset_meta/
 [sample]: {{ site.baseurl }}/sample/
-[wetlab]: {{ site.baseurl }}/wetlab/
+[observation]: {{ site.baseurl }}/observation/
 [spectra]: {{ site.baseurl }}/spectra/
 [edna]: {{ site.baseurl }}/edna/
 [all_data]: {{ site.baseurl }}/all_data/

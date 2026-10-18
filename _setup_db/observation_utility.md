@@ -3,7 +3,7 @@ title: "Observation Utility Schema"
 layout: single
 sidebar:
   nav: "setup_db"
-excerpt: "The observation_utility schema holds all reference catalogues needed for FAIR-compliant soil observations — units, methods, instruments, spatial references, software, eDNA primer pairs, lab protocols, method pipelines and more. It is defined across 36 JSON files that must be seeded before any observation data can be entered."
+excerpt: "The observation_utility schema holds all reference catalogues needed for FAIR-compliant soil observations — units, methods, instruments, spatial references, software, eDNA primer pairs, lab protocols, method pipelines and more. It is defined across 37 JSON files that must be seeded before any observation data can be entered."
 permalink: /setup_db/observation_utility/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
@@ -12,7 +12,7 @@ last_modified_at: 2026-09-30 08:00:00 +0200
 
 The `observation_utility` schema holds all reference catalogues needed for FAIR-compliant soil observations. Think of it as the controlled vocabulary layer of the database: every instrument, method, unit, spatial reference etc. used in an observation must first exist here. The `observation` schema tables cannot be populated until the relevant `observation_utility` records exist.
 
-The schema is defined across 36 JSON files, split into those with no internal foreign key dependencies (seeded first), those that reference other observation_utility tables (seeded second), and the eDNA method catalogues and method pipelines, covered separately below.
+The schema is defined across 37 JSON files, split into those with no internal foreign key dependencies (seeded first), those that reference other observation_utility tables (seeded second), and the eDNA method catalogues and method pipelines, covered separately below.
 
 Taxonomy (taxon, rank, status, function) is **not** part of this schema — it lives in [organism_utility][setup_db_organism_utility]. Tables here that need a taxon (e.g. `method_pipeline_step`) reference `organism_utility` directly.
 
@@ -62,7 +62,8 @@ These tables reference other `observation_utility` tables and must be created af
 | `provision_indicator_v10_sql.json` | `provision_indicator` | `provision`, `indicator`, `analysis_method`, `unit` — the tangible observation values delivered by a specific provision |
 | `spectrometer_v10_sql.json` | `spectrometer` | `provision`, `provision_serial_nr` — registers a spectral sensor with its full wavelength axis array |
 | `quantity_default_unit_v10_sql.json` | `quantity_default_unit` | `quantity`, `species`, `unit` |
-| `unit_translate_v10_sql.json` | `unit_translate` | `unit` — mathematical conversion factors between units |
+| `nominal_classification_v10_sql.json` | `nominal_classification` | `indicator`, `analysis_method` — nominal classes derived from numeric observations (e.g. soil texture classes); `name` is unique per indicator and analysis method. Referenced by `observation.observation_classification` |
+| `unit_translate_v10_sql.json` | `unit_translate` | `unit` — mathematical conversion between units (`factor`, `addon`, `exponent`), plus a `process` column (default `'None'`) naming a special conversion process where a plain formula is not enough |
 
 ## eDNA method catalogues and method pipelines
 

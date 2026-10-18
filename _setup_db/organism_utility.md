@@ -116,7 +116,10 @@ Taxon functions are not yet linked to individual taxa or ASVs; the functional va
 | `observation.edna_asv` | `taxon_id` | `organism_utility.taxon` (deepest resolved rank) |
 | `observation_utility.method_pipeline_step` | `taxonomy_reference_id` | `organism_utility.taxonomy_reference` |
 
+The land cover and land use classifications in `landscape_utility` follow the same pattern as `taxon`: one table per scheme, a self reference to the parent class and a rank from `landscape_utility.class_rank`. See [Landscape schema][setup_db_landscape].
+
 [setup_db_observation_utility]: {{ site.baseurl }}/setup_db/observation_utility/
 [setup_process_organism_utility]: {{ site.baseurl }}/setup_process/organism_utility/
 [edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
 [edna_insert_taxon]: {{ site.baseurl }}/edna/insert_taxon/
+[setup_db_landscape]: {{ site.baseurl }}/setup_db/landscape/

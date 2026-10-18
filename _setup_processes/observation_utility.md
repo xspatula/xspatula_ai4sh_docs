@@ -39,6 +39,7 @@ Process files are located at:
 | `provider_v10_sql.json` | `manage_provider` | `observation_utility.provider` | 4 |
 | `provision_v10_sql.json` | `manage_provision` | `observation_utility.provision`, `provision_method_tier` | 4 |
 | `provision_indicator_v10_sql.json` | `manage_provision_indicator` | `observation_utility.provision_indicator` | 4 |
+| `nominal_classification_v10_sql.json` | `manage_nominal_classification` | `observation_utility.nominal_classification` (`name`, `display_name`, `indicator_id__indicator_name`, `analysis_method_id__analysis_method_name`, `abstract`) | 4 |
 | `provision_serial_nr_v10_sql.json` | `manage_provision_serial_nr` | `observation_utility.provision_serial_nr` | 4 |
 | `quantity_v10_sql.json` | `manage_quantity` | `observation_utility.quantity` | 4 |
 | `quantity_default_unit_v10_sql.json` | `manage_quantity_default_unit` | `observation_utility.quantity_default_unit` | 4 |
@@ -49,7 +50,7 @@ Process files are located at:
 | `storage_v10_sql.json` | `manage_storage` | `observation_utility.storage` | 4 |
 | `transportation_v10_sql.json` | `manage_transportation` | `observation_utility.transportation` | 4 |
 | `unit_v10_sql.json` | `manage_unit` | `observation_utility.unit` | 4 |
-| `unit_translate_v10_sql.json` | `manage_unit_translate` | `observation_utility.unit_translate` | 4 |
+| `unit_translate_v10_sql.json` | `manage_unit_translate` | `observation_utility.unit_translate` (`src_unit_id__unit_name`, `dst_unit_id__unit_name`, `factor`, `addon`, `exponent`, `process`) | 4 |
 | `software_v10_sql.json` | `manage_software` | `observation_utility.software` | 3 |
 | `edna_primer_pair_v10_sql.json` | `manage_edna_primer_pair` | `observation_utility.edna_primer_pair` | 4 |
 | `lab_protocol_v10_sql.json` | `manage_lab_protocol` | `observation_utility.lab_protocol` | 4 |

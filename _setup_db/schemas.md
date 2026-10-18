@@ -67,7 +67,7 @@ landscape_utility ← landscape
 This is reflected in the execution order of the pilot file — utility and community tables are created before observation_utility, organism_utility before the method pipeline tables (which reference `organism_utility.taxonomy_reference`), and all utility schemas before the observation tables. Note that the method pipeline tables live in `observation_utility` but are created *after* `organism_utility` — see [eDNA metabarcoding][setup_db_edna].
 
 
-[setup_core_db_docs_schemas]: https://xspatula.github.io/setup_core_db_docs/setup_db/schemas_tables/
+[setup_core_db_docs_schemas]: https://xspatula.github.io/xspatula_core_docs/setup_db/schemas_tables/
 [setup_db_observation_utility]: {{ site.baseurl }}/setup_db/observation_utility/
 [setup_db_observation]: {{ site.baseurl }}/setup_db/observation/
 [setup_db_organism_utility]: {{ site.baseurl }}/setup_db/organism_utility/
