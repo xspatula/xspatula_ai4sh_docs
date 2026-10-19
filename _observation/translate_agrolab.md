@@ -8,7 +8,7 @@ excerpt: "Translating both Agrolab Excel files to JSON process files in a single
 permalink: /observation/translate_agrolab/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-10-17 08:00:00 +0200
+last_modified_at: 2026-10-19 08:00:00 +0200
 ---
 
 Both Agrolab Excel files are translated in a single notebook cell. Like the [sample translate step], this cell calls a `process_file` directly — the translate process file contains two entries, one per table.
@@ -96,9 +96,18 @@ Columns whose names begin with `@` in the Excel file are observation value colum
 
 For example, `@ph-h2o` in the spreadsheet maps to the `ph-h2o` provision indicator defined in the `ai4sh-agrolab` provision. The value is stored as an observation record for that indicator.
 
-Values can be:
-- **Numeric**: stored directly (e.g. `5.9`, `32`, `2.18`)
-- **String with qualifier**: below-detection values such as `"<0.10"` are stored as strings
+The text after `@` can be the indicator's name or alias. An `@` column that is not registered for the provision **stops the import** with `No indicator found for name/alias: <key>`.
+
+| Value in the cell | Stored |
+|---|---|
+| number, or a numeric string (e.g. `5.9`, `32`, `"2.18"`) | as a number |
+| below detection, starting with `<` (e.g. `"<0.10"`) | half the limit, `0.05` (a number, not a string) |
+| other non-numeric string | nothing; warning `⚠️ Value for indicator … is not a number` |
+| empty | nothing for that indicator |
+
+The unit is not in the spreadsheet; it comes from the provision's `provision_indicator` row.
+
+The texture columns (`@clay`, `@fine silt`, `@coarse silt`, `@fine sand`, `@coarse sand`) also give derived USDA and IUSS texture classes, stored in `observation.observation_classification` — see [Derived soil texture classes][obs_texture].
 
 ## Output
 
@@ -121,3 +130,4 @@ Proceed to [Manage Agrolab observation log].
 [Manage Agrolab observation log]: {{ site.baseurl }}/observation/manage_agrolab_obs_log/
 [setup_process_path_resolution]: {{ site.baseurl }}/setup_process/path_resolution/
 [insert_wetlab_data]: {{ site.baseurl }}/observation/insert_agrolab/
+[obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes

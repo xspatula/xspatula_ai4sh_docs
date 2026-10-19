@@ -8,7 +8,7 @@ excerpt: "Cell 3.2.1 of insert_ai4sh_data.ipynb inserts the Agrolab observation 
 permalink: /observation/insert_agrolab/
 author_profile: false
 date: 2026-08-21 08:00:00 +0200
-last_modified_at: 2026-10-17 08:00:00 +0200
+last_modified_at: 2026-10-19 08:00:00 +0200
 ---
 
 Cell **3.2.1 Load Agrolab (wetlab) observation data** of `./ai4sh/import_data/insert_ai4sh_data.ipynb`
@@ -75,6 +75,8 @@ files, columns, and the `@`-prefix observation-value convention are exactly as d
 [Translate Agrolab data][translate_ai4sh_wetlab_data] — only the loading mechanism
 changes, not the source data format.
 
+Cell 3.2.1 also derives soil texture classes (USDA, IUSS and their major groups) from the texture fractions and stores them in `observation.observation_classification`, see [Derived soil texture classes][obs_texture].
+
 The same folder also holds the two halves as separate files, `insert_agrolab_observation_log.json`
 and `insert_agrolab_observation.json`, used by `more_notebooks/insert_ai4sh_wetlab_data.ipynb`.
 
@@ -93,3 +95,4 @@ Digit Soil, BEST infiltration, Microbiometer and aggregate stability are loaded 
 [setup_process_insert]: {{ site.baseurl }}/setup_process/insert/
 [insert_vs_translate]: {{ site.baseurl }}/insert_vs_translate/
 [observation]: {{ site.baseurl }}/observation/
+[obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes

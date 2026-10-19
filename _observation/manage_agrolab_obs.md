@@ -8,7 +8,7 @@ excerpt: "Inserting Agrolab wet laboratory observation records into the AI4SH da
 permalink: /observation/manage_agrolab_obs/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-10-17 08:00:00 +0200
+last_modified_at: 2026-10-19 08:00:00 +0200
 ---
 
 Observation records store the actual soil property measurements. Each record links a sample to an observation log and carries the measured values as `@`-prefixed fields that map to provision indicators. One row in the source Excel file produces one observation record per sample.
@@ -83,7 +83,7 @@ The example file contains 347 entries — one per sample with Agrolab results.
 
 Fields whose names begin with `@` are observation values. The name after the `@` must match a `provision_indicator` registered under the observation log's provision (`ai4sh-agrolab`). The framework resolves each `@field` to the corresponding indicator FK at insert time.
 
-Values may be numeric (`2.18`) or string (`"<0.10"` for below-detection). The AI4SH Agrolab provision measures 16 standard indicators:
+Values may be numbers (`2.18`) or numeric strings (`"5.9"`), both stored as numbers. A below-detection string is stored as half the limit: `"<0.10"` → `0.05`. Value handling is described in full on [Translate Agrolab data][at_prefix]. The AI4SH Agrolab provision measures 15 standard indicators:
 
 | Indicator | Description |
 |---|---|
@@ -103,6 +103,8 @@ Values may be numeric (`2.18`) or string (`"<0.10"` for below-detection). The AI
 | `fine sand` | Fine sand fraction (%) |
 | `coarse sand` | Coarse sand fraction (%) |
 
+The five texture fractions also produce derived texture classes, stored in `observation.observation_classification` (up to four rows per observation). For the example above: USDA `loamy sand` (sandy soils), IUSS `sandy loam` (loamy soils). See [Derived soil texture classes][obs_texture].
+
 ## Sample name format
 
 The `sample_id__sample_name` FK uses the pattern `<tag>@<profile_min>-<profile_max>` (e.g. `366-2-c5@0-20`). This matches the name generated when samples were inserted during [Load sample data].
@@ -118,3 +120,5 @@ The Agrolab data is now loaded. Continue with the other sources in [Load observa
 [Load spectral data]: {{ site.baseurl }}/spectra/
 [insert_wetlab_data]: {{ site.baseurl }}/observation/insert_agrolab/
 [observation]: {{ site.baseurl }}/observation/
+[obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
+[at_prefix]: {{ site.baseurl }}/observation/translate_agrolab/#the--prefix-for-observation-values

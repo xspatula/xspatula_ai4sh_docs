@@ -202,10 +202,10 @@ What the current AI4SH database holds for each filter:
 | `juxtaposition_array` | setting system "agricultural field": uniform 541, furrow 118, plant row 25 |
 | `composition_array` | composite 516, individual 168 |
 | `proximity_array` | general 516, central 22, peripheral 146 |
-| `texture_class_array` | no texture classes recorded |
+| `texture_class_array` | derived on load from clay, silt and sand (cell 3.2.1); a database loaded before 2026-10-19 needs cell 3.2.1 re-run |
 | `landcover_array`, `landuse_array`, `biogeo16_array` | no landscape observations imported |
 
-So for AI4SH the sample setting filters are the ones that work.
+So for AI4SH the sample setting filters and texture are the ones that work.
 
 ### Sample setting
 
@@ -277,12 +277,11 @@ indicators that fall below `min_samples`.
 ### Texture
 
 `texture_class_array` keeps samples of the listed soil texture classes, under the classification in
-`texture_classification` (default `soil texture usda`). The AI4SH database has measured clay, silt and
-sand, but no recorded texture classes yet, so the filter selects nothing. See [Soil texture][lucas_texture]
-on the LUCAS page for the full explanation.
-
-Recommended next step for AI4SH: derive and import the USDA texture class from the measured clay, silt
-and sand. Texture is the most obvious stratification for soil spectroscopy models.
+`texture_classification` (default `soil texture usda`, or `soil texture iuss` and the two major-group
+indicators). The classes are derived from the measured clay, silt and sand while the observations load,
+see [Derived soil texture classes][obs_texture]. A database loaded before this was added (2026-10-19)
+has no classes until the observation cell (e.g. 3.2.1) is re-run; existing measurements are kept. See
+[Soil texture][lucas_texture] on the LUCAS page for the full explanation of the filter.
 
 ### Land cover, land use and biogeographic region
 
@@ -401,3 +400,4 @@ step: the spectra parameters plus `indicator_array` and `data_range`. Separate s
 [lucas_texture]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/select_data/#soil-texture
 [lucas_landcover]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/select_data/#land-cover-and-land-use
 [lucas_ranks]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/select_data/#covariates-and-ranks
+[obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes

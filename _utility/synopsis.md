@@ -8,7 +8,7 @@ excerpt: "Overview of the utility data types and the required loading sequence b
 permalink: /utility/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-10-16 08:00:00 +0200
+last_modified_at: 2026-10-19 08:00:00 +0200
 ---
 
 Utility data provides the controlled vocabularies and reference catalogues that all observation data depends on. Every observation record must reference — an indicator, a unit and a provision (e.g. instrument, tool or laboratory analysis method). Utility data must therefore be fully loaded before any dataset, sample, or observation data can be entered.
@@ -77,6 +77,7 @@ There are three sub-groups within observation utilities:
 | `indicator_parity.xlsx` | `indicator_parity` | `indicator` |
 | `juxtaposition.xlsx` | `juxtaposition` | `setting_system` |
 | `profiling.xlsx` | `profiling` | `unit` |
+| `nominal_classes.xlsx` | `nominal_classification` | `indicator`, `analysis_method`, `method_tier` |
 
 **With inheritance** (depend on pre-inserted records in a parent table which value is inherited if the user does not explicitly define a custom value):
 
@@ -85,6 +86,8 @@ There are three sub-groups within observation utilities:
 | `provision.xlsx` | `provision` | `apparatus`, `provider`, `method_tier` |
 | `provision_indicator.xlsx` | `provision_indicator` | `provision`, `indicator`, `analysis_method`, `unit` |
 | `provision_serial_nr.xlsx` | `provision_serial_nr` | `provision` |
+
+**Derived texture classes**: `nominal_classes.xlsx` holds the 32 soil texture classes (12 USDA, 12 IUSS, 4 major groups for each), all with analysis method `derived`. Their four indicators (`soil texture usda`, `soil texture usda major group`, `soil texture iuss`, `soil texture iuss major group`) have quantity `class` (`quantity.xlsx`), and unit `class` is in `unit.xlsx`. `provision_indicator.xlsx` registers all four, with analysis method `derived` and unit `class`, for `ai4sh-agrolab`, `ai4sh-veltia` and `ai4sh-ibec`; removing a row switches that class off for the provision. The classes are computed while the observations load — see [Derived soil texture classes][obs_texture].
 
 **eDNA method catalogues** (inserted last in the observation utility chain, section `EDNA UTILITIES` of `insert_observation_utility.txt`):
 
@@ -149,3 +152,4 @@ utilities, then the inheritance-dependent ones, then landscape utilities.
 [Manage observation utilities with inheritance]: {{ site.baseurl }}/utility/manage_observation_utilities_inherit/
 [edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
 [all_data]: {{ site.baseurl }}/all_data/
+[obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
