@@ -95,6 +95,24 @@ The classes, and how they aggregate to the four major groups (as in `ai4sh/impor
 | loamy soils | silt loam, silt, loam, sandy loam | silt loam, loam, sandy loam |
 | sandy soils | loamy sand, sand | loamy sand, sand |
 
+Sand, silt and clay ranges per class (%, from the `abstract` column of `nominal_classes.xlsx`). They are the outer limits of each class; inside the triangle the class edges are sloping lines, so a sample within a class's ranges can still belong to a neighbouring class. IUSS sand starts at 0.02 mm, so it includes what USDA counts as coarse silt.
+
+| Class | USDA sand | USDA silt | USDA clay | IUSS sand | IUSS silt | IUSS clay |
+|---|---|---|---|---|---|---|
+| sand | 85–100 | 0–15 | 0–10 | 85–100 | 0–15 | 0–5 |
+| loamy sand | 70–91 | 0–30 | 0–15 | 85–95 | 0–15 | 0–15 |
+| sandy loam | 43–80 | 0–50 | 0–20 | 65–85 | 0–35 | 0–15 |
+| loam | 23–52 | 28–50 | 7–27 | 40–65 | 20–45 | 0–15 |
+| silt loam | 0–50 | 50–100 | 0–27 | 0–55 | 45–100 | 0–15 |
+| silt | 0–20 | 80–100 | 0–12 | — | — | — |
+| sandy clay loam | 45–80 | 0–28 | 20–35 | 55–85 | 0–20 | 15–25 |
+| clay loam | 20–45 | 15–53 | 27–40 | 30–65 | 20–45 | 15–25 |
+| silty clay loam | 0–20 | 40–73 | 27–40 | 0–40 | 45–85 | 15–25 |
+| sandy clay | 45–65 | 0–20 | 35–55 | 55–75 | 0–20 | 25–45 |
+| silty clay | 0–20 | 40–60 | 40–60 | 0–30 | 45–75 | 25–45 |
+| light clay | — | — | — | 10–55 | 0–45 | 25–45 |
+| clay | 0–45 | 0–40 | 40–100 | 0–55 | 0–55 | 45–100 |
+
 ### Inputs and formulas
 
 Inputs are the `@` values of the same observation:
