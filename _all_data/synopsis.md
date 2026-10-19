@@ -8,7 +8,7 @@ excerpt: "The complete AI4SH loading pipeline in a single Jupyter notebook, inse
 permalink: /all_data/
 author_profile: false
 date: 2026-06-10 08:00:00 +0200
-last_modified_at: 2026-10-18 08:00:00 +0200
+last_modified_at: 2026-10-19 08:00:00 +0200
 ---
 
 All AI4SH data is loaded from one notebook:
@@ -142,7 +142,12 @@ The AI4SH data has no licence yet. It has not been reviewed and verified, and un
 - The same goes for the Excel source files, the generated JSON process files and any files extracted from the database for machine learning.
 - A dump also holds the application users in `community.user`, with e-mail addresses and password hashes. Remove or replace personal users before you give a dump to another partner.
 
+## Next step
+
+With the data loaded, continue with machine learning: [Select data][select_data] pulls spectra, indicators and covariates out of the database for modelling.
+
 [setup_db]: {{ site.baseurl }}/setup_db/
+[select_data]: {{ site.baseurl }}/machine_learning/select_data/
 [setup_process]: {{ site.baseurl }}/setup_process/
 [home_lucas]: {{ site.baseurl }}/#including-lucas-data
 [dump_restore]: https://xspatula.github.io/xspatula_core_docs/setup_db/dump_restore/

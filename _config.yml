@@ -198,6 +198,8 @@ collections:
     output: true
   all_data:
     output: true
+  machine_learning:
+    output: true
 
 # Defaults
 defaults:
@@ -281,6 +283,12 @@ defaults:
   - scope:
       path: ""
       type: all_data
+    values:
+      layout: single
+      author_profile: false
+  - scope:
+      path: ""
+      type: machine_learning
     values:
       layout: single
       author_profile: false

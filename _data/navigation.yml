@@ -228,6 +228,16 @@ loading_data:
       - title: "Single-step vs dual-step"
         url: /insert_vs_translate/
 
+machine_learning:
+  - title: Machine learning
+    children:
+      - title: "Select data"
+        url: /machine_learning/select_data/
+      - title: "Parquet files"
+        url: /machine_learning/parquet_files/
+      - title: "Plot data"
+        url: /machine_learning/plot_data/
+
 # main navbar links
 main:
   - title: "Setup DB"
@@ -245,5 +255,8 @@ main:
   - title: "Loading data"
     url: /loading_data/
     description: "Loading AI4SoilHealth data into the database"
+  - title: "Machine learning"
+    url: /machine_learning/select_data/
+    description: "Selecting, inspecting and plotting AI4SoilHealth data for machine learning"
   - title: "About"
     url: https://xspatula.github.io/about/
