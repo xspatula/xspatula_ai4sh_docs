@@ -7,7 +7,7 @@ excerpt: "Root processes are named families that group related processes togethe
 permalink: /setup_process/root_process/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
-last_modified_at: 2026-03-31 08:00:00 +0200
+last_modified_at: 2026-10-26 08:00:00 +0200
 ---
 
 Root processes are named families that group related processes. Every process in the `process` schema must belong to a root process. Root processes themselves are stored in `process.root_process` and registered before any other processes in the setup_processes workflow.
@@ -62,7 +62,9 @@ Further roots are registered at the top of the process files that use them, rath
 | `select_data` | each `select/*.json` file | `select_spectra`, `select_indicator`, `select_spectra_only`, `select_indicator_only`, `select_covariate_only`, `compile_dataset` |
 | `pandas` | `pandas/pandas_inspect_v10_sql.json` | `inspect_pandas_dataset` |
 | `plot` | `plot/plot_v10_sql.json` | `plot_indicators`, `plot_spectra` and two scatter correction comparison plots |
-| `machine_learning` | each `machine_learning/*.json` file | spectral preprocessing, outlier detection, feature selection and regression |
+| `machine_learning` | each `machine_learning/*.json` file | spectral preprocessing, outlier detection, feature selection, regression and `predict_independent` (applies saved models to new spectra, stratum 3) |
+| `ml_setting` | `ml_setting/ml_setting_v10_sql.json` | `sync_indicator_parameter_sets` (stratum 4), `create_parameter_set` (stratum 4), `list_parameter_sets` (stratum 1) — see [ML settings][ml_settings] |
+| `ml_model` | `ml_model/ml_model_v10_sql.json` | `register_model`, `retire_model` (both stratum 4) — see [Predict and register][ml_predict] |
 
 See [Select, compile and inspect][setup_process_select] for one line per select process.
 
@@ -72,3 +74,5 @@ The root process is part of the primary key structure for process lookup. When t
 
 [setup_process_insert]: {{ site.baseurl }}/setup_process/insert/
 [setup_process_select]: {{ site.baseurl }}/setup_process/#select-compile-and-inspect
+[ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
+[ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/

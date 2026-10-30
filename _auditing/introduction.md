@@ -7,7 +7,7 @@ excerpt: "Every write to the AI4SH database is logged automatically by a native 
 permalink: /auditing/
 author_profile: false
 date: 2026-08-15 08:00:00 +0200
-last_modified_at: 2026-08-15 08:00:00 +0200
+last_modified_at: 2026-10-26 08:00:00 +0200
 ---
 
 Auditing keeps a permanent log of every change made to an audited table — who changed it, when, and what the row looked like before and after — so any insert, update, or delete can be traced after the fact.
@@ -78,12 +78,14 @@ into documentation:
 | `landscape_utility` | 16 | yes |
 | `observation` | 41 | 31 tables `UPDATE`/`DELETE` only; 10 tables also `INSERT` (see below) |
 | `landscape` | 2 | yes |
+| `ml_setting` | 4 | yes |
+| `ml_model` | 4 | yes |
 | `organism` | 0 | — the schema has no tables yet, so there is nothing to audit |
 | `audit` (self-audit) | 1 | no, and never can be — see below |
 
 The rule in one sentence per group:
 
-- **Full coverage** (`community`, `process`, `utility`, `observation_utility`, `organism_utility`, `landscape_utility`, `landscape`) — admin/config data, or catalogue/reference tables (`indicator`, `apparatus`, `unit`, `software`, `taxonomy_reference`, `landuse_order`, etc.) that get added one row at a time, usually by hand. Knowing when a new catalogue entry was created has real audit value.
+- **Full coverage** (`community`, `process`, `utility`, `observation_utility`, `organism_utility`, `landscape_utility`, `landscape`, `ml_setting`, `ml_model`) — admin/config data, or catalogue/reference tables (`indicator`, `apparatus`, `unit`, `software`, `taxonomy_reference`, `landuse_order`, etc.) that get added one row at a time, usually by hand. Knowing when a new catalogue entry was created has real audit value. The machine learning parameter sets and the model registry belong here too: who created a set or registered a model, and when, is exactly what a model's history needs.
 - **`UPDATE`/`DELETE` only** — bulk pipeline-written data: samples, measurements, spectra, eDNA ASVs and abundances in `observation`, and the taxon tree `organism_utility.taxon`, which is bulk-loaded from eDNA lineages. Auditing every `INSERT` here would double the write volume on an import batch of thousands of rows, for no real audit gain — the row's own existence already proves it was created.
 - **Exceptions in `observation`** — the hand-entered provenance tables `person`, `campaign`, `campaign_meta`, `campaign_tag`, `campaign_method_tier`, `sampling_log`, `geolocation`, `observation_log`, and the macrofauna tables `monolith` and `macrofauna` are fully audited, including `INSERT`.
 

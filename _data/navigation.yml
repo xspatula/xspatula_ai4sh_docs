@@ -23,6 +23,8 @@ setup_db:
         url: /setup_db/landscape/
       - title: "eDNA metabarcoding"
         url: /setup_db/edna_metabarcoding/
+      - title: "ML setting and model"
+        url: /setup_db/ml_setting/
 
 auditing:
   - title: Auditing
@@ -237,6 +239,12 @@ machine_learning:
         url: /machine_learning/parquet_files/
       - title: "Plot data"
         url: /machine_learning/plot_data/
+      - title: "ML settings"
+        url: /machine_learning/ml_settings/
+      - title: "ML modeling"
+        url: /machine_learning/ml_model/
+      - title: "Predict and register"
+        url: /machine_learning/ml_predict/
 
 # main navbar links
 main:
@@ -257,6 +265,6 @@ main:
     description: "Loading AI4SoilHealth data into the database"
   - title: "Machine learning"
     url: /machine_learning/select_data/
-    description: "Selecting, inspecting and plotting AI4SoilHealth data for machine learning"
+    description: "Selecting, plotting and modeling AI4SoilHealth data; ML settings and model registry"
   - title: "About"
     url: https://xspatula.github.io/about/

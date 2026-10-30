@@ -7,7 +7,7 @@ excerpt: "What an AI4SoilHealth selection saves: Parquet file and companion JSON
 permalink: /machine_learning/parquet_files/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-10-19 08:00:00 +0200
+last_modified_at: 2026-10-26 08:00:00 +0200
 ---
 
 Every [select process][select_data] saves its result locally as a Parquet file. This page explains what
@@ -109,8 +109,8 @@ Different provisions and laboratories can record the same indicator in different
 processes harmonise them at extraction, so every value in the saved `.parquet` is in one unit per
 indicator.
 
-**Where the target unit comes from**: `ai4sh/default/plot/targetfeaturesymbols.json`, keyed by indicator
-name, e.g.:
+**Where the target unit comes from**: the plot symbol set `targetfeaturesymbols`
+([ML settings][ml_settings]), keyed by indicator alias, e.g.:
 
 ```json
 "c-org": {
@@ -121,8 +121,9 @@ name, e.g.:
 }
 ```
 
-All indicators in the default file use `"unit": "native"`. Point `targetfeaturesymbols` at a different
-file (a path, instead of `"default"`) to use your own settings. The same file drives the axis units and
+All indicators in the preset use `"unit": "native"`. Set `targetfeaturesymbols` to your own custom set (or
+a JSON file path) instead of `"default"` to use your own per-indicator units. A new indicator gets a grey
+placeholder symbol with `"unit": "native"` until you give it a real one. The same set drives the axis units and
 colours of the [plots][plot_data].
 
 **Two ways to set an indicator's `unit`:**
@@ -185,6 +186,27 @@ Example (from LUCAS, same format):
   ]
 }
 ```
+
+Each record also holds the **provenance** of the step: the process parameters, the process file, every
+settings set or file it read (set id and version, or file path, with sha256 and content), the software
+versions and the git commit. The meancentring step of the compiled AI4SH dataset, for example, recorded
+the colormap set it read:
+
+```json
+"provenance": {
+  "process": "spectra_scaling",
+  "parameters": {"project_root_fp": "./project_neospectra/data/compiled/neospectra_10nm",
+                 "dataframe": "previous", "method": "meancentring", "colormap": "default"},
+  "configs": {
+    "db:ml_setting.parameter_set/spectra_plot/standard@1": {
+      "set_id": 18, "category": "preset", "sha256": "e632c8fd…", "content": {"colormap": "jet"}}
+  },
+  "environment": {"python": "3.12.13", "scikit-learn": "1.8.0", "git_commit": "8c904ae63", "git_dirty": true}
+}
+```
+
+A [registered model][ml_predict] collects the parameter sets of all steps behind its input from these
+records, and freezes them.
 
 A folder written before this change has no history until a select runs there again. Inspect then says
 `ERROR: no .previous_dataframe found in ...`.
@@ -278,3 +300,5 @@ steps.
 [plot_data]: {{ site.baseurl }}/machine_learning/plot_data/
 [all_data]: {{ site.baseurl }}/all_data/
 [lucas_parquet]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/parquet_files/
+[ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
+[ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/

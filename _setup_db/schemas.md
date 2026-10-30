@@ -3,20 +3,20 @@ title: "AI4SH Database Schemas"
 layout: single
 sidebar:
   nav: "setup_db"
-excerpt: "The AI4SH database is organised into 10 postgreSQL schemas. The schema process file must be run first — before any tables — to create all schema namespaces."
+excerpt: "The AI4SH database is organised into 12 postgreSQL schemas. The schema process file must be run first — before any tables — to create all schema namespaces."
 permalink: /setup_db/schemas/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
-last_modified_at: 2026-09-30 08:00:00 +0200
+last_modified_at: 2026-10-26 08:00:00 +0200
 ---
 
-The AI4SH database is organised into 10 postgreSQL schemas. Schemas group related tables into logical namespaces and allow different access permissions to be applied per schema. The schema process file must be executed first in the pilot file — before any table definitions — because table creation requires the target schema to already exist.
+The AI4SH database is organised into 12 postgreSQL schemas. Schemas group related tables into logical namespaces and allow different access permissions to be applied per schema. The schema process file must be executed first in the pilot file — before any table definitions — because table creation requires the target schema to already exist.
 
 ## The schema process file
 
 **File**: `./setup/zzz/ai4sh/setup_db/json/schema/schema_v10_sql.json`
 
-This single file creates all 10 schemas using repeated calls to the `create_schema` process:
+This single file creates all 12 schemas using repeated calls to the `create_schema` process:
 
 ```json
 {
@@ -30,7 +30,9 @@ This single file creates all 10 schemas using repeated calls to the `create_sche
     { "process_id": "create_schema", "parameters": { "schema": "organism_utility" } },
     { "process_id": "create_schema", "parameters": { "schema": "organism" } },
     { "process_id": "create_schema", "parameters": { "schema": "observation_utility" } },
-    { "process_id": "create_schema", "parameters": { "schema": "observation" } }
+    { "process_id": "create_schema", "parameters": { "schema": "observation" } },
+    { "process_id": "create_schema", "parameters": { "schema": "ml_setting" } },
+    { "process_id": "create_schema", "parameters": { "schema": "ml_model" } }
   ]
 }
 ```
@@ -49,6 +51,8 @@ This single file creates all 10 schemas using repeated calls to the `create_sche
 | `organism` | AI4SH | Reserved for organism-level observations; no tables in the setup pilot yet — see [Organism][setup_db_organism] |
 | `observation_utility` | AI4SH | Reference catalogues for FAIR-compliant soil data (units, methods, instruments, software, eDNA primer pairs, lab protocols, method pipelines, etc.) — see [Observation utility][setup_db_observation_utility] |
 | `observation` | AI4SH | Actual soil property data (datasets, campaigns, samples, observations, eDNA ASVs and abundances) — see [Observation][setup_db_observation] |
+| `ml_setting` | AI4SH | Machine learning parameter sets (transformations, filters, regressor hyper-parameters, plot symbols), versioned and frozen when a model uses them — see [ML setting and model][setup_db_ml] |
+| `ml_model` | AI4SH | Registry of final machine learning models, their preprocessing steps, parameter sets and metrics — see [ML setting and model][setup_db_ml] |
 
 The four **framework default** schemas (`utility`, `community`, `process`, `audit`) are created for every Xspatula database, not just AI4SH. Their table structure is the same as described in the [core framework documentation][setup_core_db_docs_schemas]. The remaining schemas are specific to the AI4SH project.
 
@@ -62,9 +66,11 @@ utility ← observation_utility ← observation
           organism_utility    ← observation   (macrofauna, edna_asv → taxon)
           organism_utility    ← observation_utility.method_pipeline_step (→ taxonomy_reference)
 landscape_utility ← landscape
+observation_utility, community ← ml_setting ← ml_model
+observation_utility            ← ml_model     (model → indicator)
 ```
 
-This is reflected in the execution order of the pilot file — utility and community tables are created before observation_utility, organism_utility before the method pipeline tables (which reference `organism_utility.taxonomy_reference`), and all utility schemas before the observation tables. Note that the method pipeline tables live in `observation_utility` but are created *after* `organism_utility` — see [eDNA metabarcoding][setup_db_edna].
+This is reflected in the execution order of the pilot file — utility and community tables are created before observation_utility, organism_utility before the method pipeline tables (which reference `organism_utility.taxonomy_reference`), and all utility schemas before the observation tables. Note that the method pipeline tables live in `observation_utility` but are created *after* `organism_utility` — see [eDNA metabarcoding][setup_db_edna]. The `ml_setting` and `ml_model` tables come last: they reference `observation_utility.indicator`, and the creator of a set or a registration is a `community` user.
 
 
 [setup_core_db_docs_schemas]: https://xspatula.github.io/xspatula_core_docs/setup_db/schemas_tables/
@@ -78,3 +84,4 @@ This is reflected in the execution order of the pilot file — utility and commu
 [setup_db_process]: {{ site.baseurl }}/setup_db/process/
 [auditing]: {{ site.baseurl }}/auditing/
 [setup_db_landscape]: {{ site.baseurl }}/setup_db/landscape/
+[setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/

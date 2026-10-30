@@ -7,7 +7,7 @@ excerpt: "Selecting AI4SoilHealth spectra, indicators and covariates from the da
 permalink: /machine_learning/select_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-10-19 08:00:00 +0200
+last_modified_at: 2026-10-26 08:00:00 +0200
 ---
 
 The first step of the machine learning pipeline: decide which samples and which data you need, check
@@ -364,7 +364,7 @@ To get the spectra for exactly the samples of a filtered indicator selection:
 |---|---|
 | `indicator_array` | The indicators to select, by name or alias |
 | `data_range` | Optional JSON `{indicator: {min, max}}` to filter values; empty = no filter |
-| `targetfeaturesymbols` | Which unit to save each indicator in, see [Indicator units][indicator_units]. Default `"default"` |
+| `targetfeaturesymbols` | Which unit to save each indicator in, see [Indicator units][indicator_units]: a `plot_symbol` set name (`"name"` or `"name@version"`, see [ML settings][ml_settings]) or a JSON file path. Default `"default"` = the set `targetfeaturesymbols` |
 
 If a requested indicator has no data, the process lists what is available and asks whether to continue
 without it. The output name is explained under [Output names][output_names].
@@ -401,3 +401,4 @@ step: the spectra parameters plus `indicator_array` and `data_range`. Separate s
 [lucas_landcover]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/select_data/#land-cover-and-land-use
 [lucas_ranks]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/select_data/#covariates-and-ranks
 [obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
+[ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/

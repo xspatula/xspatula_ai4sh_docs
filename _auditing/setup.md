@@ -7,7 +7,7 @@ excerpt: "Auditing is opt-in per table, declared with an inline \"audit\" key, a
 permalink: /auditing/setup/
 author_profile: false
 date: 2026-08-21 08:00:00 +0200
-last_modified_at: 2026-08-21 08:00:00 +0200
+last_modified_at: 2026-10-26 08:00:00 +0200
 ---
 
 A table declares its own audit coverage inline, and turning auditing on for a database is a
@@ -82,7 +82,7 @@ project or per table:
 | `audit_triggers_audit_v10_sql.json` | The `audit` schema's own self-audit trigger (see the self-audit gotcha above) |
 
 **Auto-generated on every "Setup database" run** — one file per audited schema, written fresh
-each time from every table's `"audit"` key. For AI4SH today that's 8 files — every schema except
+each time from every table's `"audit"` key. For AI4SH today that's 10 files — every schema except
 `audit` itself, which is covered by the shipped file above, and `organism`, which has no tables yet
 and therefore gets no trigger file:
 
@@ -91,6 +91,8 @@ and therefore gets no trigger file:
 | `audit_triggers_community_v10_sql.json` | `community` |
 | `audit_triggers_landscape_v10_sql.json` | `landscape` |
 | `audit_triggers_landscape_utility_v10_sql.json` | `landscape_utility` |
+| `audit_triggers_ml_model_v10_sql.json` | `ml_model` |
+| `audit_triggers_ml_setting_v10_sql.json` | `ml_setting` |
 | `audit_triggers_observation_v10_sql.json` | `observation` |
 | `audit_triggers_observation_utility_v10_sql.json` | `observation_utility` |
 | `audit_triggers_organism_utility_v10_sql.json` | `organism_utility` |
@@ -98,7 +100,7 @@ and therefore gets no trigger file:
 | `audit_triggers_utility_v10_sql.json` | `utility` |
 
 Plus, at the pilot-file level: `setup/zzz/ai4sh/setup_db/db_audit.txt` — the
-generated pilot file cell 2 runs. All 8 generated files (and the pilot file) are build
+generated pilot file cell 2 runs. All 10 generated files (and the pilot file) are build
 artifacts. If you edit one by hand, the next "Setup database" run will overwrite your edit —
 change the source table's `"audit"` key instead.
 

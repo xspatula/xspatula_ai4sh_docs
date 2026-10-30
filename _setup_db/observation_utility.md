@@ -7,7 +7,7 @@ excerpt: "The observation_utility schema holds all reference catalogues needed f
 permalink: /setup_db/observation_utility/
 author_profile: false
 date: 2026-03-31 08:00:00 +0200
-last_modified_at: 2026-09-30 08:00:00 +0200
+last_modified_at: 2026-10-26 08:00:00 +0200
 ---
 
 The `observation_utility` schema holds all reference catalogues needed for FAIR-compliant soil observations. Think of it as the controlled vocabulary layer of the database: every instrument, method, unit, spatial reference etc. used in an observation must first exist here. The `observation` schema tables cannot be populated until the relevant `observation_utility` records exist.
@@ -101,6 +101,8 @@ A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existin
 
 **Indicator** represents a single measurable result (e.g. soil pH, organic carbon %). Indicators belong to a `quantity` (the physical property type). The same indicator can be delivered by multiple provisions, and one indicator can be declared equivalent to another via `indicator_parity` (`src_indicator_id`/`dst_indicator_id`, both referencing `indicator`) — useful when two differently-named indicators from different sources measure the same thing.
 
+After `manage_indicator` (directly, or through `insert_tabular_data`) has inserted an indicator, the machine learning settings follow automatically: every transformation and standardisation parameter set gets a row for it, and the plot symbol set `targetfeaturesymbols` gets a grey placeholder symbol (`"needs_review": true`) until you give it a colour, label and unit. See [ML settings — New indicators][ml_new_indicators] and [ML setting and model schemas][setup_db_ml].
+
 [![Indicator schema]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})]({{ "/assets/media/observation_utility/indicator.png" | relative_url }})
 
 **Profiling** describes z-dimension sampling profiles (soil cores, sediment cores, ice cores) by specifying depth increments in a given unit. Samples with a profile dimension reference a profiling record.
@@ -111,3 +113,5 @@ A `method_pipeline` hangs off an `analysis_method`, so it plugs into the existin
 [setup_db_organism_utility]: {{ site.baseurl }}/setup_db/organism_utility/
 [setup_db_edna]: {{ site.baseurl }}/setup_db/edna_metabarcoding/
 [edna_catalogues]: {{ site.baseurl }}/edna/edna_catalogues/
+[ml_new_indicators]: {{ site.baseurl }}/machine_learning/ml_settings/#new-indicators
+[setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/
