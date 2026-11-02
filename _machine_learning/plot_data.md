@@ -7,7 +7,7 @@ excerpt: "Plotting selected AI4SoilHealth indicators, class distributions and sp
 permalink: /machine_learning/plot_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-10-26 08:00:00 +0200
+last_modified_at: 2026-10-31 08:00:00 +0100
 ---
 
 Look at the selection before preprocessing: the distribution of each indicator, the class counts of a
@@ -102,21 +102,24 @@ folder, e.g. `./project_neospectra/data/spectra/<provision tag>/ds2/ai4sh`.
 | Process file | Plots |
 |---|---|
 | `plot_neospectra.json` | the selected spectra, no processing |
-| `plot_neospectra_scattercorrection_scalers.json` | raw spectra against each scatter correction (SNV, MSC, ...) |
-| `plot_neospectra_scaling_methods.json` | raw spectra against each scaling method (meancentring, autoscaling, paretoscaling, poissonscaling) |
+| `plot_neospectra_scatter_correction.json` | raw spectra against each scatter correction (l1, l2, max, SNV, MSC, detrend) |
+| `plot_neospectra_variable_scaling.json` | raw spectra against each variable scaling (meancentring, autoscaling, paretoscaling, poissonscaling) |
 | `plot_filter_neospectra.json` | raw spectra against each smoothing filter (moving-average, gauss, Savitzky-Golay, lowess) |
 
 `colormap` sets the colour ramp of the spectra. Its default is `"default"`, the `spectra_plot` set
 `standard` (= `jet`); `"none"` gives the matplotlib default (viridis), and any matplotlib name
-(`"plasma"`, `"jet"`) also works. The `chemometrics` and `filter` parameters take set names in the same way
+(`"plasma"`, `"jet"`) also works. The `filter` parameter takes a filter parameter set name in the same way
 (see [ML settings][ml_settings]).
+
+`chemometrics_array` (in `plot_neospectra.json` and `plot_filter_neospectra.json`) applies pre-processing
+steps before plotting, with the same syntax as the [chemometric chain][chain_syntax], e.g.
+`["snv", "meancentring"]`. The plot files are named after the steps with dots, e.g. `spectra_snv.mc.png`.
 
 ## Next step
 
-An AI4SH page for preprocessing is still to be written. Until then, follow the LUCAS
-[ML preprocessing][lucas_preprocess] page with the compiled AI4SH dataset as `project_root_fp` (see
-[Compile the project dataset][compile]). Then name your settings ([ML settings][ml_settings]), train the
-models ([ML modeling][ml_model]) and apply or register them ([Predict and register][ml_predict]).
+Name your settings ([ML settings][ml_settings]), then clean up the indicators and spectra
+([ML pre-processing 1][ml_preprocess]), train the models ([ML modeling][ml_model]) and apply or register them
+([Predict and register][ml_predict]).
 
 [select_data]: {{ site.baseurl }}/machine_learning/select_data/
 [previous_dataframe]: {{ site.baseurl }}/machine_learning/parquet_files/#the-previous-dataframe-previous_dataframe
@@ -126,4 +129,5 @@ models ([ML modeling][ml_model]) and apply or register them ([Predict and regist
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
-[lucas_preprocess]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/ml_preprocess/
+[ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
+[chain_syntax]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/#chemometrics_array-syntax

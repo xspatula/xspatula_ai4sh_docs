@@ -7,7 +7,7 @@ excerpt: "What an AI4SoilHealth selection saves: Parquet file and companion JSON
 permalink: /machine_learning/parquet_files/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-10-26 08:00:00 +0200
+last_modified_at: 2026-11-01 08:00:00 +0100
 ---
 
 Every [select process][select_data] saves its result locally as a Parquet file. This page explains what
@@ -156,7 +156,7 @@ unit translation. A value is set to missing if it is
   conductivities, lengths or areas.
 
 Each removal is printed per indicator, e.g.
-`⚠️  clay: 3 value(s) are missing codes or outside the valid range for weight percent, set to missing: [-999.0]`.
+`⚠️  clay: <n> value(s) are missing codes or outside the valid range for weight percent, set to missing: [-999.0]`.
 
 **Transformation** (`chemometrics.py`): log of values ≤ 0, square root of values < 0 and the reciprocal
 of 0 give a missing value with a warning, instead of ±inf that crashes the plots.
@@ -172,16 +172,16 @@ file `.previous_dataframe` in the folder it saved to: process, time, note and fi
 - The earlier records are the folder's history, oldest first.
 - Spectra, indicator and covariate folders each keep their own history.
 
-Example (from LUCAS, same format):
+Example (shortened):
 
 ```json
 {
   "history": [
-    {"process": "select_indicator_only", "created_at": "2026-10-19T08:49:03",
-     "note": "indicator: 199 samples",
+    {"process": "select_indicator_only", "created_at": "<timestamp>",
+     "note": "indicator: <n> samples",
      "entries": [{"dataframe": "clay-c-org_0-20.parquet", "indicator": null, "regressor": null, "selector": null}]},
-    {"process": "select_indicator_only", "created_at": "2026-10-19T08:49:04",
-     "note": "indicator: 23 samples, filter {'landcover': ['cropland']}",
+    {"process": "select_indicator_only", "created_at": "<timestamp>",
+     "note": "indicator: <n> samples, filter {'landcover': ['cropland']}",
      "entries": [{"dataframe": "clay-c-org_0-20__lc-cropland.parquet", "indicator": null, "regressor": null, "selector": null}]}
   ]
 }
@@ -189,8 +189,7 @@ Example (from LUCAS, same format):
 
 Each record also holds the **provenance** of the step: the process parameters, the process file, every
 settings set or file it read (set id and version, or file path, with sha256 and content), the software
-versions and the git commit. The meancentring step of the compiled AI4SH dataset, for example, recorded
-the colormap set it read:
+versions and the git commit. A meancentring step, for example, records the colormap set it read:
 
 ```json
 "provenance": {
@@ -199,21 +198,23 @@ the colormap set it read:
                  "dataframe": "previous", "method": "meancentring", "colormap": "default"},
   "configs": {
     "db:ml_setting.parameter_set/spectra_plot/standard@1": {
-      "set_id": 18, "category": "preset", "sha256": "e632c8fd…", "content": {"colormap": "jet"}}
+      "set_id": "<id>", "category": "preset", "sha256": "…", "content": {"colormap": "jet"}}
   },
-  "environment": {"python": "3.12.13", "scikit-learn": "1.8.0", "git_commit": "8c904ae63", "git_dirty": true}
+  "environment": {"python": "…", "scikit-learn": "…", "git_commit": "…", "git_dirty": false}
 }
 ```
 
 A [registered model][ml_predict] collects the parameter sets of all steps behind its input from these
 records, and freezes them.
 
-A folder written before this change has no history until a select runs there again. Inspect then says
+A folder without a `.previous_dataframe` has no history until a select runs there. Inspect then says
 `ERROR: no .previous_dataframe found in ...`.
 
 [Plot data][plot_data] picks the latest *selected* (not derived) file from the history. Without a
 history it falls back to the newest file by date, and lists the others in a warning
-(`Find_selected_parquet`). Derived files (with step suffixes like `_ol`, `_mc`) are never candidates.
+(`Find_selected_parquet`). Derived (pre-processed) files are never candidates: a file is derived when its name has a pre-processing
+suffix (`.olif`, `.mc`, `.snv.sg5.d1` …) or its companion JSON
+has a non-empty `preprocessing_chain` (`Is_derived_parquet`). See [ML pre-processing 1][ml_preprocess].
 
 ## Inspect the dataset
 
@@ -286,6 +287,18 @@ steps.
   found in two inputs is an error.
 - Units, `class_columns`, `covariate_rank` and `class_labels` are merged. The companion JSON lists each
   input with its role and sample count.
+- **Inputs must be unprocessed.** An input whose companion JSON has a `preprocessing_chain` with any step
+  other than indicator outlier removal stops the compile:
+  `❌ ERROR: <input> is pre-processed (…). Compile the unprocessed selection and pre-process the compiled
+  dataset, e.g. chemometric_chain with chain_from = "<input path>.json"`. Outlier removal is allowed, since it
+  only sets indicator values to missing; its chain is recorded under that input in the compiled JSON.
+- The compiled JSON does not take over `preprocessing_chain`, `source_parquet` or `output_data` from its
+  inputs. The compiled dataset is a new, unprocessed starting point.
+
+A spectral pre-processing chain is fitted on all samples of its dataframe. The model refits it on the
+training samples, starting from the unprocessed source in the same folder, so the chain must be run in the
+compiled folder: explore in the spectra folder, compile the unprocessed selections, then run the chosen
+chain there with [chain_from][chain_from] (see [ML pre-processing 1][ml_preprocess]).
 - Compile registers its output in `.previous_dataframe`.
 
 **Output**: `data/compiled/<output_name>/<output_name>.parquet` (+ `.json`).
@@ -302,3 +315,5 @@ steps.
 [lucas_parquet]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/parquet_files/
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
+[ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
+[chain_from]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/#from-exploration-to-the-model

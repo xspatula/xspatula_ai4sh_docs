@@ -7,7 +7,7 @@ excerpt: "Selecting AI4SoilHealth spectra, indicators and covariates from the da
 permalink: /machine_learning/select_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-10-26 08:00:00 +0200
+last_modified_at: 2026-11-01 08:00:00 +0100
 ---
 
 The first step of the machine learning pipeline: decide which samples and which data you need, check
@@ -26,16 +26,6 @@ LUCAS has that data and AI4SH (so far) does not.
 The extracted files contain AI4SH data and may only be shared within the AI4SoilHealth partners (see
 [AI4SH data: partners only][partners_only]).
 
-{% capture notice-1 %}
-**The AI4SH ML project is being rebuilt.** The current project `xspatula_ai4sh/ai4sh/project_neospectra/`
-predates the processes on this page: its select files use the removed process `select_indicator` and the
-provision `neospectra`, which has no spectra in the current database. The process files on this page show
-the shape of the new files. The outputs are real runs against the AI4SH database (2026-10-19), but no
-process file in the repo produces them yet. Run `setup/setup_processes.ipynb` in `xspatula_ai4sh` to
-register the select parameters before using them.
-{% endcapture %}
-
-<div class="notice--warning">{{ notice-1 | markdownify }}</div>
 
 ## Workflow
 
@@ -91,20 +81,61 @@ Each process skips silently if its output already exists, unless `overwrite: tru
 
 ### Campaigns and sampling logs
 
-The `ai4sh` dataset (684 samples, current DB) spans many sites. Each site is a **campaign**, with one or
-more **sampling logs** (survey rounds). The largest:
+The `ai4sh` dataset spans many sites. Each site is a **campaign**, with one or more **sampling logs**
+(survey rounds), for example:
 
-| Campaign | Sampling log | Samples |
-|---|---|---|
-| `ai4sh_dk_foulum` | `ai4sh_dk_foulum_2024` | 145 |
-| `ai4sh_fi_jokioinen` | `ai4sh_fi_jokioinen_2024` | 94 |
-| `ai4sh_gr_ktima-gerovassiliou` | `ai4sh_gr_ktima-gerovassiliou_2023` | 75 |
-| `ai4sh_gr_zazari` | `ai4sh_gr_zazari_2025` | 70 |
-| `ai4sh_hr_neretva` | `ai4sh_hr_neretva_2024`, `ai4sh_hr_neretva_2025` | 24 + 24 |
+| Campaign | Sampling log |
+|---|---|
+| `ai4sh_dk_foulum` | `ai4sh_dk_foulum_2024` |
+| `ai4sh_fi_jokioinen` | `ai4sh_fi_jokioinen_2024` |
+| `ai4sh_gr_ktima-gerovassiliou` | `ai4sh_gr_ktima-gerovassiliou_2023` |
+| `ai4sh_gr_zazari` | `ai4sh_gr_zazari_2025` |
+| `ai4sh_hr_neretva` | `ai4sh_hr_neretva_2024`, `ai4sh_hr_neretva_2025` |
+
+`identify_indicator` (below) gives the number of samples in a campaign or sampling log.
 
 Set `campaign` or `sampling_log` to model one site or one round. Leave both empty to pool all sites.
 Every saved parquet carries `campaign_tag` and `sampling_log_tag`, so a pooled model can still be
 evaluated and plotted per site later. LUCAS has one campaign; for AI4SH this is the main split.
+
+## Observation logs, subsamples and replicates
+
+`select_spectra`, `select_spectra_only`, `select_indicator_only` and `select_covariate_only` also take:
+
+| Parameter | Default | Description |
+|---|---|---|
+| `aggregate` | `average` | How several observations of the same sample *within one observation log* (subsamples and/or replicates) are combined into one value or spectrum: `average`, `median`, `min` or `max` (per band for spectra) |
+| `observation_log_array` | empty | The observation logs (names or tags) to take the data from; empty = all |
+
+Aggregation is reported in the log, e.g.:
+
+```
+    Aggregating (average) <n> subsample/replicate spectra of <m> samples
+    Aggregating (average) subsample/replicate values of <n> sample/indicator pairs
+```
+
+**One observation log per sample.** If a sample's spectra, or a sample's value of one indicator, come from
+more than one observation log, the selection stops and lists the logs. Typical causes are rescans in
+different years, ds2 and ilmx scans when `spectra_preparation_name` is not set, or two laboratories
+analysing the same indicator:
+
+```
+    ❌ ERROR: <n> samples have data from more than one observation log:
+        <log name> (tag <tag>): <n> samples
+        <log name> (tag <tag>): <n> samples
+    Set observation_log_array to the names or tags of the observation logs to use (and spectra_preparation_name to
+    separate sample preparations, e.g. ds2 and ilmx).
+```
+
+Values of different indicators may come from different logs, e.g. c-org from one laboratory and pH from
+another. Observation log tags may repeat across sampling logs, so one tag selects the matching log in every
+sampling log. The companion JSON records `observation_log_array` and `aggregate`.
+
+**Paired datasets.** To get, e.g., ds2 and ilmx spectra of the same samples (to test ilmx → ds2
+translations), run `select_spectra_only` twice with different `spectra_preparation_name` (or
+`observation_log_array`), the second with [`sample_source`](#reuse-a-selections-samples-sample_source)
+set to the first output. The two outputs get different sub paths (the preparation alias), the same samples
+and identical columns, provided the wavelength grid parameters are the same.
 
 ## Identify indicators and sample counts
 
@@ -139,26 +170,25 @@ parameters, every class filter (below), `sample_source` and `min_samples`:
 }
 ```
 
-`min_samples` (default 30) flags every count below it with ⚠️. Output, all AI4SH samples, current DB
-(list shortened):
+`min_samples` (default 30) flags every count below it with ⚠️. The output lists the samples in scope, the
+spectral sensors and the indicators (list shortened):
 
 ```
     Querying available data for dataset "ai4soilhealth"
 
-    Samples in scope: 684
+    Samples in scope: <n>
 
     Spectral sensors (provisions):
-        - bruker invenio s ftir: 471 samples
-        - foss micral: 489 samples
-        - foss nirs ds2500 l: 564 samples
-        - proxiscout: 345 samples
+        - bruker invenio s ftir: <n> samples
+        - foss micral: <n> samples
+        - foss nirs ds2500 l: <n> samples
+        - proxiscout: <n> samples
 
     Indicators (samples with a value):
-        - aggregate stability (aggstab) [index]: 16  ⚠️  < 30
-        - calcium ion (ca2+) [cmol*kg^-1]: 347
-        - cation exchange capacity (cec) [cmol*kg^-1]: 347
-        - clay (<0.002 mm) (clay) [weight percent]: 347
-        - fungi alpha shannon diversity (fungi alpha shannon) [unitless]: 157
+        - aggregate stability (aggstab) [index]: <n>  ⚠️  < 30
+        - calcium ion (ca2+) [cmol*kg^-1]: <n>
+        - cation exchange capacity (cec) [cmol*kg^-1]: <n>
+        - clay (<0.002 mm) (clay) [weight percent]: <n>
         ...
 ```
 
@@ -195,14 +225,14 @@ Common rules:
 - Filters restrict **every** query (keys, spectra, indicators, covariates). A filtered spectra selection
   and a filtered indicator selection therefore start from the same samples.
 
-What the current AI4SH database holds for each filter:
+What the AI4SH database holds for each filter:
 
-| Filter | AI4SH data (current DB) |
+| Filter | AI4SH data |
 |---|---|
-| `juxtaposition_array` | setting system "agricultural field": uniform 541, furrow 118, plant row 25 |
-| `composition_array` | composite 516, individual 168 |
-| `proximity_array` | general 516, central 22, peripheral 146 |
-| `texture_class_array` | derived on load from clay, silt and sand (cell 3.2.1); a database loaded before 2026-10-19 needs cell 3.2.1 re-run |
+| `juxtaposition_array` | setting system "agricultural field": uniform, furrow, plant row |
+| `composition_array` | composite, individual |
+| `proximity_array` | general, central, peripheral |
+| `texture_class_array` | derived on load from clay, silt and sand (observation cell, e.g. 3.2.1) |
 | `landcover_array`, `landuse_array`, `biogeo16_array` | no landscape observations imported |
 
 So for AI4SH the sample setting filters and texture are the ones that work.
@@ -230,17 +260,15 @@ Furrow and plant row samples:
 ```
     Filter juxtaposition: ['furrow', 'plant row']
 
-    Samples in scope: 143
+    Samples in scope: <n>
 
     Samples per class_juxtaposition:
-        - furrow: 118
-        - plant row: 25  ⚠️  < 30
+        - furrow: <n>
+        - plant row: <n>  ⚠️  < 30
 
     Spectral sensors (provisions):
-        - bruker invenio s ftir: 57 samples
-        - foss micral: 69 samples
-        - foss nirs ds2500 l: 71 samples
-        - proxiscout: 67 samples
+        - bruker invenio s ftir: <n> samples
+        ...
 ```
 
 Individual samples, centre and periphery:
@@ -254,14 +282,14 @@ Individual samples, centre and periphery:
     Filter composition: ['individual']
     Filter proximity: ['central', 'peripheral']
 
-    Samples in scope: 168
+    Samples in scope: <n>
 
     Samples per class_composition:
-        - individual: 168
+        - individual: <n>
 
     Samples per class_proximity:
-        - central: 22  ⚠️  < 30
-        - peripheral: 146
+        - central: <n>  ⚠️  < 30
+        - peripheral: <n>
 ```
 
 In the current data every individual sample is central or peripheral, and every composite sample is
@@ -269,19 +297,17 @@ general. `composition` and `proximity` thus split the data the same way; filteri
 
 ### When the selection is too narrow
 
-The counts exist to catch this. Under the furrow/plant row filter above, the microbial and eDNA-derived
-indicators drop to about 21–23 samples, all flagged ⚠️. Plant row (25) is too thin for a model of its
-own. Broaden the selection: pool furrow and plant row into one model, drop the filter, or drop the
-indicators that fall below `min_samples`.
+The counts exist to catch this. A narrow filter, such as furrow and plant row, can leave some indicators
+(e.g. microbial and eDNA-derived ones) and some classes below `min_samples`, flagged ⚠️. A class that thin
+is too small for a model of its own. Broaden the selection: pool the classes into one model, drop the
+filter, or drop the indicators that fall below `min_samples`.
 
 ### Texture
 
 `texture_class_array` keeps samples of the listed soil texture classes, under the classification in
 `texture_classification` (default `soil texture usda`, or `soil texture iuss` and the two major-group
 indicators). The classes are derived from the measured clay, silt and sand while the observations load,
-see [Derived soil texture classes][obs_texture]. A database loaded before this was added (2026-10-19)
-has no classes until the observation cell (e.g. 3.2.1) is re-run; existing measurements are kept. See
-[Soil texture][lucas_texture] on the LUCAS page for the full explanation of the filter.
+see [Derived soil texture classes][obs_texture]. See [Soil texture][lucas_texture] on the LUCAS page for the full explanation of the filter.
 
 ### Land cover, land use and biogeographic region
 

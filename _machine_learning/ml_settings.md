@@ -7,7 +7,7 @@ excerpt: "Machine learning settings as named, versioned parameter sets in the ml
 permalink: /machine_learning/ml_settings/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-10-26 08:00:00 +0200
+last_modified_at: 2026-11-01 08:00:00 +0100
 ---
 
 Every machine learning step reads settings: which transformation an indicator gets, the filter window,
@@ -112,7 +112,7 @@ When `manage_indicator` (directly, or through `insert_tabular_data`) adds an ind
 - the symbol set `targetfeaturesymbols` gets a grey placeholder for it, with the display name as label,
   unit `native` and `"needs_review": true`. A warning lists the indicators that got one.
 
-After the first sync on AI4SH, for example, `ph`, `k+` and `na+` had placeholders:
+A placeholder looks like this:
 
 ```json
 "ph": { "unit": "native", "alpha": 0.2, "color": "grey", "label": "pH", "needs_review": true }
@@ -216,8 +216,10 @@ frozen set, because that does not change anything a model used.
 
 ## Next step
 
+[ML pre-processing 1][ml_preprocess]: clean up indicators and spectra before modelling. Then
 [ML modeling][ml_model]: train regressors with explicitly named settings.
 
 [setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
+[ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/

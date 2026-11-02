@@ -7,7 +7,7 @@ excerpt: "Training and evaluating regressors on AI4SoilHealth spectra: regressio
 permalink: /machine_learning/ml_model/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-10-26 08:00:00 +0200
+last_modified_at: 2026-11-01 08:00:00 +0100
 ---
 
 Trains and evaluates regressors on the compiled dataset (see [Compile the project dataset][compile]) or on
@@ -16,7 +16,7 @@ band-selected, or any other chained variant. Every saved model is a complete pip
 spectra to a prediction in the native unit of the indicator, so it can be applied to new spectra (see
 [Predict and register][ml_predict]).
 
-The preprocessing steps are the same as for LUCAS; see [LUCAS ML preprocessing][lucas_preprocess].
+The preprocessing steps are described in [ML pre-processing 1][ml_preprocess].
 
 ## Notebook
 
@@ -67,8 +67,9 @@ modeling cell.
 | `model_fp` | Folder for the saved models, relative to the project root. Empty = `<project_root_fp>/models` |
 
 **Set `indicator_transformation` and `indicator_standardisation` here, deliberately.** They are not taken
-over from the transformation you last looked at in a plot. The process file in the repository leaves them
-out, which gives `none`; the example above writes them out.
+over from the transformation you last looked at in a plot. The process file in the repository sets
+`indicator_transformation` to `none` and leaves out `indicator_standardisation`, which also gives `none`;
+the example above writes both out.
 
 The example uses the project's own regressor file. Since it holds the same values as the `standard` set,
 `"model_parameters_fp": "default"` gives the same models, and records a database set instead of a file in
@@ -115,15 +116,15 @@ with the model.
 
 Two steps are not refitted, and the model run says so in its notes:
 
-- **Outlier detection** (`_ol`): indicator outliers were set to missing using all samples.
+- **Outlier detection** (`.olif`, `.olee`, `.ollof`, `.ol1csvm`): indicator outliers were set to missing using all samples.
 - **Permutation selection**: the selected bands are taken as fixed. They are clean only if the selection
   used the same `test_size` (see above).
 
-On `neospectra_10nm_ol_mc` (outlier detection, then meancentring) the run starts with:
+Steps that are not refitted are printed at the start of the run, e.g. for a chain that starts with
+isolation forest outlier detection:
 
 ```
-    Previous: spectra_scaling — neospectra_10nm_ol_mc.parquet (2026-10-26T21:33:17)
-    ⚠️  01_ol: indicator outliers were set to missing using all samples (not refitted)
+    ⚠️  01_olif: indicator outliers were set to missing using all samples (not refitted)
 ```
 
 The indicator transformation and standardisation are part of the pipeline too, so predictions are returned
@@ -147,31 +148,25 @@ Written under `project_root_fp`, named after the input dataframe:
 - **`covariate_importance/<name>_tt/`**: feature and band importance of the fitted models.
 - **`plot/<name>_tt/`**: the observed-predicted and importance plots, if saved.
 
-The run on `neospectra_10nm_ol_mc` (136 samples with both indicators, 116 bands 1350–2500 nm) printed:
+The run prints the main test metrics per indicator, one column per regressor:
 
 ```
     ── c-org ──
                   ols/tr              huber/tr
-    r2            -5.5885             0.4232
-    rmse          3.9150              1.1584
-    rpiq          0.5677              1.9187
-
-    ── n-tot ──
-                  ols/tr              huber/tr
-    r2            -0.2044             0.5973
-    rmse          0.1398              0.0808
-    rpiq          1.4486              2.5052
+    r2            <value>             <value>
+    rmse          <value>             <value>
+    rpiq          <value>             <value>
 ```
 
-and saved, among others,
-`models/neospectra_10nm_ol_mc_tt/neospectra_10nm_ol_mc_c-org_huber_tt.joblib` with its manifest. An
-excerpt of the manifest of the `c-org` OLS model:
+For the meancentred dataframe `neospectra_10nm.mc` the models are saved as, e.g.,
+`models/neospectra_10nm.mc_tt/neospectra_10nm.mc_c-org_huber_tt.joblib`, each with its manifest. An
+excerpt of a manifest (`c-org`, OLS):
 
 ```json
 {
   "manifest_version": 1,
-  "model_file": "neospectra_10nm_ol_mc_c-org_ols_tt.joblib",
-  "model_sha256": "6249e5da…8a024f",
+  "model_file": "neospectra_10nm.mc_c-org_ols_tt.joblib",
+  "model_sha256": "…",
   "indicator": "c-org",
   "indicator_unit": "weight percent",
   "regressor": "ols",
@@ -179,28 +174,28 @@ excerpt of the manifest of the `c-org` OLS model:
   "mode": "traintest",
   "input": { "columns": ["wl_nm_1350", "…", "wl_nm_2500"], "signal_type": "refl", "n_bands": 116 },
   "pipeline": {
-    "steps": ["bands", "02_mc"],
+    "steps": ["bands", "01_mc"],
     "indicator": { "transform": "linear", "standardise": false },
     "holdout": { "test_size": 0.3, "key": "sample_id" },
-    "notes": ["01_ol: indicator outliers were set to missing using all samples (not refitted)"]
+    "notes": []
   },
   "data": {
-    "input_parquet": "neospectra_10nm_ol_mc.parquet",
+    "input_parquet": "neospectra_10nm.mc.parquet",
     "source_parquet": "neospectra_10nm.parquet",
-    "n_train": 94,
-    "train_sample_ids": [2, 4, 9, "…"]
+    "n_train": "…",
+    "train_sample_ids": ["…"]
   }
 }
 ```
 
-**Reading the numbers.** OLS on 116 bands with 94 training samples has almost as many unknowns as samples
-and overfits: a negative `r2` means it predicts the test samples worse than their mean. The robust Huber
-regressor does better (`rpiq` 1.9 for `c-org`, 2.5 for `n-tot`), but Huber also warned that it did not
-converge in 100 iterations. Reduce the bands (PCA, band selection) or use regularised regressors before
-reading anything into these metrics.
+**Reading the numbers.** OLS on all bands has nearly as many unknowns as training samples and overfits;
+a negative `r2` means it predicts the test samples worse than their mean. Robust and regularised
+regressors, or fewer inputs (PCA, band reduction, band selection), usually do better. `rpiq` (the
+interquartile range of the observed values divided by the RMSE) is the common yardstick for soil
+spectroscopy: the higher, the better.
 
-**Models saved before 2026-10-23 have no manifest** and are refused by `predict_independent` and
-`register_model` (`no manifest for … rerun regression_modeling`). Rerun `regression_modeling`.
+A model without a manifest is refused by `predict_independent` and `register_model`
+(`no manifest for … rerun regression_modeling`). Rerun `regression_modeling`.
 {: .notice--warning}
 
 ## Next step
@@ -211,4 +206,4 @@ the database.
 [compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
-[lucas_preprocess]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/ml_preprocess/
+[ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/

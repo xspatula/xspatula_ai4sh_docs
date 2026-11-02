@@ -7,7 +7,7 @@ excerpt: "Applying saved AI4SoilHealth models to new spectra with predict_indepe
 permalink: /machine_learning/ml_predict/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-10-26 08:00:00 +0200
+last_modified_at: 2026-11-01 08:00:00 +0100
 ---
 
 A model saved by [ML modeling][ml_model] is a complete pipeline: give it unprocessed spectra and it returns
@@ -37,7 +37,7 @@ that line in the cell you want to run.
         "project_root_fp": "./project_neospectra/data/compiled/neospectra_10nm",
         "dataframe": "neospectra_10nm",
         "model_array": [
-          "./project_neospectra/data/compiled/neospectra_10nm/models/neospectra_10nm_ol_mc_tt/neospectra_10nm_ol_mc_c-org_huber_tt.joblib",
+          "./project_neospectra/data/compiled/neospectra_10nm/models/neospectra_10nm.mc_tt/neospectra_10nm.mc_c-org_huber_tt.joblib",
           "c-org_huber_neospectra"
         ],
         "dst_fp": "./project_neospectra/data/predictions/neospectra_10nm"
@@ -58,7 +58,7 @@ that line in the cell you want to run.
 companion JSON shows spectral preprocessing (anything but outlier detection) is refused
 (`… holds preprocessed spectra … give the unprocessed spectra`): it has the same band names, so it would
 give wrong predictions without any error. In the example, `neospectra_10nm` is accepted, but
-`neospectra_10nm_ol_mc` is not.
+`neospectra_10nm.mc` is not.
 {: .notice--warning}
 
 Before predicting, each model is checked:
@@ -97,10 +97,10 @@ Register only models you intend to use: **a registered model is never changed or
       "process": "register_model",
       "parameters": {
         "model_array": [
-          "./project_neospectra/data/compiled/neospectra_10nm/models/neospectra_10nm_ol_mc_tt/neospectra_10nm_ol_mc_c-org_huber_tt.joblib"
+          "./project_neospectra/data/compiled/neospectra_10nm/models/neospectra_10nm.mc_tt/neospectra_10nm.mc_c-org_huber_tt.joblib"
         ],
         "name": "c-org_huber_neospectra",
-        "abstract": "Organic carbon from NeoSpectra reflectance 1350-2500 nm, AI4SH partners 0-20 cm, outliers removed, mean-centred, Huber"
+        "abstract": "Organic carbon from NeoSpectra reflectance 1350-2500 nm, AI4SH partners 0-20 cm, mean-centred, Huber"
       }
     }
   ]
@@ -151,5 +151,6 @@ A file that is already registered, or a name that is already taken, is refused.
 A retired model can no longer be applied by name. Its record, metrics and frozen parameter sets are kept.
 
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
+[ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/
