@@ -7,7 +7,7 @@ excerpt: "What an AI4SoilHealth selection saves: Parquet file and companion JSON
 permalink: /machine_learning/parquet_files/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-11-01 08:00:00 +0100
+last_modified_at: 2026-11-03 08:00:00 +0100
 ---
 
 Every [select process][select_data] saves its result locally as a Parquet file. This page explains what
@@ -102,6 +102,18 @@ Records the scope, the filters and the result. Shortened (the real file also has
 `sample_filter` is the record of how the file was made (with `texture_classification` added when texture
 is filtered). A selection made with [`sample_source`][sample_source] inherits the source's
 `sample_filter`.
+
+The companion JSON of a **compiled** dataset also has `column_blocks`, which columns hold what:
+
+```json
+"column_blocks": {
+  "indicator": ["cec", "clay", "ca2+", "ec", "n-tot", "c-org", "ph-water"],
+  "covariate": ["soil texture usda", "soil texture usda major group"],
+  "spectra": ["wl_nm_1350", "…", "wl_nm_2500"]
+}
+```
+
+[ML modeling][ml_model_covariates] reads the covariates from here (`covariate_array: ["all"]`).
 
 ## Indicator units
 
@@ -288,10 +300,13 @@ steps.
 - Units, `class_columns`, `covariate_rank` and `class_labels` are merged. The companion JSON lists each
   input with its role and sample count.
 - **Inputs must be unprocessed.** An input whose companion JSON has a `preprocessing_chain` with any step
-  other than indicator outlier removal stops the compile:
+  other than indicator outlier removal or [indicator range][pp1_range] stops the compile:
   `❌ ERROR: <input> is pre-processed (…). Compile the unprocessed selection and pre-process the compiled
-  dataset, e.g. chemometric_chain with chain_from = "<input path>.json"`. Outlier removal is allowed, since it
-  only sets indicator values to missing; its chain is recorded under that input in the compiled JSON.
+  dataset, e.g. chemometric_chain with chain_from = "<input path>.json"`. Outlier removal and the indicator
+  range are allowed, since they only set indicator values to missing; their chain is recorded under that input
+  in the compiled JSON.
+- The compiled JSON gets `column_blocks` (see [The companion JSON](#the-companion-json)): the indicators, the
+  covariates and the spectral bands of the dataset.
 - The compiled JSON does not take over `preprocessing_chain`, `source_parquet` or `output_data` from its
   inputs. The compiled dataset is a new, unprocessed starting point.
 
@@ -302,6 +317,37 @@ chain there with [chain_from][chain_from] (see [ML pre-processing 1][ml_preproce
 - Compile registers its output in `.previous_dataframe`.
 
 **Output**: `data/compiled/<output_name>/<output_name>.parquet` (+ `.json`).
+
+### Compile with covariates
+
+Covariates are selected on their own with `select_covariate_only` (see
+[Select covariates][select_covariates]) and compiled like any other input, next to the indicators and the
+spectra. The notebook `compile_dataframe.ipynb` has the two cells for soil texture:
+
+**Process file**: `project_neospectra/process/compile/compile_neospectra_10nm_texture.json`
+
+```json
+{
+  "process": [
+    {
+      "process": "compile_dataset",
+      "overwrite": false,
+      "parameters": {
+        "input_array": [
+          "./project_neospectra/data/indicator/ai4sh/cec-clay-ca2-ec-n-tot-c-org-ph-water_0-20.olif.parquet",
+          "./project_neospectra/data/covariate/ai4sh/texture-usda_0-20.parquet",
+          "./project_neospectra/data/spectra/neospectra/ds2/ai4sh/1350-2500_10.parquet"
+        ],
+        "output_root_fp": "./project_neospectra/data",
+        "output_name": "neospectra_10nm_texture"
+      }
+    }
+  ]
+}
+```
+
+The indicators here are the outlier-cleaned selection (`.olif`), which compile accepts. The texture columns
+are nominal (unit `class`); how a model uses them is explained under [Covariates][ml_model_covariates].
 
 ## Next step
 
@@ -317,3 +363,6 @@ chain there with [chain_from][chain_from] (see [ML pre-processing 1][ml_preproce
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [chain_from]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/#from-exploration-to-the-model
+[pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
+[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
+[select_covariates]: {{ site.baseurl }}/machine_learning/select_data/#select-covariates

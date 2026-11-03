@@ -7,7 +7,7 @@ excerpt: "Applying saved AI4SoilHealth models to new spectra with predict_indepe
 permalink: /machine_learning/ml_predict/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-01 08:00:00 +0100
+last_modified_at: 2026-11-03 08:00:00 +0100
 ---
 
 A model saved by [ML modeling][ml_model] is a complete pipeline: give it unprocessed spectra and it returns
@@ -55,7 +55,7 @@ that line in the cell you want to run.
 | `dst_fp` | Output folder. Empty = `<project_root_fp>/predictions` |
 
 **Give unprocessed spectra.** The models refit and apply their own preprocessing. A dataframe whose
-companion JSON shows spectral preprocessing (anything but outlier detection) is refused
+companion JSON shows spectral preprocessing (anything but outlier detection or an indicator range) is refused
 (`… holds preprocessed spectra … give the unprocessed spectra`): it has the same band names, so it would
 give wrong predictions without any error. In the example, `neospectra_10nm` is accepted, but
 `neospectra_10nm.mc` is not.
@@ -67,7 +67,14 @@ Before predicting, each model is checked:
   registration);
 - the spectra must have all the model's bands (any column order) and the same signal type (the NeoSpectra
   models above use `refl`);
-- a different version of scikit-learn, numpy or scipy than the model was saved with gives a warning.
+- a different version of scikit-learn, numpy or scipy than the model was saved with gives a warning;
+- a model with [covariates][ml_model_covariates] also needs the covariate columns in the parquet (any
+  missing: `covariate(s) of the model missing in the input: …`).
+
+**Models with covariates.** A sample with a missing covariate value, or with a class (after the model's
+class grouping) that was not among the training samples, is not predicted: it gets a missing value, and the
+run prints how many (`<n> sample(s) with a missing covariate or a class not in the training samples, not
+predicted`). The other samples are predicted as usual.
 
 **Output** in `dst_fp`:
 
@@ -154,3 +161,4 @@ A retired model can no longer be applied by name. Its record, metrics and frozen
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/
+[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates

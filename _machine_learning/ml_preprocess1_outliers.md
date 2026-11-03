@@ -7,11 +7,12 @@ excerpt: "Detecting outlying indicator values with isolation forest, elliptic en
 permalink: /machine_learning/ml_preprocess1/outliers/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-10-31 08:00:00 +0100
+last_modified_at: 2026-11-03 08:00:00 +0100
 ---
 
-Section 1 of the notebook `ml_preprocess_separated.ipynb`. Outlier removal is the only pre-process for
-indicators (the laboratory, home or field observed values). It runs on the indicator selection, not on the spectra. See
+Section 1.1 of the notebook `ml_preprocess_separated.ipynb`. Indicators (the laboratory, home or field observed
+values) have two pre-processes: outlier removal (this page) and the [indicator range][pp1_range] (1.2). Both run
+on the indicator selection, not on the spectra, and both set single values to missing, never whole samples. See
 [ML pre-processing 1][pp1] for input dataframes, naming and the companion JSON.
 
 ## How outliers are detected
@@ -158,13 +159,20 @@ suffix: `.olif`, `.olee`, `.ollof` or `.ol1csvm` for the detector applied (+ opt
 
 Outlier removal is not refitted on the training samples in [ML modeling][ml_model]. The values were set to
 missing using all samples, and the model prints a note that says so. That is acceptable for gross errors.
-It is a reason to keep the threshold low rather than to use outlier removal to trim the distribution.
+It is a reason to keep the threshold low rather than to use outlier removal to trim the distribution. To limit
+the model to a population (e.g. agricultural soils with c-org up to 10 %), use the [indicator range][pp1_range]
+instead: fixed limits, nothing learned from the samples.
+
+Outlier detection and the indicator range are the two indicator steps: they only set indicator values to missing
+and are never refitted in a model. An indicator file with either step can be [compiled][compile].
 
 ## Next step
 
-[Filters][pp1_filter]: smooth the spectra.
+[Indicator range][pp1_range]: set indicator values outside a [min, max] range to missing.
 
 [pp1]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [name_extension]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#name-extension
 [pp1_filter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/filter/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
+[pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
+[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset

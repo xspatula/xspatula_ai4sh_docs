@@ -7,7 +7,7 @@ excerpt: "Selecting AI4SoilHealth spectra, indicators and covariates from the da
 permalink: /machine_learning/select_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-11-01 08:00:00 +0100
+last_modified_at: 2026-11-03 08:00:00 +0100
 ---
 
 The first step of the machine learning pipeline: decide which samples and which data you need, check
@@ -401,6 +401,37 @@ without it. The output name is explained under [Output names][output_names].
 classes). AI4SH has no landscape covariates yet. Any indicator can still be selected as a covariate,
 e.g. a field measurement used as model input. See [Covariates and ranks][lucas_ranks] on the LUCAS page.
 
+Soil texture is the main nominal covariate. When observations are imported, texture is derived into four
+classifications ([Derived soil texture classes][obs_texture]): `soil texture usda` (12 classes),
+`soil texture usda major group` (4 groups), `soil texture iuss` and `soil texture iuss major group`. They are
+saved as text with unit `class`.
+
+**Process file**: `project_neospectra/process/select/select_ai4sh_texture.json`
+
+```json
+{
+  "process": [
+    {
+      "process": "select_covariate_only",
+      "overwrite": false,
+      "parameters": {
+        "dataset": "ai4sh",
+        "campaign": "",
+        "sampling_log": "",
+        "min_profile": 0,
+        "max_profile": 20,
+        "covariate_array": ["soil texture usda", "soil texture usda major group"],
+        "output_root_fp": "./project_neospectra/data",
+        "output_name": "texture-usda_0-20"
+      }
+    }
+  ]
+}
+```
+
+The selection is then [compiled with the indicators and spectra][compile_covariates], and used in a model as
+described under [Covariates][ml_model_covariates].
+
 ## All in one: select_spectra
 
 `select_spectra` (role `all`) saves spectra, indicators and covariates in one file, without a compile
@@ -428,3 +459,5 @@ step: the spectra parameters plus `indicator_array` and `data_range`. Separate s
 [lucas_ranks]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/select_data/#covariates-and-ranks
 [obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
+[compile_covariates]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-with-covariates
+[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates

@@ -3,11 +3,11 @@ title: "ML Modeling"
 layout: single
 sidebar:
   nav: "machine_learning"
-excerpt: "Training and evaluating regressors on AI4SoilHealth spectra: regression_modeling parameters, the standard regressor set, sample-id holdout, the preprocessing refitted inside the model, and the saved pipeline with its manifest."
+excerpt: "Training and evaluating regressors on AI4SoilHealth spectra: regression_modeling parameters, the standard regressor set, covariates (numeric and classes such as soil texture) next to the spectra, sample-id holdout, the preprocessing refitted inside the model, and the saved pipeline with its manifest."
 permalink: /machine_learning/ml_model/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-01 08:00:00 +0100
+last_modified_at: 2026-11-03 08:00:00 +0100
 ---
 
 Trains and evaluates regressors on the compiled dataset (see [Compile the project dataset][compile]) or on
@@ -56,6 +56,8 @@ modeling cell.
 |---|---|
 | `dataframe` | The dataframe to model: `"raw"` for the unprocessed selection, an explicit chained name, or `"previous"` |
 | `indicator_array` | The target indicators; one model per indicator and regressor |
+| `covariate_array` | Covariates used next to the spectra: empty = spectra only (default), `all` = every covariate of the compiled dataset, or the covariate names. See [Covariates](#covariates) |
+| `class_grouping` | Pool the classes of a nominal covariate into groups before encoding. See [Covariates](#covariates) |
 | `regressor_array` | The regressors to fit per indicator, see the table below |
 | `model_parameters_fp` | Regressor hyper-parameters: `default` (the `standard` set), `none` (scikit-learn defaults), a set name or a JSON file. See [ML settings][ml_settings] |
 | `indicator_transformation` | Transformation of the indicator before fitting: `none`, `default`/`standard`, a set name or a JSON file. Default `none` |
@@ -94,6 +96,82 @@ Hyper-parameters of the `standard` regressor set (`model_parameters_fp: "default
 `random_state: 42` makes the stochastic regressors give the same model every run. To change
 hyper-parameters, create a custom regressor set ([ML settings][ml_settings]) rather than editing a file.
 
+## Covariates
+
+Besides the spectra, a model can use **covariates**: other observations of the same samples, selected with
+`select_covariate_only` and compiled with the indicators and spectra (see
+[Compile the project dataset][compile]). A covariate is either numeric (e.g. a field pH) or nominal, a class
+with unit `class` (e.g. soil texture).
+
+**Process file**: `project_neospectra/process/ml_model/regression_modeling_texture.json`
+
+```json
+{
+  "process": [
+    {
+      "process": "regression_modeling",
+      "overwrite": true,
+      "parameters": {
+        "project_root_fp": "./project_neospectra/data/compiled/neospectra_10nm_texture",
+        "dataframe": "raw",
+        "indicator_array": ["c-org", "n-tot"],
+        "covariate_array": ["soil texture usda"],
+        "class_grouping": [
+          {
+            "covariate": "soil texture usda",
+            "groups": [
+              ["sand", "loamy sand", "sandy loam"],
+              ["loam", "silt loam", "silt", "sandy clay loam"],
+              ["clay loam", "silty clay loam", "sandy clay", "silty clay", "clay"]
+            ]
+          }
+        ],
+        "regressor_array": ["ols", "randfor"],
+        "model_parameters_fp": "./project_neospectra/regressors/regression_model_parameters.json",
+        "traintest": true,
+        "test_size": 0.3,
+        "kfold": true,
+        "folds": 5
+      }
+    }
+  ]
+}
+```
+
+- **`covariate_array`**: empty means spectra only (as before), `all` means every covariate of the compiled
+  dataset (read from `column_blocks` in its companion JSON, or else from `covariate_array`), or list the
+  covariate names. Numeric covariates are used unchanged. Nominal ones become one 0/1
+  column per class (one-hot encoding).
+- **`class_grouping`** pools the classes of a covariate before encoding: an array of objects
+  `{"covariate": <name>, "groups": [[class, class, …], …]}`. Every class in the data must be placed in a group;
+  otherwise the run stops and lists the classes it could not place
+  (`class_grouping for "soil texture usda" does not place the class(es): …`). A group is named by its classes
+  joined with `|`, e.g. `sand|loamy sand|sandy loam`.
+- **Predefined groupings** need no `class_grouping`: they are separate covariates. When observations are
+  imported, texture is derived into four nominal classifications: `soil texture usda` (12 classes),
+  `soil texture usda major group` (4 groups), `soil texture iuss` and `soil texture iuss major group`
+  (see [Derived soil texture classes][obs_texture]). LUCAS has the same four. Select the one you want as
+  covariate.
+- **Samples without a covariate value are skipped**, both when modelling and when predicting (they get no
+  prediction, and the number is printed). Test samples whose class has no training sample are skipped too.
+  With k-fold, a class with fewer samples than folds is missing from some training folds; the run warns and
+  suggests a `class_grouping`.
+- **The same train-only fitting as the spectra:** the spectra's preprocessing chain is still refitted on the
+  training samples only, now together with the covariates, in one saved model. That model needs only the
+  unprocessed spectra plus the covariates to predict.
+- A covariate of the model is never an indicator. Other covariates of the dataset are only modelled as
+  indicators when named in `indicator_array`.
+- **Spectra-only models** (no `covariate_array`) are built exactly as before, so existing saved models still
+  load and predict.
+
+`covariate_array` and `class_grouping` are registered by `setup_processes.ipynb`; rerun it after updating
+xspatula_ai4sh.
+{: .notice--info}
+
+**Which classification?** With few samples (e.g. 181 AI4SH samples over the 12 USDA texture classes), use a
+coarse grouping or a major-group covariate, so that every class has enough samples. For linear regressors a
+class shifts the prediction by a fixed amount; tree-based regressors can use the class columns in their splits.
+
 ## Train and test samples
 
 The test samples are chosen from the `sample_id`, not from the row order: the `round(test_size × n)`
@@ -127,12 +205,18 @@ isolation forest outlier detection:
     ⚠️  01_olif: indicator outliers were set to missing using all samples (not refitted)
 ```
 
+An [indicator range][pp1_range] (`.ir`) is not refitted either, but needs no note: its limits are fixed,
+nothing is learned from the samples.
+
 The indicator transformation and standardisation are part of the pipeline too, so predictions are returned
 in the native unit of the indicator.
 
 ## Output
 
-Written under `project_root_fp`, named after the input dataframe:
+Written under `project_root_fp`, named after the input dataframe. With covariates, the model, plot and results
+names get the suffix `_cv-<covariates>` (the names in lower case without spaces or punctuation, e.g.
+`_cv-soiltextureusdamajorgroup`; replaced by an 8-character hash when longer than 40 characters), so they do
+not overwrite the spectra-only models:
 
 - **`<name>_regression.json`**: per indicator and regressor the test metrics `r2`, `rmse`, `mae`, `mape`,
   `medae`, `bias`, `rpiq`, `ccc`, with `n_train`/`n_test`, the model file and its sha256. `input_parquet`
@@ -146,7 +230,12 @@ Written under `project_root_fp`, named after the input dataframe:
     parameters, every settings set or file used with its checksum, the software versions and the git
     commit).
 - **`covariate_importance/<name>_tt/`**: feature and band importance of the fitted models.
-- **`plot/<name>_tt/`**: the observed-predicted and importance plots, if saved.
+- **`plot/<name>_tt/`**: the observed-predicted and importance plots, if saved. With covariates the feature
+  importance plot gets a second panel with the covariate columns (e.g. `texture=clay|clay loam`), and the
+  permutation importance lists them next to the wavelengths.
+
+With covariates the manifest's `input` also has `covariates`: `numeric`, `nominal`, `class_grouping` and
+`levels` (the classes, after grouping, seen in training).
 
 The run prints the main test metrics per indicator, one column per regressor:
 
@@ -207,3 +296,5 @@ the database.
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
+[obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
+[pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/

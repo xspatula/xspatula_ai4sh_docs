@@ -245,8 +245,10 @@ machine_learning:
     children:
       - title: "Overview"
         url: /machine_learning/ml_preprocess1/
-      - title: "1 Indicator outliers"
+      - title: "1.1 Indicator outliers"
         url: /machine_learning/ml_preprocess1/outliers/
+      - title: "1.2 Indicator range"
+        url: /machine_learning/ml_preprocess1/range/
       - title: "2.1 Filters"
         url: /machine_learning/ml_preprocess1/filter/
       - title: "2.2 Scatter correction"

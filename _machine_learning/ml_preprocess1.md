@@ -7,7 +7,7 @@ excerpt: "Machine learning pre-processes that work on indicators or spectra sepa
 permalink: /machine_learning/ml_preprocess1/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-02 08:00:00 +0100
+last_modified_at: 2026-11-03 08:00:00 +0100
 ---
 
 ML pre-processing 1 cleans up indicators and spectra **separately**, before they are compiled into a
@@ -31,6 +31,7 @@ numbers of the notebook. Each pre-process adds a unique suffix to the saved data
 | Section | Page | Process | Suffix |
 |---|---|---|---|
 | 1.1 Indicator outliers | [Indicator outliers][pp1_outliers] | `detect_outliers` | `.olif`, `.olee`, `.ollof`, `.ol1csvm` |
+| 1.2 Indicator range | [Indicator range][pp1_range] | `indicator_range` | `.ir` |
 | 2.1 Filters | [Filters][pp1_filter] | `filter_spectra`, `multi_filter_spectra` | `.ma5`, `.gf2`, `.sg5`, `.lw21`, `.mf` |
 | 2.2 Scatter correction | [Scatter correction][pp1_scatter] | `spectra_scatter_correction` | `.l1`, `.l2`, `.max`, `.snv`, `.msc`, `.dt` |
 | 2.3 Derivatives | [Derivatives][pp1_derivative] | `spectra_derivative`, `filter_spectra` | `.d1`, `.d2`, `.sg5.d1` |
@@ -106,6 +107,7 @@ Chained scatter corrections are joined without a dot (`snv` + `detrend` → `snv
 | Suffix | Method | Category |
 |---|---|---|
 | `olif`, `olee`, `ollof`, `ol1csvm` | Isolation forest, elliptic envelope, local outlier factor, one-class SVM | Indicator outliers |
+| `ir` | Indicator values outside a [min, max] range set to missing | Indicator range |
 | `ma{n}` | Moving average, n = kernel length (`ma5`) | Filter |
 | `gf{n}` | Gaussian filter, n = sigma (`gf2`, `gf1p5`) | Filter |
 | `sg{n}` | Savitzky-Golay smoothing, n = window length (`sg7`) | Filter |
@@ -224,7 +226,7 @@ leakage).
 The model needs the indicators and spectra in one dataframe, i.e. the compiled dataset
 ([Compile the project dataset][compile]), and it can only refit a chain from an unprocessed source in the
 same folder. `compile_dataset` therefore refuses spectra that are pre-processed (any step other than
-indicator outlier removal). The workflow is: explore and choose the pipeline in the spectra folder, compile
+indicator outlier removal or indicator range). The workflow is: explore and choose the pipeline in the spectra folder, compile
 the unprocessed selections, run the chosen pipeline in the compiled folder with [chain_from][chain_from],
 and model the result. Two consequences:
 
@@ -233,9 +235,10 @@ and model the result. Two consequences:
 - Fitted results (msc reference, scaling means, kept bands, clusters, PCA loadings) can differ slightly
   between the exploration run and the model.
 
-Indicator outlier removal is the exception. It only sets values to missing, so an outlier-cleaned indicator
-selection can be compiled; its chain is recorded per input in the compiled companion JSON. The model notes
-that the outliers were removed using all samples.
+Indicator outlier removal and the indicator range are the exception. They only set values to missing, so an
+outlier-cleaned or ranged indicator selection can be compiled; its chain is recorded per input in the compiled
+companion JSON. The model notes that the outliers were removed using all samples; the range needs no note, its
+limits are fixed.
 
 ## Recommended order
 
@@ -270,6 +273,7 @@ Not every pipeline needs every step. A common, robust NIR pipeline is
 [compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
 [chain_from]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/#273-load-existing-pre-processing-chain
 [pp1_outliers]: {{ site.baseurl }}/machine_learning/ml_preprocess1/outliers/
+[pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
 [pp1_filter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/filter/
 [pp1_scatter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/scatter/
 [pp1_derivative]: {{ site.baseurl }}/machine_learning/ml_preprocess1/derivative/
