@@ -7,7 +7,7 @@ excerpt: "Detecting outlying indicator values with isolation forest, elliptic en
 permalink: /machine_learning/ml_preprocess1/outliers/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-03 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Section 1.1 of the notebook `ml_preprocess_separated.ipynb`. Indicators (the laboratory, home or field observed
@@ -158,7 +158,7 @@ suffix: `.olif`, `.olee`, `.ollof` or `.ol1csvm` for the detector applied (+ opt
 ## In a model
 
 Outlier removal is not refitted on the training samples in [ML modeling][ml_model]. The values were set to
-missing using all samples, and the model prints a note that says so. That is acceptable for gross errors.
+missing using all samples. That is acceptable for gross errors.
 It is a reason to keep the threshold low rather than to use outlier removal to trim the distribution. To limit
 the model to a population (e.g. agricultural soils with c-org up to 10 %), use the [indicator range][pp1_range]
 instead: fixed limits, nothing learned from the samples.

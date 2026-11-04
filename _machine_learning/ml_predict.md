@@ -7,7 +7,7 @@ excerpt: "Applying saved AI4SoilHealth models to new spectra with predict_indepe
 permalink: /machine_learning/ml_predict/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-03 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 A model saved by [ML modeling][ml_model] is a complete pipeline: give it unprocessed spectra and it returns
@@ -75,6 +75,10 @@ Before predicting, each model is checked:
 class grouping) that was not among the training samples, is not predicted: it gets a missing value, and the
 run prints how many (`<n> sample(s) with a missing covariate or a class not in the training samples, not
 predicted`). The other samples are predicted as usual.
+
+To get the covariates into the parquet, compile the spectra with the same covariate selection (see
+[Compile with covariates][compile_covariates]); indicators are not needed. Give the classes as selected, not
+grouped: the model applies its own `class_grouping`.
 
 **Output** in `dst_fp`:
 
@@ -162,3 +166,4 @@ A retired model can no longer be applied by name. Its record, metrics and frozen
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/
 [ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
+[compile_covariates]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-with-covariates

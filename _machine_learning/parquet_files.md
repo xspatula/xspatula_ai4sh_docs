@@ -7,7 +7,7 @@ excerpt: "What an AI4SoilHealth selection saves: Parquet file and companion JSON
 permalink: /machine_learning/parquet_files/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-11-03 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Every [select process][select_data] saves its result locally as a Parquet file. This page explains what
@@ -348,6 +348,10 @@ spectra. The notebook `compile_dataframe.ipynb` has the two cells for soil textu
 
 The indicators here are the outlier-cleaned selection (`.olif`), which compile accepts. The texture columns
 are nominal (unit `class`); how a model uses them is explained under [Covariates][ml_model_covariates].
+
+The inputs are inner joined, so the compiled dataset only holds the samples that have a texture class. To
+see what the covariate adds, compare a model with covariates against a spectra-only model of the **same**
+compiled dataset (`covariate_array` empty), not against a dataset compiled without the covariates.
 
 ## Next step
 

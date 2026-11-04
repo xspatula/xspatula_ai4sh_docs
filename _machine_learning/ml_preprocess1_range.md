@@ -7,7 +7,7 @@ excerpt: "Setting indicator values outside a [min, max] range to missing, intera
 permalink: /machine_learning/ml_preprocess1/range/
 author_profile: false
 date: 2026-11-03 08:00:00 +0100
-last_modified_at: 2026-11-03 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Section 1.2 of the notebook `ml_preprocess_separated.ipynb`. Like [outlier removal][pp1_outliers], the
@@ -29,7 +29,8 @@ The process `indicator_range`:
 - **Start ranges** come from `data_range` in the process file, the same JSON format as in
   `select_indicator_only`: `"{\"c-org\": {\"min\": 0, \"max\": 10}}"` (a JSON string). Omit `min` or `max` for an
   open end. An indicator without an entry starts with no limits. `indicator_array` limits which indicators are
-  shown and ranged (empty = all numeric indicators).
+  shown and ranged (empty = all numeric indicators); a `data_range` entry for an indicator not in
+  `indicator_array` is ignored.
 - **What you see:** a table per indicator (n, min, 1 %, median, 99 %, max, current range, number of values
   outside) and a strip plot with the limits as dashed red lines and the values outside in red.
 - **Changing a range:** type `<indicator> <min> <max>`, e.g. `c-org 0 8`, or `ph-water - 8.5` for no lower
@@ -39,7 +40,8 @@ The process `indicator_range`:
   (other indicators, spectra) is kept. A model of that indicator then drops the sample, while models of other
   indicators still use it. Nothing is saved if no value is outside.
 - The file gets the suffix `.ir` (optional `#<name_extension>`), and the applied ranges are recorded in the
-  preprocessing chain of the companion JSON (`process: indicator_range`, `parameters.data_range`).
+  preprocessing chain of the companion JSON (`process: indicator_range`, `parameters.data_range`). Only the
+  ranges that set at least one value to missing are recorded.
 
 ## 1.2 Remove indicator values outside a range
 
@@ -84,8 +86,8 @@ table is printed:
 
 ```
     indicator           n       min        p1    median       p99       max   range              outside
-    c-org             181     <min>      <p1>  <median>     <p99>     <max>   [0, 10]            <n>
-    n-tot             181     <min>      <p1>  <median>     <p99>     <max>   [0, 1]             <n>
+    c-org             <n>     <min>      <p1>  <median>     <p99>     <max>   [0, 10]            <n>
+    n-tot             <n>     <min>      <p1>  <median>     <p99>     <max>   [0, 1]             <n>
 ```
 
 and the prompt asks for changes:
@@ -104,7 +106,7 @@ suffix: `.ir` (+ optional `#<name_extension>`)
 
 Unlike outlier detection, nothing is learned from the samples: the limits are fixed, so the step is the same for
 training and independent data. A ranged indicator file can be [compiled][compile] and used for prediction, and
-[ML modeling][ml_model] neither refits the step nor prints a note about it. Outlier detection and indicator range
+[ML modeling][ml_model] does not refit it. Outlier detection and indicator range
 are the two **indicator steps**: they only set indicator values to missing.
 
 Typical order: outlier detection (1.1), then indicator range (1.2) with `"dataframe": "previous"`; or the range

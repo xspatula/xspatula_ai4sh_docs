@@ -7,7 +7,7 @@ excerpt: "Training and evaluating regressors on AI4SoilHealth spectra: regressio
 permalink: /machine_learning/ml_model/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-03 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Trains and evaluates regressors on the compiled dataset (see [Compile the project dataset][compile]) or on
@@ -92,6 +92,11 @@ Hyper-parameters of the `standard` regressor set (`model_parameters_fp: "default
 | `randfor` | Random forest | `n_estimators: 30`, `random_state: 42` |
 | `mlp` | Multi-layer perceptron | `hidden_layer_sizes: [100, 100]`, `max_iter: 200`, `tol: 0.001`, `epsilon: 1e-8`, `random_state: 42` |
 | `cubist` | Cubist | `random_state: 42` |
+| `plsr` | Partial least squares regression | not in the `standard` set: scikit-learn defaults (`n_components: 2`) |
+
+PLSR is the classic regressor for NIR spectra. It compresses the bands into a few latent components that explain both the
+spectra and the indicator. Two components is usually too few for soil spectra: set `n_components` (often 5–20) in a
+custom regressor set, and compare the test metrics over a few values.
 
 `random_state: 42` makes the stochastic regressors give the same model every run. To change
 hyper-parameters, create a custom regressor set ([ML settings][ml_settings]) rather than editing a file.
@@ -139,8 +144,7 @@ with unit `class` (e.g. soil texture).
 ```
 
 - **`covariate_array`**: empty means spectra only (as before), `all` means every covariate of the compiled
-  dataset (read from `column_blocks` in its companion JSON, or else from `covariate_array`), or list the
-  covariate names. Numeric covariates are used unchanged. Nominal ones become one 0/1
+  dataset (the covariates listed in its companion JSON), or list the covariate names. Numeric covariates are used unchanged. Nominal ones become one 0/1
   column per class (one-hot encoding).
 - **`class_grouping`** pools the classes of a covariate before encoding: an array of objects
   `{"covariate": <name>, "groups": [[class, class, …], …]}`. Every class in the data must be placed in a group;
@@ -152,10 +156,17 @@ with unit `class` (e.g. soil texture).
   `soil texture usda major group` (4 groups), `soil texture iuss` and `soil texture iuss major group`
   (see [Derived soil texture classes][obs_texture]). LUCAS has the same four. Select the one you want as
   covariate.
-- **Samples without a covariate value are skipped**, both when modelling and when predicting (they get no
-  prediction, and the number is printed). Test samples whose class has no training sample are skipped too.
-  With k-fold, a class with fewer samples than folds is missing from some training folds; the run warns and
-  suggests a `class_grouping`.
+- **Samples without a value for each covariate of the model are skipped**, both when modelling and when
+  predicting (they get no prediction, and the number is printed). A sample missing one of two covariates is
+  skipped too.
+- **A class the model has not seen cannot be predicted.** The model learns one column per class from its
+  training samples; a class without training samples has no column, and the model has nothing to base a
+  prediction on. In train/test, test samples of such a class are skipped, and the run names the class:
+  `<indicator>: <n> test sample(s) with a <covariate> class not in the training samples (<classes>), skipped`.
+  With k-fold, a class with fewer samples than folds is missing from some training folds; its samples in
+  those folds are predicted without a class column, which biases the k-fold metrics. The run warns
+  (`… class(es) with fewer samples than folds (<folds>): <class> (<n>) … — consider class_grouping`). The cure
+  in both cases is the same: pool the rare classes with a `class_grouping`, or use a major-group covariate.
 - **The same train-only fitting as the spectra:** the spectra's preprocessing chain is still refitted on the
   training samples only, now together with the covariates, in one saved model. That model needs only the
   unprocessed spectra plus the covariates to predict.
@@ -168,7 +179,7 @@ with unit `class` (e.g. soil texture).
 xspatula_ai4sh.
 {: .notice--info}
 
-**Which classification?** With few samples (e.g. 181 AI4SH samples over the 12 USDA texture classes), use a
+**Which classification?** With few samples (e.g. a few hundred samples over the 12 USDA texture classes), use a
 coarse grouping or a major-group covariate, so that every class has enough samples. For linear regressors a
 class shifts the prediction by a fixed amount; tree-based regressors can use the class columns in their splits.
 
@@ -192,21 +203,24 @@ samples only. Mean centring, scaling, the MSC reference spectrum, PCA, Ward clus
 and univariate band selection therefore never see the test samples, and their fitted values are saved
 with the model.
 
-Two steps are not refitted, and the model run says so in its notes:
+Three steps are not refitted:
 
-- **Outlier detection** (`.olif`, `.olee`, `.ollof`, `.ol1csvm`): indicator outliers were set to missing using all samples.
+- **Outlier detection** (`.olif`, `.olee`, `.ollof`, `.ol1csvm`): indicator outliers were set to missing using
+  all samples.
+- **[Indicator range][pp1_range]** (`.ir`): the limits are fixed, nothing is learned from the samples, so
+  there is nothing to refit.
 - **Permutation selection**: the selected bands are taken as fixed. They are clean only if the selection
   used the same `test_size` (see above).
 
-Steps that are not refitted are printed at the start of the run, e.g. for a chain that starts with
-isolation forest outlier detection:
+When outlier detection or permutation selection is in the chain of the dataframe you model, the run prints a
+note at the start, e.g. for a chain that starts with isolation forest outlier detection:
 
 ```
     ⚠️  01_olif: indicator outliers were set to missing using all samples (not refitted)
 ```
 
-An [indicator range][pp1_range] (`.ir`) is not refitted either, but needs no note: its limits are fixed,
-nothing is learned from the samples.
+For a compiled dataset the outlier step belongs to an input: it is recorded under `inputs` in the compiled
+companion JSON (see [Compile the project dataset][compile]), and the model prints no note about it.
 
 The indicator transformation and standardisation are part of the pipeline too, so predictions are returned
 in the native unit of the indicator.
@@ -216,7 +230,12 @@ in the native unit of the indicator.
 Written under `project_root_fp`, named after the input dataframe. With covariates, the model, plot and results
 names get the suffix `_cv-<covariates>` (the names in lower case without spaces or punctuation, e.g.
 `_cv-soiltextureusdamajorgroup`; replaced by an 8-character hash when longer than 40 characters), so they do
-not overwrite the spectra-only models:
+not overwrite the spectra-only models. The tag names the covariates, not the `class_grouping`: a rerun with
+the same covariates but another grouping overwrites the earlier models, plots and results. Move them first if
+you want to compare groupings. For the texture example above the names are e.g.
+`models/neospectra_10nm_texture_cv-soiltextureusda_tt/neospectra_10nm_texture_cv-soiltextureusda_c-org_randfor_tt.joblib`
+and `neospectra_10nm_texture_cv-soiltextureusda_regression.json`.
+
 
 - **`<name>_regression.json`**: per indicator and regressor the test metrics `r2`, `rmse`, `mae`, `mape`,
   `medae`, `bias`, `rpiq`, `ccc`, with `n_train`/`n_test`, the model file and its sha256. `input_parquet`
@@ -231,7 +250,8 @@ not overwrite the spectra-only models:
     commit).
 - **`covariate_importance/<name>_tt/`**: feature and band importance of the fitted models.
 - **`plot/<name>_tt/`**: the observed-predicted and importance plots, if saved. With covariates the feature
-  importance plot gets a second panel with the covariate columns (e.g. `texture=clay|clay loam`), and the
+  importance plot gets a second panel with the covariate columns (e.g.
+  `soil texture usda=sand|loamy sand|sandy loam`), and the
   permutation importance lists them next to the wavelengths.
 
 With covariates the manifest's `input` also has `covariates`: `numeric`, `nominal`, `class_grouping` and

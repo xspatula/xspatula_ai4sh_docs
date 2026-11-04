@@ -7,7 +7,7 @@ excerpt: "Machine learning pre-processes that work on indicators or spectra sepa
 permalink: /machine_learning/ml_preprocess1/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-03 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 ML pre-processing 1 cleans up indicators and spectra **separately**, before they are compiled into a
@@ -237,7 +237,7 @@ and model the result. Two consequences:
 
 Indicator outlier removal and the indicator range are the exception. They only set values to missing, so an
 outlier-cleaned or ranged indicator selection can be compiled; its chain is recorded per input in the compiled
-companion JSON. The model notes that the outliers were removed using all samples; the range needs no note, its
+companion JSON. The outliers were removed using all samples; the range learns nothing from the samples, its
 limits are fixed.
 
 ## Recommended order
