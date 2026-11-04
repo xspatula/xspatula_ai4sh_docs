@@ -3,7 +3,7 @@ title: "Parquet Files"
 layout: single
 sidebar:
   nav: "machine_learning"
-excerpt: "What an AI4SoilHealth selection saves: Parquet file and companion JSON, output names, columns, units, invalid values, the .previous_dataframe history, inspecting and compiling."
+excerpt: "What an AI4SoilHealth selection saves: Parquet file and companion JSON, output names, columns, units, invalid values, the .previous_dataframe history and inspecting a dataset."
 permalink: /machine_learning/parquet_files/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
@@ -11,7 +11,8 @@ last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Every [select process][select_data] saves its result locally as a Parquet file. This page explains what
-is in it, how it is named, and how to inspect it and compile several selections into one dataset. The
+is in it, how it is named, and how to inspect it. Joining selections into one dataset is described under
+[Compile dataframe][compile]. The
 code is the same as for LUCAS ([LUCAS Parquet Files][lucas_parquet]).
 
 ## What a select process saves
@@ -113,7 +114,8 @@ The companion JSON of a **compiled** dataset also has `column_blocks`, which col
 }
 ```
 
-[ML modeling][ml_model_covariates] reads the covariates from here (`covariate_array: ["all"]`).
+[ML modeling][ml_model_covariates] reads the covariates from here (`covariate_array: ["all"]`). The whole
+compiled companion JSON is described under [Compile dataframe][compiled_json].
 
 ## Indicator units
 
@@ -269,89 +271,10 @@ It first names what it read, e.g.
 Set only one of the four `columns_*` views at a time. A name in `column_array` that isn't a column is
 skipped with a warning, and the available columns are listed.
 
-## Compile the project dataset
+## Compile
 
-Joins saved selections into one dataset. The compiled folder is the `project_root_fp` of all later ML
-steps.
-
-```json
-{
-  "process": [
-    {
-      "process": "compile_dataset",
-      "overwrite": false,
-      "parameters": {
-        "input_array": [
-          "./project_neospectra/data/spectra/<provision tag>/ds2/ai4sh/400-2500_10__jx-furrow-plant-row.parquet",
-          "./project_neospectra/data/indicator/ai4sh/cec-clay_0-100__jx-furrow-plant-row.parquet"
-        ],
-        "output_root_fp": "./project_neospectra/data",
-        "output_name": "ai4sh_furrow_plant_row"
-      }
-    }
-  ]
-}
-```
-
-- `input_array` needs at least two files; `output_name` is required.
-- The inputs are **inner joined** on `sample_id`: only samples present in all inputs are kept.
-- Key columns are kept once. `class_*` columns repeated across inputs are kept once. Any other column
-  found in two inputs is an error.
-- Units, `class_columns`, `covariate_rank` and `class_labels` are merged. The companion JSON lists each
-  input with its role and sample count.
-- **Inputs must be unprocessed.** An input whose companion JSON has a `preprocessing_chain` with any step
-  other than indicator outlier removal or [indicator range][pp1_range] stops the compile:
-  `❌ ERROR: <input> is pre-processed (…). Compile the unprocessed selection and pre-process the compiled
-  dataset, e.g. chemometric_chain with chain_from = "<input path>.json"`. Outlier removal and the indicator
-  range are allowed, since they only set indicator values to missing; their chain is recorded under that input
-  in the compiled JSON.
-- The compiled JSON gets `column_blocks` (see [The companion JSON](#the-companion-json)): the indicators, the
-  covariates and the spectral bands of the dataset.
-- The compiled JSON does not take over `preprocessing_chain`, `source_parquet` or `output_data` from its
-  inputs. The compiled dataset is a new, unprocessed starting point.
-
-A spectral pre-processing chain is fitted on all samples of its dataframe. The model refits it on the
-training samples, starting from the unprocessed source in the same folder, so the chain must be run in the
-compiled folder: explore in the spectra folder, compile the unprocessed selections, then run the chosen
-chain there with [chain_from][chain_from] (see [ML pre-processing 1][ml_preprocess]).
-- Compile registers its output in `.previous_dataframe`.
-
-**Output**: `data/compiled/<output_name>/<output_name>.parquet` (+ `.json`).
-
-### Compile with covariates
-
-Covariates are selected on their own with `select_covariate_only` (see
-[Select covariates][select_covariates]) and compiled like any other input, next to the indicators and the
-spectra. The notebook `compile_dataframe.ipynb` has the two cells for soil texture:
-
-**Process file**: `project_neospectra/process/compile/compile_neospectra_10nm_texture.json`
-
-```json
-{
-  "process": [
-    {
-      "process": "compile_dataset",
-      "overwrite": false,
-      "parameters": {
-        "input_array": [
-          "./project_neospectra/data/indicator/ai4sh/cec-clay-ca2-ec-n-tot-c-org-ph-water_0-20.olif.parquet",
-          "./project_neospectra/data/covariate/ai4sh/texture-usda_0-20.parquet",
-          "./project_neospectra/data/spectra/neospectra/ds2/ai4sh/1350-2500_10.parquet"
-        ],
-        "output_root_fp": "./project_neospectra/data",
-        "output_name": "neospectra_10nm_texture"
-      }
-    }
-  ]
-}
-```
-
-The indicators here are the outlier-cleaned selection (`.olif`), which compile accepts. The texture columns
-are nominal (unit `class`); how a model uses them is explained under [Covariates][ml_model_covariates].
-
-The inputs are inner joined, so the compiled dataset only holds the samples that have a texture class. To
-see what the covariate adds, compare a model with covariates against a spectra-only model of the **same**
-compiled dataset (`covariate_array` empty), not against a dataset compiled without the covariates.
+Joining several selections into one dataset (`compile_dataset`) has its own page:
+[Compile dataframe][compile].
 
 ## Next step
 
@@ -370,3 +293,5 @@ compiled dataset (`covariate_array` empty), not against a dataset compiled witho
 [pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
 [ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
 [select_covariates]: {{ site.baseurl }}/machine_learning/select_data/#select-covariates
+[compile]: {{ site.baseurl }}/machine_learning/compile/
+[compiled_json]: {{ site.baseurl }}/machine_learning/compile/#the-compiled-companion-json

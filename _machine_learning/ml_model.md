@@ -10,7 +10,7 @@ date: 2026-10-26 08:00:00 +0200
 last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
-Trains and evaluates regressors on the compiled dataset (see [Compile the project dataset][compile]) or on
+Trains and evaluates regressors on the compiled dataset (see [Compile dataframe][compile]) or on
 any dataframe derived from it in ML preprocessing: outlier-cleaned, meancentred, derivative, PCA-reduced,
 band-selected, or any other chained variant. Every saved model is a complete pipeline, from unprocessed
 spectra to a prediction in the native unit of the indicator, so it can be applied to new spectra (see
@@ -137,7 +137,7 @@ hyper-parameters, create a custom regressor set ([ML settings][ml_settings]) rat
 
 Besides the spectra, a model can use **covariates**: other observations of the same samples, selected with
 `select_covariate_only` and compiled with the indicators and spectra (see
-[Compile the project dataset][compile]). A covariate is either numeric (e.g. a field pH) or nominal, a class
+[Compile dataframe][compile]). A covariate is either numeric (e.g. a field pH) or nominal, a class
 with unit `class` (e.g. soil texture).
 
 **Process file**: `project_neospectra/process/ml_model/regression_modeling_texture.json`
@@ -267,7 +267,7 @@ note at the start, e.g. for a chain that starts with isolation forest outlier de
 ```
 
 For a compiled dataset the outlier step belongs to an input: it is recorded under `inputs` in the compiled
-companion JSON (see [Compile the project dataset][compile]), and the model prints no note about it.
+companion JSON (see [Compile dataframe][compile]), and the model prints no note about it.
 
 The indicator transformation and standardisation are part of the pipeline too, so predictions are returned
 in the native unit of the indicator.
@@ -369,7 +369,7 @@ A model without a manifest is refused by `predict_independent` and `register_mod
 [Predict and register][ml_predict]: apply a saved model to new spectra, and register the final model in
 the database.
 
-[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
+[compile]: {{ site.baseurl }}/machine_learning/compile/
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/

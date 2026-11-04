@@ -175,4 +175,4 @@ and are never refitted in a model. An indicator file with either step can be [co
 [pp1_filter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/filter/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
-[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
+[compile]: {{ site.baseurl }}/machine_learning/compile/

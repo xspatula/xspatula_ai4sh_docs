@@ -177,4 +177,4 @@ A retired model can no longer be applied by name. Its record, metrics and frozen
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/
 [ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
-[compile_covariates]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-with-covariates
+[compile_covariates]: {{ site.baseurl }}/machine_learning/compile/#compile-with-covariates

@@ -121,4 +121,4 @@ alone on the raw selection.
 [name_extension]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#name-extension
 [pp1_filter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/filter/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
-[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
+[compile]: {{ site.baseurl }}/machine_learning/compile/

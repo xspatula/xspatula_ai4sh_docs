@@ -46,3 +46,13 @@ search: false
 .archive figure.highlight {
   font-size: $type-size-6 * 0.75;   // 0.5625em, as the tables
 }
+
+/* Sidebar: a navigation child without url (placeholder, e.g. a section to be completed) is shown as
+   plain, greyed text instead of a link (see _includes/nav_list). */
+.nav__list .nav__pending {
+  display: block;
+  padding: 0.25rem 0;
+  font-size: $type-size-6;
+  font-style: italic;
+  color: $muted-text-color;
+}

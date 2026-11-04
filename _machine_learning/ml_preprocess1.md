@@ -224,7 +224,7 @@ samples only**, inside the model pipeline. The test samples then never influence
 leakage).
 
 The model needs the indicators and spectra in one dataframe, i.e. the compiled dataset
-([Compile the project dataset][compile]), and it can only refit a chain from an unprocessed source in the
+([Compile dataframe][compile]), and it can only refit a chain from an unprocessed source in the
 same folder. `compile_dataset` therefore refuses spectra that are pre-processed (any step other than
 indicator outlier removal or indicator range). The workflow is: explore and choose the pipeline in the spectra folder, compile
 the unprocessed selections, run the chosen pipeline in the compiled folder with [chain_from][chain_from],
@@ -270,7 +270,7 @@ Not every pipeline needs every step. A common, robust NIR pipeline is
 [select_data]: {{ site.baseurl }}/machine_learning/select_data/
 [previous_dataframe]: {{ site.baseurl }}/machine_learning/parquet_files/#the-previous-dataframe-previous_dataframe
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
-[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
+[compile]: {{ site.baseurl }}/machine_learning/compile/
 [chain_from]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/#273-load-existing-pre-processing-chain
 [pp1_outliers]: {{ site.baseurl }}/machine_learning/ml_preprocess1/outliers/
 [pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/

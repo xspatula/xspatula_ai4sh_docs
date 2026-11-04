@@ -7,7 +7,7 @@ excerpt: "Running a complete spectral pre-processing pipeline in one process wit
 permalink: /machine_learning/ml_preprocess1/chain/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-10-31 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Section 2.7 of the notebook `ml_preprocess_separated.ipynb`. See [ML pre-processing 1][pp1] for input
@@ -202,9 +202,10 @@ therefore refuses a pre-processed input:
 The workflow is:
 
 1. Explore and choose the pipeline in the spectra folder (sections 2.1–2.7).
-2. Compile the unprocessed spectra and indicator selections ([Compile the project dataset][compile]).
+2. Compile the unprocessed spectra and indicator selections ([Compile dataframe][compile]).
 3. Run `chemometric_chain` with `project_root_fp` set to the compiled folder and `chain_from` set to the
-   companion JSON of the explored chain, as a path relative to the project root.
+   companion JSON of the explored chain, as a path relative to the project root
+   ([Pre-process the compiled dataset][compile_chain]).
 4. Model the result ([ML modeling][ml_model]).
 
 suffix: the suffixes of the loaded chain, e.g. `.snv.sg5.d1.mc.wc40.pca5` (+ optional `#<name_extension>`)
@@ -226,4 +227,5 @@ suffix: the suffixes of the loaded chain, e.g. `.snv.sg5.d1.mc.wc40.pca5` (+ opt
 [plot_data]: {{ site.baseurl }}/machine_learning/plot_data/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
-[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
+[compile]: {{ site.baseurl }}/machine_learning/compile/
+[compile_chain]: {{ site.baseurl }}/machine_learning/compile/#pre-process-the-compiled-dataset

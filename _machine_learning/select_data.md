@@ -7,7 +7,7 @@ excerpt: "Selecting AI4SoilHealth spectra, indicators and covariates from the da
 permalink: /machine_learning/select_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-11-03 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 The first step of the machine learning pipeline: decide which samples and which data you need, check
@@ -445,7 +445,7 @@ step: the spectra parameters plus `indicator_array` and `data_range`. Separate s
 [parquet_files]: {{ site.baseurl }}/machine_learning/parquet_files/
 [plot_data]: {{ site.baseurl }}/machine_learning/plot_data/
 [inspect]: {{ site.baseurl }}/machine_learning/parquet_files/#inspect-the-dataset
-[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
+[compile]: {{ site.baseurl }}/machine_learning/compile/
 [columns]: {{ site.baseurl }}/machine_learning/parquet_files/#columns
 [output_names]: {{ site.baseurl }}/machine_learning/parquet_files/#output-names
 [indicator_units]: {{ site.baseurl }}/machine_learning/parquet_files/#indicator-units
@@ -459,5 +459,5 @@ step: the spectra parameters plus `indicator_array` and `data_range`. Separate s
 [lucas_ranks]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/select_data/#covariates-and-ranks
 [obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
-[compile_covariates]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-with-covariates
+[compile_covariates]: {{ site.baseurl }}/machine_learning/compile/#compile-with-covariates
 [ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates

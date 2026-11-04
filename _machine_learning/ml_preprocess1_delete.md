@@ -7,7 +7,7 @@ excerpt: "Deleting the redundant pre-processed dataframes left by exploring pre-
 permalink: /machine_learning/ml_preprocess1/delete/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-10-31 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Section 3 of the notebook `ml_preprocess_separated.ipynb`. Exploring pre-processing options leaves many
@@ -71,10 +71,11 @@ companion JSON. With [chain_from][chain_from] the same pipeline can also be run 
 
 ## Next step
 
-[ML modeling][ml_model]: train regressors on the pre-processed dataframe.
+[Compile dataframe][compile]: join the unprocessed selections into one dataset for modelling.
 
 [pp1]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [pp1_chain]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/
 [explore]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#exploration-versus-modelling
 [chain_from]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/#273-load-existing-pre-processing-chain
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
+[compile]: {{ site.baseurl }}/machine_learning/compile/

@@ -7,7 +7,7 @@ excerpt: "Plotting selected AI4SoilHealth indicators, class distributions and sp
 permalink: /machine_learning/plot_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-10-31 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Look at the selection before preprocessing: the distribution of each indicator, the class counts of a
@@ -124,7 +124,7 @@ Name your settings ([ML settings][ml_settings]), then clean up the indicators an
 [select_data]: {{ site.baseurl }}/machine_learning/select_data/
 [previous_dataframe]: {{ site.baseurl }}/machine_learning/parquet_files/#the-previous-dataframe-previous_dataframe
 [indicator_units]: {{ site.baseurl }}/machine_learning/parquet_files/#indicator-units
-[compile]: {{ site.baseurl }}/machine_learning/parquet_files/#compile-the-project-dataset
+[compile]: {{ site.baseurl }}/machine_learning/compile/
 [lucas_plot]: https://xspatula.github.io/xspatula_lucas_docs/lucas_2009/machine_learning/plot_data/
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/

@@ -265,6 +265,13 @@ machine_learning:
         url: /machine_learning/ml_preprocess1/chain/
       - title: "3 Delete dataframes"
         url: /machine_learning/ml_preprocess1/delete/
+  - title: Compile dataframe
+    children:
+      - title: "Compile dataframe"
+        url: /machine_learning/compile/
+  - title: ML pre-processing 2
+    children:
+      - title: "To be completed"
   - title: ML modeling
     children:
       - title: "ML modeling"
