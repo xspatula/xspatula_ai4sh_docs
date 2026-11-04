@@ -79,7 +79,8 @@ the provenance.
 
 ## Available regressors
 
-Hyper-parameters of the `standard` regressor set (`model_parameters_fp: "default"`):
+Hyper-parameters of the `standard` regressor set (`model_parameters_fp: "default"`, the latest version of
+`standard`, version 2):
 
 | Key | Regressor | Hyper-parameters |
 |---|---|---|
@@ -91,12 +92,43 @@ Hyper-parameters of the `standard` regressor set (`model_parameters_fp: "default
 | `svr` | Support vector regression | `kernel: linear`, `C: 1.5`, `epsilon: 0.05` |
 | `randfor` | Random forest | `n_estimators: 30`, `random_state: 42` |
 | `mlp` | Multi-layer perceptron | `hidden_layer_sizes: [100, 100]`, `max_iter: 200`, `tol: 0.001`, `epsilon: 1e-8`, `random_state: 42` |
+| `plsr` | Partial least squares regression | `n_components: 10` (capped to the data, see below), `scale: false` |
 | `cubist` | Cubist | `random_state: 42` |
-| `plsr` | Partial least squares regression | not in the `standard` set: scikit-learn defaults (`n_components: 2`) |
 
-PLSR is the classic regressor for NIR spectra. It compresses the bands into a few latent components that explain both the
-spectra and the indicator. Two components is usually too few for soil spectra: set `n_components` (often 5–20) in a
-custom regressor set, and compare the test metrics over a few values.
+PLSR is the classic regressor for NIR spectra. It compresses the inputs into a few latent components that
+explain both the spectra and the indicator. Too few components miss information; too many fit the noise of
+the training samples. Ten is a middle value for 10 nm spectra and a training set of about a hundred samples
+or more. It is still worth comparing a few values (e.g. 5, 10, 15, 20) in a custom regressor set, using the
+test metrics.
+
+`scale: false` makes PLSR use the inputs as the preprocessing chain leaves them. The scaling is chosen in
+the chain, in one place that the manifest records: meancentring gives classic centred PLS, and autoscaling
+gives unit-variance PLS. scikit-learn's default, `scale: true`, would autoscale every input inside the
+regressor and silently override the scaling step of the chain. Covariates are not part of the chain: numeric
+covariates are standardised by the model itself (see [Covariates](#covariates)), class columns stay 0/1.
+A custom regressor set can still set `"scale": true`.
+
+The number of components can not exceed what the training data hold: the number of training samples minus
+one, and the number of features left after the preprocessing chain (bands left after band selection,
+components after PCA, Ward clusters, plus covariate columns). A larger `n_components` is capped when the
+model is fitted. The run prints a note under the `Model: plsr` line of each saved model that was capped, at
+most one per indicator and mode (`tt` for train/test, `kf` for k-fold):
+
+```
+        ⚠️  c-org plsr [tt]: n_components 10 → 5 (<n> samples, <p> features) — fewer components than requested
+```
+
+The `kf` note refers to the final model, fitted on all samples; the k-fold folds are capped the same way but
+not reported. Band selection with `plsr` (permutation, RFE) caps without a note.
+
+The common case is a chain that ends in `pca5`: PLSR then uses 5 components, not 10. The manifest records
+both values (see [Output](#output)).
+
+`plsr` was added in version 2 of the `standard` set. Version 1 (`standard@1`) is the set without it. In an
+existing database, version 2 is added by rerunning the main cell of `setup/setup_db.ipynb` after updating
+xspatula_ai4sh; existing records are skipped. Until then `"default"` gives version 1, and `plsr` runs with
+the scikit-learn defaults (2 components, `scale: true`).
+{: .notice--info}
 
 `random_state: 42` makes the stochastic regressors give the same model every run. To change
 hyper-parameters, create a custom regressor set ([ML settings][ml_settings]) rather than editing a file.
@@ -143,9 +175,26 @@ with unit `class` (e.g. soil texture).
 }
 ```
 
-- **`covariate_array`**: empty means spectra only (as before), `all` means every covariate of the compiled
-  dataset (the covariates listed in its companion JSON), or list the covariate names. Numeric covariates are used unchanged. Nominal ones become one 0/1
+- **`covariate_array`**: empty means spectra only, `all` means every covariate of the compiled dataset (the
+  covariates listed in its companion JSON), or list the covariate names. Nominal covariates become one 0/1
   column per class (one-hot encoding).
+- **Numeric covariates are standardised** with the mean and standard deviation of the training samples:
+  (value − mean) / std. The mean and std are fitted with the model, saved in it and applied unchanged when
+  predicting. Why: without it, a
+  covariate's weight in `plsr`, `knn` and `svr` would depend on its unit (clay in % or in g/kg) and its
+  variance. Consequences:
+  - the unit of a numeric covariate does not change the predictions;
+  - for linear regressors a numeric covariate's coefficient, and its feature importance (|coefficient|), is
+    per standard deviation, not per unit;
+  - tree-based regressors (`dectree`, `randfor`) are unaffected.
+
+  A standardised covariate has variance 1. A band of meancentred reflectance spectra has a far smaller
+  variance, so in `plsr`, `knn` and `svr` one numeric covariate can weigh as much as many bands. Choose
+  autoscaling in the chain to put the bands on the same footing.
+- **A covariate that does not vary in the training samples has no effect**: a numeric covariate with one
+  value (it is only centred, an all-zero column) or a class covariate with one class. The run prints a note
+  once per indicator and mode:
+  `⚠️  <indicator> [tt|kf]: covariate(s) <labels> do not vary in the training samples — no effect`.
 - **`class_grouping`** pools the classes of a covariate before encoding: an array of objects
   `{"covariate": <name>, "groups": [[class, class, …], …]}`. Every class in the data must be placed in a group;
   otherwise the run stops and lists the classes it could not place
@@ -172,8 +221,6 @@ with unit `class` (e.g. soil texture).
   unprocessed spectra plus the covariates to predict.
 - A covariate of the model is never an indicator. Other covariates of the dataset are only modelled as
   indicators when named in `indicator_array`.
-- **Spectra-only models** (no `covariate_array`) are built exactly as before, so existing saved models still
-  load and predict.
 
 `covariate_array` and `class_grouping` are registered by `setup_processes.ipynb`; rerun it after updating
 xspatula_ai4sh.
@@ -254,8 +301,17 @@ and `neospectra_10nm_texture_cv-soiltextureusda_regression.json`.
   `soil texture usda=sand|loamy sand|sandy loam`), and the
   permutation importance lists them next to the wavelengths.
 
-With covariates the manifest's `input` also has `covariates`: `numeric`, `nominal`, `class_grouping` and
-`levels` (the classes, after grouping, seen in training).
+For `plsr` the manifest keeps the requested value in `hyper_parameters` and the value used in
+`fitted_hyper_parameters`, e.g. `"hyper_parameters": {"n_components": 10}` and
+`"fitted_hyper_parameters": {"n_components": 5}` after a `pca5` chain (`{}` for the other regressors). In
+`<name>_regression.json` the `plsr` metrics also have `fitted_hyper_parameters`.
+
+With covariates the manifest's `input` also has `covariates`: `numeric`, `nominal`, `class_grouping`,
+`levels` (the classes, after grouping, seen in training), `numeric_standardisation`, the training mean and
+standard deviation of each numeric covariate (6 significant digits; `std: 0` for a covariate that did not
+vary), e.g. `{"clay": {"mean": <mean>, "std": <std>}}`, and `numeric_units`, the unit of each numeric
+covariate, e.g. `{"clay": "weight percent"}`. Prediction checks the unit (see
+[Predict and register][ml_predict]).
 
 The run prints the main test metrics per indicator, one column per regressor:
 
@@ -280,6 +336,7 @@ excerpt of a manifest (`c-org`, OLS):
   "indicator_unit": "weight percent",
   "regressor": "ols",
   "hyper_parameters": { "fit_intercept": true },
+  "fitted_hyper_parameters": {},
   "mode": "traintest",
   "input": { "columns": ["wl_nm_1350", "…", "wl_nm_2500"], "signal_type": "refl", "n_bands": 116 },
   "pipeline": {

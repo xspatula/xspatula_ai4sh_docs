@@ -69,7 +69,11 @@ Before predicting, each model is checked:
   models above use `refl`);
 - a different version of scikit-learn, numpy or scipy than the model was saved with gives a warning;
 - a model with [covariates][ml_model_covariates] also needs the covariate columns in the parquet (any
-  missing: `covariate(s) of the model missing in the input: …`).
+  missing: `covariate(s) of the model missing in the input: …`), and each numeric covariate in the unit the
+  model was trained on (`covariate unit differs: clay in g*kg^-1, the model was trained on weight percent`).
+
+A model that fails a check is reported (`ERROR: <model>: <problem>`) and skipped; the other models in
+`model_array` are still applied.
 
 **Models with covariates.** A sample with a missing covariate value, or with a class (after the model's
 class grouping) that was not among the training samples, is not predicted: it gets a missing value, and the
@@ -78,7 +82,14 @@ predicted`). The other samples are predicted as usual.
 
 To get the covariates into the parquet, compile the spectra with the same covariate selection (see
 [Compile with covariates][compile_covariates]); indicators are not needed. Give the classes as selected, not
-grouped: the model applies its own `class_grouping`.
+grouped: the model applies its own `class_grouping`. Give numeric covariates in the unit of the training data:
+the model standardises them with the training mean and standard deviation, so a value in another unit gives
+wrong predictions. The unit check above catches this when both the model and the parquet record the unit.
+Units are compared as text, as spelled in the indicator definitions of the database; a parquet made by
+selection and compile always has those spellings, a hand-made file must use them too (`weight percent`, not
+`%`). A covariate without a unit in the parquet is not checked, and the run says so:
+`⚠️  <model file>: no unit recorded in the input for covariate(s) clay (model: weight percent) — unit not checked`.
+Convert the values, the model does not convert units.
 
 **Output** in `dst_fp`:
 

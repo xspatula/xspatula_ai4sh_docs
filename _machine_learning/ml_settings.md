@@ -7,7 +7,7 @@ excerpt: "Machine learning settings as named, versioned parameter sets in the ml
 permalink: /machine_learning/ml_settings/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-01 08:00:00 +0100
+last_modified_at: 2026-11-04 08:00:00 +0100
 ---
 
 Every machine learning step reads settings: which transformation an indicator gets, the filter window,
@@ -45,12 +45,21 @@ Three cells: sync, list, create a custom set. Set `scheme_file = '../scheme_ai4s
 | `filter` | `filter_fp` | `none`, `gauss`, `lowess`, `moving-average`, `savitzky-golay` |
 | `multi_filter` | `multi_filter_fp` | `standard` |
 | `selector` | band selection (permutation, RFE, tree based) | `none`, `standard` |
-| `regressor` | `model_parameters_fp` | `none` (scikit-learn defaults), `standard` |
+| `regressor` | `model_parameters_fp` | `none` (scikit-learn defaults), `standard` (version 2 adds `plsr`) |
 | `spectra_plot` | `colormap` | `none` (viridis), `standard` (jet) |
 | `plot_symbol` | `targetfeaturesymbols`, `regressionmodelsymbols` | `targetfeaturesymbols`, `regressionmodelsymbols` |
 | `plot_layout` | not used by the code yet | four layouts |
 
-Together these are the 24 sets created by `setup_db`. Run `list_parameter_sets` to see every set with its
+Together these are the 24 sets created by `setup_db`. The preset `regressor/standard` has two versions:
+version 2 adds `plsr` with 10 components and `scale: false` ([Available regressors][ml_model_regressors]), and version 1
+(`standard@1`) is the set before it.
+
+Version 2 of `regressor/standard` reaches an existing database when you rerun the main cell of
+`setup/setup_db.ipynb` after updating xspatula_ai4sh. Existing records are skipped, only the new version is
+added.
+{: .notice--info}
+
+Run `list_parameter_sets` to see every set with its
 version, category, creator and description (`family` empty = all families):
 
 **Process file**: `project_neospectra/process/ml_setting/list_parameter_sets.json`
@@ -223,3 +232,4 @@ frozen set, because that does not change anything a model used.
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
+[ml_model_regressors]: {{ site.baseurl }}/machine_learning/ml_model/#available-regressors
