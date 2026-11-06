@@ -274,8 +274,20 @@ machine_learning:
       - title: "To be completed"
   - title: ML modeling
     children:
-      - title: "ML modeling"
+      - title: "Overview"
         url: /machine_learning/ml_model/
+      - title: "1 Pre-processing effects"
+        url: /machine_learning/ml_model/preprocessing/
+      - title: "2.1 Covariates"
+        url: /machine_learning/ml_model/covariates/
+      - title: "2.2 Regressors"
+        url: /machine_learning/ml_model/regressors/
+      - title: "3 Arrays and plot layouts"
+        url: /machine_learning/ml_model/plots/
+      - title: "4 Feature importance"
+        url: /machine_learning/ml_model/importance/
+      - title: "5 Output and manifest"
+        url: /machine_learning/ml_model/output/
       - title: "Predict and register"
         url: /machine_learning/ml_predict/
 

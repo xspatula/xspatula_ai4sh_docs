@@ -291,7 +291,7 @@ Joining several selections into one dataset (`compile_dataset`) has its own page
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [chain_from]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/#from-exploration-to-the-model
 [pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
-[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
+[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/covariates/
 [select_covariates]: {{ site.baseurl }}/machine_learning/select_data/#select-covariates
 [compile]: {{ site.baseurl }}/machine_learning/compile/
 [compiled_json]: {{ site.baseurl }}/machine_learning/compile/#the-compiled-companion-json

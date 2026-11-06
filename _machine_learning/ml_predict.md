@@ -7,7 +7,7 @@ excerpt: "Applying saved AI4SoilHealth models to new spectra with predict_indepe
 permalink: /machine_learning/ml_predict/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-05 14:00:00 +0100
 ---
 
 A model saved by [ML modeling][ml_model] is a complete pipeline: give it unprocessed spectra and it returns
@@ -81,8 +81,9 @@ run prints how many (`<n> sample(s) with a missing covariate or a class not in t
 predicted`). The other samples are predicted as usual.
 
 To get the covariates into the parquet, compile the spectra with the same covariate selection (see
-[Compile with covariates][compile_covariates]); indicators are not needed. Give the classes as selected, not
-grouped: the model applies its own `class_grouping`. Give numeric covariates in the unit of the training data:
+[Compile for prediction][compile_predict]). Without indicators the compiled dataset is a dataset for prediction;
+with indicators the prediction also validates the model ([Independent validation](#predict-independent-spectra)
+below). Give the classes as selected, not grouped: the model applies its own `class_grouping`. Give numeric covariates in the unit of the training data:
 the model standardises them with the training mean and standard deviation, so a value in another unit gives
 wrong predictions. The unit check above catches this when both the model and the parquet record the unit.
 Units are compared as text, as spelled in the indicator definitions of the database; a parquet made by
@@ -176,5 +177,6 @@ A retired model can no longer be applied by name. Its record, metrics and frozen
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [setup_db_ml]: {{ site.baseurl }}/setup_db/ml_setting/
-[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
+[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/covariates/
 [compile_covariates]: {{ site.baseurl }}/machine_learning/compile/#compile-with-covariates
+[compile_predict]: {{ site.baseurl }}/machine_learning/compile/#compile-for-prediction

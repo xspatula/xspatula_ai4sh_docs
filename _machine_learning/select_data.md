@@ -489,4 +489,4 @@ and saves a compiled dataset without separate selections. See
 [obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
 [compile_covariates]: {{ site.baseurl }}/machine_learning/compile/#compile-with-covariates
-[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
+[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/covariates/

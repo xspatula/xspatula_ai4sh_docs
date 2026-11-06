@@ -473,8 +473,8 @@ ML pre-processing 2 (to be completed): supervised band selection on the compiled
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [select_indicators]: {{ site.baseurl }}/machine_learning/select_data/#select-indicators
 [select_obs_logs]: {{ site.baseurl }}/machine_learning/select_data/#observation-logs-subsamples-and-replicates
-[ml_model_choose]: {{ site.baseurl }}/machine_learning/ml_model/
-[ml_model_refit]: {{ site.baseurl }}/machine_learning/ml_model/#the-preprocessing-is-refitted-inside-the-model
+[ml_model_choose]: {{ site.baseurl }}/machine_learning/ml_model/regressors/#the-examples
+[ml_model_refit]: {{ site.baseurl }}/machine_learning/ml_model/preprocessing/#the-pre-processing-is-refitted-inside-the-model
 [input_df]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#the-input-dataframe
-[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/#covariates
+[ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/covariates/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/

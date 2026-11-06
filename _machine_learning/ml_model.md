@@ -3,375 +3,178 @@ title: "ML Modeling"
 layout: single
 sidebar:
   nav: "machine_learning"
-excerpt: "Training and evaluating regressors on AI4SoilHealth spectra: regression_modeling parameters, the standard regressor set, covariates (numeric and classes such as soil texture) next to the spectra, sample-id holdout, the preprocessing refitted inside the model, and the saved pipeline with its manifest."
+excerpt: "Training and evaluating regressors on AI4SoilHealth spectra and covariates with regression_modeling: how a run works, the notebook ml_model.ipynb, and every parameter with a link to the page that explains it."
 permalink: /machine_learning/ml_model/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-06 12:00:00 +0100
 ---
 
-Trains and evaluates regressors on the compiled dataset (see [Compile dataframe][compile]) or on
-any dataframe derived from it in ML preprocessing: outlier-cleaned, meancentred, derivative, PCA-reduced,
-band-selected, or any other chained variant. Every saved model is a complete pipeline, from unprocessed
-spectra to a prediction in the native unit of the indicator, so it can be applied to new spectra (see
-[Predict and register][ml_predict]).
-
-The preprocessing steps are described in [ML pre-processing 1][ml_preprocess].
+The process `regression_modeling` trains and evaluates regressors on compiled datasets that must include both indicators and input features (spectra and/or other covariates) (see
+[Compile dataframe][compile]). Every saved
+model also saves a complete pipeline of the processes leading up to the model, including any pre-processing steps. A saved model can then be applied to independent feature data for predicting indicators from e.g. spectra and/or other covariates (see [Predict and register][ml_predict]).
 
 ## Notebook
 
 **Path**: `xspatula_ai4sh/ai4sh/project_neospectra/ml_model.ipynb`
 
-Just one step. Set `scheme_file = '../scheme_ai4sh.json'` in the setup cell (the default), then run the
-modeling cell.
+Set `scheme_file = '../scheme_ai4sh.json'` in the setup cell (the default), then run the cell you need. Each
+cell runs one process file from `project_neospectra/process/ml_model/`. The pages of ML modeling manual collection follow the
+blocks of the notebook:
 
-## Machine Learning modeling with train-test
-
-**Process file**: `project_neospectra/process/ml_model/regression_modeling.json`
-
-```json
-{
-  "process": [
-    {
-      "process": "regression_modeling",
-      "overwrite": true,
-      "parameters": {
-        "project_root_fp": "./project_neospectra/data/compiled/neospectra_10nm",
-        "dataframe": "previous",
-        "indicator_array": ["c-org", "n-tot"],
-        "regressor_array": ["ols", "huber"],
-        "model_parameters_fp": "./project_neospectra/regressors/regression_model_parameters.json",
-        "indicator_transformation": "none",
-        "indicator_standardisation": "none",
-        "traintest": true,
-        "test_size": 0.3,
-        "kfold": false
-      }
-    }
-  ]
-}
-```
-
-| Parameter | Description |
-|---|---|
-| `dataframe` | The dataframe to model: `"raw"` for the unprocessed selection, an explicit chained name, or `"previous"` |
-| `indicator_array` | The target indicators; one model per indicator and regressor |
-| `covariate_array` | Covariates used next to the spectra: empty = spectra only (default), `all` = every covariate of the compiled dataset, or the covariate names. See [Covariates](#covariates) |
-| `class_grouping` | Pool the classes of a nominal covariate into groups before encoding. See [Covariates](#covariates) |
-| `regressor_array` | The regressors to fit per indicator, see the table below |
-| `model_parameters_fp` | Regressor hyper-parameters: `default` (the `standard` set), `none` (scikit-learn defaults), a set name or a JSON file. See [ML settings][ml_settings] |
-| `indicator_transformation` | Transformation of the indicator before fitting: `none`, `default`/`standard`, a set name or a JSON file. Default `none` |
-| `indicator_standardisation` | Z-score standardisation of the indicator: same forms. Default `none` |
-| `refit_preprocessing` | Refit the preprocessing chain of the dataframe inside the model on the training samples (default `true`, see below) |
-| `traintest` | Split into train and test samples and evaluate on the test samples |
-| `test_size` | Fraction of samples held out for testing (0.3 = 30%) |
-| `kfold` | Evaluate with k-fold cross-validation (`folds` folds, default 10) |
-| `model_fp` | Folder for the saved models, relative to the project root. Empty = `<project_root_fp>/models` |
-
-**Set `indicator_transformation` and `indicator_standardisation` here, deliberately.** They are not taken
-over from the transformation you last looked at in a plot. The process file in the repository sets
-`indicator_transformation` to `none` and leaves out `indicator_standardisation`, which also gives `none`;
-the example above writes both out.
-
-The example uses the project's own regressor file. Since it holds the same values as the `standard` set,
-`"model_parameters_fp": "default"` gives the same models, and records a database set instead of a file in
-the provenance.
-
-## Available regressors
-
-Hyper-parameters of the `standard` regressor set (`model_parameters_fp: "default"`, the latest version of
-`standard`, version 2):
-
-| Key | Regressor | Hyper-parameters |
+| Page | Cells | Content |
 |---|---|---|
-| `ols` | Ordinary least squares | `fit_intercept: true` |
-| `theil_sen` | Theil-Sen estimator | `random_state: 42` |
-| `huber` | Huber regressor | library defaults |
-| `knn` | K-nearest neighbours | library defaults |
-| `dectree` | Decision tree | `random_state: 42` |
-| `svr` | Support vector regression | `kernel: linear`, `C: 1.5`, `epsilon: 0.05` |
-| `randfor` | Random forest | `n_estimators: 30`, `random_state: 42` |
-| `mlp` | Multi-layer perceptron | `hidden_layer_sizes: [100, 100]`, `max_iter: 200`, `tol: 0.001`, `epsilon: 1e-8`, `random_state: 42` |
-| `plsr` | Partial least squares regression | `n_components: 10` (capped to the data, see below), `scale: false` |
-| `cubist` | Cubist | `random_state: 42` |
+| [1 Pre-processing effects][ml_model_pp] | 1.1.1–1.1.3 | `ols` and `huber` on raw, range-limited and pre-processed data; train and test samples; the pre-processing refitted inside the model; reading the metrics |
+| [2.1 Covariates][ml_model_cov] | 2.1.1–2.1.2 | Soil texture as covariate, on raw and on PCA-reduced spectra |
+| [2.2 Regressors][ml_model_regr] | 2.2.1–2.2.5 | `plsr`, `svr`, `cubist`, `randfor` and `mlp` on the full pre-processed spectra; hyper-parameters |
+| [3 Arrays and plot layouts][ml_model_plots] | 3.1.1, 3.2.1 | Many indicators with one regressor, one indicator with many regressors; grid figures |
+| [4 Feature importance][ml_model_imp] | 4.1.1–4.2.4 | Feature and permutation importance, `importance_only`, importance next to the model results |
+| [5 Output and manifest][ml_model_out] | | Saved models, manifests, results and plots |
 
-PLSR is the classic regressor for NIR spectra. It compresses the inputs into a few latent components that
-explain both the spectra and the indicator. Too few components miss information; too many fit the noise of
-the training samples. Ten is a middle value for 10 nm spectra and a training set of about a hundred samples
-or more. It is still worth comparing a few values (e.g. 5, 10, 15, 20) in a custom regressor set, using the
-test metrics.
+## How a run works
 
-`scale: false` makes PLSR use the inputs as the preprocessing chain leaves them. The scaling is chosen in
-the chain, in one place that the manifest records: meancentring gives classic centred PLS, and autoscaling
-gives unit-variance PLS. scikit-learn's default, `scale: true`, would autoscale every input inside the
-regressor and silently override the scaling step of the chain. Covariates are not part of the chain: numeric
-covariates are standardised by the model itself (see [Covariates](#covariates)), class columns stay 0/1.
-A custom regressor set can still set `"scale": true`.
+`regression_modeling` fits one model per **indicator** in `indicator_array` and **regressor** in
+`regressor_array`, in one or two evaluation modes:
 
-The number of components can not exceed what the training data hold: the number of training samples minus
-one, and the number of features left after the preprocessing chain (bands left after band selection,
-components after PCA, Ward clusters, plus covariate columns). A larger `n_components` is capped when the
-model is fitted. The run prints a note under the `Model: plsr` line of each saved model that was capped, at
-most one per indicator and mode (`tt` for train/test, `kf` for k-fold):
+- **train/test** (`traintest: true`, tag `tt`): the samples are split into training and test samples
+  (`test_size`); the model is fitted on the training samples and scored on the test samples;
+- **k-fold** (`kfold: true`, tag `kf`): every sample is predicted once by a model fitted on the other folds
+  (`folds`); the saved model is then fitted on all samples.
 
-```
-        ⚠️  c-org plsr [tt]: n_components 10 → 5 (<n> samples, <p> features) — fewer components than requested
-```
+Two indicators, three regressors and both modes give 2 × 3 × 2 = 12 models.
 
-The `kf` note refers to the final model, fitted on all samples; the k-fold folds are capped the same way but
-not reported. Band selection with `plsr` (permutation, RFE) caps without a note.
+## Models always start with unprocessed spectra
 
-The common case is a chain that ends in `pca5`: PLSR then uses 5 components, not 10. The manifest records
-both values (see [Output](#output)).
+In the process file, `dataframe` can name the compiled dataset with unprocessed spectra (`raw`) or a
+pre-processed dataframe, e.g. `neospectra_10nm_olif_texture.snv.d1.mc`. With a pre-processed dataframe the
+model does not train on its spectra:
 
-`plsr` was added in version 2 of the `standard` set. Version 1 (`standard@1`) is the set without it. In an
-existing database, version 2 is added by rerunning the main cell of `setup/setup_db.ipynb` after updating
-xspatula_ai4sh; existing records are skipped. Until then `"default"` gives version 1, and `plsr` runs with
-the scikit-learn defaults (2 components, `scale: true`).
-{: .notice--info}
+- The companion JSON of the dataframe records the unprocessed parquet the chain started from
+  (`source_parquet`) and every step of the chain (`preprocessing_chain`).
+- `regression_modeling` reads the spectra from `source_parquet` and the indicators and covariates from the
+  dataframe you named. Indicator steps of the chain (outliers set to missing, indicator range) therefore carry
+  over. The two parquets must hold the same samples in the same order, otherwise the run stops.
+- The steps of the chain become steps of the model's pipeline, and are fitted on the training samples of each
+  model (each fold in k-fold). The run prints
+  `Refitting <n> preprocessing step(s) on the training samples, from <source>.parquet`.
 
-`random_state: 42` makes the stochastic regressors give the same model every run. To change
-hyper-parameters, create a custom regressor set ([ML settings][ml_settings]) rather than editing a file.
+This gives two guarantees:
 
-## Covariates
+- No information from the test samples leaks into the model through the pre-processing (the mean of
+  meancentring, the PCA components, …), so the test and k-fold metrics are honest.
+- The saved model holds the whole chain. It takes unprocessed spectra and applies the pre-processing itself when
+  predicting new samples ([Predict and register][ml_predict]).
 
-Besides the spectra, a model can use **covariates**: other observations of the same samples, selected with
-`select_covariate_only` and compiled with the indicators and spectra (see
-[Compile dataframe][compile]). A covariate is either numeric (e.g. a field pH) or nominal, a class
-with unit `class` (e.g. soil texture).
+With `refit_preprocessing: false` the model trains on the pre-processed spectra as they are, fitted on all
+samples, and the run warns that the test metrics are optimistic. With `raw` there is no chain to refit. Details
+and the steps that are not refitted: [The pre-processing is refitted inside the model][ml_model_refit].
 
-**Process file**: `project_neospectra/process/ml_model/regression_modeling_texture.json`
+## Models results
 
-```json
-{
-  "process": [
-    {
-      "process": "regression_modeling",
-      "overwrite": true,
-      "parameters": {
-        "project_root_fp": "./project_neospectra/data/compiled/neospectra_10nm_texture",
-        "dataframe": "raw",
-        "indicator_array": ["c-org", "n-tot"],
-        "covariate_array": ["soil texture usda"],
-        "class_grouping": [
-          {
-            "covariate": "soil texture usda",
-            "groups": [
-              ["sand", "loamy sand", "sandy loam"],
-              ["loam", "silt loam", "silt", "sandy clay loam"],
-              ["clay loam", "silty clay loam", "sandy clay", "silty clay", "clay"]
-            ]
-          }
-        ],
-        "regressor_array": ["ols", "randfor"],
-        "model_parameters_fp": "./project_neospectra/regressors/regression_model_parameters.json",
-        "traintest": true,
-        "test_size": 0.3,
-        "kfold": true,
-        "folds": 5
-      }
-    }
-  ]
-}
-```
-
-- **`covariate_array`**: empty means spectra only, `all` means every covariate of the compiled dataset (the
-  covariates listed in its companion JSON), or list the covariate names. Nominal covariates become one 0/1
-  column per class (one-hot encoding).
-- **Numeric covariates are standardised** with the mean and standard deviation of the training samples:
-  (value − mean) / std. The mean and std are fitted with the model, saved in it and applied unchanged when
-  predicting. Why: without it, a
-  covariate's weight in `plsr`, `knn` and `svr` would depend on its unit (clay in % or in g/kg) and its
-  variance. Consequences:
-  - the unit of a numeric covariate does not change the predictions;
-  - for linear regressors a numeric covariate's coefficient, and its feature importance (|coefficient|), is
-    per standard deviation, not per unit;
-  - tree-based regressors (`dectree`, `randfor`) are unaffected.
-
-  A standardised covariate has variance 1. A band of meancentred reflectance spectra has a far smaller
-  variance, so in `plsr`, `knn` and `svr` one numeric covariate can weigh as much as many bands. Choose
-  autoscaling in the chain to put the bands on the same footing.
-- **A covariate that does not vary in the training samples has no effect**: a numeric covariate with one
-  value (it is only centred, an all-zero column) or a class covariate with one class. The run prints a note
-  once per indicator and mode:
-  `⚠️  <indicator> [tt|kf]: covariate(s) <labels> do not vary in the training samples — no effect`.
-- **`class_grouping`** pools the classes of a covariate before encoding: an array of objects
-  `{"covariate": <name>, "groups": [[class, class, …], …]}`. Every class in the data must be placed in a group;
-  otherwise the run stops and lists the classes it could not place
-  (`class_grouping for "soil texture usda" does not place the class(es): …`). A group is named by its classes
-  joined with `|`, e.g. `sand|loamy sand|sandy loam`.
-- **Predefined groupings** need no `class_grouping`: they are separate covariates. When observations are
-  imported, texture is derived into four nominal classifications: `soil texture usda` (12 classes),
-  `soil texture usda major group` (4 groups), `soil texture iuss` and `soil texture iuss major group`
-  (see [Derived soil texture classes][obs_texture]). LUCAS has the same four. Select the one you want as
-  covariate.
-- **Samples without a value for each covariate of the model are skipped**, both when modelling and when
-  predicting (they get no prediction, and the number is printed). A sample missing one of two covariates is
-  skipped too.
-- **A class the model has not seen cannot be predicted.** The model learns one column per class from its
-  training samples; a class without training samples has no column, and the model has nothing to base a
-  prediction on. In train/test, test samples of such a class are skipped, and the run names the class:
-  `<indicator>: <n> test sample(s) with a <covariate> class not in the training samples (<classes>), skipped`.
-  With k-fold, a class with fewer samples than folds is missing from some training folds; its samples in
-  those folds are predicted without a class column, which biases the k-fold metrics. The run warns
-  (`… class(es) with fewer samples than folds (<folds>): <class> (<n>) … — consider class_grouping`). The cure
-  in both cases is the same: pool the rare classes with a `class_grouping`, or use a major-group covariate.
-- **The same train-only fitting as the spectra:** the spectra's preprocessing chain is still refitted on the
-  training samples only, now together with the covariates, in one saved model. That model needs only the
-  unprocessed spectra plus the covariates to predict.
-- A covariate of the model is never an indicator. Other covariates of the dataset are only modelled as
-  indicators when named in `indicator_array`.
-
-`covariate_array` and `class_grouping` are registered by `setup_processes.ipynb`; rerun it after updating
-xspatula_ai4sh.
-{: .notice--info}
-
-**Which classification?** With few samples (e.g. a few hundred samples over the 12 USDA texture classes), use a
-coarse grouping or a major-group covariate, so that every class has enough samples. For linear regressors a
-class shifts the prediction by a fixed amount; tree-based regressors can use the class columns in their splits.
-
-## Train and test samples
-
-The test samples are chosen from the `sample_id`, not from the row order: the `round(test_size × n)`
-samples with the lowest hash of their `sample_id` are the test samples. The same sample is therefore always
-a test sample for the same `test_size`, whatever order or subset the dataframe has.
-
-Band selection (permutation and univariate selection in ML preprocessing) uses the same rule. Give the
-selection and the modeling the **same `test_size`**, otherwise the model's test samples include samples
-the band selection has already seen, and the test metrics are too optimistic. The model prints a note when
-the two differ.
-
-## The preprocessing is refitted inside the model
-
-With `refit_preprocessing: true` (the default), the model does not train on the preprocessed dataframe
-directly. It starts from the unprocessed source spectra (`source_parquet` in the dataframe's companion
-JSON) and replays its `preprocessing_chain` as steps of a scikit-learn pipeline, fitted on the training
-samples only. Mean centring, scaling, the MSC reference spectrum, PCA, Ward clusters, variance threshold
-and univariate band selection therefore never see the test samples, and their fitted values are saved
-with the model.
-
-Three steps are not refitted:
-
-- **Outlier detection** (`.olif`, `.olee`, `.ollof`, `.ol1csvm`): indicator outliers were set to missing using
-  all samples.
-- **[Indicator range][pp1_range]** (`.ir`): the limits are fixed, nothing is learned from the samples, so
-  there is nothing to refit.
-- **Permutation selection**: the selected bands are taken as fixed. They are clean only if the selection
-  used the same `test_size` (see above).
-
-When outlier detection or permutation selection is in the chain of the dataframe you model, the run prints a
-note at the start, e.g. for a chain that starts with isolation forest outlier detection:
-
-```
-    ⚠️  01_olif: indicator outliers were set to missing using all samples (not refitted)
-```
-
-For a compiled dataset the outlier step belongs to an input: it is recorded under `inputs` in the compiled
-companion JSON (see [Compile dataframe][compile]), and the model prints no note about it.
-
-The indicator transformation and standardisation are part of the pipeline too, so predictions are returned
-in the native unit of the indicator.
-
-## Output
-
-Written under `project_root_fp`, named after the input dataframe. With covariates, the model, plot and results
-names get the suffix `_cv-<covariates>` (the names in lower case without spaces or punctuation, e.g.
-`_cv-soiltextureusdamajorgroup`; replaced by an 8-character hash when longer than 40 characters), so they do
-not overwrite the spectra-only models. The tag names the covariates, not the `class_grouping`: a rerun with
-the same covariates but another grouping overwrites the earlier models, plots and results. Move them first if
-you want to compare groupings. For the texture example above the names are e.g.
-`models/neospectra_10nm_texture_cv-soiltextureusda_tt/neospectra_10nm_texture_cv-soiltextureusda_c-org_randfor_tt.joblib`
-and `neospectra_10nm_texture_cv-soiltextureusda_regression.json`.
-
-
-- **`<name>_regression.json`**: per indicator and regressor the test metrics `r2`, `rmse`, `mae`, `mape`,
-  `medae`, `bias`, `rpiq`, `ccc`, with `n_train`/`n_test`, the model file and its sha256. `input_parquet`
-  is the dataframe you gave, `source_parquet` the unprocessed spectra the pipeline starts from.
-- **`models/<name>_tt/`** (or `_kf/`), per indicator and regressor:
-  - `<name>_<indicator>_<regressor>_tt.joblib`: the fitted pipeline (preprocessing, regressor, indicator
-    transformation);
-  - `<name>_<indicator>_<regressor>_tt.manifest.json`: everything needed to trust and reuse the model: the
-    sha256 of the `.joblib`, indicator and unit, regressor and hyper-parameters, the input bands and signal
-    type, the preprocessing chain, the training sample ids, the metrics, and the provenance (process
-    parameters, every settings set or file used with its checksum, the software versions and the git
-    commit).
-- **`covariate_importance/<name>_tt/`**: feature and band importance of the fitted models.
-- **`plot/<name>_tt/`**: the observed-predicted and importance plots, if saved. With covariates the feature
-  importance plot gets a second panel with the covariate columns (e.g.
-  `soil texture usda=sand|loamy sand|sandy loam`), and the
-  permutation importance lists them next to the wavelengths.
-
-For `plsr` the manifest keeps the requested value in `hyper_parameters` and the value used in
-`fitted_hyper_parameters`, e.g. `"hyper_parameters": {"n_components": 10}` and
-`"fitted_hyper_parameters": {"n_components": 5}` after a `pca5` chain (`{}` for the other regressors). In
-`<name>_regression.json` the `plsr` metrics also have `fitted_hyper_parameters`.
-
-With covariates the manifest's `input` also has `covariates`: `numeric`, `nominal`, `class_grouping`,
-`levels` (the classes, after grouping, seen in training), `numeric_standardisation`, the training mean and
-standard deviation of each numeric covariate (6 significant digits; `std: 0` for a covariate that did not
-vary), e.g. `{"clay": {"mean": <mean>, "std": <std>}}`, and `numeric_units`, the unit of each numeric
-covariate, e.g. `{"clay": "weight percent"}`. Prediction checks the unit (see
-[Predict and register][ml_predict]).
-
-The run prints the main test metrics per indicator, one column per regressor:
+Each run prints, per indicator, the main metrics with one column per regressor and mode, e.g.:
 
 ```
     ── c-org ──
-                  ols/tr              huber/tr
-    r2            <value>             <value>
-    rmse          <value>             <value>
-    rpiq          <value>             <value>
+                  ols/tt              randfor/tt          ols/kf              randfor/kf
+    r2            <value>             <value>             <value>             <value>
+    rmse          <value>             <value>             <value>             <value>
+    rpiq          <value>             <value>             <value>             <value>
 ```
 
-For the meancentred dataframe `neospectra_10nm.mc` the models are saved as, e.g.,
-`models/neospectra_10nm.mc_tt/neospectra_10nm.mc_c-org_huber_tt.joblib`, each with its manifest. An
-excerpt of a manifest (`c-org`, OLS):
+and saves the models, their manifests and a results JSON. If asked, plots are displayed and/or saved with each model ([Output and manifest][ml_model_out]).
+
+## Parameters
+
+**Input and targets**
+
+| Parameter | Description |
+|---|---|
+| `project_root_fp` | The folder with the compiled dataframe |
+| `dataframe` | The dataframe to model: `raw` (the compiled dataset, default), a dataframe name, or `previous` ([The input dataframe][input_df]) |
+| `indicator_array` | The target indicators; empty = every indicator of the dataframe |
+| `covariate_array` | Covariates next to the spectra: empty = none, `all`, or names. See [Covariates][ml_model_cov] |
+| `class_grouping` | Pool the classes of a nominal covariate before encoding. See [Covariates][ml_model_cov] |
+| `indicator_transformation` | Transformation of the indicator before fitting: `none` (default), `default`/`standard`, a set name or a JSON file |
+| `indicator_standardisation` | Z-score standardisation of the indicator: same forms, default `none` |
+
+**Regressors and evaluation**
+
+| Parameter | Description |
+|---|---|
+| `regressor_array` | The regressors to fit, see [Available regressors][ml_model_avail] |
+| `model_parameters_fp` | Hyper-parameters: `default` (the `standard` set), `none` (scikit-learn defaults), a set name or a JSON file ([ML settings][ml_settings]) |
+| `traintest` | Train/test evaluation (default `true`) |
+| `test_size` | Fraction of test samples (default 0.3) |
+| `kfold` | K-fold cross-validation (default `false`) |
+| `folds` | Number of folds (default 10) |
+| `refit_preprocessing` | Refit the pre-processing chain inside the model on the training samples (default `true`) |
+| `model_fp` | Folder for the saved models, relative to the project root. Empty = `<project_root_fp>/models` |
+
+**Plots and importance**
+
+| Parameter | Description |
+|---|---|
+| `show_observed_predicted` / `save_observed_predicted` | Observed/predicted scatter (default shown, not saved) |
+| `show_feature_importance` / `save_feature_importance` | Feature importance (default neither) |
+| `show_permutation_importance` / `save_permutation_importance` | Permutation importance (default neither) |
+| `n_top_features_in_plot` | Most important features in a saved permutation figure (default 8; 0 = all) |
+| `targetfeaturesymbols` | Colour per indicator in the scatter plots: `default` (the `plot_symbol` set `targetfeaturesymbols`), a set name or a JSON file. See [Plot symbols](#plot-symbols) |
+| `regressionmodelsymbols` | Marker per regressor: `default` (the set `regressionmodelsymbols`), a set name or a JSON file |
+| `plot_layout` | Compose the shown plots into grid figures: `default`, a preset, a set name, a JSON file or `none`. See [Plot layout][ml_model_layout] |
+| `save_plot_layout` | Also save the grid figures (default `false`) |
+| `importance_only` | Fit the regressors and map the importance only: no metrics, models or results. See [Importance without the model tests][ml_model_imp_only] |
+
+The indicator transformation and standardisation are set only in `regression_modeling`. A compiled dataframe
+always holds the indicators in their native unit: no process writes transformed or standardised indicators
+(the plot processes transform for display only), so the transformation can not be applied twice. Both default
+to `none`; a transformation used in a plot is not taken over. The model fits them on the training samples and
+returns predictions in the native unit ([ML settings][ml_settings_trans]).
+
+### Plot symbols
+
+`targetfeaturesymbols` and `regressionmodelsymbols` take a JSON file the same way as the other settings, e.g.
+`"regressionmodelsymbols": "./project_neospectra/plot_symbol/regressor_markers.json"`:
 
 ```json
 {
-  "manifest_version": 1,
-  "model_file": "neospectra_10nm.mc_c-org_ols_tt.joblib",
-  "model_sha256": "…",
-  "indicator": "c-org",
-  "indicator_unit": "weight percent",
-  "regressor": "ols",
-  "hyper_parameters": { "fit_intercept": true },
-  "fitted_hyper_parameters": {},
-  "mode": "traintest",
-  "input": { "columns": ["wl_nm_1350", "…", "wl_nm_2500"], "signal_type": "refl", "n_bands": 116 },
-  "pipeline": {
-    "steps": ["bands", "01_mc"],
-    "indicator": { "transform": "linear", "standardise": false },
-    "holdout": { "test_size": 0.3, "key": "sample_id" },
-    "notes": []
-  },
-  "data": {
-    "input_parquet": "neospectra_10nm.mc.parquet",
-    "source_parquet": "neospectra_10nm.parquet",
-    "n_train": "…",
-    "train_sample_ids": ["…"]
+  "regressionModelSymbols": {
+    "plsr":    {"marker": "o", "size": 50},
+    "randfor": {"marker": "h", "size": 50}
   }
 }
 ```
 
-**Reading the numbers.** OLS on all bands has nearly as many unknowns as training samples and overfits;
-a negative `r2` means it predicts the test samples worse than their mean. Robust and regularised
-regressors, or fewer inputs (PCA, band reduction, band selection), usually do better. `rpiq` (the
-interquartile range of the observed values divided by the RMSE) is the common yardstick for soil
-spectroscopy: the higher, the better.
+and for the indicators `{"targetFeatureSymbols": {"c-org": {"color": "black", "alpha": 0.6}, …}}`. The keys are
+the regressor keys and the indicator names of the dataframe. A file replaces the whole set: a regressor not in it
+is drawn with marker `o`, size 40, an indicator in `steelblue`, alpha 0.6. To change a few entries and keep the
+rest, create a custom `plot_symbol` set on the preset ([Create a custom set][ml_settings_custom]).
 
-A model without a manifest is refused by `predict_independent` and `register_model`
-(`no manifest for … rerun regression_modeling`). Rerun `regression_modeling`.
-{: .notice--warning}
+A dataframe compiled without indicators is a dataset for prediction ([Compile for prediction][compile_predict])
+and can not be modelled:
+`ERROR: no valid indicator columns. <name> is a dataset for prediction (compiled without indicators).`
+
+`plot_layout`, `save_plot_layout` and `importance_only` are registered by `setup_processes.ipynb`; rerun it after
+updating xspatula_ai4sh.
+{: .notice--info}
 
 ## Next step
 
-[Predict and register][ml_predict]: apply a saved model to new spectra, and register the final model in
-the database.
+[1 Pre-processing effects][ml_model_pp]: the first models, and how pre-processing changes them.
 
 [compile]: {{ site.baseurl }}/machine_learning/compile/
+[compile_predict]: {{ site.baseurl }}/machine_learning/compile/#compile-for-prediction
+[input_df]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#the-input-dataframe
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
+[ml_settings_trans]: {{ site.baseurl }}/machine_learning/ml_settings/#indicator-transformation-and-standardisation
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
-[ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
-[obs_texture]: {{ site.baseurl }}/observation/#derived-soil-texture-classes
-[pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
+[ml_model_pp]: {{ site.baseurl }}/machine_learning/ml_model/preprocessing/
+[ml_model_refit]: {{ site.baseurl }}/machine_learning/ml_model/preprocessing/#the-pre-processing-is-refitted-inside-the-model
+[ml_model_cov]: {{ site.baseurl }}/machine_learning/ml_model/covariates/
+[ml_model_regr]: {{ site.baseurl }}/machine_learning/ml_model/regressors/
+[ml_model_avail]: {{ site.baseurl }}/machine_learning/ml_model/regressors/#available-regressors
+[ml_model_plots]: {{ site.baseurl }}/machine_learning/ml_model/plots/
+[ml_model_layout]: {{ site.baseurl }}/machine_learning/ml_model/plots/#plot-layout
+[ml_model_imp]: {{ site.baseurl }}/machine_learning/ml_model/importance/
+[ml_model_imp_only]: {{ site.baseurl }}/machine_learning/ml_model/importance/#importance-without-the-model-tests
+[ml_model_out]: {{ site.baseurl }}/machine_learning/ml_model/output/
+[ml_settings_custom]: {{ site.baseurl }}/machine_learning/ml_settings/#create-a-custom-set

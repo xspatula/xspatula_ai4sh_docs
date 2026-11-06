@@ -3,11 +3,11 @@ title: "ML Setting and Model Schemas"
 layout: single
 sidebar:
   nav: "setup_db"
-excerpt: "The ml_setting schema holds the machine learning parameter sets, the ml_model schema the registry of final models. Tables, the 24 seed sets and the triggers that protect frozen sets."
+excerpt: "The ml_setting schema holds the machine learning parameter sets, the ml_model schema the registry of final models. Tables, the 28 seed sets and the triggers that protect frozen sets."
 permalink: /setup_db/ml_setting/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-05 18:00:00 +0100
 ---
 
 Two schemas support machine learning. `ml_setting` holds the named, versioned **parameter sets** that every
@@ -26,7 +26,7 @@ sections `MACHINE LEARNING SETTINGS` and `MACHINE LEARNING MODEL REGISTRY`:
 | File | Content |
 |---|---|
 | `ml_setting/ml_setting_v10_sql.json` | Tables `transform` (seeded), `parameter_set`, `indicator_transformation`, `indicator_standardisation` |
-| `ml_setting/ml_setting_records_v10_sql.json` | The 24 seed parameter sets (`regressor/standard` in two versions) |
+| `ml_setting/ml_setting_records_v10_sql.json` | The 28 seed parameter sets (`regressor/standard` in two versions) |
 | `ml_setting/ml_setting_frozen_v10_sql.json` | Trigger functions and `BEFORE UPDATE OR DELETE` triggers that protect frozen sets |
 | `ml_model/ml_model_v10_sql.json` | Tables `model`, `model_step`, `model_parameter_set`, `model_metric` |
 
@@ -45,7 +45,7 @@ creator of a custom set and who registered a model) must exist first.
 The per-indicator rows are not seeded by `setup_db`. They are written by `sync_indicator_parameter_sets`,
 and automatically after every `manage_indicator` (see [Observation utility][setup_db_observation_utility]).
 
-### The 24 seed sets
+### The 28 seed sets
 
 All seed sets have creator `setup` and are version 1, except `regressor/standard`, which also has version 2
 (version 1 plus `plsr` with 10 components and `scale: false`). A set name without `@<version>` uses the latest version, so
@@ -64,9 +64,12 @@ inserted.
 | `regressor` | `none` (raw, scikit-learn defaults), `standard` |
 | `spectra_plot` | `none` (raw, viridis), `standard` (jet) |
 | `plot_symbol` | `targetfeaturesymbols`, `regressionmodelsymbols` |
-| `plot_layout` | `enhancementplotlayout`, `modelplot`, `modelplotlayout`, `outliersplotlayout` (not used by the code yet) |
+| `plot_layout` | `scatter-1`, `scatter-2`, `scatter-3`, `scatter-4`, `scatter-tt-kf`, `importance` (used by `regression_modeling`, see [Plot layouts][ml_model_plots]); `enhancementplotlayout`, `outliersplotlayout` (not used by the code) |
 
 Sets without "(raw)" are `preset`.
+
+Rerunning the main cell of `setup/setup_db.ipynb` in an existing database inserts the `plot_layout` presets and
+deletes the `plot_layout` sets `modelplot` and `modelplotlayout`, which no process uses.
 
 ### Frozen sets
 
@@ -103,6 +106,7 @@ deleted.
 All eight tables are audited for `INSERT`, `UPDATE` and `DELETE` (see [Auditing][auditing]).
 
 [ml_settings]: {{ site.baseurl }}/machine_learning/ml_settings/
+[ml_model_plots]: {{ site.baseurl }}/machine_learning/ml_model/plots/#plot-layout
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
 [setup_db_observation_utility]: {{ site.baseurl }}/setup_db/observation_utility/
 [auditing]: {{ site.baseurl }}/auditing/

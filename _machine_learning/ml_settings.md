@@ -7,7 +7,7 @@ excerpt: "Machine learning settings as named, versioned parameter sets in the ml
 permalink: /machine_learning/ml_settings/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-05 18:00:00 +0100
 ---
 
 Every machine learning step reads settings: which transformation an indicator gets, the filter window,
@@ -48,9 +48,9 @@ Three cells: sync, list, create a custom set. Set `scheme_file = '../scheme_ai4s
 | `regressor` | `model_parameters_fp` | `none` (scikit-learn defaults), `standard` (version 2 adds `plsr`) |
 | `spectra_plot` | `colormap` | `none` (viridis), `standard` (jet) |
 | `plot_symbol` | `targetfeaturesymbols`, `regressionmodelsymbols` | `targetfeaturesymbols`, `regressionmodelsymbols` |
-| `plot_layout` | not used by the code yet | four layouts |
+| `plot_layout` | `plot_layout` in `regression_modeling` ([Plot layouts][ml_model_plots]) | `scatter-1` … `scatter-4`, `scatter-tt-kf`, `importance` |
 
-Together these are the 24 sets created by `setup_db`. The preset `regressor/standard` has two versions:
+Together these are the 28 sets created by `setup_db`. The preset `regressor/standard` has two versions:
 version 2 adds `plsr` with 10 components and `scale: false` ([Available regressors][ml_model_regressors]), and version 1
 (`standard@1`) is the set before it.
 
@@ -79,7 +79,7 @@ Every parameter in the table above accepts the same four forms:
 | Value | Meaning |
 |---|---|
 | `"none"` (or `""`) | No settings: the step is skipped or uses the library defaults |
-| `"default"` | The preset `standard` of that family (`targetfeaturesymbols` / `regressionmodelsymbols` for symbols, `jet` for `colormap`) |
+| `"default"` | The preset `standard` of that family (`targetfeaturesymbols` / `regressionmodelsymbols` for symbols, `jet` for `colormap`, a preset picked from the shown plots for `plot_layout`) |
 | `"<name>"` or `"<name>@<version>"` | That parameter set; without `@` the latest version |
 | a path (contains `/`, starts with `~` or ends with `.json`) | A JSON settings file, relative to the project root |
 
@@ -96,6 +96,11 @@ Until the `ml_setting` schema is set up, `"default"` and the preset filter names
 `ai4sh/default/`, with one warning per run
 (`⚠️ ml_setting schema not available — using the default settings files`). A set name then fails with an
 error.
+
+**A wrong name stops the run.** A settings file that does not exist, or a parameter set name that is not in
+`ml_setting`, stops the process with an `ERROR:` that names it. Nothing is run with library defaults instead.
+The same holds for an unknown `scaler` in scatter correction and an unknown `method` in scaling: the error
+lists the valid names.
 
 **`"none"` means none.** For `model_parameters_fp`, `"none"` gives the scikit-learn defaults; use
 `"default"` for the `standard` hyper-parameters (`random_state: 42` for the stochastic regressors).
@@ -232,4 +237,5 @@ frozen set, because that does not change anything a model used.
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [ml_preprocess]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
-[ml_model_regressors]: {{ site.baseurl }}/machine_learning/ml_model/#available-regressors
+[ml_model_plots]: {{ site.baseurl }}/machine_learning/ml_model/plots/#plot-layout
+[ml_model_regressors]: {{ site.baseurl }}/machine_learning/ml_model/regressors/#available-regressors
