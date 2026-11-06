@@ -7,7 +7,7 @@ excerpt: "Detecting outlying indicator values with isolation forest, elliptic en
 permalink: /machine_learning/ml_preprocess1/outliers/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-04 16:00:00 +0100
 ---
 
 Section 1.1 of the notebook `ml_preprocess_separated.ipynb`. Indicators (the laboratory, home or field observed
@@ -166,6 +166,10 @@ instead: fixed limits, nothing learned from the samples.
 Outlier detection and the indicator range are the two indicator steps: they only set indicator values to missing
 and are never refitted in a model. An indicator file with either step can be [compiled][compile].
 
+Outlier removal also runs on a compiled dataset: set `project_root_fp` to the compiled folder. With an empty
+`indicator_array` it skips the covariates of the compiled dataset; name a covariate in `indicator_array` to
+test it. See [Indicator steps before or after compiling][compile_indicator_steps].
+
 ## Next step
 
 [Indicator range][pp1_range]: set indicator values outside a [min, max] range to missing.
@@ -176,3 +180,4 @@ and are never refitted in a model. An indicator file with either step can be [co
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
 [compile]: {{ site.baseurl }}/machine_learning/compile/
+[compile_indicator_steps]: {{ site.baseurl }}/machine_learning/compile/#indicator-steps-before-or-after-compiling

@@ -7,7 +7,7 @@ excerpt: "Machine learning pre-processes that work on indicators or spectra sepa
 permalink: /machine_learning/ml_preprocess1/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-04 16:00:00 +0100
 ---
 
 ML pre-processing 1 cleans up indicators and spectra **separately**, before they are compiled into a
@@ -62,13 +62,15 @@ All spectral processes read their input from the folder `project_root_fp`, here
 
 | `dataframe` | Input |
 |---|---|
-| `raw` (default) | The selected dataset of the folder (e.g. `1350-2500_10.parquet`), never a pre-processed file |
-| `previous` | The dataframe saved last, i.e. the latest record of `.previous_dataframe` |
+| `raw` (default) | The selected dataset of the folder (e.g. `1350-2500_10.parquet`), never a pre-processed file. In a compiled folder: the compiled dataset |
+| `previous` | The dataframe saved last in the folder by any process (or found already saved, see [Overwrite](#overwrite)), i.e. the latest record of `.previous_dataframe` |
 | a file name | A parquet file in `project_root_fp`, `.parquet` optional, e.g. `1350-2500_10.snv` |
 
 A file counts as pre-processed when its name has a known suffix, or when its companion JSON has a non-empty
 `preprocessing_chain`. To build a pipeline step by step, give each process the output of the step before
-(or `previous`). The [chemometric chain][pp1_chain] does all steps in one go.
+(or `previous`). The [chemometric chain][pp1_chain] does all steps in one go. A missing file stops the process:
+`ERROR: Dataframe file not found: <path>`. Where several processes have run in one folder, name the file
+rather than rely on `previous`.
 
 ## Three ways to run a pre-process
 

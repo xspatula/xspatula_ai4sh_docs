@@ -7,7 +7,7 @@ excerpt: "What an AI4SoilHealth selection saves: Parquet file and companion JSON
 permalink: /machine_learning/parquet_files/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-05 14:00:00 +0100
 ---
 
 Every [select process][select_data] saves its result locally as a Parquet file. This page explains what
@@ -31,7 +31,7 @@ Output paths are built from tags (`_Ml_output_paths` in `select.py`):
 ```
 {output_root_fp}/{role}/{provision tag}/{preparation alias}/{scope tag}/{begin}-{end}_{bandwidth}[__{filter}].parquet   spectra
 {output_root_fp}/{role}/{scope tag}/{aliases}_{min}-{max}[__{filter}].parquet                                        indicator, covariate
-{output_root_fp}/compiled/{output_name}/{output_name}.parquet                                                         compile
+{output_root_fp}/compiled/{output_name}/{output_name}.parquet                                                         compiled
 ```
 
 - The **scope tag** is the most specific one given: sampling_log > campaign > dataset. For all AI4SH

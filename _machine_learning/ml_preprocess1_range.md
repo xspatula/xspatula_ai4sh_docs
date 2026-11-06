@@ -7,7 +7,7 @@ excerpt: "Setting indicator values outside a [min, max] range to missing, intera
 permalink: /machine_learning/ml_preprocess1/range/
 author_profile: false
 date: 2026-11-03 08:00:00 +0100
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-05 14:00:00 +0100
 ---
 
 Section 1.2 of the notebook `ml_preprocess_separated.ipynb`. Like [outlier removal][pp1_outliers], the
@@ -21,6 +21,10 @@ instead sets **fixed limits** that define the population the model is meant for.
 agricultural soils, where the span is usually up to 5 % (sometimes 8–10 %), is distorted by a few organic or
 peat soils with 25 % or more: they dominate the model error and make the estimated error unrealistically high
 for the soils the model is meant for. The range `c-org 0–10` removes them.
+
+`data_range` in the select processes applies the same rule while selecting (see
+[Select indicators][select_indicators]). `indicator_range` adds the interactive check of the limits, and can run on
+a saved selection or a compiled dataset.
 
 ## How it works
 
@@ -112,6 +116,10 @@ are the two **indicator steps**: they only set indicator values to missing.
 Typical order: outlier detection (1.1), then indicator range (1.2) with `"dataframe": "previous"`; or the range
 alone on the raw selection.
 
+The indicator range also runs on a compiled dataset: set `project_root_fp` to the compiled folder. With an empty
+`indicator_array` it skips the covariates of the compiled dataset; a covariate named in `indicator_array` or
+`data_range` is ranged. See [Indicator steps before or after compiling][compile_indicator_steps].
+
 ## Next step
 
 [Filters][pp1_filter]: smooth the spectra.
@@ -122,3 +130,5 @@ alone on the raw selection.
 [pp1_filter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/filter/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [compile]: {{ site.baseurl }}/machine_learning/compile/
+[select_indicators]: {{ site.baseurl }}/machine_learning/select_data/#select-indicators
+[compile_indicator_steps]: {{ site.baseurl }}/machine_learning/compile/#indicator-steps-before-or-after-compiling

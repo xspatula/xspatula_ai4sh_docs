@@ -7,7 +7,7 @@ excerpt: "Running a complete spectral pre-processing pipeline in one process wit
 permalink: /machine_learning/ml_preprocess1/chain/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-04 16:00:00 +0100
 ---
 
 Section 2.7 of the notebook `ml_preprocess_separated.ipynb`. See [ML pre-processing 1][pp1] for input
@@ -29,8 +29,8 @@ settings. Once you know the pipeline you want, `chemometric_chain` runs it in on
 
 | Parameter (`chemometric_chain`) | Description |
 |---|---|
-| `project_root_fp` | The spectra selection folder |
-| `dataframe` | Input dataframe: `raw` (default), `previous` or a file name |
+| `project_root_fp` | The spectra selection folder, or the compiled folder |
+| `dataframe` | Input dataframe: `raw` (default), `previous` or a file name, see [The input dataframe][input_df] |
 | `chemometrics_array` | The steps, see the syntax below |
 | `chain_from` | Instead of `chemometrics_array`: rerun the chain of a saved dataframe (2.7.3) |
 | `name_extension` | Optional, see [Name extension][name_extension] |
@@ -162,12 +162,23 @@ Instead of writing a chain, point `chain_from` at a saved pre-processed datafram
 its companion JSON is rebuilt with the recorded settings and run on the input dataframe. Give
 `chain_from` as:
 
-- the name of a dataframe in `project_root_fp` (`.json` optional), e.g.
-  `1350-2500_10.snv.sg5.d1.mc.wc40.pca5`;
-- or a path relative to the project root, to use the chain of another dataset, e.g.
+- the name of a dataframe in `project_root_fp`, e.g. `1350-2500_10.snv.sg5.d1.mc.wc40.pca5`;
+- or, when it contains `/`, a path relative to the project root, to use the chain of another dataset, e.g.
   `./project_neospectra/data/spectra/neospectra/ds2/ai4sh/1350-2500_10.snv.sg5.d1.mc.wc40.pca5.json`.
 
-Give either `chain_from` or `chemometrics_array`, not both.
+The `.json` ending is optional, and a `.parquet` ending is read as `.json`. A missing file stops the process
+(`ERROR: chain_from not found: <path>`). Give either `chain_from` or `chemometrics_array`, not both.
+
+**Which input.** Run the chain on an input without spectral steps: `raw`, or the result of an indicator step
+(e.g. `neospectra_10nm.olif` in a compiled folder). The chain is
+applied on top of whatever the input already has, without a warning: on `1350-2500_10.snv`, a chain that
+starts with SNV gives SNV twice, and the model refits the doubled steps.
+
+**Only spectral chains.** The chain may only hold spectral steps (filter, scatter correction, derivative,
+scaling, variance threshold, Ward clustering, PCA). A dataframe whose chain also has an indicator step, such as
+`neospectra_10nm.olif.snv.sg5.d1.mc.wc40.pca5`, stops the process with
+`ERROR: chain_from <file>: step 1: "detect_outliers" cannot be run in a chain (…)`. Point `chain_from` at the
+explored chain in the spectra folder instead.
 
 **Settings, not fitted results.** The recorded settings are reused: the filter settings themselves (not the
 file, which may have changed), the scatter corrections, the variance threshold and the applied number of
@@ -228,4 +239,5 @@ suffix: the suffixes of the loaded chain, e.g. `.snv.sg5.d1.mc.wc40.pca5` (+ opt
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
 [ml_model]: {{ site.baseurl }}/machine_learning/ml_model/
 [compile]: {{ site.baseurl }}/machine_learning/compile/
+[input_df]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#the-input-dataframe
 [compile_chain]: {{ site.baseurl }}/machine_learning/compile/#pre-process-the-compiled-dataset

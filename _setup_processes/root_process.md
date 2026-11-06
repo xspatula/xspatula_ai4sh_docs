@@ -59,7 +59,7 @@ Further roots are registered at the top of the process files that use them, rath
 
 | Root process | Registered in | Processes |
 |---|---|---|
-| `select_data` | each `select/*.json` file | `select_spectra`, `select_indicator`, `select_spectra_only`, `select_indicator_only`, `select_covariate_only`, `compile_dataset` |
+| `select_data` | each `select/*.json` file | `compile_dataset_from_db`, `select_indicator`, `select_spectra_only`, `select_indicator_only`, `select_covariate_only`, `compile_dataset` |
 | `pandas` | `pandas/pandas_inspect_v10_sql.json` | `inspect_pandas_dataset` |
 | `plot` | `plot/plot_v10_sql.json` | `plot_indicators`, `plot_spectra` and two scatter correction comparison plots |
 | `machine_learning` | each `machine_learning/*.json` file | spectral preprocessing, outlier detection, feature selection, regression and `predict_independent` (applies saved models to new spectra, stratum 3) |

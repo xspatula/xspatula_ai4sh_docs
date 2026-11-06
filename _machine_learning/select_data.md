@@ -7,7 +7,7 @@ excerpt: "Selecting AI4SoilHealth spectra, indicators and covariates from the da
 permalink: /machine_learning/select_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-05 18:00:00 +0100
 ---
 
 The first step of the machine learning pipeline: decide which samples and which data you need, check
@@ -17,7 +17,8 @@ it.
 
 Spectra, indicators (the targets you want to predict) and covariates are selected **separately**, each
 into its own tag-named Parquet file. A compile step then joins them on `sample_id` into the dataset that
-every later ML step works on.
+every later ML step works on. Alternatively, `compile_dataset_from_db` selects them in one call and saves the
+compiled dataset directly ([Compile directly from the database][compile_from_db]).
 
 The code is the same as for LUCAS. The [LUCAS Select Data][lucas_select] page is the extended version of
 this page. It covers texture, land cover, land use and biogeographic region filtering in depth, because
@@ -53,14 +54,12 @@ One function does all selections; the process sets the **role** of the output (`
 | `select_spectra_only` | `spectra` | spectra only |
 | `select_indicator_only` | `indicator` | numeric (and nominal) indicators |
 | `select_covariate_only` | `covariate` | covariates |
-| `select_spectra` | `all` | spectra + indicators (+ covariates) in one file |
-| `compile_dataset` | — | joins saved selections on `sample_id`, see [Compile][compile] |
+| `compile_dataset_from_db` | `compiled` | indicators, spectra and/or covariates in one call, saved as a compiled dataset, see [Compile directly from the database][compile_from_db] |
+| `compile_dataset` | `compiled` | joins saved selections on `sample_id`, see [Compile][compile] |
 
 The process decides the role, not the data: pH can be an indicator in one file and a covariate in
 another. Whether a name is a numeric measurement, a nominal classification or a landscape class is
 looked up in the database.
-
-The old process `select_indicator` and the parameters `dataset_name`/`campaign_name` no longer exist.
 
 ## Scope
 
@@ -100,12 +99,12 @@ evaluated and plotted per site later. LUCAS has one campaign; for AI4SH this is 
 
 ## Observation logs, subsamples and replicates
 
-`select_spectra`, `select_spectra_only`, `select_indicator_only` and `select_covariate_only` also take:
+`select_spectra_only`, `select_indicator_only`, `select_covariate_only` and `compile_dataset_from_db` also take:
 
 | Parameter | Default | Description |
 |---|---|---|
 | `aggregate` | `average` | How several observations of the same sample *within one observation log* (subsamples and/or replicates) are combined into one value or spectrum: `average`, `median`, `min` or `max` (per band for spectra) |
-| `observation_log_array` | empty | The observation logs (names or tags) to take the data from; empty = all |
+| `observation_log_array` | empty | The observation logs (names or tags) to take the data from, per kind of data; empty = all |
 
 Aggregation is reported in the log, e.g.:
 
@@ -126,6 +125,20 @@ analysing the same indicator:
     Set observation_log_array to the names or tags of the observation logs to use (and spectra_preparation_name to
     separate sample preparations, e.g. ds2 and ilmx).
 ```
+
+**Per kind of data, and per indicator.** A listed log restricts only the data it holds: spectral logs restrict
+the spectra, laboratory and field logs the indicators, covariates and classes (e.g. soil texture). An indicator or
+covariate without a record in any listed log keeps all its logs, with a note naming them:
+
+```
+    Note: observation_log_array names no observation log with indicator/covariate data for clay — all its logs used (<logs>)
+```
+
+When no listed log holds that kind of data at all, there is one note without `for <name>`. So listing only the
+spectral logs, as in the [compile from the database][compile_from_db] example, selects those spectra and every
+laboratory value; listing the laboratory log of the indicators keeps a covariate that is held only in a field
+log. Classes are checked like numeric values: a sample with a class from two logs stops the selection
+(`… sample/class pairs have data from more than one observation log`).
 
 Values of different indicators may come from different logs, e.g. c-org from one laboratory and pH from
 another. Observation log tags may repeat across sampling logs, so one tag selects the matching log in every
@@ -323,8 +336,8 @@ To get the spectra for exactly the samples of a filtered indicator selection:
 - Set `sample_source` to a saved parquet (relative to the project root, `.parquet` optional).
 - Its `sample_id`s restrict the scope. Its `class_*` columns and `sample_filter` are inherited, so the
   spectra file gets the same filter part in its name.
-- Don't repeat the filter instead. The indicator selection may already have dropped samples (no value,
-  `data_range`). `sample_source` gives exactly the same samples.
+- Don't repeat the filter instead. The indicator selection may already have dropped samples (no indicator
+  value, also after `data_range`). `sample_source` gives exactly the same samples.
 
 ## Select spectra
 
@@ -389,8 +402,22 @@ To get the spectra for exactly the samples of a filtered indicator selection:
 | Parameter | Description |
 |---|---|
 | `indicator_array` | The indicators to select, by name or alias |
-| `data_range` | Optional JSON `{indicator: {min, max}}` to filter values; empty = no filter |
+| `data_range` | Optional JSON string `{"<indicator>": {"min": …, "max": …}}`; a value outside its range is set to missing; empty = no filter |
 | `targetfeaturesymbols` | Which unit to save each indicator in, see [Indicator units][indicator_units]: a `plot_symbol` set name (`"name"` or `"name@version"`, see [ML settings][ml_settings]) or a JSON file path. Default `"default"` = the set `targetfeaturesymbols` |
+
+**`data_range`** sets a value outside its range to missing and keeps the other values of the sample, as the
+[indicator range][pp1_range] does. A sample without any indicator value is removed, whether it had none from the
+start or `data_range` set them all to missing. At `verbose` 1 or more the run prints, e.g.:
+
+```
+    Set to missing by data_range: c-org <n>, n-tot <n>
+    Excluded, no indicator value: <n> (<n> emptied by data_range)
+```
+
+The part in brackets is printed only when `data_range` emptied a sample.
+
+The range is recorded as `data_range` in the companion JSON, not as a pre-processing step. `data_range` works the
+same in `select_covariate_only` and `compile_dataset_from_db`.
 
 If a requested indicator has no data, the process lists what is available and asks whether to continue
 without it. The output name is explained under [Output names][output_names].
@@ -432,11 +459,11 @@ saved as text with unit `class`.
 The selection is then [compiled with the indicators and spectra][compile_covariates], and used in a model as
 described under [Covariates][ml_model_covariates].
 
-## All in one: select_spectra
+## Select and compile in one step
 
-`select_spectra` (role `all`) saves spectra, indicators and covariates in one file, without a compile
-step: the spectra parameters plus `indicator_array` and `data_range`. Separate selections plus
-[compile][compile] are the recommended route.
+`compile_dataset_from_db` takes the spectra parameters plus `indicator_array`, `covariate_array` and `data_range`,
+and saves a compiled dataset without separate selections. See
+[Compile directly from the database][compile_from_db], also for when to use which route.
 
 ## Next step
 
@@ -446,6 +473,8 @@ step: the spectra parameters plus `indicator_array` and `data_range`. Separate s
 [plot_data]: {{ site.baseurl }}/machine_learning/plot_data/
 [inspect]: {{ site.baseurl }}/machine_learning/parquet_files/#inspect-the-dataset
 [compile]: {{ site.baseurl }}/machine_learning/compile/
+[compile_from_db]: {{ site.baseurl }}/machine_learning/compile/#compile-directly-from-the-database
+[pp1_range]: {{ site.baseurl }}/machine_learning/ml_preprocess1/range/
 [columns]: {{ site.baseurl }}/machine_learning/parquet_files/#columns
 [output_names]: {{ site.baseurl }}/machine_learning/parquet_files/#output-names
 [indicator_units]: {{ site.baseurl }}/machine_learning/parquet_files/#indicator-units

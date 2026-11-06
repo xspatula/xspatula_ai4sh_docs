@@ -80,7 +80,7 @@ The `select_data` root holds the processes that read from the database and save 
 
 | File | Process | Purpose |
 |---|---|---|
-| `select/select_data_v10_sql.json` | `select_spectra` | Spectra, indicators and optional covariates in one call, saved as one file |
+| `select/select_data_v10_sql.json` | `compile_dataset_from_db` | Indicators plus spectra and/or covariates in one call, saved as a compiled dataset |
 | `select/select_data_v10_sql.json` | `select_indicator` | List the indicators recorded under a dataset or campaign |
 | `select/select_spectra_only_v10_sql.json` | `select_spectra_only` | Spectra only, resampled to the output bandwidth |
 | `select/select_indicator_only_v10_sql.json` | `select_indicator_only` | Indicators (target features) only, translated to target units |
@@ -88,7 +88,7 @@ The `select_data` root holds the processes that read from the database and save 
 | `select/compile_dataset_v10_sql.json` | `compile_dataset` | Join saved spectra/indicator/covariate files on `sample_id`, keeping samples present in all inputs |
 | `pandas/pandas_inspect_v10_sql.json` | `inspect_pandas_dataset` | Show the structure and contents of a saved Parquet file |
 
-`select_spectra` takes the parameters `dataset`, `campaign`, `sampling_log`, `spectra_provision`, `spectra_preparation_name`, `output_spectra_signal`, `covariate_array` and `covariate_rank` (the land class rank to report a covariate at), among others. `plot_indicators` (in `plot/`) takes `covariate_array`, `max_classes`, `class_label`, `single_canvas_plot` and `individual_canvas_plot`. The pipeline is described with LUCAS examples in [Explore and select data][lucas_explore_select].
+`compile_dataset_from_db` takes the parameters `dataset`, `campaign`, `sampling_log`, `indicator_array`, `spectra_provision` (optional), `spectra_preparation_name`, `output_spectra_signal`, `covariate_array` and `covariate_rank` (the land class rank to report a covariate at), among others. `plot_indicators` (in `plot/`) takes `covariate_array`, `max_classes`, `class_label`, `single_canvas_plot` and `individual_canvas_plot`. The pipeline is described with LUCAS examples in [Explore and select data][lucas_explore_select].
 
 ## Process file structure
 
