@@ -18,7 +18,7 @@ spectra (`select_spectra_only.ipynb`), but the [multi-filter](#216-multi-filter)
 
 ## The four filters
 
-All four slide a window along each spectrum and replace every band by a weighted local estimate. Window
+All four filter slide a window along each spectrum and replace every band by a weighted local estimate. Window
 sizes are counted in **bands, not nm**: with the 10 nm NeoSpectra selection a 5-band window spans 40 nm
 (centre ± 2 bands).
 

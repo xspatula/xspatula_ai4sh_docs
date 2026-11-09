@@ -1,17 +1,17 @@
 ---
-title: "ML Pre-processing 1: PCA"
+title: "ML Pre-processing 1: Decomposition"
 layout: single
 sidebar:
   nav: "machine_learning"
-excerpt: "Principal Component Analysis of spectra: what the components and scores are, the share of variance they explain, and comparing PCA of differently pre-processed inputs."
+excerpt: "Decomposition of spectra: Principal Component Analysis (components, scores, explained variance, comparing inputs) and the discrete wavelet transform (denoising, wavelet coefficients as features)."
 permalink: /machine_learning/ml_preprocess1/pca/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-10-31 08:00:00 +0100
+last_modified_at: 2026-11-06 16:00:00 +0100
 ---
 
-Section 2.6 of the notebook `ml_preprocess_separated.ipynb`. See [ML pre-processing 1][pp1] for input
-dataframes, naming and the companion JSON.
+Section 2.6 of the notebook `ml_preprocess_separated.ipynb`: PCA (2.6.1, 2.6.2) and wavelets (2.6.3, 2.6.4).
+See [ML pre-processing 1][pp1] for input dataframes, naming and the companion JSON.
 
 ## What PCA does
 
@@ -126,6 +126,96 @@ The PCA of the chosen input is saved directly, with the suffix added to that inp
 
 suffix: `.pca5` (`.pca` + the number of components) added to the selected input dataframe
 
+## Wavelets
+
+The discrete wavelet transform (DWT) splits a spectrum by scale. At each level the spectrum is passed through
+a pair of filters: a smoothing filter gives the **approximation** (the broad shape, at half the number of
+points) and a difference filter gives the **detail** coefficients (the sharp, local changes at that scale).
+The next level splits the approximation again. After three levels a 116-band spectrum is described by about
+20 approximation coefficients plus three sets of details, from fine (noise, sharp edges) to coarse.
+
+Think of a photo saved at decreasing resolution: each step keeps a smaller image (the approximation) and
+stores what was lost (the details). PCA finds patterns across the samples; a wavelet works on each spectrum
+on its own, and each coefficient covers a wavelength region.
+
+| Parameter (`spectra_wavelet`) | Description |
+|---|---|
+| `project_root_fp` | The spectra selection folder, or the compiled folder |
+| `dataframe` | Input dataframe: `raw` (default), `previous` or a file name |
+| `mode` | `denoise` (default): same bands, less noise. `coefficients`: the coefficients replace the bands |
+| `wavelet` | A discrete wavelet: `db4` (default, Daubechies 4), `db1`–`db38` (`db1` = Haar), `sym2`–`sym20`, `coif1`–`coif17`, … |
+| `level` | Decomposition levels, default 3; capped to what the number of bands allows |
+| `details` | `coefficients` only: detail levels kept next to the approximation, coarsest first; default 0 (approximation only) |
+| `name_extension` | Optional, see [Name extension][name_extension] |
+| `colormap`, `max_spectra` | Colour ramp and number of spectra in the plot |
+| `show`, `save` | Show the plot, save it under `plot/` |
+
+The process needs the PyWavelets package (`pip install PyWavelets`); without it the run stops with
+`ERROR: wavelets need the PyWavelets package: pip install PyWavelets`. The wavelet works on each spectrum on
+its own and learns nothing from the other samples, so in a model it is replayed unchanged.
+
+## 2.6.3 Wavelet denoise
+
+**Process file**: `project_neospectra/process/ml_preprocess/spectra_wavelet_denoise.json`
+
+```json
+{
+  "process": [
+    {
+      "process": "spectra_wavelet",
+      "parameters": {
+        "project_root_fp": "./project_neospectra/data/spectra/neospectra/ds2/ai4sh",
+        "dataframe": "raw",
+        "mode": "denoise",
+        "wavelet": "db4",
+        "level": 3,
+        "show": true,
+        "save": false
+      }
+    }
+  ]
+}
+```
+
+The detail coefficients are shrunk towards zero (soft thresholding) and the spectrum is rebuilt from the
+approximation and the shrunk details. The threshold is the universal threshold of Donoho & Johnstone (1994),
+σ·√(2 ln n), with the noise σ estimated per spectrum from the finest details and n the number of bands.
+Details smaller than the threshold are taken as noise and removed; larger ones, real absorption features, are
+kept but reduced by the threshold.
+
+![Wavelet denoise of the raw spectra]({{ "/assets/media/ml_preprocesses_separate/2-6-3-wavelet-denoise.png" | relative_url }})
+
+The output has the same bands as the input. Compared with a smoothing filter ([Filters][pp1_filter]), the
+wavelet removes noise where the spectrum is flat and keeps sharp features where it changes. The 10 nm
+NeoSpectra spectra carry little high-frequency noise, so the effect is small here.
+
+```
+    Accept and save wd result? [y/n]:
+```
+
+suffix: `.wd`
+
+## 2.6.4 Wavelet coefficients
+
+**Process file**: `project_neospectra/process/ml_preprocess/spectra_wavelet_coefficients.json`, the same
+with `"mode": "coefficients"` and `"details": 1`.
+
+The approximation coefficients at `level`, plus `details` levels of detail coefficients (coarsest first),
+replace the bands as the columns `wt1 … wtn`. Like PCA this compresses the spectrum, but each coefficient still
+belongs to a wavelength region.
+
+![Wavelet coefficients of the raw spectra]({{ "/assets/media/ml_preprocesses_separate/2-6-4-wavelet-coefficients.png" | relative_url }})
+
+With 116 bands, `db4` and level 3 there are 20 approximation coefficients (`wt1`–`wt20`), a smoothed and
+shortened copy of the spectrum, and 20 detail coefficients of level 3 (`wt21`–`wt40`). On raw spectra the
+details are close to zero: the shape is in the approximation. Every level halves the number of approximation
+coefficients; `details` adds one block per level.
+
+suffix: `.wt`
+
+The coefficients are features, not wavelengths: a later band selection selects coefficients, and importance
+plots show coefficient numbers ([ML pre-processing 2: Wavelet coefficients][pp2_wavelet]).
+
 ## Next step
 
 [Chemometric chain][pp1_chain]: run a complete pre-processing pipeline in one go.
@@ -135,3 +225,6 @@ suffix: `.pca5` (`.pca` + the number of components) added to the selected input 
 [pp1_scatter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/scatter/
 [pp1_bands]: {{ site.baseurl }}/machine_learning/ml_preprocess1/bands/
 [pp1_chain]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/
+[pp1_filter]: {{ site.baseurl }}/machine_learning/ml_preprocess1/filter/
+[name_extension]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#name-extension
+[pp2_wavelet]: {{ site.baseurl }}/machine_learning/ml_preprocess2/wavelet/

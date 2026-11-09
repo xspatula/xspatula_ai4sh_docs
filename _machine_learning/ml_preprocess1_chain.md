@@ -7,7 +7,7 @@ excerpt: "Running a complete spectral pre-processing pipeline in one process wit
 permalink: /machine_learning/ml_preprocess1/chain/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-04 16:00:00 +0100
+last_modified_at: 2026-11-06 16:00:00 +0100
 ---
 
 Section 2.7 of the notebook `ml_preprocess_separated.ipynb`. See [ML pre-processing 1][pp1] for input
@@ -51,6 +51,7 @@ and custom settings:
 | Variance threshold | — | `{"variance_threshold": {"threshold": 0.03}}` | `vt03` |
 | Ward clustering | — | `{"ward_clustering": {"n_clusters": 40, "connectivity": true}}` | `wc40` |
 | PCA | `pca` (5 components) | `{"pca": 5}` or `{"pca": {"n_components": 5}}` | `pca5` |
+| Wavelet | `wavelet` (denoise, `db4`, level 3) | `{"wavelet": {"mode": "coefficients", "wavelet": "db4", "level": 3, "details": 1}}` | `wd`, `wt` |
 
 - The filter object also takes the settings inline, e.g.
   `{"filter": {"savitzky-golay": {"window_length": 7, "polyorder": 2, "deriv": 1}}}`.
@@ -59,6 +60,8 @@ and custom settings:
   computed on minmax-scaled bands; a `scaler` other than `minmax` is an error. Ward `connectivity` defaults
   to `true`. Ward clustering also accepts the path of a settings file with `n_clusters`.
 - An appended derivative (`d1app`) cannot be part of a chain.
+- The wavelet object takes the parameters of [`spectra_wavelet`][pp1_wavelet] (`mode`, `wavelet`, `level`,
+  `details`); `{"wavelet": "db4"}` without an object is an error.
 
 The same syntax is used for `chemometrics_array` in the spectra plots ([Plot data][plot_data]).
 
@@ -241,3 +244,4 @@ suffix: the suffixes of the loaded chain, e.g. `.snv.sg5.d1.mc.wc40.pca5` (+ opt
 [compile]: {{ site.baseurl }}/machine_learning/compile/
 [input_df]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#the-input-dataframe
 [compile_chain]: {{ site.baseurl }}/machine_learning/compile/#pre-process-the-compiled-dataset
+[pp1_wavelet]: {{ site.baseurl }}/machine_learning/ml_preprocess1/pca/#wavelets

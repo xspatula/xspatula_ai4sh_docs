@@ -81,9 +81,6 @@ The process `indicator_range`:
 | `show`, `save` | Show the plot (default `true`); save it as `plot/range_<indicators>.png` (default `false`) |
 | `name_extension` | Optional, see [Name extension][name_extension] |
 
-The process `indicator_range` is registered by `setup_processes.ipynb`; rerun it after updating xspatula_ai4sh.
-{: .notice--info}
-
 The example runs on the previous dataframe, i.e. after the outlier removal of 1.1, and starts from c-org 0–10 %
 and n-tot 0–1 %. Set `"dataframe": "raw"` to range the selected indicators directly. When the cell runs, the
 table is printed:
@@ -110,8 +107,7 @@ suffix: `.ir` (+ optional `#<name_extension>`)
 
 Unlike outlier detection, nothing is learned from the samples: the limits are fixed, so the step is the same for
 training and independent data. A ranged indicator file can be [compiled][compile] and used for prediction, and
-[ML modeling][ml_model] does not refit it. Outlier detection and indicator range
-are the two **indicator steps**: they only set indicator values to missing.
+[ML modeling][ml_model] does not refit it. 
 
 Typical order: outlier detection (1.1), then indicator range (1.2) with `"dataframe": "previous"`; or the range
 alone on the raw selection.

@@ -178,7 +178,7 @@ columns as the input.
 Compared with 2.3.1 the curves are smoother and the extremes somewhat lower, because the 5-band window
 averages the slope over 40 nm.
 
-The Savitzky-Golay derivative is the common choice for soil NIR. In a pipeline it goes after scatter
+The Savitzky-Golay derivative is a common choice for soil NIR spectra pre-processing. In a pipeline it goes after scatter
 correction and before variable scaling, and it replaces both the filter (2.1) and the derivative (2.3.1)
 step:
 

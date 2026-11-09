@@ -7,18 +7,17 @@ excerpt: "Machine learning pre-processes that work on indicators or spectra sepa
 permalink: /machine_learning/ml_preprocess1/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-04 16:00:00 +0100
+last_modified_at: 2026-11-06 16:00:00 +0100
 ---
 
-ML pre-processing 1 cleans up indicators and spectra **separately**, before they are compiled into a
+ML pre-processing 1 cleans up indicators and spectra separately, before they are compiled into a
 modelling dataset. These pre-processes remove indicator outliers and physical artefacts, instrument noise and
 baseline shifts from the spectra. Some also compress the spectra into fewer, more informative columns.
 Neither the target indicator nor the regressor plays any part, which makes these pre-processes fast and
 suited to exploring options.
 
-**ML pre-processing 2** (to be documented) works on the compiled dataset. It can use the relation between
-spectra and target indicator, and the regressor (univariate, permutation and recursive feature
-elimination selection). It is the notebook `ml_preprocess_compiled`.
+[ML pre-processing 2][pp2] works on the compiled dataset. It selects bands by their relation to the target
+indicator, and for some methods by a regressor.
 
 ## Notebook
 
@@ -26,18 +25,18 @@ elimination selection). It is the notebook `ml_preprocess_compiled`.
 
 Set `scheme_file = '../scheme_ai4sh.json'` in the setup cell (the default). Every other cell runs one process
 file from `project_neospectra/process/ml_preprocess/`. The section numbers on these pages are the cell
-numbers of the notebook. Each pre-process adds a unique suffix to the saved dataframe, and a pipeline of pre-processes stacks the sequential suffixes separated by dots.
+numbers of the notebook. Each pre-process adds a unique suffix to the saved dataframe, and a pipeline of pre-processes stacks the sequential suffixes separated by dots. The filename becomes a quick reference for the process history, with exact details saved in a companion JSON file.
 
 | Section | Page | Process | Suffix |
 |---|---|---|---|
 | 1.1 Indicator outliers | [Indicator outliers][pp1_outliers] | `detect_outliers` | `.olif`, `.olee`, `.ollof`, `.ol1csvm` |
 | 1.2 Indicator range | [Indicator range][pp1_range] | `indicator_range` | `.ir` |
-| 2.1 Filters | [Filters][pp1_filter] | `filter_spectra`, `multi_filter_spectra` | `.ma5`, `.gf2`, `.sg5`, `.lw21`, `.mf` |
+| 2.1 Filters | [Filters][pp1_filter] | `filter_spectra`, `multi_filter_spectra` | `.ma<n>`, `.gf<n>`, `.sg<n>`, `.lw<n>`, `.mf` |
 | 2.2 Scatter correction | [Scatter correction][pp1_scatter] | `spectra_scatter_correction` | `.l1`, `.l2`, `.max`, `.snv`, `.msc`, `.dt` |
 | 2.3 Derivatives | [Derivatives][pp1_derivative] | `spectra_derivative`, `filter_spectra` | `.d1`, `.d2`, `.sg5.d1` |
 | 2.4 Variable scaling | [Variable scaling][pp1_scaling] | `spectra_scaling` | `.mc`, `.as`, `.ps`, `.poi` |
-| 2.5 Band reduction | [Band reduction][pp1_bands] | `select_variance_threshold`, `ward_clustering` | `.vt03`, `.wc40` |
-| 2.6 Decomposition | [PCA][pp1_pca] | `spectra_decomposition` | `.pca5` |
+| 2.5 Band reduction | [Band reduction][pp1_bands] | `select_variance_threshold`, `ward_clustering` | `.vt<n>`, `.wc<n>` |
+| 2.6 Decomposition | [Decomposition][pp1_pca] | `spectra_decomposition`, `spectra_wavelet` | `.pca<n>`, `.wd`, `.wt` |
 | 2.7 Chemometric chain | [Chemometric chain][pp1_chain] | `chemometric_chain` | the suffixes of the steps |
 | 3 Delete dataframes | [Delete dataframes][pp1_delete] | `delete_dataframes` | — |
 
@@ -56,9 +55,7 @@ spectrum as reference). A variable scaling changes if you add or remove samples.
 
 ## The input dataframe
 
-All spectral processes read their input from the folder `project_root_fp`, here
-`./project_neospectra/data/spectra/neospectra/ds2/ai4sh` (the selection of
-[Select data][select_data]). The parameter `dataframe` chooses the file:
+All spectral processes read their input from the folder `project_root_fp`. The parameter `dataframe` chooses the file:
 
 | `dataframe` | Input |
 |---|---|
@@ -66,10 +63,9 @@ All spectral processes read their input from the folder `project_root_fp`, here
 | `previous` | The dataframe saved last in the folder by any process (or found already saved, see [Overwrite](#overwrite)), i.e. the latest record of `.previous_dataframe` |
 | a file name | A parquet file in `project_root_fp`, `.parquet` optional, e.g. `1350-2500_10.snv` |
 
-A file counts as pre-processed when its name has a known suffix, or when its companion JSON has a non-empty
-`preprocessing_chain`. To build a pipeline step by step, give each process the output of the step before
-(or `previous`). The [chemometric chain][pp1_chain] does all steps in one go. A missing file stops the process:
-`ERROR: Dataframe file not found: <path>`. Where several processes have run in one folder, name the file
+All dataframes have a companion JSON file that keeps a record of the
+`preprocessing_chain` that led to the dataframe. To build a pipeline step by step, give each process the output of the step before
+(or `previous`). The [chemometric chain][pp1_chain] does all steps in one go. A missing file stops the process with a error message. Where several processes have run in one folder, name the file
 rather than rely on `previous`.
 
 ## Three ways to run a pre-process
@@ -77,9 +73,8 @@ rather than rely on `previous`.
 The notebook has a cell for each way where it applies:
 
 1. **Select**: all methods of one kind are applied and plotted together. You choose one by number at the
-   prompt (`0 = none`), and the chosen result is saved without a further y/n question. Used for outlier
-   detectors (`"detector": "select"`), filters (`"filter_fp": "select"`), scatter corrections
-   (`"scaler": ["select"]`) and variable scalings (`"method": "select"`).
+   prompt (0 = none), and the chosen result is saved without a further y/n question. Used for outlier
+   detectors, filters, scatter corrections and variable scalings.
 2. **Compare inputs**: one method is applied to several input dataframes (`dataframe_array`, two or more
    entries) and the results are plotted together. You choose which input's result to save. Use it to see
    how earlier pre-processing changes a step (derivative 2.3.3, PCA 2.6.2).
@@ -91,8 +86,7 @@ All prompts are answered in the notebook's input field. The plots show at most 1
 
 ## Output names
 
-Every pre-process saves `<input stem>.<suffix>.parquet` and a companion `<input stem>.<suffix>.json` next to
-its input. The suffixes are separated by a dot, so the file name spells out the pipeline:
+Every pre-process saves `<input stem>.<suffix>.parquet` and a companion `<input stem>.<suffix>.json` next to its input. The suffixes are separated by a dot, so the file name spells out the pipeline that led to the file:
 
 ```
 1350-2500_10.parquet                         the selected (raw) dataset
@@ -126,14 +120,16 @@ Chained scatter corrections are joined without a dot (`snv` + `detrend` → `snv
 | `vt{n}` | Variance threshold on minmax-scaled bands, n = threshold (`vt03`, `vt028`) | Band reduction |
 | `wc{n}` | Ward clustering, n = number of clusters (`wc40`) | Band reduction |
 | `pca{n}` | PCA, n = number of components (`pca5`) | Decomposition |
+| `wd` | Wavelet denoise (soft-thresholded details; same bands) | Decomposition |
+| `wt` | Wavelet coefficients as features (`wt1 … wtn`) | Decomposition |
 
-The full table, including the suffixes of ML pre-processing 2, is
-`xspatula_ai4sh/ai4sh/default/chemometric/chemometric_abbreviations.md`.
+The suffixes of the band selections are in [ML pre-processing 2][pp2_names]. The full table is available in the project itself,
+`ai4sh/default/chemometric/chemometric_abbreviations.md`.
 
 ### Name extension
 
 Some settings do not show in the suffix, e.g. the kernel weights of a moving average. Outlier detection,
-filter, multi-filter, variance threshold, Ward clustering and the chemometric chain therefore accept
+filter, multi-filter, variance threshold, Ward clustering, wavelets and the chemometric chain therefore accept
 `name_extension`: 1-6 letters, digits or `-`, added after a `#`. A moving average with the kernel
 `[1, 2, 3, 2, 1]` and `"name_extension": "12321"` is saved as `1350-2500_10.ma5#12321` (see
 [2.1.5][pp1_ma_ext]).
@@ -147,7 +143,7 @@ A pre-process does not recompute an output that already exists. It prints
 ```
 
 and registers the existing file as previous, so the next step with `"dataframe": "previous"` still finds it.
-To recompute, add `"overwrite": true` to the process block, next to `"parameters"`:
+To recompute, add `"overwrite": true` to the process block:
 
 ```json
 {
@@ -219,23 +215,17 @@ made.
 
 ## Exploration versus modelling
 
-The notebook fits every step on all samples: it is for exploring. When a model is trained on a
-pre-processed dataframe ([ML modeling][ml_model]), the model does not use the saved numbers. It reads the
-companion JSON, starts from `source_parquet` and **refits the whole `preprocessing_chain` on the training
-samples only**, inside the model pipeline. The test samples then never influence the pre-processing (no
-leakage).
+The notebook fits every step on all samples: it is for exploring, not for modeling. When a model is trained on a
+pre-processed dataframe ([ML modeling][ml_model]), the model does not use the saved dataframes. It reads the
+companion JSON, starts from `source_parquet` and refits the whole `preprocessing_chain` on the training
+samples only, inside the model pipeline. The test samples then never influence the pre-processing (no leakage).
 
-The model needs the indicators and spectra in one dataframe, i.e. the compiled dataset
-([Compile dataframe][compile]), and it can only refit a chain from an unprocessed source in the
-same folder. `compile_dataset` therefore refuses spectra that are pre-processed (any step other than
-indicator outlier removal or indicator range). The workflow is: explore and choose the pipeline in the spectra folder, compile
-the unprocessed selections, run the chosen pipeline in the compiled folder with [chain_from][chain_from],
-and model the result. Two consequences:
+To assure that there is no leakage `compile_dataset` refuses spectra that are pre-processed, but accepts indicator outlier removal or indicator range. The general workflow for developing a model thus becomes: explore and choose the pipeline in the spectra folder, compile the unprocessed selections, run the chosen pipeline in the compiled folder with [chain_from][chain_from],
+and model the result. This leads to two consequences:
 
 - Intermediate files are not needed for modelling: only the final dataframe and its companion JSON (see
   [Delete dataframes][pp1_delete]).
-- Fitted results (msc reference, scaling means, kept bands, clusters, PCA loadings) can differ slightly
-  between the exploration run and the model.
+- Fitted results (msc reference, scaling means, kept bands, clusters, PCA loadings) can differ slightly between the exploration run and the model.
 
 Indicator outlier removal and the indicator range are the exception. They only set values to missing, so an
 outlier-cleaned or ranged indicator selection can be compiled; its chain is recorded per input in the compiled
@@ -244,8 +234,10 @@ limits are fixed.
 
 ## Recommended order
 
+General recommendation for the pre-processing of Near Infra-Red (NIR) soil spectra:
+
 ```
-raw → filter → scatter correction → derivative → variable scaling → band reduction → PCA
+raw → filter → scatter correction → derivative → variable scaling → band reduction → PCA or wavelet coefficients
 ```
 
 - Scatter corrections (snv, msc) model the offset and slope of a whole spectrum. They need complete,
@@ -284,4 +276,6 @@ Not every pipeline needs every step. A common, robust NIR pipeline is
 [pp1_pca]: {{ site.baseurl }}/machine_learning/ml_preprocess1/pca/
 [pp1_chain]: {{ site.baseurl }}/machine_learning/ml_preprocess1/chain/
 [pp1_delete]: {{ site.baseurl }}/machine_learning/ml_preprocess1/delete/
+[pp2]: {{ site.baseurl }}/machine_learning/ml_preprocess2/
+[pp2_names]: {{ site.baseurl }}/machine_learning/ml_preprocess2/#output-names
 [pp1_ma_ext]: {{ site.baseurl }}/machine_learning/ml_preprocess1/filter/#215-moving-average-with-name-extension

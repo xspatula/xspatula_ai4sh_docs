@@ -20,8 +20,8 @@ parsimonious input. The two methods here do it without the target indicator or t
 - **Variance threshold** (2.5.1) *discards* bands whose variance is low.
 - **Ward clustering** (2.5.2) *merges* similar bands into clusters and keeps the cluster means.
 
-Selection that uses the target indicator (univariate, permutation and recursive feature elimination) is
-part of ML pre-processing 2. Apply band reduction after derivatives: a derivative needs neighbouring bands,
+Selection that uses the target indicator (univariate, permutation, recursive feature elimination and
+tree-based) is part of [ML pre-processing 2][pp2]. Apply band reduction after derivatives: a derivative needs neighbouring bands,
 and after Ward clustering the columns are clusters, not wavelengths.
 
 ## 2.5.1 Variance select spectral bands to keep/discard
@@ -215,3 +215,4 @@ suffix: `.wc<n_clusters>`, e.g. `.wc40` (+ optional `#<name_extension>`)
 [pp1]: {{ site.baseurl }}/machine_learning/ml_preprocess1/
 [name_extension]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#name-extension
 [pp1_pca]: {{ site.baseurl }}/machine_learning/ml_preprocess1/pca/
+[pp2]: {{ site.baseurl }}/machine_learning/ml_preprocess2/

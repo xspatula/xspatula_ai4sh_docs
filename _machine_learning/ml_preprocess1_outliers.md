@@ -30,7 +30,7 @@ Four detectors from scikit-learn are available:
 | `lof` | LocalOutlierFactor | Compares the density around each value with the density around its neighbours. Values in sparse regions are outliers, which also catches isolated values inside the range. |
 | `1csvm` | OneClassSVM | Fits a boundary around the values with a kernel support vector machine. Values outside the boundary are outliers. |
 
-`threshold` is the expected share of outliers, between 0 and 1 (exclusive). It is `contamination` for
+The process parameter `threshold` is the expected share of outliers, between 0 and 1 (exclusive). It is `contamination` for
 iforest, ee and lof, and `nu` for 1csvm. With 0.1, about 10 % of the values of each indicator are flagged.
 
 - Only the indicators in `indicator_array` are tested. Without it, every numeric column that is not
@@ -60,7 +60,8 @@ from a peat sample is flagged as easily as a typing error. Look at the plot befo
         "project_root_fp": "./project_neospectra/data/indicator/ai4sh",
         "indicator_array": ["n-tot", "c-org"],
         "detector": "select",
-        "threshold": 0.1
+        "threshold": 0.1,
+        "name_extension": ""
       }
     }
   ]
@@ -98,7 +99,7 @@ and 1csvm can flag values in the bulk of the distribution. Then the prompt asks 
 
 The number in brackets is the total count over all indicators. `0` skips outlier detection. Any other
 number continues as in 1.1.2 with the chosen detector: the threshold can still be changed, and you choose
-which outliers to remove. 
+which outliers to remove.
 
 suffix: `.olif`, `.olee`, `.ollof` or `.ol1csvm` for the chosen detector (+ optional `#<name_extension>`)
 

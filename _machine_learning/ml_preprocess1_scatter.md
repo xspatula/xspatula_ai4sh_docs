@@ -23,7 +23,7 @@ absorption features. A scatter correction removes these effects so that the rema
 spectra reflect composition.
 
 Think of photographs of the same page taken in different light. Scatter correction adjusts brightness and
-contrast so that only the text differs.
+contrast.
 
 All six methods work **per spectrum**: each row of the data table is corrected using only its own values
 (MSC also uses the mean spectrum as reference). This is the opposite of

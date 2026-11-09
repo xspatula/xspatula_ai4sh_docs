@@ -34,7 +34,7 @@ indicators together. The order:
 5. Spectral chain in the compiled folder: `chemometric_chain` with `chain_from` the explored chain
    ([Load existing pre-processing chain][chain_from]), on the result of step 4, or on the compiled dataset
    itself when step 4 is skipped ([Pre-process the compiled dataset](#pre-process-the-compiled-dataset)).
-6. ML pre-processing 2 (to be completed) and [ML modeling][ml_model] on the result of step 5.
+6. [ML pre-processing 2][pp2] (supervised band selection) and [ML modeling][ml_model] on the result of step 5.
 
 Indicator steps come before the spectral chain. The chain's output then carries them in its companion JSON,
 and the model reads the cleaned indicators from it while refitting the spectral steps on the training
@@ -458,7 +458,7 @@ JSON of the explored chain ([Load existing pre-processing chain][chain_from]), e
 
 ## Next step
 
-ML pre-processing 2 (to be completed): supervised band selection on the compiled dataset. Until then, go to
+[ML pre-processing 2][pp2]: supervised band selection on the compiled dataset. Or go straight to
 [ML modeling][ml_model]: train regressors on the compiled or pre-processed compiled dataset.
 
 [select_data]: {{ site.baseurl }}/machine_learning/select_data/
@@ -478,3 +478,4 @@ ML pre-processing 2 (to be completed): supervised band selection on the compiled
 [input_df]: {{ site.baseurl }}/machine_learning/ml_preprocess1/#the-input-dataframe
 [ml_model_covariates]: {{ site.baseurl }}/machine_learning/ml_model/covariates/
 [ml_predict]: {{ site.baseurl }}/machine_learning/ml_predict/
+[pp2]: {{ site.baseurl }}/machine_learning/ml_preprocess2/

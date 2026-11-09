@@ -259,7 +259,7 @@ machine_learning:
         url: /machine_learning/ml_preprocess1/scaling/
       - title: "2.5 Band reduction"
         url: /machine_learning/ml_preprocess1/bands/
-      - title: "2.6 PCA"
+      - title: "2.6 Decomposition"
         url: /machine_learning/ml_preprocess1/pca/
       - title: "2.7 Chemometric chain"
         url: /machine_learning/ml_preprocess1/chain/
@@ -271,7 +271,14 @@ machine_learning:
         url: /machine_learning/compile/
   - title: ML pre-processing 2
     children:
-      - title: "To be completed"
+      - title: "Overview"
+        url: /machine_learning/ml_preprocess2/
+      - title: "1 Band selection"
+        url: /machine_learning/ml_preprocess2/selection/
+      - title: "2 Wavelet coefficients"
+        url: /machine_learning/ml_preprocess2/wavelet/
+      - title: "3 Model the selections"
+        url: /machine_learning/ml_preprocess2/model/
   - title: ML modeling
     children:
       - title: "Overview"
