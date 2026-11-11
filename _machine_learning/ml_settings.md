@@ -7,7 +7,7 @@ excerpt: "Machine learning settings as named, versioned parameter sets in the ml
 permalink: /machine_learning/ml_settings/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-05 18:00:00 +0100
+last_modified_at: 2026-11-11 08:00:00 +0100
 ---
 
 Every machine learning step reads settings: which transformation an indicator gets, the filter window,
@@ -42,7 +42,7 @@ Three cells: sync, list, create a custom set. Set `scheme_file = '../scheme_ai4s
 | `transformation` | `indicator_transformation` (modeling), `transformation` (plots) | `none`, `standard` |
 | `standardisation` | `indicator_standardisation` (modeling), `standardisation` (plots) | `none`, `standard` |
 | `chemometric` | `chemometrics` | `none`, `standard` |
-| `filter` | `filter_fp` | `none`, `gauss`, `lowess`, `moving-average`, `savitzky-golay` |
+| `filter` | `filter_fp` | `none`, `gauss`, `loess`, `lowess`, `moving-average`, `savitzky-golay` |
 | `multi_filter` | `multi_filter_fp` | `standard` |
 | `selector` | band selection (permutation, RFE, tree based) | `none`, `standard` |
 | `regressor` | `model_parameters_fp` | `none` (scikit-learn defaults), `standard` (version 2 adds `plsr`) |
@@ -50,7 +50,7 @@ Three cells: sync, list, create a custom set. Set `scheme_file = '../scheme_ai4s
 | `plot_symbol` | `targetfeaturesymbols`, `regressionmodelsymbols` | `targetfeaturesymbols`, `regressionmodelsymbols` |
 | `plot_layout` | `plot_layout` in `regression_modeling` ([Plot layouts][ml_model_plots]) | `scatter-1` … `scatter-4`, `scatter-tt-kf`, `importance` |
 
-Together these are the 28 sets created by `setup_db`. The preset `regressor/standard` has two versions:
+Together these are the 29 sets created by `setup_db`. The preset `regressor/standard` has two versions:
 version 2 adds `plsr` with 10 components and `scale: false` ([Available regressors][ml_model_regressors]), and version 1
 (`standard@1`) is the set before it.
 

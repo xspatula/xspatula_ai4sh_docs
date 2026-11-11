@@ -7,7 +7,7 @@ excerpt: "Plotting selected AI4SoilHealth indicators, class distributions and sp
 permalink: /machine_learning/plot_data/
 author_profile: false
 date: 2026-10-19 08:00:00 +0200
-last_modified_at: 2026-11-04 08:00:00 +0100
+last_modified_at: 2026-11-11 08:00:00 +0100
 ---
 
 Look at the selection before preprocessing: the distribution of each indicator, the class counts of a
@@ -104,7 +104,7 @@ folder, e.g. `./project_neospectra/data/spectra/<provision tag>/ds2/ai4sh`.
 | `plot_neospectra.json` | the selected spectra, no processing |
 | `plot_neospectra_scatter_correction.json` | raw spectra against each scatter correction (l1, l2, max, SNV, MSC, detrend) |
 | `plot_neospectra_variable_scaling.json` | raw spectra against each variable scaling (meancentring, autoscaling, paretoscaling, poissonscaling) |
-| `plot_filter_neospectra.json` | raw spectra against each smoothing filter (moving-average, gauss, Savitzky-Golay, lowess) |
+| `plot_filter_neospectra.json` | spectra smoothed with the `filter` preset (moving-average, gauss, savitzky-golay, lowess or loess) |
 
 `colormap` sets the colour ramp of the spectra. Its default is `"default"`, the `spectra_plot` set
 `standard` (= `jet`); `"none"` gives the matplotlib default (viridis), and any matplotlib name

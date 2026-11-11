@@ -7,7 +7,7 @@ excerpt: "Machine learning pre-processes that work on indicators or spectra sepa
 permalink: /machine_learning/ml_preprocess1/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-06 16:00:00 +0100
+last_modified_at: 2026-11-11 08:00:00 +0100
 ---
 
 ML pre-processing 1 cleans up indicators and spectra separately, before they are compiled into a
@@ -31,7 +31,7 @@ numbers of the notebook. Each pre-process adds a unique suffix to the saved data
 |---|---|---|---|
 | 1.1 Indicator outliers | [Indicator outliers][pp1_outliers] | `detect_outliers` | `.olif`, `.olee`, `.ollof`, `.ol1csvm` |
 | 1.2 Indicator range | [Indicator range][pp1_range] | `indicator_range` | `.ir` |
-| 2.1 Filters | [Filters][pp1_filter] | `filter_spectra`, `multi_filter_spectra` | `.ma<n>`, `.gf<n>`, `.sg<n>`, `.lw<n>`, `.mf` |
+| 2.1 Filters | [Filters][pp1_filter] | `filter_spectra`, `multi_filter_spectra` | `.ma<n>`, `.gf<n>`, `.sg<n>`, `.lw<n>`, `.lo<n>`, `.mf` |
 | 2.2 Scatter correction | [Scatter correction][pp1_scatter] | `spectra_scatter_correction` | `.l1`, `.l2`, `.max`, `.snv`, `.msc`, `.dt` |
 | 2.3 Derivatives | [Derivatives][pp1_derivative] | `spectra_derivative`, `filter_spectra` | `.d1`, `.d2`, `.sg5.d1` |
 | 2.4 Variable scaling | [Variable scaling][pp1_scaling] | `spectra_scaling` | `.mc`, `.as`, `.ps`, `.poi` |
@@ -109,6 +109,7 @@ Chained scatter corrections are joined without a dot (`snv` + `detrend` → `snv
 | `sg{n}` | Savitzky-Golay smoothing, n = window length (`sg7`) | Filter |
 | `sg{n}.d1`, `sg{n}.d2` | Savitzky-Golay derivative (deriv 1 or 2) | Filter / derivative |
 | `lw{n}` | LOWESS, n = number of points (`lw21`) | Filter |
+| `lo{n}` | LOESS, n = number of points (`lo7`) | Filter |
 | `mf` | Multi-filter (region-wise) | Filter |
 | `l1`, `l2`, `max` | L1, L2 and max normalisation | Scatter correction |
 | `snv`, `msc` | Standard Normal Variate, Multiplicative Scatter Correction | Scatter correction |

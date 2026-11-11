@@ -3,11 +3,11 @@ title: "ML Setting and Model Schemas"
 layout: single
 sidebar:
   nav: "setup_db"
-excerpt: "The ml_setting schema holds the machine learning parameter sets, the ml_model schema the registry of final models. Tables, the 28 seed sets and the triggers that protect frozen sets."
+excerpt: "The ml_setting schema holds the machine learning parameter sets, the ml_model schema the registry of final models. Tables, the 29 seed sets and the triggers that protect frozen sets."
 permalink: /setup_db/ml_setting/
 author_profile: false
 date: 2026-10-26 08:00:00 +0200
-last_modified_at: 2026-11-05 18:00:00 +0100
+last_modified_at: 2026-11-11 08:00:00 +0100
 ---
 
 Two schemas support machine learning. `ml_setting` holds the named, versioned **parameter sets** that every
@@ -26,7 +26,7 @@ sections `MACHINE LEARNING SETTINGS` and `MACHINE LEARNING MODEL REGISTRY`:
 | File | Content |
 |---|---|
 | `ml_setting/ml_setting_v10_sql.json` | Tables `transform` (seeded), `parameter_set`, `indicator_transformation`, `indicator_standardisation` |
-| `ml_setting/ml_setting_records_v10_sql.json` | The 28 seed parameter sets (`regressor/standard` in two versions) |
+| `ml_setting/ml_setting_records_v10_sql.json` | The 29 seed parameter sets (`regressor/standard` in two versions) |
 | `ml_setting/ml_setting_frozen_v10_sql.json` | Trigger functions and `BEFORE UPDATE OR DELETE` triggers that protect frozen sets |
 | `ml_model/ml_model_v10_sql.json` | Tables `model`, `model_step`, `model_parameter_set`, `model_metric` |
 
@@ -45,20 +45,20 @@ creator of a custom set and who registered a model) must exist first.
 The per-indicator rows are not seeded by `setup_db`. They are written by `sync_indicator_parameter_sets`,
 and automatically after every `manage_indicator` (see [Observation utility][setup_db_observation_utility]).
 
-### The 28 seed sets
+### The 29 seed sets
 
 All seed sets have creator `setup` and are version 1, except `regressor/standard`, which also has version 2
 (version 1 plus `plsr` with 10 components and `scale: false`). A set name without `@<version>` uses the latest version, so
 `"model_parameters_fp": "default"` gives version 2. In an existing database, add it by rerunning the main cell of
 `setup/setup_db.ipynb` after updating xspatula_ai4sh: existing records are skipped, only the new version is
-inserted.
+inserted. The same applies to the `filter/loess` preset (added 2026-11-11).
 
 | Family | Sets |
 |---|---|
 | `transformation` | `none` (raw), `standard` |
 | `standardisation` | `none` (raw), `standard` |
 | `chemometric` | `none` (raw), `standard` |
-| `filter` | `none` (raw), `moving-average`, `gauss`, `savitzky-golay`, `lowess` |
+| `filter` | `none` (raw), `moving-average`, `gauss`, `savitzky-golay`, `lowess`, `loess` |
 | `multi_filter` | `standard` |
 | `selector` | `none` (raw), `standard` |
 | `regressor` | `none` (raw, scikit-learn defaults), `standard` |

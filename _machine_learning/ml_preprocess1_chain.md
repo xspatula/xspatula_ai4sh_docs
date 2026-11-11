@@ -7,7 +7,7 @@ excerpt: "Running a complete spectral pre-processing pipeline in one process wit
 permalink: /machine_learning/ml_preprocess1/chain/
 author_profile: false
 date: 2026-10-30 08:00:00 +0100
-last_modified_at: 2026-11-06 16:00:00 +0100
+last_modified_at: 2026-11-11 08:00:00 +0100
 ---
 
 Section 2.7 of the notebook `ml_preprocess_separated.ipynb`. See [ML pre-processing 1][pp1] for input
@@ -43,7 +43,7 @@ and custom settings:
 
 | Step | Method name (default settings) | Object (custom settings) | Suffix |
 |---|---|---|---|
-| Filter | `moving-average`, `gauss`, `savitzky-golay`, `lowess` (the [filter presets][filter_presets]) | `{"filter": "<parameter set name or JSON file>"}` | `ma5`, `gf2`, `sg5`, `lw21` … |
+| Filter | `moving-average`, `gauss`, `savitzky-golay`, `lowess`, `loess` (the [filter presets][filter_presets]) | `{"filter": "<parameter set name or JSON file>"}` | `ma5`, `gf2`, `sg5`, `lw21`, `lo7` … |
 | Multi-filter | — | `{"multi_filter": "<parameter set name or JSON file>"}` | `mf` |
 | Scatter correction | `l1`, `l2`, `max`, `snv`, `msc`, `detrend` | `{"scatter_correction": ["snv", "detrend"]}` | `snv`, `dt`, `snvdt` … |
 | Derivative | `derivative` (1st order) | `{"derivative": 2}` | `d1`, `d2` |
